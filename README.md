@@ -7,4 +7,4 @@
 * `game`: From joining and leaving to resetting the game when it's all over, everything to do with the game at large.
 * `main`: The base of the bot, mostly handles listening for commands and all that jazz.
 * `map`: Everything that edits the map goes here, from influence incrementation to DEFCON declination.
-* `readwrite`: [Probably for future implementations because I cannot Java for the life of me] A save function in case one player or the bot needs to go for some reason. 
+* `readwrite`: (Probably for future implementations because I cannot Java for the life of me) A save function in case one player or the bot needs to go for some reason. 
