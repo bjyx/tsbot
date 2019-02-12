@@ -7,7 +7,7 @@ import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
 
 public class PlayerList {
-	private User[] players;
+	private static User[] players;
 	
 	public PlayerList() {
 		players = new User[2];
@@ -52,6 +52,9 @@ public class PlayerList {
 			builder.setDescription(players[0] + "\n" + players[1]);
 		}
 		return builder.build();
+	}
+	public User[] getArray() {
+		return players;
 	}
 	public User getUSA() {
 		return players[0];

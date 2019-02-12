@@ -51,8 +51,6 @@ public class HelpCommand extends Command {
                     name = (name == null || name.isEmpty()) ? "`null`" : name;
                     description = (description == null || description.isEmpty()) ? "`404 NOT FOUND`" : description;
                     usageInstructions = (usageInstructions == null || usageInstructions.isEmpty()) ? Collections.singletonList("404 NOT FOUND") : usageInstructions;
-
-                    //TODO: Replace with a PrivateMessage
                     channel.sendMessage(new MessageBuilder()
                             .append("**Name:** " + name + "\n")
                             .append("**Description:** " + description + "\n")
@@ -97,8 +95,8 @@ public class HelpCommand extends Command {
         return Collections.singletonList(
                 "TS.help   **OR**  TS.help *<command>*\n"
                 + "TS.help - returns the list of commands along with a simple description of each.\n"
-                + ".help <command> - returns the name, description, aliases and usage information of a command.\n"
+                + "TS.help <command> - returns the name, description, aliases and usage information of a command.\n"
                 + "   - This can use the aliases of a command as input as well.\n"
-                + "__Example:__ .help help");
+                + "__Example:__ TS.help help");
 	}
 }
