@@ -1,5 +1,7 @@
 package game;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -53,8 +55,8 @@ public class PlayerList {
 		}
 		return builder.build();
 	}
-	public User[] getArray() {
-		return players;
+	public List<User> getArray() {
+		return Arrays.asList(players);
 	}
 	public User getUSA() {
 		return players[0];
