@@ -7,17 +7,16 @@ import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LeaveCommand extends Command {
-	
-	private PlayerList plist = new PlayerList();
+
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		//TODO: if game started return;
 		//TODO: if game over return;
-		if (!Arrays.asList(plist.getArray()).contains(e.getAuthor())) {
+		if (!Arrays.asList(PlayerList.getArray()).contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're not on the list.");
 			return;
 		}
-		plist.removePlayer(e.getAuthor());
+		PlayerList.removePlayer(e.getAuthor());
 	}
 
 	@Override

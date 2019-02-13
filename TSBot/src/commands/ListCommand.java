@@ -9,11 +9,9 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.MessageBuilder;
 
 public class ListCommand extends Command {
-	private GameData gamedata = new GameData();
-	private PlayerList plist = new PlayerList();
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		sendMessage(e, new MessageBuilder(plist.getPlayers(gamedata.hasGameStarted())).build());
+		sendMessage(e, new MessageBuilder(PlayerList.getPlayers(GameData.hasGameStarted())).build());
 	}
 
 	@Override

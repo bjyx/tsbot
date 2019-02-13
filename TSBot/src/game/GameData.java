@@ -4,23 +4,23 @@ public class GameData {
 	private static boolean started = false;
 	private static boolean ended = false;
 	
-	public void startGame() {
+	public static void startGame() {
 		started = true;
 	}
 	
-	public boolean hasGameStarted() {
+	public static boolean hasGameStarted() {
 		return started;
 	}
 	
-	public void endGame() {
+	public static void endGame() {
 		ended = true;
 	}
 	
-	public boolean hasGameEnded() {
+	public static boolean hasGameEnded() {
 		return ended;
 	}
 	
-	public void reset() {
+	public static void reset() {
 		started = false;
 		ended = false;
 	}

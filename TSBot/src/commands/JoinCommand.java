@@ -9,20 +9,18 @@ import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class JoinCommand extends Command {
-	private GameData gamedata = new GameData();
-	private PlayerList plist = new PlayerList();
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.hasGameStarted()) {
 			sendMessage(e, ":x: Cannot join a game that has already started.");
 			return;
 		}
-		if (Arrays.asList(plist.getArray()).contains(e.getAuthor())) {
+		if (Arrays.asList(PlayerList.getArray()).contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're already on the list.");
 			return;
 		}
-		if (Arrays.asList(plist.getArray()).contains(null)) {
-			plist.addPlayer(e.getAuthor());
+		if (Arrays.asList(PlayerList.getArray()).contains(null)) {
+			PlayerList.addPlayer(e.getAuthor());
 			sendMessage(e, ":o: Done");
 			return;
 		}
