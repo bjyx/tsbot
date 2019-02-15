@@ -2,6 +2,8 @@ package cards;
 
 import java.util.List;
 
+import events.Card;
+
 public class CardList {
 	public static List<Card> cardList;
 	private static int counter=0;

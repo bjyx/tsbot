@@ -26,7 +26,7 @@ public class CodeCommand extends Command {
 
 	@Override
 	public String getName() {
-		return "Code Dump";
+		return "Code Dump (code)";
 	}
 
 	@Override

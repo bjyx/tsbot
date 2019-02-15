@@ -3,6 +3,7 @@ package commands;
 import java.util.Arrays;
 import java.util.List;
 
+import cards.HandManager;
 import game.GameData;
 import game.PlayerList;
 
@@ -30,7 +31,7 @@ public class StartCommand extends Command {
 		sendMessage(e, ":hourglass: Seven minutes to midnight... and counting.");
 		GameData.startGame();
 		PlayerList.detSides();
-		//TODO hand dealing
+		HandManager.addToDeck(0);
 		
 	}
 
@@ -49,7 +50,7 @@ public class StartCommand extends Command {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Start";
+		return "Start (start)";
 	}
 
 	@Override

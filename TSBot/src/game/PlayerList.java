@@ -58,8 +58,8 @@ public class PlayerList {
 	public static User getSSR() {
 		return players[1];
 	}
-	public static User getPhasing(int ar) {
-		if (ar==0) return null; //(I can't deal with this yet)
-		return players[ar%2]; //ar1 is USSR, ar2 is US, and so forth until ar12/14/16
+	public static User getPhasing() {
+		if (GameData.getAR()==0) return null; //(I can't deal with this yet)
+		return players[GameData.getAR()%2]; //ar1 is USSR, ar2 is US, and so forth until ar12/14/16
 	}
 }

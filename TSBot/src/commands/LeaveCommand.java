@@ -31,7 +31,7 @@ public class LeaveCommand extends Command {
 
 	@Override
 	public String getName() {
-		return "Leave";
+		return "Leave (leave)";
 	}
 
 	@Override

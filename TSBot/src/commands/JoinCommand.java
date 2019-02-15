@@ -39,7 +39,7 @@ public class JoinCommand extends Command {
 
 	@Override
 	public String getName() {
-		return "Join";
+		return "Join (join)";
 	}
 
 	@Override
