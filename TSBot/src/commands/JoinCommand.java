@@ -11,6 +11,10 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class JoinCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
+		if (GameData.hasGameEnded()) {
+			sendMessage(e, ":x: Have you tried turning it off and on again?");
+			return;
+		}
 		if (GameData.hasGameStarted()) {
 			sendMessage(e, ":x: Cannot join a game that has already started.");
 			return;

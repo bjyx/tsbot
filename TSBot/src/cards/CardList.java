@@ -13,9 +13,11 @@ public class CardList {
 		counter++;
 		
 		return cardList;
-	} 
+	}
 	
-	
+	public static Card getCard(int i) {
+		return cardList.get(i);
+	}
 	
 	public static int numberOfCards() {
 		return counter-1; // counter should be @ 111

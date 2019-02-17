@@ -32,6 +32,7 @@ public class StartCommand extends Command {
 		GameData.startGame();
 		PlayerList.detSides();
 		HandManager.addToDeck(0);
+		HandManager.deal();
 		
 	}
 

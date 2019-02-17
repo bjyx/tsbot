@@ -2,6 +2,8 @@ package commands;
 
 import java.util.Arrays;
 import java.util.List;
+
+import game.GameData;
 import game.PlayerList;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -10,8 +12,13 @@ public class LeaveCommand extends Command {
 
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		//TODO: if game started return;
-		//TODO: if game over return;
+		if (GameData.hasGameEnded()) {
+			sendMessage(e, ":x: Have you tried turning it off and on again?");
+			return;
+		}
+		if (GameData.hasGameStarted()) {
+			sendMessage(e, ":x: This isn't a game of chicken. Once you're in the Cold War you see it through to the end.");
+		}
 		if (!Arrays.asList(PlayerList.getArray()).contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're not on the list.");
 			return;
