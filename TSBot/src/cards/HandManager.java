@@ -10,13 +10,13 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public class HandManager {
-	private static List<Integer> USAHand;
-	private static List<Integer> SUNHand;
-	private static List<Integer> Deck;
-	private static List<Integer> Discard;
-	private static List<Integer> Removed;
-	private static List<Integer> Effects;
-	private static boolean China;
+	public static List<Integer> USAHand;
+	public static List<Integer> SUNHand;
+	public static List<Integer> Deck;
+	public static List<Integer> Discard;
+	public static List<Integer> Removed;
+	public static List<Integer> Effects;
+	public static boolean China;
 	
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
@@ -63,17 +63,44 @@ public class HandManager {
 		return builder.build(); 
 	}
 	
-	public static void play(int sp, int card) {
+	public static void play(int sp, int card, String[] args) {
 		if (sp==0&&USAHand.contains(card)) {
-			
+			USAHand.remove(card);
 		}
 		if (sp==1&&SUNHand.contains(card)) {
-			
+			SUNHand.remove(card);
 		}
 		if (CardList.getCard(card).isRemoved()) Removed.add(card);
 		else Discard.add(card);
 	}
 	public static void discard(int sp, int card) {
-		
+		if (sp==0&&USAHand.contains(card)) {
+			USAHand.remove(card);
+		}
+		if (sp==1&&SUNHand.contains(card)) {
+			SUNHand.remove(card);
+		}
+		Discard.add(card);
+	}
+	public static void getFromDiscard(int sp, int card) {
+		if (Discard.contains(card)) {
+			Discard.remove(card);
+		}
+		if (sp==0) {
+			USAHand.add(card);
+		}
+		if (sp==1) {
+			SUNHand.add(card);
+		}
+	}
+	public static void transfer(int source, int card) {
+		if (source==0&&USAHand.contains(card)) {
+			USAHand.remove(card);
+			SUNHand.add(card);
+		}
+		if (source==1&&SUNHand.contains(card)) {
+			USAHand.add(card);
+			SUNHand.remove(card);
+		}
 	}
 }
