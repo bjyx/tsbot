@@ -16,7 +16,7 @@ public class HandManager {
 	public static List<Integer> Discard;
 	public static List<Integer> Removed;
 	public static List<Integer> Effects;
-	public static boolean China;
+	public static int China;
 	
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
@@ -46,7 +46,7 @@ public class HandManager {
 		for (int c : USAHand) {
 			builder.addField(CardList.getCard(c).toString(), CardList.getCard(c).getDescription(), false);
 		}
-		if (China==false) {
+		if (China==0) {
 			builder.addField(CardList.cardList.get(6).toString(), CardList.cardList.get(6).getDescription(), false);
 		}
 		return builder.build(); 
@@ -57,19 +57,23 @@ public class HandManager {
 		for (int c : SUNHand) {
 			builder.addField(CardList.getCard(c).toString(), CardList.getCard(c).getDescription(), false);
 		}
-		if (China==true) {
+		if (China==1) {
 			builder.addField(CardList.cardList.get(6).toString(), CardList.cardList.get(6).getDescription(), false);
 		}
 		return builder.build(); 
 	}
 	
 	public static void play(int sp, int card, String[] args) {
+		if (card==6&&China==sp) {
+			China += 2;
+		}
 		if (sp==0&&USAHand.contains(card)) {
 			USAHand.remove(card);
 		}
 		if (sp==1&&SUNHand.contains(card)) {
 			SUNHand.remove(card);
 		}
+		//super complicated area, will nitgrit later
 		if (CardList.getCard(card).isRemoved()) Removed.add(card);
 		else Discard.add(card);
 	}
@@ -102,5 +106,11 @@ public class HandManager {
 			USAHand.add(card);
 			SUNHand.remove(card);
 		}
+	}
+	public static void addEffect(int card) {
+		Effects.add(card);
+	}
+	public static void removeEffect(int card) {
+		Effects.remove(Effects.indexOf(card));
 	}
 }

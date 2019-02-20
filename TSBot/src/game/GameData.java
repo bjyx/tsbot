@@ -1,5 +1,7 @@
 package game;
 
+import cards.HandManager;
+
 public class GameData {
 	private static boolean started = false;
 	private static boolean ended = false;
@@ -38,15 +40,41 @@ public class GameData {
 		
 	}
 	public static void advanceTurn() {
-		if (turn==10) return;
+		if (turn==10) return; //should do final scoring...
 		turn++;
 		ar = 0;
+	}
+	public static int getTurn() {
+		return turn;
 	}
 	public static int getEra() {
 		if (turn==0) return -1;
 		if (turn<4) return 0;
 		if (turn>7) return 2;
 		return 1;
+	}
+	public static void advanceTime() {
+		if (getEra()==0 && ar==12) {
+			advanceTurn();
+			return;
+		}
+		if (HandManager.Effects.contains(83)&&ar==14) {
+			ar = 16; 
+			return; //North Sea Oil's effect, end of AR7
+		}
+		if (space[1]==8&&space[0]<8&&ar==14) {
+			ar=15;
+			return;
+		}
+		if (space[0]==8&&space[1]<8&&ar==14) {
+			ar=16;
+			return;
+		}
+		if (ar>=14) {
+			advanceTurn();
+			return;
+		}
+		ar++;
 	}
 	public static int getAR() {
 		return ar;
