@@ -1,7 +1,11 @@
 package events;
 
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
+
 public abstract class Card {
-	public abstract void onEvent(String[] args); //what happens when played for event?
+	public static final String[] numbers = {"zero","one","two","three","four","five","six"};
+	public abstract MessageEmbed onEvent(String[] args); //what happens when played for event?
 	public abstract String getId();
 	public abstract String getName();
 	public abstract int getOps();
@@ -18,5 +22,13 @@ public abstract class Card {
 	
 	public String toString() {
 		return "`" + getId() + " " + getName() + (isRemoved()?"*":"") + " (" + (getOps()==0?"S":getOps()) + getAssociationString() + ")`";
+	}
+	
+	public MessageEmbed toEmbed() {
+		EmbedBuilder builder = new EmbedBuilder()
+				.setTitle(":" + numbers[getOps()] + "::Influence" + getAssociationString() + ": `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
+				.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/cards/" + getId())
+				.setDescription(getDescription());
+		return builder.build();
 	}
 }
