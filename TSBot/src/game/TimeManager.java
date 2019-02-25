@@ -12,6 +12,6 @@ public class TimeManager extends ListenerAdapter {
         if (e.getMessage().getContentRaw().startsWith("`ADVANCE`")) {
         	GameData.advanceTime();
         }
-            
+        
     }
 }
