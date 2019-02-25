@@ -6,11 +6,12 @@ public class GameData {
 	private static boolean started = false;
 	private static boolean ended = false;
 	private static int turn = 0;
-	private static int ar = 0; // 0 - headline, (ar+1)/2 - actual action rounds, ar%2 - phasing player
+	private static int ar = 1; // 1,2 - headline, (ar+1)/2 - actual action rounds, ar%2 - phasing player
 	private static int defcon = 5;
 	private static int[] milops = {0,0};
 	private static int[] space = {0,0};
 	private static int score = 0;
+	private static int[] hasSpaced = {0,0};
 	
 	public static void startGame() {
 		started = true;
@@ -32,18 +33,23 @@ public class GameData {
 		started = false;
 		ended = false;
 		turn = 0;
-		ar = 0;
+		ar = 1;
 		defcon = 5;
 		milops[0] = 0;
 		milops[1] = 0;
 		space[0] = 0;
 		space[1] = 0;
-		
+		hasSpaced[0] = 0;
+		hasSpaced[1] = 0;
 	}
 	public static void advanceTurn() {
 		if (turn==10) return; //should do final scoring...
 		turn++;
-		ar = 0;
+		ar = 1;
+		hasSpaced[0] = 0;
+		hasSpaced[1] = 0;
+		if (turn==4) HandManager.addToDeck(1);
+		if (turn==7) HandManager.addToDeck(2);
 	}
 	public static int getTurn() {
 		return turn;
@@ -55,27 +61,27 @@ public class GameData {
 		return 1;
 	}
 	public static void advanceTime() {
-		if (getEra()==0 && ar==12) {
+		if (getEra()==0 && ar==14) { //end of AR6 in early war
 			advanceTurn();
 			return;
 		}
-		if (HandManager.Effects.contains(83)&&ar==14) {
-			ar = 16; 
+		if (HandManager.Effects.contains(83)&&(ar==16||ar==17)) {
+			ar = 18; 
 			return; //North Sea Oil's effect, end of AR7
 		}
-		if (space[1]==8&&space[0]<8&&ar==14) {
-			ar=15;
+		if (space[1]==8&&space[0]<8&&ar==16) {
+			ar=17;
 			return;
 		}
-		if (space[0]==8&&space[1]<8&&ar==14) {
-			ar=16;
+		if (space[0]==8&&space[1]<8&&ar==16) {
+			ar=18;
 			return;
 		}
-		if (ar>=14) {
+		if (ar>=16) {
 			advanceTurn();
 			return;
 		}
-		ar++;
+		ar++; //if you don't advance the turn or have anything to do with extra action rounds
 	}
 	public static int getAR() {
 		return ar;
