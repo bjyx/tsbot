@@ -10,6 +10,7 @@ public class GameData {
 	private static int defcon = 5;
 	private static int[] milops = {0,0};
 	private static int[] space = {0,0};
+	private static int score = 0;
 	
 	public static void startGame() {
 		started = true;
@@ -100,5 +101,11 @@ public class GameData {
 	}
 	public static int getSpace(int sp) {
 		return space[sp];
+	}
+	public static void changeScore(int amt) {
+		score += amt;
+	}
+	public static int getScore() {
+		return score;
 	}
 }
