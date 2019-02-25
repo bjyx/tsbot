@@ -33,7 +33,7 @@ public class StartCommand extends Command {
 		PlayerList.detSides();
 		HandManager.addToDeck(0);
 		HandManager.deal();
-		
+		sendMessage(e, PlayerList.getSSR().getAsMention() + ", please place six influence markers in Eastern Europe.");
 	}
 
 	@Override
