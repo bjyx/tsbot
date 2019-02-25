@@ -9,7 +9,7 @@ public class CardList {
 	private static int counter=0;
 	
 	public static void initialize() {
-		CardList.addCard(null); //just to occupy the 0 slot
+		CardList.addCard(null); //just to occupy the 0 slot so I don't get peeved enough to use a map
 		CardList.addCard(new AsiaScoring());
 	}
 	

@@ -2,6 +2,8 @@ package map;
 
 import java.util.List;
 
+import game.GameData;
+import game.PlayerList;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
@@ -35,6 +37,13 @@ public abstract class Country {
 		if (influence[1]>=influence[0]+getStab()) return 1;
 		return -1;
 	}
+	public boolean checkIsCoupable() {
+		if (influence[PlayerList.getPhasing()]==0) {
+			return false;
+		}
+		if ((getRegion()<=2&&GameData.getDEFCON()<5)||(getRegion()<=5&&getRegion()>=4&&GameData.getDEFCON()<4)||(getRegion()==3&&GameData.getDEFCON()<3)) return false;
+		return true;
+	}
 	
 	//flavor again
 	public MessageEmbed getInfo() {
@@ -43,11 +52,11 @@ public abstract class Country {
 				.setDescription(getStab() + " stability" + (isBattleground()?" battleground ":" ")+ "country in " + regions[getRegion()])
 				.setThumbnail("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/countries/"+getISO3166())
 				.addField("Current Leader", getLeader(),false)
-				.addField("Influence", ":InflUS:"+influence[0]+":InflSU"+influence[1], false)
+				.addField("Influence", ":InfluenceA:"+influence[0]+":InfluenceR:"+influence[1], false)
 				.addField("", getDesc(), false);
 		String str = "";
 		for (int i : getAdj()) {
-			str += MapManager.map.get(i).getName() + "\n";
+			str += ":flag_" + MapManager.map.get(i).getISO3166() + ":";
 		}
 		builder.addField("Adjacencies", str, false);
 		return builder.build();
