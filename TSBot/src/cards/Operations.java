@@ -10,18 +10,21 @@ public class Operations {
 	private int restrictions = 7;
 	
 	public Operations(int ops) {
-		ops = opnumber;
+		opnumber = ops;
 	}
 	
-	public void influence(Country country, int amt) {
-		
+	public void influence(Country[] countries, int[] amt) {
+		if (realignment) return;
+		for (int i=0; i<countries.length; i++) {
+			
+		}
 	}
 	public void realignment(Country country) {
 		
 		realignment = true;
 		
 	}
-	public int getCoupModifiers(Country country) {
+	public int getCoupModifiers(Country country, int sp) {
 		return (HandManager.Effects.contains(43)?-1:0);
 	}
 	public void coup(Country country) {
@@ -34,4 +37,9 @@ public class Operations {
 			
 		}
 	}
+	public void space() {
+		if (realignment) return;
+		
+	}
+	
 }

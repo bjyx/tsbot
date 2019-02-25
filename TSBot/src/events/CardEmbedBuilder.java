@@ -22,4 +22,9 @@ public class CardEmbedBuilder extends EmbedBuilder {
 		MapManager.map.get(country).changeInfluence(sp, amt);
 		return (CardEmbedBuilder) addField(":flag_" + MapManager.map.get(country).getISO3166() + "::Influence" + (sp==0?"A":"R") + ":" + intToEmoji(amt),"Now at " + MapManager.map.get(country).influence[0] + "/" + MapManager.map.get(country).influence[1],false);
 	}
+	public CardEmbedBuilder changeDEFCON(int amt) {
+		GameData.setDEFCON(GameData.getDEFCON()+amt);
+		return (CardEmbedBuilder) addField(":radioactive:" + intToEmoji(amt),"Now at " + GameData.getDEFCON(),false);
+		
+	}
 }
