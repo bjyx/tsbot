@@ -46,7 +46,7 @@ public class Austria extends Country {
 	@Override
 	public List<Integer> getAdj() {
 		// TODO Auto-generated method stub
-		return Arrays.asList();
+		return Arrays.asList(6,10,11,19);//dd, hu, it, de
 	}
 
 	@Override
