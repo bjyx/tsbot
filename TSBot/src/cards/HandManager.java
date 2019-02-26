@@ -17,6 +17,8 @@ public class HandManager {
 	public static List<Integer> Removed;
 	public static List<Integer> Effects;
 	public static int China;
+	private static int[] headline = {0,0};
+	private static int activecard = 0;
 	
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
@@ -63,7 +65,7 @@ public class HandManager {
 		return builder.build(); 
 	}
 	
-	public static void play(int sp, int card, String[] args) {
+	public static void play(int sp, int card, char mode, String[] args) {
 		if (card==6&&China==sp) {
 			China += 2;
 		}
@@ -74,8 +76,15 @@ public class HandManager {
 			SUNHand.remove(card);
 		}
 		//super complicated area, will nitgrit later
-		if (CardList.getCard(card).isRemoved()) Removed.add(card);
-		else Discard.add(card);
+		if (mode=='e') {
+			if (CardList.getCard(card).isRemoved()) Removed.add(card);
+			else Discard.add(card);
+		}
+		if (mode=='o') {
+			if (CardList.getCard(card).isRemoved()&&CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) Removed.add(card);
+			else Discard.add(card);
+		}
+		
 	}
 	public static void discard(int sp, int card) {
 		if (sp==0&&USAHand.contains(card)) {
@@ -112,5 +121,8 @@ public class HandManager {
 	}
 	public static void removeEffect(int card) {
 		Effects.remove(Effects.indexOf(card));
+	}
+	public static int getActive() {
+		return activecard;
 	}
 }
