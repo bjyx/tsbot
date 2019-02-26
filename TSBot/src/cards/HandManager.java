@@ -17,8 +17,9 @@ public class HandManager {
 	public static List<Integer> Removed;
 	public static List<Integer> Effects;
 	public static int China;
-	private static int[] headline = {0,0};
-	private static int activecard = 0;
+	public static int[] headline = {0,0};
+	public static int activecard = 0;
+	public static char playmode = 0;
 	
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
@@ -67,6 +68,7 @@ public class HandManager {
 	
 	public static void play(int sp, int card, char mode, String[] args) {
 		if (card==6&&China==sp) {
+			China = (China+1)%2;
 			China += 2;
 		}
 		if (sp==0&&USAHand.contains(card)) {
@@ -76,13 +78,58 @@ public class HandManager {
 			SUNHand.remove(card);
 		}
 		//super complicated area, will nitgrit later
+		if (mode=='h') {
+			if (CardList.getCard(card).isRemoved()) {
+				Removed.add(card);
+			}
+			else {
+				Discard.add(card);
+			}
+			playmode = 'h';
+			headline[sp]=card;
+		}
 		if (mode=='e') {
-			if (CardList.getCard(card).isRemoved()) Removed.add(card);
-			else Discard.add(card);
+			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
+				if (CardList.getCard(card).isRemoved()) {
+					Removed.add(card);
+				}
+				else {
+					Discard.add(card);
+				}
+				playmode = 'f';
+			}
+			else {
+				if (CardList.getCard(card).isRemoved()) {
+					Removed.add(card);
+				}
+				else {
+					Discard.add(card);
+				}
+				playmode = 'e';
+			}
+			activecard = card;
+			
 		}
 		if (mode=='o') {
-			if (CardList.getCard(card).isRemoved()&&CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) Removed.add(card);
-			else Discard.add(card);
+			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
+				if (CardList.getCard(card).isRemoved()) {
+					Removed.add(card);
+				}
+				else {
+					Discard.add(card);
+				}
+				playmode = 'l';
+			}
+			else {
+				Discard.add(card);
+				playmode = 'o'; //ops only
+			}
+			activecard = card;
+		}
+		if (mode=='s') {
+			Discard.add(card);
+			playmode = 's';
+			activecard = card;
 		}
 		
 	}
@@ -124,5 +171,17 @@ public class HandManager {
 	}
 	public static int getActive() {
 		return activecard;
+	}
+	public static int checkScoring() {
+		int ret=0;
+		for (int c : SUNHand) {
+			if (CardList.getCard(c).getOps()==0) ret += 2; 
+			break;
+		}
+		for (int c : USAHand) {
+			if (CardList.getCard(c).getOps()==0) ret += 1;
+			break;
+		}
+		return ret;
 	}
 }

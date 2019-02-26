@@ -5,7 +5,7 @@ import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public abstract class Card {
 	public static final String[] numbers = {"zero","one","two","three","four","five","six"};
-	public abstract MessageEmbed onEvent(String[] args); //what happens when played for event?
+	public abstract void onEvent(String[] args); //what happens when played for event?
 	public abstract String getId();
 	public abstract String getName();
 	public abstract int getOps();

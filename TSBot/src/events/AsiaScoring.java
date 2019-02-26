@@ -4,7 +4,6 @@ import cards.HandManager;
 import game.GameData;
 import map.Country;
 import map.MapManager;
-import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public class AsiaScoring extends Card {
 	private static final int presence = 3;
@@ -20,7 +19,7 @@ public class AsiaScoring extends Card {
 		return 0;
 	}
 	@Override
-	public MessageEmbed onEvent(String[] args) {
+	public void onEvent(String[] args) {
 		int[] totalCountries = {0,0};
 		int[] battlegrounds = {0,0};
 		String[] strings = {"","","",""};
@@ -57,10 +56,8 @@ public class AsiaScoring extends Card {
 		if (battlegrounds[1]==6) vp -= control;
 		else if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]) vp -= domination;
 		else if (totalCountries[1]>0) vp -= presence;
-		
 		builder.changeVP(vp);
-		HandManager.Discard.add(1);
-		return builder.build();
+		GameData.txtchnl.sendMessage(builder.build());
 	}
 	@Override
 	public String getId() {

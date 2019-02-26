@@ -3,7 +3,9 @@ package commands;
 import java.util.Arrays;
 import java.util.List;
 
+import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -30,15 +32,35 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: Cards are indexed from 1 to 110.");
 			return;
 		}
+		e.getMessage().delete().complete();
 		if (GameData.getAR()%2!=PlayerList.getArray().indexOf(e.getAuthor())&&GameData.getAR()>2) {
 			sendMessage(e, ":x: Please wait for your Action Round to come.");
 			return;
 		}
 		if (HandManager.getActive()!=0) {
-			sendMessage(e, "There is already a card played.");
+			sendMessage(e, ":x: There is already a card played.");
 			return;
 		}
-		
+		if (mode == 'h'&&GameData.getAR()>2) {
+			sendMessage(e, ":x: Can't play headlines in non-headline phases.");
+			return;
+		}
+		if (mode == 'h'&&HandManager.headline[PlayerList.getArray().indexOf(e.getAuthor())]!=0) {
+			sendMessage(e, ":x: You've already set a headline.");
+			return;
+		}
+		if (mode == 'o'&&CardList.getCard(card).getOps()==0) {
+			sendMessage(e, ":x: Scoring cards must be played for the event.");
+			return;
+		}
+		if (mode == 's' && (GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))==8||CardList.getCard(card).getOps()<Operations.spaceOps[GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))])) {
+			sendMessage(e, ":x: You cannot play that card on the space race.");
+			return;
+		}
+		if (mode=='s'&&GameData.hasSpace(PlayerList.getArray().indexOf(e.getAuthor()))) {
+			sendMessage(e, ":x: Wait until next turn to space this card.");
+			return;
+		}
 		if (e.getAuthor().equals(PlayerList.getSSR())&&HandManager.SUNHand.contains(card)) {
 			HandManager.play(1, card, mode, args);
 		}

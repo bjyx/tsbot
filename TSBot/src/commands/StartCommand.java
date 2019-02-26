@@ -29,6 +29,7 @@ public class StartCommand extends Command {
 			return;
 		}
 		sendMessage(e, ":hourglass: Seven minutes to midnight... and counting.");
+		GameData.txtchnl = e.getTextChannel();
 		GameData.startGame();
 		PlayerList.detSides();
 		HandManager.addToDeck(0);

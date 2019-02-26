@@ -1,8 +1,11 @@
 package game;
 
 import cards.HandManager;
+import net.dv8tion.jda.core.entities.TextChannel;
 
 public class GameData {
+	public static TextChannel txtchnl;
+	
 	private static boolean started = false;
 	private static boolean ended = false;
 	private static int turn = 0;
@@ -43,13 +46,22 @@ public class GameData {
 		hasSpaced[1] = 0;
 	}
 	public static void advanceTurn() {
-		if (turn==10) return; //should do final scoring...
-		turn++;
-		ar = 1;
-		hasSpaced[0] = 0;
+		
+		changeScore(OpsToVP()); // stage E
+		int scoring = HandManager.checkScoring();
+		if (scoring!=0) {
+			
+		} // stage F
+		HandManager.China %= 2; // stage G
+		if (turn==10) return; //stage I
+		turn++; // stage H
+		ar = 1; 
+		hasSpaced[0] = 0; 
 		hasSpaced[1] = 0;
 		if (turn==4) HandManager.addToDeck(1);
 		if (turn==7) HandManager.addToDeck(2);
+		if (defcon!=5) defcon++; //stage A
+		HandManager.deal(); // stage B
 	}
 	public static int getTurn() {
 		return turn;
@@ -113,5 +125,11 @@ public class GameData {
 	}
 	public static int getScore() {
 		return score;
+	}
+	public static void toSpace(int sp) {
+		hasSpaced[sp]++;
+	}
+	public static boolean hasSpace(int sp) {
+		return (space[sp]>=2&&space[(sp+1)%2]<2)?hasSpaced[sp]==2:hasSpaced[sp]==1;
 	}
 }
