@@ -16,10 +16,25 @@ public class HandManager {
 	public static List<Integer> Discard;
 	public static List<Integer> Removed;
 	public static List<Integer> Effects;
-	public static int China;
+	public static int China=1;
 	public static int[] headline = {0,0};
+	public static int precedence = -1;
 	public static int activecard = 0;
 	public static char playmode = 0;
+	
+	public static void reset() {
+		USAHand.clear();
+		SUNHand.clear();
+		Deck.clear();
+		Discard.clear();
+		Removed.clear();
+		Effects.clear();
+		China = 1;
+		headline[1] = 0;
+		headline[0] = 0;
+		activecard = 0;
+		playmode = 0;
+	}
 	
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
@@ -68,8 +83,9 @@ public class HandManager {
 	
 	public static void play(int sp, int card, char mode, String[] args) {
 		if (card==6&&China==sp) {
-			China = (China+1)%2;
-			China += 2;
+			China = (China+1)%2+2;
+			activecard=6;
+			return;
 		}
 		if (sp==0&&USAHand.contains(card)) {
 			USAHand.remove(card);
@@ -87,6 +103,11 @@ public class HandManager {
 			}
 			playmode = 'h';
 			headline[sp]=card;
+			
+			if (headline[(sp+1)%2]!=0) {
+				if (CardList.getCard(headline[0]).getOps()>=CardList.getCard(headline[1]).getOps()) precedence = 0;
+				else precedence = 1;
+			}
 		}
 		if (mode=='e') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {

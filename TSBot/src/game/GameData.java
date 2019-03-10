@@ -1,6 +1,7 @@
 package game;
 
 import cards.HandManager;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class GameData {
@@ -24,15 +25,37 @@ public class GameData {
 		return started;
 	}
 	
-	public static void endGame() {
+	public static void endGame(int victor, int cause) {
 		ended = true;
+		if (victor==-1) {
+			txtchnl.sendMessage(new EmbedBuilder()
+					.setTitle("GAME OVER - NO CONTEST!")
+					.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/draw.png")
+					.build());
+			return;
+		}
+		EmbedBuilder builder = new EmbedBuilder()
+				.setTitle("GAME OVER - The winner is :flag_" + (victor==0?"us":"su") + ": " + PlayerList.getArray().get(victor).getAsMention() + "!")
+				.setDescription("Cause: " + getCause(cause))
+				.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/victory_" + (victor==0?"us":"su") + ".png");
+		txtchnl.sendMessage(builder.build());
 	}
 	
+	private static String getCause(int cause) {
+		if (cause==0) return "Ideological Domination"; //VP = 20 OR VP > the other
+		if (cause==1) return "Cold War got hot"; //DEFCON == 1
+		if (cause==2) return "Tore Down That Wall like the Kool-Aid Man; Oh YEAH!"; //winning Europe scoring
+		if (cause==3) return "Withheld a scoring card";
+		if (cause==4) return "Only winning move was not to play"; //wargamed
+		return null;
+	}
+
 	public static boolean hasGameEnded() {
 		return ended;
 	}
 	
 	public static void reset() {
+		txtchnl.sendMessage(":hourglass: Charting course for 1949.");
 		started = false;
 		ended = false;
 		turn = 0;
@@ -44,6 +67,7 @@ public class GameData {
 		space[1] = 0;
 		hasSpaced[0] = 0;
 		hasSpaced[1] = 0;
+		HandManager.reset();
 	}
 	public static void advanceTurn() {
 		

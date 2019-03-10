@@ -79,4 +79,12 @@ public class AsiaScoring extends Card {
 	public String getDescription() {
 		return "Scores Asia on a scale of 3/7/9. +1 for battlegrounds, +1 for each country you control that borders the other superpower (Afghanistan, North Korea, Japan).";
 	}
+	@Override
+	public boolean isPlayable() {
+		return true; //always playable.
+	}
+	@Override
+	public boolean isFormatted(String[] args) {
+		return true;
+	}
 }

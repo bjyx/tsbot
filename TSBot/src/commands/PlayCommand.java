@@ -38,11 +38,19 @@ public class PlayCommand extends Command {
 			return;
 		}
 		if (HandManager.getActive()!=0) {
-			sendMessage(e, ":x: There is already a card played.");
+			sendMessage(e, ":x: There is already a card being played.");
 			return;
 		}
 		if (mode == 'h'&&GameData.getAR()>2) {
 			sendMessage(e, ":x: Can't play headlines in non-headline phases.");
+			return;
+		}
+		if (mode != 'h'&&GameData.getAR()<=2) {
+			sendMessage(e, ":x: Must play headlines in headline phases.");
+			return;
+		}
+		if (mode == 'h'&&(card == 32 || card == 6)) {
+			sendMessage(e, ":x: "+CardList.getCard(card)+" is not a card you can play in the headline.");
 			return;
 		}
 		if (mode == 'h'&&HandManager.headline[PlayerList.getArray().indexOf(e.getAuthor())]!=0) {
@@ -59,6 +67,10 @@ public class PlayCommand extends Command {
 		}
 		if (mode=='s'&&GameData.hasSpace(PlayerList.getArray().indexOf(e.getAuthor()))) {
 			sendMessage(e, ":x: Wait until next turn to space this card.");
+			return;
+		}
+		if (mode=='e'&&!CardList.getCard(card).isPlayable()) {
+			sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
 			return;
 		}
 		if (e.getAuthor().equals(PlayerList.getSSR())&&HandManager.SUNHand.contains(card)) {
@@ -90,7 +102,11 @@ public class PlayCommand extends Command {
 	@Override
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.play **[card ID]** - The user (who should be phasing player) plays the card with the corresponding ID.\n Is also used during the headline phase; the message must be immediately deleted for headline privacy.");
+		return Arrays.asList("TS.play **[ID]** **[usage method]** \n- The user (who should be phasing player) plays the card with ID **ID** in one of the following manners:\n"
+				+ "- `h`eadline\n"
+				+ "- `e`vent (first)\n"
+				+ "- `o`perations (first)\n"
+				+ "- `s`pace");
 	}
 	
 	
