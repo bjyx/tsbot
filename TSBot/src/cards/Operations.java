@@ -2,6 +2,7 @@ package cards;
 
 import java.util.Random;
 
+import events.CardEmbedBuilder;
 import game.GameData;
 import map.Country;
 import map.MapManager;
@@ -28,9 +29,22 @@ public class Operations {
 			GameData.txtchnl.sendMessage(":x: You're already doing realignments.");
 			return;
 		}
+		int ops = 0;
 		for (int i=0; i<countries.length; i++) {
-			MapManager.map.get(countries[i]).changeInfluence(sp, amt[i]);
+			ops += (Math.max(0, MapManager.map.get(countries[i]).influence[(sp+1)%2]-MapManager.map.get(countries[i]).influence[sp]-MapManager.map.get(countries[i]).getStab()+1))*2 + amt[i]-Math.max(0, MapManager.map.get(countries[i]).influence[(sp+1)%2]-MapManager.map.get(countries[i]).influence[sp]-MapManager.map.get(countries[i]).getStab()+1);
 		}
+		if (ops!=opnumber) {
+			GameData.txtchnl.sendMessage(":x: Endeavor to use all available ops.");
+			return;
+		}
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Influence Placement");
+		if (new Random().nextInt(14)==0) builder.setDescription("\"You have a row of dominoes set up, you knock over the first one, and what will happen to the last one is the certainty that it will go over very quickly. So you could have a beginning of a disintegration that would have the most profound influences.\" \n-Dwight David Eisenhower, 1954");
+		for (int i=0; i<countries.length; i++) {
+			builder.changeInfluence(countries[i], sp, amt[i]);
+		}
+		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage("`Operations Complete`");
 	}
 	public void realignment(int sp, int country) {
 		if (HandManager.playmode!='o') {
@@ -42,6 +56,45 @@ public class Operations {
 			GameData.txtchnl.sendMessage(":x: You've run out of ops...");
 			return;
 		}
+		if (MapManager.map.get(country).influence[(sp+1)%2]==0) {
+			GameData.txtchnl.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.");
+			return;
+		}
+		Random rand = new Random();
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Realignment")
+		.setDescription("Target: "+ MapManager.map.get(country));
+		int[] rolls = new int[] {rand.nextInt(6)+1, rand.nextInt(6)+1};
+		String[] modifiers = {"",""};
+		if (MapManager.map.get(country).influence[0]>MapManager.map.get(country).influence[1]) {
+			rolls[0]++;
+			modifiers[0] += MapManager.map.get(country);
+		}
+		if (MapManager.map.get(country).influence[0]<MapManager.map.get(country).influence[1]) {
+			rolls[1]++;
+			modifiers[1] += MapManager.map.get(country);
+		}
+		for (int adj : MapManager.map.get(country).getAdj()) {
+			if (adj==84) {
+				rolls[0]++;
+				modifiers[0] += MapManager.map.get(adj);
+			}
+			else if (adj==85) {
+				rolls[1]++;
+				modifiers[1] += MapManager.map.get(adj);
+			}
+			else {
+				if (MapManager.map.get(adj).isControlledBy()!=-1) {
+					rolls[MapManager.map.get(adj).isControlledBy()]++;
+					modifiers[MapManager.map.get(adj).isControlledBy()] += MapManager.map.get(adj);
+				}
+			}
+		}
+		builder.addField("Rolls", ":flag_us::" + CardEmbedBuilder.numbers[rolls[0]] + "::heavy_plus:" + modifiers[0] + "\n:flag_su::" + CardEmbedBuilder.numbers[rolls[1]] + "::heavy_plus:" + modifiers[1], false);
+		if (rolls[1]>rolls[0]) builder.changeInfluence(country, 0, -(rolls[1]-rolls[0]));
+		if (rolls[0]>rolls[1]) builder.changeInfluence(country, 1, -(rolls[0]-rolls[1]));
+		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage("`Operations Complete`");
 	}
 	
 	public void coup(int sp, int country) {
