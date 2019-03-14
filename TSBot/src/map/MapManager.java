@@ -1,17 +1,18 @@
 package map;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class MapManager {
-	public static List<Country> map;
+	public static ArrayList<Country> map;
 	
 	public static void initialize() {//literally list every damn country here.
 		map.add(new Austria());
+		//and so forth.
 	}
-	public Country find(String alias) {
+	public int find(String alias) {
 		for (Country c : map) {
-			if (c.getAliases().contains(alias)) return c;
+			if (c.getAliases().contains(alias)) return c.getID();
 		}
-		return null;
+		return -1;
 	}
 }

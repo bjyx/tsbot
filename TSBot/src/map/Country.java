@@ -31,6 +31,7 @@ public abstract class Country {
 	
 	public void changeInfluence(int sp, int amt) {
 		influence[sp] += amt;
+		if (influence[sp]<0) influence[sp]=0;
 	}
 	public int isControlledBy() {
 		if (influence[0]>=influence[1]+getStab()) return 0;

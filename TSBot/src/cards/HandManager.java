@@ -1,6 +1,6 @@
 package cards;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 import cards.CardList;
@@ -10,12 +10,12 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public class HandManager {
-	public static List<Integer> USAHand;
-	public static List<Integer> SUNHand;
-	public static List<Integer> Deck;
-	public static List<Integer> Discard;
-	public static List<Integer> Removed;
-	public static List<Integer> Effects;
+	public static ArrayList<Integer> USAHand;
+	public static ArrayList<Integer> SUNHand;
+	public static ArrayList<Integer> Deck;
+	public static ArrayList<Integer> Discard;
+	public static ArrayList<Integer> Removed;
+	public static ArrayList<Integer> Effects;
 	public static int China=1;
 	public static int[] headline = {0,0};
 	public static int precedence = -1;

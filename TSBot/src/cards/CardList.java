@@ -1,11 +1,11 @@
 package cards;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import events.*;
 
 public class CardList {
-	public static List<Card> cardList;
+	public static ArrayList<Card> cardList;
 	private static int counter=0;
 	
 	public static void initialize() {
