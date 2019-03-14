@@ -31,10 +31,10 @@ public class AsiaScoring extends Card {
 				totalCountries[c.isControlledBy()]++;
 				if (c.isBattleground()) {
 					battlegrounds[c.isControlledBy()]++;
-					strings[c.isControlledBy()+2] += ":flag_" + c.getISO3166() +":";
+					strings[c.isControlledBy()+2] += c;
 				}
 				else {
-					strings[c.isControlledBy()] += ":flag_" + c.getISO3166() +":";
+					strings[c.isControlledBy()] += c;
 				}
 				if (c.getID()==31 && c.isControlledBy()==0) vp++; //af
 				if (c.getID()==39 && c.isControlledBy()==0) vp++; //kp

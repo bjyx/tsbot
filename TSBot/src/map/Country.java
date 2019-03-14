@@ -46,6 +46,10 @@ public abstract class Country {
 		return true;
 	}
 	
+	public String toString() {
+		return ":flag_" + getISO3166() + ":";
+	}
+	
 	//flavor again
 	public MessageEmbed getInfo() {
 		EmbedBuilder builder = new EmbedBuilder()
