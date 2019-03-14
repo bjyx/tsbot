@@ -37,13 +37,13 @@ public class EventCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList("TS.event");
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Play the active card for the event.";
 	}
 
 	@Override
