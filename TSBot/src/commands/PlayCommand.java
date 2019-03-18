@@ -74,10 +74,10 @@ public class PlayCommand extends Command {
 			return;
 		}
 		if (e.getAuthor().equals(PlayerList.getSSR())&&HandManager.SUNHand.contains(card)) {
-			HandManager.play(1, card, mode, args);
+			HandManager.play(1, card, mode);
 		}
 		else if (e.getAuthor().equals(PlayerList.getUSA())&&HandManager.USAHand.contains(card)) {
-			HandManager.play(0, card, mode, args);
+			HandManager.play(0, card, mode);
 		}
 		else {
 			sendMessage(e, ":x: Do you even own that card?");

@@ -20,10 +20,6 @@ public class Operations {
 	}
 	
 	public void influence(int sp, int[] countries, int[] amt) {
-		if (HandManager.playmode!='o') {
-			GameData.txtchnl.sendMessage(":x: Changed your mind on this card already?");
-			return;
-		}
 		if (realignment) {
 			GameData.txtchnl.sendMessage(":x: You're already doing realignments.");
 			return;
@@ -46,10 +42,6 @@ public class Operations {
 		GameData.txtchnl.sendMessage("`Operations Complete`");
 	}
 	public void realignment(int sp, int country) {
-		if (HandManager.playmode!='o') {
-			GameData.txtchnl.sendMessage(":x: Changed your mind on this card already?");
-			return;
-		}
 		realignment = true;
 		if (opnumber<1) {
 			GameData.txtchnl.sendMessage(":x: You've run out of ops...");
@@ -102,10 +94,6 @@ public class Operations {
 	}
 	
 	public void coup(int sp, int country) {
-		if (HandManager.playmode!='o') {
-			GameData.txtchnl.sendMessage(":x: Changed your mind on this card already?");
-			return;
-		}
 		if (realignment) {
 			GameData.txtchnl.sendMessage(":x: You're already doing realignments.");
 			return;
@@ -126,10 +114,6 @@ public class Operations {
 		}
 	}
 	public void space(int sp) {
-		if (HandManager.playmode!='s') {
-			GameData.txtchnl.sendMessage(":x: Changed your mind on this card already?");
-			return;
-		}
 		if (realignment) {
 			GameData.txtchnl.sendMessage(":x: You're already doing realignments.");
 			return;
