@@ -32,6 +32,10 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: What's the play?");
 			return;
 		}
+		if (HandManager.activecard==0) {
+			sendMessage(e, ":x: What's the play?");
+			return;
+		}
 	}
 
 	@Override

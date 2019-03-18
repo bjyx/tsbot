@@ -10,7 +10,6 @@ import map.MapManager;
 public class Operations {
 	private boolean realignment = false; //0 = anything else - that uses ops in one fell swoop, 1 = realignment
 	private int opnumber = -1;
-	private int restrictions = 7;
 	public static final int[] spaceOps = {2, 2, 2, 2, 3, 3, 4, 4};
 	public static final int[] spaceVP = {2, 0, 2, 0, 3, 0, 4, 2};
 	public static final int[] spaceVP2 = {1, 0, 0, 0, 1, 0, 2, 0};
@@ -56,6 +55,10 @@ public class Operations {
 			GameData.txtchnl.sendMessage(":x: You've run out of ops...");
 			return;
 		}
+		if (!MapManager.map.get(country).checkIsCoupable()) {
+			GameData.txtchnl.sendMessage(":x: DEFCON restricts you from realigning this country.");
+			return;
+		}
 		if (MapManager.map.get(country).influence[(sp+1)%2]==0) {
 			GameData.txtchnl.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.");
 			return;
@@ -94,6 +97,7 @@ public class Operations {
 		if (rolls[1]>rolls[0]) builder.changeInfluence(country, 0, -(rolls[1]-rolls[0]));
 		if (rolls[0]>rolls[1]) builder.changeInfluence(country, 1, -(rolls[0]-rolls[1]));
 		GameData.txtchnl.sendMessage(builder.build());
+		opnumber--;
 		GameData.txtchnl.sendMessage("`Operations Complete`");
 	}
 	
@@ -106,8 +110,10 @@ public class Operations {
 			GameData.txtchnl.sendMessage(":x: You're already doing realignments.");
 			return;
 		}
-		if (restrictions%2==0) return;
-		if (!MapManager.map.get(country).checkIsCoupable()) return;
+		if (!MapManager.map.get(country).checkIsCoupable()) {
+			GameData.txtchnl.sendMessage(":x: DEFCON restrictions disallow you from couping this nation.");
+			return;
+		}
 		if (MapManager.map.get(country).isBattleground()) GameData.setDEFCON(GameData.getDEFCON()-1);
 		GameData.addMilOps(sp, opnumber);
 		int die = (new Random().nextInt(6))+1;

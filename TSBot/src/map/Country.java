@@ -39,9 +39,6 @@ public abstract class Country {
 		return -1;
 	}
 	public boolean checkIsCoupable() {
-		if (influence[PlayerList.getPhasing()]==0) {
-			return false;
-		}
 		if ((getRegion()<=2&&GameData.getDEFCON()<5)||(getRegion()<=5&&getRegion()>=4&&GameData.getDEFCON()<4)||(getRegion()==3&&GameData.getDEFCON()<3)) return false;
 		return true;
 	}
