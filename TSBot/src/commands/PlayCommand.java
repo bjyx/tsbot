@@ -37,7 +37,7 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: Please wait for your Action Round to come.");
 			return;
 		}
-		if (HandManager.getActive()!=0) {
+		if (HandManager.activecard!=0) {
 			sendMessage(e, ":x: There is already a card being played.");
 			return;
 		}

@@ -27,4 +27,8 @@ public class CardEmbedBuilder extends EmbedBuilder {
 		return (CardEmbedBuilder) addField(":radioactive:" + intToEmoji(amt),"Now at " + GameData.getDEFCON(),false);
 		
 	}
+	public CardEmbedBuilder addMilOps(int sp, int mil) {
+		GameData.addMilOps(sp, mil);
+		return (CardEmbedBuilder) addField(":tank::Influence" + (sp==0?"A:":"R:") + intToEmoji(mil),"Now at " + GameData.getMilOps(sp),false);
+	}
 }

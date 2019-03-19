@@ -132,6 +132,9 @@ public class GameData {
 		milops[sp] += mil;
 		if (milops[sp] > 5) milops[sp]=5;
 	}
+	public static int getMilOps(int sp) {
+		return milops[sp];
+	}
 	public static int OpsToVP() {
 		int vp = Math.min(0, milops[0]-defcon)-Math.min(0, milops[1]-defcon);
 		milops[0]=0;
