@@ -202,16 +202,19 @@ public class Operations {
 		}
 		if (allsea&&HandManager.Effects.contains(9)&&sp==1) opnumber++;
 		if (allasia&&HandManager.activecard==6) opnumber++;
+		if (HandManager.Effects.contains(43)) opnumber--;
 		realignment = false;
 		influence = false;
 		spaceable = false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Realignment")
 		.setDescription("Target: "+ MapManager.map.get(country));
-		if (MapManager.map.get(country).isBattleground()) builder.changeDEFCON(-1);
-		builder.addMilOps(sp, opnumber);
+		if (MapManager.map.get(country).isBattleground()) builder.changeDEFCON(-1)
+				.addMilOps(sp, opnumber);
 		int die = (new Random().nextInt(6))+1;
 		int amt = opnumber + die - MapManager.map.get(country).getStab()*2;
+		builder.addField("Roll: :" + CardEmbedBuilder.numbers[die] + ":", CardEmbedBuilder.intToEmoji(amt), false);
+		
 		if (amt>0) {
 			if (amt>MapManager.map.get(country).influence[(sp+1)%2]) {
 				MapManager.map.get(country).changeInfluence(sp, amt-MapManager.map.get(country).influence[(sp+1)%2]);

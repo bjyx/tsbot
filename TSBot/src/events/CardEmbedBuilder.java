@@ -6,7 +6,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 
 public class CardEmbedBuilder extends EmbedBuilder {
 	public static final String[] numbers = {"zero","one","two","three","four","five","six","seven","eight","nine"};
-	public String intToEmoji(int i) {
+	public static String intToEmoji(int i) {
 		if (Math.abs(i)>10) return intToEmoji(i/10) + ":" + numbers[Math.abs(i)%10] + ":";
 		String str="";
 		if (i<0) str += ":heavy_minus:";
