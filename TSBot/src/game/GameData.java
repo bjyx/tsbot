@@ -1,6 +1,7 @@
 package game;
 
 import cards.HandManager;
+import cards.Operations;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 
@@ -16,6 +17,7 @@ public class GameData {
 	private static int[] space = {0,0};
 	private static int score = 0;
 	private static int[] hasSpaced = {0,0};
+	public static Operations ops = null;
 	
 	public static void startGame() {
 		started = true;
