@@ -9,7 +9,7 @@ public class MapManager {
 		map.add(new Austria());
 		//and so forth.
 	}
-	public int find(String alias) {
+	public static int find(String alias) {
 		for (Country c : map) {
 			if (c.getAliases().contains(alias)) return c.getID();
 		}

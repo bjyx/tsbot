@@ -9,7 +9,6 @@ import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class JoinCommand extends Command {
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.hasGameEnded()) {
@@ -20,11 +19,11 @@ public class JoinCommand extends Command {
 			sendMessage(e, ":x: Cannot join a game that has already started.");
 			return;
 		}
-		if (Arrays.asList(PlayerList.getArray()).contains(e.getAuthor())) {
+		if (PlayerList.getArray().contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're already on the list.");
 			return;
 		}
-		if (Arrays.asList(PlayerList.getArray()).contains(null)) {
+		if (PlayerList.getArray().contains(null)) {
 			PlayerList.addPlayer(e.getAuthor());
 			sendMessage(e, ":o: Done");
 			return;

@@ -47,7 +47,7 @@ public class GameData {
 		if (cause==0) return "Ideological Domination"; //VP = 20 OR VP > the other
 		if (cause==1) return "Cold War got hot"; //DEFCON == 1
 		if (cause==2) return "Tore Down That Wall like the Kool-Aid Man; Oh YEAH!"; //winning Europe scoring
-		if (cause==3) return "Withheld a scoring card";
+		if (cause==3) return "Withheld a scoring card. Oops.";
 		if (cause==4) return "Only winning move was not to play"; //wargamed
 		return null;
 	}
@@ -84,6 +84,21 @@ public class GameData {
 		ar = 1; 
 		hasSpaced[0] = 0; 
 		hasSpaced[1] = 0;
+		HandManager.removeEffect(9);	//Vietnam
+		HandManager.removeEffect(25);	//Containment
+		HandManager.removeEffect(41);	//Nuclear Subs
+		HandManager.removeEffect(43);	//SALT
+		HandManager.removeEffect(51);	//Brezhnev
+		HandManager.removeEffect(60);	//U2
+		HandManager.removeEffect(93);	//Iran Contra
+		HandManager.removeEffect(94);	//Chernobyl
+		HandManager.removeEffect(109);	//Samantha Smith
+		HandManager.removeEffect(310);	//Red Scare/Purge
+		HandManager.removeEffect(311);
+		HandManager.removeEffect(400);	//Missile Crisis
+		HandManager.removeEffect(401);
+		HandManager.removeEffect(690);	//LADS
+		HandManager.removeEffect(691);
 		if (turn==4) HandManager.addToDeck(1);
 		if (turn==7) HandManager.addToDeck(2);
 		if (defcon!=5) defcon++; //stage A
@@ -158,7 +173,15 @@ public class GameData {
 	public static void toSpace(int sp) {
 		hasSpaced[sp]++;
 	}
+	public static int aheadInSpace() {
+		if (space[0]<space[1]) return 1;
+		if (space[1]<space[0]) return 0;
+		return -1;
+	}
 	public static boolean hasSpace(int sp) {
 		return (space[sp]>=2&&space[(sp+1)%2]<2)?hasSpaced[sp]==2:hasSpaced[sp]==1;
+	}
+	public static void setOps(int o, boolean i, boolean r, boolean c, boolean s) {
+		ops = new Operations(o, i, r, c, s);
 	}
 }

@@ -4,8 +4,6 @@ import java.util.Random;
 
 import events.CardEmbedBuilder;
 import game.GameData;
-import game.PlayerList;
-import map.Country;
 import map.MapManager;
 /**
  * Class for handling all related to operations.
@@ -13,6 +11,10 @@ import map.MapManager;
  *
  */
 public class Operations {
+	/**
+	 * The superpower in charge of these operations.
+	 */
+	private int sp = -1;
 	/**
 	 * If the current set of ops can be used for influence placement.
 	 */
@@ -32,7 +34,7 @@ public class Operations {
 	/**
 	 * The number of ops available to use.
 	 */
-	private int opnumber = -1;
+	public int opnumber = -1;
 	/**
 	 * The number of ops required to send things into space.
 	 */
@@ -58,22 +60,28 @@ public class Operations {
 	 */
 	boolean allsea = true;
 	/**
-	 * Constructor, specifying the number of ops on the card used
-	 * @param ops
-	 * @param infl
-	 * @param realign
-	 * @param coup
-	 * @param space
+	 * Constructor, specifying the number of ops on the card used and the conditions under which they can be used.
+	 * @param superpower is the superpower in charge of these Operations points.
+	 * @param ops is the number of Operation Points usable in this instance of Operations.
+	 * @param infl indicates whether one can place Influence using this instance of Operations.
+	 * @param realign indicates whether one can Realigh using this instance of Operations.
+	 * @param coup indicates whether one can conduct a Coup using this instance of Operations.
+	 * @param space indicates whether one can send this instance of Operations to space.
 	 */
-	public Operations(int ops, boolean infl, boolean realign, boolean coup, boolean space) {
+	public Operations(int superpower, int ops, boolean infl, boolean realign, boolean coup, boolean space) {
+		sp = superpower;
 		opnumber = ops;
 		influence = infl;
 		realignment = realign;
 		coupdetat = coup;
 		spaceable = space;
 	}
-	
-	public void influence(int sp, int[] countries, int[] amt) {
+	/**
+	 * Places the given amounts of influence in their respective countries.
+	 * @param countries is an array containing the IDs of the countries targeted.
+	 * @param amt is an array containing the amount of influence used on each country.
+	 */
+	public void influence(int[] countries, int[] amt) {
 		if (!influence) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
 			return;
@@ -88,7 +96,19 @@ public class Operations {
 					allasia=false;
 				}
 			}
-			
+			if (!(MapManager.map.get(countries[i]).influence[sp]>0)) {
+				boolean flag = false;
+				for (int adj : MapManager.map.get(countries[i]).getAdj()) {
+					if (MapManager.map.get(adj).influence[sp]!=0) {
+						flag = true;
+						break;
+					}
+				}
+				if (!flag) {
+					GameData.txtchnl.sendMessage(":x: Can you even reach that country with your influence?...");
+					return;
+				}
+			}
 		}
 		if (allasia && HandManager.activecard==6) ops--; //handles China Card fringe case
 		if (allsea && HandManager.Effects.contains(9)&&sp==1) ops--;
@@ -112,7 +132,11 @@ public class Operations {
 		GameData.txtchnl.sendMessage(builder.build());
 		GameData.txtchnl.sendMessage("`Operations Complete`");
 	}
-	public void realignment(int sp, int country) {
+	/**
+	 * Realigns the given country in an attempt to remove influence.
+	 * @param country is the country targeted by the realignment.
+	 */
+	public void realignment(int country) {
 		if (!realignment) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
 			return;
@@ -141,7 +165,8 @@ public class Operations {
 				allasia=false;
 			}
 			else {
-				GameData.txtchnl.sendMessage(":x: You've run out of ops...");
+				GameData.txtchnl.sendMessage("You've run out of ops...");
+				opnumber--;
 				return;
 			}
 		}
@@ -184,8 +209,11 @@ public class Operations {
 		GameData.txtchnl.sendMessage(builder.build());
 		opnumber--;
 	}
-	
-	public void coup(int sp, int country) {
+	/**
+	 * Coups the given country, to attempt to sway that country to the side of sp.
+	 * @param country is the country targeted by the coup.
+	 */
+	public void coup(int country) {
 		if (!coupdetat) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
 			return;
@@ -207,7 +235,7 @@ public class Operations {
 		influence = false;
 		spaceable = false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Realignment")
+		builder.setTitle("Coup d'État")
 		.setDescription("Target: "+ MapManager.map.get(country));
 		if (MapManager.map.get(country).isBattleground()) builder.changeDEFCON(-1)
 				.addMilOps(sp, opnumber);
@@ -217,12 +245,22 @@ public class Operations {
 		
 		if (amt>0) {
 			if (amt>MapManager.map.get(country).influence[(sp+1)%2]) {
-				MapManager.map.get(country).changeInfluence(sp, amt-MapManager.map.get(country).influence[(sp+1)%2]);
-				MapManager.map.get(country).changeInfluence((sp+1)%2, MapManager.map.get(country).influence[(sp+1)%2]);
+				builder.changeInfluence(country, sp, amt-MapManager.map.get(country).influence[(sp+1)%2]);
+				builder.changeInfluence(country, (sp+1)%2, -MapManager.map.get(country).influence[(sp+1)%2]);
+			}
+			else {
+				builder.changeInfluence(country, (sp+1)%2, -amt);
 			}
 		}
+		else {
+			builder.addField(":( Failure!", "", false);
+		}
+		GameData.txtchnl.sendMessage(builder.build());
 	}
-	public void space(int sp) {
+	/**
+	 * Sends the card to space.
+	 */
+	public void space() {
 		if (!spaceable) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
 			return;
@@ -230,6 +268,52 @@ public class Operations {
 		realignment = false;
 		coupdetat = false;
 		influence = false;
+		GameData.toSpace(sp);
+		int spaceLevel = GameData.getSpace(sp);
+		int die = (new Random().nextInt(6))+1;
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Space Race")
+		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));
+		if (die <= spaceRoll[spaceLevel]) {
+			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],getSpaceNames(spaceLevel),false);
+			if (GameData.aheadInSpace()==(sp+1)%2) {
+				builder.changeVP(-(sp*2-1)*spaceVP2[spaceLevel]);
+			}
+			else builder.changeVP(-(sp*2-1)*spaceVP[spaceLevel]);
+			GameData.addSpace(sp);
+		}
+		else {
+			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],"Failure.",false);
+		}
+		GameData.txtchnl.sendMessage(builder.build());
 	}
-	
+	/**
+	 * Flavor text regarding the space race goes here.
+	 * @param spaceLevel is the superpower's advancement on the race.
+	 * @param sp is the superpower conducting the roll.
+	 * @return a string, with relevant flavor text.
+	 */
+	public String getSpaceNames(int spaceLevel) {
+		if (sp==0) {
+			if (spaceLevel==0) return "Explorer 1 launched.";
+			if (spaceLevel==1) return "AM-18 launched.";
+			if (spaceLevel==2) return "\"You know, being a test pilot isn't always the healthiest business in the world.\" - Alan Shepard";
+			if (spaceLevel==3) return "Success.";
+			if (spaceLevel==4) return "Lunar Orbiter 1 launched.";
+			if (spaceLevel==5) return "\"Houston, Tranquility Base here. The Eagle has landed.\" \n- Neil Armstrong, 1969";
+			if (spaceLevel==6) return "Space Shuttle launched.";
+			if (spaceLevel==7) return "Success.";
+		}
+		if (sp==1) {
+			if (spaceLevel==0) return "Sputnik launched.";
+			if (spaceLevel==1) return "Sputnik 2 launched.";
+			if (spaceLevel==2) return "\"Poyekhali [Let's go]!\" \n- Yuri Gagarin, 1961";
+			if (spaceLevel==3) return "Success.";
+			if (spaceLevel==4) return "Luna 10 launched.";
+			if (spaceLevel==5) return "N1 launched.";
+			if (spaceLevel==6) return "Success.";
+			if (spaceLevel==7) return "Success.";
+		}
+		return null;
+	}
 }

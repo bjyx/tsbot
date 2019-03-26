@@ -3,7 +3,6 @@ package map;
 import java.util.List;
 
 import game.GameData;
-import game.PlayerList;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 

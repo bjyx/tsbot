@@ -23,7 +23,7 @@ public class TimeManager extends ListenerAdapter {
         }
         if (e.getMessage().getContentRaw().startsWith("`Headline Complete`")) {
         	e.getMessage().delete().complete();
-        	GameData.txtchnl.sendMessage("`Update`");
+        	if (HandManager.playmode=='h') GameData.txtchnl.sendMessage("`Update`");
         }
         if (e.getMessage().getContentRaw().startsWith("`Event Complete`")) {
         	e.getMessage().delete().complete();
@@ -31,7 +31,7 @@ public class TimeManager extends ListenerAdapter {
         		GameData.txtchnl.sendMessage(PlayerList.getArray().get(PlayerList.getPhasing()).getAsMention() + ", you may now play card for Operations.");
         		HandManager.playmode='o';
         	}
-        	GameData.txtchnl.sendMessage("`Update`");
+        	if (HandManager.playmode=='e') GameData.txtchnl.sendMessage("`Update`");
         }
         if (e.getMessage().getContentRaw().startsWith("`Operations Complete`")) {
         	e.getMessage().delete().complete();
@@ -39,11 +39,11 @@ public class TimeManager extends ListenerAdapter {
         		GameData.txtchnl.sendMessage(PlayerList.getArray().get(CardList.getCard(HandManager.activecard).getAssociation()).getAsMention() + ", you may now play card for event."); //impossible to get -1 in that area.
         		HandManager.playmode='e';
         	}
-        	GameData.txtchnl.sendMessage("`Update`");
+        	if (HandManager.playmode=='o') GameData.txtchnl.sendMessage("`Update`");
         }
         if (e.getMessage().getContentRaw().startsWith("`Spacing Complete")) {
         	e.getMessage().delete().complete();
-        	GameData.txtchnl.sendMessage("`Update`");
+        	if (HandManager.playmode=='s') GameData.txtchnl.sendMessage("`Update`");
         }
     }
 }
