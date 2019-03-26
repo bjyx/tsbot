@@ -87,4 +87,9 @@ public class AsiaScoring extends Card {
 	public boolean isFormatted(String[] args) {
 		return true;
 	}
+	@Override
+	public String getArguments() {
+		// TODO Auto-generated method stub
+		return "None.";
+	}
 }

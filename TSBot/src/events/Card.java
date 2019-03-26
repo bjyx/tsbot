@@ -15,6 +15,7 @@ public abstract class Card {
 	public abstract boolean isRemoved();
 	public abstract boolean isFormatted(String[] args);
 	public abstract String getDescription();
+	public abstract String getArguments();
 	
 	public String getAssociationString() {
 		if (getAssociation() == 0) return "A";
@@ -30,7 +31,8 @@ public abstract class Card {
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle(":" + numbers[getOps()] + "::Influence" + getAssociationString() + ": `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
 				.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/cards/" + getId())
-				.setDescription(getDescription());
+				.setDescription(getDescription())
+				.addField("Arguments:",getArguments(),false);
 		return builder.build();
 	}
 }
