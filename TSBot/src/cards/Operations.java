@@ -297,12 +297,12 @@ public class Operations {
 		if (sp==0) {
 			if (spaceLevel==0) return "Explorer 1 launched.";
 			if (spaceLevel==1) return "AM-18 launched.";
-			if (spaceLevel==2) return "\"You know, being a test pilot isn't always the healthiest business in the world.\" - Alan Shepard";
+			if (spaceLevel==2) return "\"You know, being a test pilot isn't always the healthiest business in the world.\" \n- Alan Shepard";
 			if (spaceLevel==3) return "Success.";
 			if (spaceLevel==4) return "Lunar Orbiter 1 launched.";
 			if (spaceLevel==5) return "\"Houston, Tranquility Base here. The Eagle has landed.\" \n- Neil Armstrong, 1969";
 			if (spaceLevel==6) return "Space Shuttle launched.";
-			if (spaceLevel==7) return "Success.";
+			if (spaceLevel==7) return "Skylab launched.";
 		}
 		if (sp==1) {
 			if (spaceLevel==0) return "Sputnik launched.";
@@ -312,7 +312,7 @@ public class Operations {
 			if (spaceLevel==4) return "Luna 10 launched.";
 			if (spaceLevel==5) return "N1 launched.";
 			if (spaceLevel==6) return "Success.";
-			if (spaceLevel==7) return "Success.";
+			if (spaceLevel==7) return "Salyut 6 launched.";
 		}
 		return null;
 	}
