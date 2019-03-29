@@ -15,19 +15,23 @@ public class CardEmbedBuilder extends EmbedBuilder {
 		
 	}
 	public CardEmbedBuilder changeVP(int amt) {
+		if (amt==0) return this;
 		GameData.changeScore(amt);
 		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:" + intToEmoji(amt),"Now at " + GameData.getScore(),false);
 	}
 	public CardEmbedBuilder changeInfluence(int country, int sp, int amt) {
+		if (amt==0) return this;
 		MapManager.map.get(country).changeInfluence(sp, amt);
 		return (CardEmbedBuilder) this.addField(":flag_" + MapManager.map.get(country).getISO3166() + "::Influence" + (sp==0?"A":"R") + ":" + intToEmoji(amt),"Now at " + MapManager.map.get(country).influence[0] + "/" + MapManager.map.get(country).influence[1],true);
 	}
 	public CardEmbedBuilder changeDEFCON(int amt) {
+		if (amt==0) return this;
 		GameData.setDEFCON(GameData.getDEFCON()+amt);
 		return (CardEmbedBuilder) this.addField(":radioactive:" + intToEmoji(amt),"Now at " + GameData.getDEFCON(),false);
 		
 	}
 	public CardEmbedBuilder addMilOps(int sp, int mil) {
+		if (mil==0) return this;
 		GameData.addMilOps(sp, mil);
 		return (CardEmbedBuilder) this.addField(":tank::Influence" + (sp==0?"A:":"R:") + intToEmoji(mil),"Now at " + GameData.getMilOps(sp),false);
 	}
