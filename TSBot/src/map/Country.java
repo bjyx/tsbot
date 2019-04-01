@@ -1,5 +1,6 @@
 package map;
 
+import java.awt.Color;
 import java.util.List;
 
 import game.GameData;
@@ -45,6 +46,15 @@ public abstract class Country {
 	public String toString() {
 		return ":flag_" + getISO3166() + ":";
 	}
+	public Color getColor() {
+		if (getRegion()<=2) return Color.blue;
+		if (getRegion()==3) return Color.cyan;
+		if (getRegion()==4||getRegion()==5) return Color.orange;
+		if (getRegion()==6) return Color.yellow;
+		if (getRegion()==7) return Color.green;
+		if (getRegion()==8) return Color.green;
+		return Color.darkGray;
+	}
 	
 	//flavor again
 	public MessageEmbed getInfo() {
@@ -52,6 +62,7 @@ public abstract class Country {
 				.setTitle(getName()+" ("+getISO3166()+")")
 				.setDescription(getStab() + " stability" + (isBattleground()?" battleground ":" ")+ "country in " + regions[getRegion()])
 				.setThumbnail("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/countries/"+getISO3166())
+				.setColor(getColor())
 				.addField("Current Leader", getLeader(),false)
 				.addField("Influence", ":InfluenceA:"+influence[0]+":InfluenceR:"+influence[1], false)
 				.addField("", getDesc(), false);

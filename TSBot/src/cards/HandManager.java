@@ -1,5 +1,6 @@
 package cards;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -196,11 +197,17 @@ public class HandManager {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("We Will Bury You...");
 			if(card!=32 || mode != 'e') {
-				builder.setDescription("...and the UN sits idle.");
+				builder.setDescription("...and the UN sits idle.")
+					.setFooter("If you don't like us, don't accept our invitations, and don't invite us to come to see you. Whether you like it or not, history is on our side.\" \n"
+							+ "- Nikita Khrushchev, 1956", "images/countries/su")
+					.setColor(Color.red);
 				builder.changeVP(-3);
 			}
 			else {
-				builder.setDescription("UN INTERVENTION!");
+				builder.setDescription("UN INTERVENTION!")
+					.setColor(Color.blue)
+					.setFooter("\"We are happy with our way of life. We recognize its shortcomings and are always trying to improve it. But if challenged, we shall fight to the death to preserve it.\"\n"
+							+ "- Norris Poulson, 1959", "images/countries/us");
 			}
 			Effects.remove(Effects.indexOf(50));
 			GameData.txtchnl.sendMessage(builder.build());
@@ -208,8 +215,11 @@ public class HandManager {
 		
 		if (Effects.contains(60)&&card==32) {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("U2 Incident");
-			builder.setDescription("UN INTERVENTION!");
+			builder.setTitle("U2 Incident")
+				.setDescription("UN INTERVENTION!")
+				.setFooter("\"I must tell you a secret. When I made my first report I deliberately did not say that the pilot was alive and well ... and now just look how many silly things the Americans have said.\n" + 
+						"\n- Nikita Khrushchev, 1960\"","images/countries/su")
+				.setColor(Color.red);
 			builder.changeVP(-1);
 			Effects.remove(Effects.indexOf(60));
 			GameData.txtchnl.sendMessage(builder.build());
@@ -217,8 +227,11 @@ public class HandManager {
 		
 		if (Effects.contains(59)&&(card==13||card==11||card==24||card==36||card==102)) {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("Flower Power");
-			builder.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!");
+			builder.setTitle("Flower Power")
+				.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
+				.setFooter("\"I think that we're up against the strongest, well-trained, militant, revolutionary group that has ever assembled in America.\" \n"
+						+ "- Jim Rhodes, 1970", "images/countries/us.png")
+				.setColor(Color.red);
 			builder.changeVP(-1);
 			Effects.remove(Effects.indexOf(60));
 			GameData.txtchnl.sendMessage(builder.build());

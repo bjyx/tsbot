@@ -1,7 +1,10 @@
 package game;
 
+import java.awt.Color;
+
 import cards.HandManager;
 import cards.Operations;
+import events.Decision;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 
@@ -18,6 +21,7 @@ public class GameData {
 	private static int score = 0;
 	private static int[] hasSpaced = {0,0};
 	public static Operations ops = null;
+	public static Decision dec = null;
 	
 	public static void startGame() {
 		started = true;
@@ -33,12 +37,14 @@ public class GameData {
 			txtchnl.sendMessage(new EmbedBuilder()
 					.setTitle("GAME OVER - NO CONTEST!")
 					.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/draw.png")
+					.setColor(Color.gray)
 					.build());
 			return;
 		}
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("GAME OVER - The winner is :flag_" + (victor==0?"us":"su") + ": " + PlayerList.getArray().get(victor).getAsMention() + "!")
 				.setDescription("Cause: " + getCause(cause))
+				.setColor(victor==0?Color.blue:Color.red)
 				.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/victory_" + (victor==0?"us":"su") + ".png");
 		txtchnl.sendMessage(builder.build());
 	}
@@ -181,7 +187,7 @@ public class GameData {
 	public static boolean hasSpace(int sp) {
 		return (space[sp]>=2&&space[(sp+1)%2]<2)?hasSpaced[sp]==2:hasSpaced[sp]==1;
 	}
-	public static void setOps(int o, boolean i, boolean r, boolean c, boolean s) {
-		ops = new Operations(o, i, r, c, s);
+	public static void setOps(int sp, int o, boolean i, boolean r, boolean c, boolean s) {
+		ops = new Operations(sp, o, i, r, c, s);
 	}
 }

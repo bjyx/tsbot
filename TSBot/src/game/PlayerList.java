@@ -1,5 +1,6 @@
 package game;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -41,7 +42,7 @@ public class PlayerList {
 		players[1] = temp;
 	}
 	public static MessageEmbed getPlayers(boolean started) {
-		EmbedBuilder builder = new EmbedBuilder().setTitle("Superpowers").setColor(8519882);
+		EmbedBuilder builder = new EmbedBuilder().setTitle("Superpowers").setColor(Color.magenta);
 		if (started) {
 			builder.setDescription(":flag_us: " + players[0] + "\n:flag_su: " + players[1]);
 		}

@@ -1,5 +1,6 @@
 package cards;
 
+import java.awt.Color;
 import java.util.Random;
 
 import events.CardEmbedBuilder;
@@ -124,8 +125,7 @@ public class Operations {
 		coupdetat = false;
 		spaceable = false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Influence Placement");
-		if (new Random().nextInt(15)==0) builder.setDescription("\"You have a row of dominoes set up, you knock over the first one, and what will happen to the last one is the certainty that it will go over very quickly. So you could have a beginning of a disintegration that would have the most profound influences.\" \n-Dwight David Eisenhower, 1954");
+		builder.setTitle("Influence Placement").setColor(sp==0?Color.blue:Color.red);
 		for (int i=0; i<countries.length; i++) {
 			builder.changeInfluence(countries[i], sp, amt[i]);
 		}
@@ -176,7 +176,8 @@ public class Operations {
 		Random rand = new Random();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Realignment")
-		.setDescription("Target: "+ MapManager.map.get(country));
+			.setDescription("Target: "+ MapManager.map.get(country))
+			.setColor(sp==0?Color.blue:Color.red);
 		int[] rolls = new int[] {rand.nextInt(6)+1, rand.nextInt(6)+1};
 		String[] modifiers = {"",""};
 		if (MapManager.map.get(country).influence[0]>MapManager.map.get(country).influence[1]) {
@@ -236,7 +237,8 @@ public class Operations {
 		spaceable = false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Coup d'État")
-		.setDescription("Target: "+ MapManager.map.get(country));
+			.setDescription("Target: "+ MapManager.map.get(country))
+			.setColor(sp==0?Color.blue:Color.red);
 		if (MapManager.map.get(country).isBattleground()) builder.changeDEFCON(-1)
 				.addMilOps(sp, opnumber);
 		int die = (new Random().nextInt(6))+1;
@@ -275,7 +277,8 @@ public class Operations {
 		builder.setTitle("Space Race")
 		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));
 		if (die <= spaceRoll[spaceLevel]) {
-			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],getSpaceNames(spaceLevel),false);
+			builder.setColor(sp==0?Color.blue:Color.red)
+				.addField("Roll: "+CardEmbedBuilder.numbers[die],getSpaceNames(spaceLevel),false);
 			if (GameData.aheadInSpace()==(sp+1)%2) {
 				builder.changeVP(-(sp*2-1)*spaceVP2[spaceLevel]);
 			}
@@ -283,6 +286,7 @@ public class Operations {
 			GameData.addSpace(sp);
 		}
 		else {
+			builder.setColor(Color.ORANGE);
 			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],"Failure.",false);
 		}
 		GameData.txtchnl.sendMessage(builder.build());

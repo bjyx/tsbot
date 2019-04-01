@@ -1,5 +1,7 @@
 package events;
 
+import java.awt.Color;
+
 import cards.HandManager;
 import game.GameData;
 import map.Country;
@@ -24,7 +26,9 @@ public class AsiaScoring extends Card {
 		int[] battlegrounds = {0,0};
 		String[] strings = {"","","",""};
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Asia Scoring").setDescription("");
+		builder.setTitle("Asia Scoring")
+			.setDescription("")
+			.setColor(Color.orange);
 		int vp = 0;
 		for (Country c : MapManager.map.subList(31, 46)) { //Afghanistan and Algeria, resp.
 			if (c.isControlledBy()!=-1) {
