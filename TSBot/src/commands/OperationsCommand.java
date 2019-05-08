@@ -34,7 +34,7 @@ public class OperationsCommand extends Command {
 			return;
 		}
 		String usage = args[0];
-		if (usage.equals("influence")) {
+		if (usage.equals("influence")||usage.equals("i")) {
 			if (args.length%2!=1) {
 				sendMessage(e, ":x: An influence value must be associated with every listed country.");
 				return;
@@ -51,7 +51,7 @@ public class OperationsCommand extends Command {
 			}
 			GameData.ops.influence(countries, amt);
 		}
-		if (usage.equals("realignment")) {
+		if (usage.equals("realignment")||usage.equals("r")) {
 			int country = MapManager.find(args[1]);
 			if (country==-1) {
 				sendMessage(e, ":x: "+args[1]+" isn't a country or alias of one.");
@@ -60,7 +60,7 @@ public class OperationsCommand extends Command {
 			GameData.ops.realignment(country);
 			if (GameData.ops.opnumber!=-1) return;
 		}
-		if (usage.equals("coup")) {
+		if (usage.equals("coup")||usage.equals("c")) {
 			int country = MapManager.find(args[1]);
 			if (country==-1) {
 				sendMessage(e, ":x: "+args[1]+" isn't a country or alias of one.");

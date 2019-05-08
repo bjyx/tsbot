@@ -14,8 +14,8 @@ public class PlayCommand extends Command {
 	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		int card = Integer.parseInt(args[0]);
-		char mode = args[1].charAt(0);
+		int card = Integer.parseInt(args[1]);
+		char mode = args[2].charAt(0);
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");
 			return;
