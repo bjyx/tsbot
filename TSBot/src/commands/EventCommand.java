@@ -34,6 +34,16 @@ public class EventCommand extends Command {
 			return;
 		}
 		CardList.getCard(HandManager.activecard).onEvent(args);
+		
+		if (GameData.isHeadlinePhase()) {
+			if (TimeCommand.hl1) TimeCommand.hl2 = true;
+			else TimeCommand.hl1 = true;
+			return;
+		}
+		if (GameData.dec==null) {
+			TimeCommand.eventDone = true;
+			if (HandManager.playmode == 'f') TimeCommand.operationsRequired = true;
+		}
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class PlayCommand extends Command {
 			return;
 		}
 		e.getMessage().delete().complete();
-		if (GameData.getAR()%2!=PlayerList.getArray().indexOf(e.getAuthor())&&GameData.getAR()>2) {
+		if (GameData.getAR()%2!=PlayerList.getArray().indexOf(e.getAuthor())&&!GameData.isHeadlinePhase()) {
 			sendMessage(e, ":x: Please wait for your Action Round to come.");
 			return;
 		}
@@ -41,28 +41,28 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: There is already a card being played.");
 			return;
 		}
-		if (mode == 'h'&&GameData.getAR()>2) {
+		if (mode == 'h'&&!GameData.isHeadlinePhase()) {
 			sendMessage(e, ":x: Can't play headlines in non-headline phases.");
 			return;
 		}
-		if (mode != 'h'&&GameData.getAR()<=2) {
+		if (mode != 'h'&&GameData.isHeadlinePhase()) {
 			sendMessage(e, ":x: Must play headlines in headline phases.");
 			return;
 		}
-		if (mode == 'h'&&(card == 32 || card == 6)) {
-			sendMessage(e, ":x: "+CardList.getCard(card)+" is not a card you can play in the headline.");
+		if (mode == 'h'&&(card == 32 || card == 6)) { //UN Intervention and the China Card cannot be played in the headline
+			sendMessage(e, ":x: That is not a card you can play in the headline.");
 			return;
 		}
 		if (mode == 'h'&&HandManager.headline[PlayerList.getArray().indexOf(e.getAuthor())]!=0) {
 			sendMessage(e, ":x: You've already set a headline.");
 			return;
 		}
-		if (mode == 'o'&&CardList.getCard(card).getOps()==0) {
-			sendMessage(e, ":x: Scoring cards must be played for the event.");
+		if (mode == 'o'&&CardList.getCard(card).getOps()==0) { //All cards have either an op value or is a scoring card that is obligatorily played for the event
+			sendMessage(e, ":x: This card must be played for the event only.");
 			return;
 		}
 		if (mode == 's' && (GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))==8||CardList.getCard(card).getOps()<Operations.spaceOps[GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))])) {
-			sendMessage(e, ":x: You cannot play that card on the space race.");
+			sendMessage(e, ":x: You cannot play this card on the space race.");
 			return;
 		}
 		if (mode=='s'&&GameData.hasSpace(PlayerList.getArray().indexOf(e.getAuthor()))) {
@@ -73,10 +73,10 @@ public class PlayCommand extends Command {
 			sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
 			return;
 		}
-		if (e.getAuthor().equals(PlayerList.getSSR())&&HandManager.SUNHand.contains(card)) {
+		if (e.getAuthor().equals(PlayerList.getSSR())&&(HandManager.SUNHand.contains(card)||(card == 6 && HandManager.China==1))) {
 			HandManager.play(1, card, mode);
 		}
-		else if (e.getAuthor().equals(PlayerList.getUSA())&&HandManager.USAHand.contains(card)) {
+		else if (e.getAuthor().equals(PlayerList.getUSA())&&(HandManager.USAHand.contains(card)||(card == 6 && HandManager.China==0))) {
 			HandManager.play(0, card, mode);
 		}
 		else {

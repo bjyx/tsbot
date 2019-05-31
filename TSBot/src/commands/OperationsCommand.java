@@ -68,7 +68,8 @@ public class OperationsCommand extends Command {
 			}
 			GameData.ops.coup(country);
 		}
-		sendMessage(e, "`Operations Complete`");
+		TimeCommand.operationsDone = true;
+		if (HandManager.playmode == 'l') TimeCommand.eventRequired = true;
 	}
 
 	@Override

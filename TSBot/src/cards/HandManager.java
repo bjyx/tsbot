@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cards.CardList;
+import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
@@ -199,7 +200,7 @@ public class HandManager {
 			if(card!=32 || mode != 'e') {
 				builder.setDescription("...and the UN sits idle.")
 					.setFooter("If you don't like us, don't accept our invitations, and don't invite us to come to see you. Whether you like it or not, history is on our side.\" \n"
-							+ "- Nikita Khrushchev, 1956", "images/countries/su")
+							+ "- Nikita Khrushchev, 1956", "images/countries/su.png")
 					.setColor(Color.red);
 				builder.changeVP(-3);
 			}
@@ -207,7 +208,7 @@ public class HandManager {
 				builder.setDescription("UN INTERVENTION!")
 					.setColor(Color.blue)
 					.setFooter("\"We are happy with our way of life. We recognize its shortcomings and are always trying to improve it. But if challenged, we shall fight to the death to preserve it.\"\n"
-							+ "- Norris Poulson, 1959", "images/countries/us");
+							+ "- Norris Poulson, 1959", "images/countries/us.png");
 			}
 			Effects.remove(Effects.indexOf(50));
 			GameData.txtchnl.sendMessage(builder.build());
@@ -218,7 +219,7 @@ public class HandManager {
 			builder.setTitle("U2 Incident")
 				.setDescription("UN INTERVENTION!")
 				.setFooter("\"I must tell you a secret. When I made my first report I deliberately did not say that the pilot was alive and well ... and now just look how many silly things the Americans have said.\n" + 
-						"\n- Nikita Khrushchev, 1960\"","images/countries/su")
+						"\n- Nikita Khrushchev, 1960\"","images/countries/su.png")
 				.setColor(Color.red);
 			builder.changeVP(-1);
 			Effects.remove(Effects.indexOf(60));
@@ -233,7 +234,6 @@ public class HandManager {
 						+ "- Jim Rhodes, 1970", "images/countries/us.png")
 				.setColor(Color.red);
 			builder.changeVP(-1);
-			Effects.remove(Effects.indexOf(60));
 			GameData.txtchnl.sendMessage(builder.build());
 		}
 		
@@ -263,6 +263,9 @@ public class HandManager {
 			if (headline[(sp+1)%2]!=0) {
 				if (CardList.getCard(headline[0]).getOps()>=CardList.getCard(headline[1]).getOps()) precedence = 0;
 				else precedence = 1;
+				TimeCommand.cardPlayed = true;
+				TimeCommand.hl1 = false;
+				TimeCommand.hl2 = false;
 			}
 		}
 		if (mode=='e') {
@@ -307,6 +310,7 @@ public class HandManager {
 			Discard.add(card);
 			playmode = 's';
 			activecard = card;
+			TimeCommand.cardPlayed = true;
 		}
 		
 	}

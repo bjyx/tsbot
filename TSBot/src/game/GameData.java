@@ -14,7 +14,7 @@ public class GameData {
 	private static boolean started = false;
 	private static boolean ended = false;
 	private static int turn = 0;
-	private static int ar = 1; // 1,2 - headline, (ar+1)/2 - actual action rounds, ar%2 - phasing player
+	private static int ar = 0; // 0 - headline, (ar+1)/2 - actual action rounds, ar%2 - phasing player
 	private static int defcon = 5;
 	private static int[] milops = {0,0};
 	private static int[] space = {0,0};
@@ -50,11 +50,11 @@ public class GameData {
 	}
 	
 	private static String getCause(int cause) {
-		if (cause==0) return "Ideological Domination"; //VP = 20 OR VP > the other
-		if (cause==1) return "Cold War got hot"; //DEFCON == 1
+		if (cause==0) return "Ideological Domination."; //VP = 20 OR VP > the other after turn 10
+		if (cause==1) return "Cold War got hot."; //DEFCON == 1
 		if (cause==2) return "Tore Down That Wall like the Kool-Aid Man; Oh YEAH!"; //winning Europe scoring
 		if (cause==3) return "Withheld a scoring card. Oops.";
-		if (cause==4) return "Only winning move was not to play"; //wargamed
+		if (cause==4) return "Only winning move was not to play."; //wargamed
 		return null;
 	}
 
@@ -120,23 +120,23 @@ public class GameData {
 		return 1;
 	}
 	public static void advanceTime() {
-		if (getEra()==0 && ar==14) { //end of AR6 in early war
+		if (getEra()==0 && ar==12) { //end of AR6 in early war
 			advanceTurn();
 			return;
 		}
-		if (HandManager.Effects.contains(83)&&(ar==16||ar==17)) {
-			ar = 18; 
+		if (HandManager.Effects.contains(83)&&(ar==14||ar==15)) {
+			ar = 16; 
 			return; //North Sea Oil's effect, end of AR7
 		}
-		if (space[1]==8&&space[0]<8&&ar==16) {
-			ar=17;
+		if (space[1]==8&&space[0]<8&&ar==14) {
+			ar=15;
 			return;
 		}
-		if (space[0]==8&&space[1]<8&&ar==16) {
-			ar=18;
+		if (space[0]==8&&space[1]<8&&ar==14) {
+			ar=16;
 			return;
 		}
-		if (ar>=16) {
+		if (ar>=14) {
 			advanceTurn();
 			return;
 		}
@@ -144,6 +144,13 @@ public class GameData {
 	}
 	public static int getAR() {
 		return ar;
+	}
+	public static boolean isHeadlinePhase() {
+		return ar==0;
+	}
+	public static int phasing() {
+		if (isHeadlinePhase()) return (HandManager.precedence+ar-1)%2;
+		return ar%2;
 	}
 	public static void setDEFCON(int defcon2) {
 		defcon = defcon2;
