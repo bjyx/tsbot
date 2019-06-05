@@ -33,6 +33,10 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: What's the play?");
 			return;
 		}
+		if (!CardList.getCard(HandManager.activecard).isFormatted(args)) {
+			sendMessage(e, ":x: Format your arguments correctly.");
+			return;
+		}
 		CardList.getCard(HandManager.activecard).onEvent(args);
 		
 		if (GameData.isHeadlinePhase()) {
@@ -40,7 +44,7 @@ public class EventCommand extends Command {
 			else TimeCommand.hl1 = true;
 			return;
 		}
-		if (GameData.dec==null) {
+		if (GameData.dec==null&&GameData.ops==null) {
 			TimeCommand.eventDone = true;
 			if (HandManager.playmode == 'f') TimeCommand.operationsRequired = true;
 		}

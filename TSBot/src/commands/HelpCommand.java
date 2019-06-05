@@ -34,13 +34,13 @@ public class HelpCommand extends Command {
             }
 
             channel.sendMessage(new MessageBuilder()
-                    .append("The following commands are supported by the bot\n")
+                    .append("The following commands are supported by the bot:\n")
                     .append(s.toString())
                     .build()).queue();
         }
         else
         {
-            String command = args[1].charAt(0) == '.' ? args[1] : "." + args[1];    //If there is not a preceding . attached to the command we are search, then prepend one.
+            String command = args[1].substring(0,3).equals("TS.") ? args[1] : "TS." + args[1];    //If there is not a preceding . attached to the command we are search, then prepend one.
             for (Command c : commands.values())
             {
                 if (c.getAliases().contains(command))
@@ -68,7 +68,7 @@ public class HelpCommand extends Command {
                 }
             }
             channel.sendMessage(new MessageBuilder()
-                    .append("The provided command '**" + args[1] + "**' does not exist. Use .help to list all commands.")
+                    .append("The provided command '**" + args[1] + "**' does not exist. Use TS.help to list all commands.")
                     .build()).queue();
         }
 

@@ -1,74 +1,100 @@
 package map;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.List;
 
 import game.GameData;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
-public abstract class Country {
+public class Country {
 	//practical
 	public static final String[] regions = {"Officially Neutral Europe","Western Europe","Eastern Europe","Middle East","Asia","Southeast Asia","Africa","Central America","South America","Superpower"};
+	public static int count=0;
 	public int[] influence = {0,0};
-	public abstract int getID(); //yes, countries have a unique identifier so it can work with twistrug; problem?
-	public abstract String getName();
-	public abstract int getRegion();
-	public abstract String getISO3166();
-	public abstract List<String> getAliases();
-	public abstract int getStab();
-	public abstract List<Integer> getAdj();
-	public abstract boolean isBattleground();
+	public int id; //yes, countries have a unique identifier so it can work with twistrug; problem?
+	public String name;
+	public int region;
+	public String iso;
+	public List<String> aliases;
+	public int stab;
+	public List<Integer> adj;
+	public boolean isBattleground;
 	
 	//flavor
-	public abstract String getDesc();
-	public abstract String getLeader(); //Will be determined based on turns and who controls more:
-	/*
-	 * Early: 1948-60 (Truman and Eisenhower)
-	 * Mid: 1960-1976 (Down to Ford)
-	 * Late: 1976-1988 (Carter, Reagan, Bush)
-	 * */
+	public String desc;
+	
+	/**
+	 * Sets up a given country. 
+	 * @param n is the name of the country.
+	 * @param reg is the region that country belongs to.
+	 * @param i is the ISO 3166-1 alpha-2 code, used for the generation of flags.
+	 * @param st is the stability of that country.
+	 * @param bg is true if the country is a battleground, and will drop DEFCON if targeted with a coup.
+	 * @param a provides a list of aliases for the country that can stand in for the actual name.
+	 * @param j provides a list of integers, representing countries adjacent 
+	 * @param desc2
+	 * @param inf
+	 */
+	
+	public Country(String n, int reg, String i, int st, boolean bg, String[] a, Integer[] j, String desc2, int[] inf) {
+		name = n;
+		region = reg;
+		iso = i;
+		stab = st;
+		isBattleground = bg;
+		aliases = Arrays.asList(a);
+		adj = Arrays.asList(j);
+		desc = desc2;
+		influence[0] = inf[0];
+		influence[1] = inf[1];
+		id = count; 
+		count++;
+	}
 	
 	public void changeInfluence(int sp, int amt) {
 		influence[sp] += amt;
 		if (influence[sp]<0) influence[sp]=0;
 	}
 	public int isControlledBy() {
-		if (influence[0]>=influence[1]+getStab()) return 0;
-		if (influence[1]>=influence[0]+getStab()) return 1;
+		if (influence[0]>=influence[1]+stab) return 0;
+		if (influence[1]>=influence[0]+stab) return 1;
 		return -1;
 	}
 	public boolean checkIsCoupable() {
-		if ((getRegion()<=2&&GameData.getDEFCON()<5)||(getRegion()<=5&&getRegion()>=4&&GameData.getDEFCON()<4)||(getRegion()==3&&GameData.getDEFCON()<3)) return false;
+		if ((region<=2&&GameData.getDEFCON()<5) //Europe
+				||(region<=5&&region>=4&&GameData.getDEFCON()<4) //Asia
+				||(region==3&&GameData.getDEFCON()<3)) //Middle East
+			return false;
 		return true;
 	}
 	
 	public String toString() {
-		return ":flag_" + getISO3166() + ":";
+		return ":flag_" + iso + ":"; //flag emoji
 	}
 	public Color getColor() {
-		if (getRegion()<=2) return Color.blue;
-		if (getRegion()==3) return Color.cyan;
-		if (getRegion()==4||getRegion()==5) return Color.orange;
-		if (getRegion()==6) return Color.yellow;
-		if (getRegion()==7) return Color.green;
-		if (getRegion()==8) return Color.green;
+		if (region<=2) return Color.blue;
+		if (region==3) return Color.cyan;
+		if (region==4||region==5) return Color.orange;
+		if (region==6) return Color.yellow;
+		if (region==7) return Color.green;
+		if (region==8) return Color.green;
 		return Color.darkGray;
 	}
 	
 	//flavor again
 	public MessageEmbed getInfo() {
 		EmbedBuilder builder = new EmbedBuilder()
-				.setTitle(getName()+" ("+getISO3166()+")")
-				.setDescription(getStab() + " stability" + (isBattleground()?" battleground ":" ")+ "country in " + regions[getRegion()])
-				.setThumbnail("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/countries/"+getISO3166())
+				.setTitle(name+" ("+iso+")")
+				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "country in " + regions[region])
+				.setThumbnail("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/countries/"+iso)
 				.setColor(getColor())
-				.addField("Current Leader", getLeader(),false)
 				.addField("Influence", ":InfluenceA:"+influence[0]+":InfluenceR:"+influence[1], false)
-				.addField("", getDesc(), false);
+				.addField("", desc, false);
 		String str = "";
-		for (int i : getAdj()) {
-			str += ":flag_" + MapManager.map.get(i).getISO3166() + ":";
+		for (int i : adj) {
+			str += MapManager.get(i);
 		}
 		builder.addField("Adjacencies", str, false);
 		return builder.build();

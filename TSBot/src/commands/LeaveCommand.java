@@ -19,6 +19,7 @@ public class LeaveCommand extends Command {
 		}
 		if (GameData.hasGameStarted()) {
 			sendMessage(e, ":x: This isn't a game of chicken. Once you're in the Cold War you see it through to the end.");
+			return;
 		}
 		if (!Arrays.asList(PlayerList.getArray()).contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're not on the list.");

@@ -194,12 +194,13 @@ public class HandManager {
 	 * @param mode is the mode of playing, as described under playmode.
 	 */
 	public static void play(int sp, int card, char mode) {
+		
 		if (Effects.contains(50)&&sp==0&&mode!='h') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("We Will Bury You...");
 			if(card!=32 || mode != 'e') {
 				builder.setDescription("...and the UN sits idle.")
-					.setFooter("If you don't like us, don't accept our invitations, and don't invite us to come to see you. Whether you like it or not, history is on our side.\" \n"
+					.setFooter("\"If you don't like us, don't accept our invitations, and don't invite us to come to see you. Whether you like it or not, history is on our side.\" \n"
 							+ "- Nikita Khrushchev, 1956", "images/countries/su.png")
 					.setColor(Color.red);
 				builder.changeVP(-3);
@@ -226,7 +227,7 @@ public class HandManager {
 			GameData.txtchnl.sendMessage(builder.build());
 		}
 		
-		if (Effects.contains(59)&&(card==13||card==11||card==24||card==36||card==102)) {
+		if (Effects.contains(59)&&((card==13&&!Effects.contains(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Flower Power")
 				.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
@@ -237,12 +238,16 @@ public class HandManager {
 			GameData.txtchnl.sendMessage(builder.build());
 		}
 		
-		if (card==6&&China==sp) {
-			China = (China+1)%2+2;
-			activecard=6;
-			playmode = 'o';
-			return;
+		if (card==6) {
+			if (China==sp) {
+				China = (China+1)%2+2;
+				activecard=6;
+				playmode = 'o';
+				removeEffect(35);
+				return;
+			}
 		}
+		
 		if (sp==0&&USAHand.contains(card)) {
 			USAHand.remove(card);
 		}
@@ -288,29 +293,34 @@ public class HandManager {
 				playmode = 'e';
 			}
 			activecard = card;
+			TimeCommand.cardPlayed = true;
+			TimeCommand.eventRequired = true;
 			
 		}
 		if (mode=='o') {
-			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
+			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable()) {
 				if (CardList.getCard(card).isRemoved()) {
 					Removed.add(card);
 				}
 				else {
 					Discard.add(card);
 				}
-				playmode = 'l';
+				playmode = 'l'; //event last
 			}
 			else {
 				Discard.add(card);
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
+			TimeCommand.cardPlayed = true;
+			TimeCommand.operationsRequired = true;
 		}
 		if (mode=='s') {
 			Discard.add(card);
 			playmode = 's';
 			activecard = card;
 			TimeCommand.cardPlayed = true;
+			TimeCommand.spaceRequired = true;
 		}
 		
 	}
@@ -323,9 +333,10 @@ public class HandManager {
 		if (sp==0&&USAHand.contains(card)) {
 			USAHand.remove(card);
 		}
-		if (sp==1&&SUNHand.contains(card)) {
+		else if (sp==1&&SUNHand.contains(card)) {
 			SUNHand.remove(card);
 		}
+		else return;
 		Discard.add(card);
 	}
 	/**
@@ -351,12 +362,12 @@ public class HandManager {
 	 */
 	public static void transfer(int source, int card) {
 		if (source==0&&USAHand.contains(card)) {
-			USAHand.remove(card);
+			USAHand.remove(USAHand.indexOf(card));
 			SUNHand.add(card);
 		}
 		if (source==1&&SUNHand.contains(card)) {
 			USAHand.add(card);
-			SUNHand.remove(card);
+			SUNHand.remove(SUNHand.indexOf(card));
 		}
 	}
 	/**

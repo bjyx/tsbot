@@ -1,5 +1,6 @@
 package events;
 
+import cards.HandManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
@@ -34,5 +35,12 @@ public abstract class Card {
 				.setDescription(getDescription())
 				.addField("Arguments:",getArguments(),false);
 		return builder.build();
+	}
+	
+	public int getOpsMod(int sp) {
+		if (sp==0) {
+			return Math.max(1, Math.min(4, this.getOps() + (HandManager.Effects.contains(25)?1:0) - (HandManager.Effects.contains(310)?1:0)));
+		}
+		else return Math.max(1, Math.min(4, this.getOps() + (HandManager.Effects.contains(51)?1:0) - (HandManager.Effects.contains(311)?1:0)));
 	}
 }

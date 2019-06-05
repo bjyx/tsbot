@@ -14,8 +14,7 @@ public class PlayCommand extends Command {
 	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		int card = Integer.parseInt(args[1]);
-		char mode = args[2].charAt(0);
+		
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");
 			return;
@@ -28,6 +27,19 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: Excuse me, but who are *you* playing as? China's abstracted as a card and the rest of the world has a board space each.");
 			return;
 		}
+		if (args.length>3) {
+			sendMessage(e, ":x: You're playing... what, exactly? And how?");
+			return;
+		}
+		int card;
+		try {
+			card = Integer.parseInt(args[1]);
+		}
+		catch (NumberFormatException err) {
+			sendMessage(e, ":x: That's no card. Cards are denoted by integers.");
+			return;
+		}
+		char mode = args[2].charAt(0);
 		if (card<=0 || card > 110) {
 			sendMessage(e, ":x: Cards are indexed from 1 to 110.");
 			return;

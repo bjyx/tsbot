@@ -33,6 +33,10 @@ public class Operations {
 	 */
 	private boolean spaceable = false;
 	/**
+	 * If used on a coup, whether this set of ops contributes to Military Operations.
+	 */
+	private boolean free = false;
+	/**
 	 * The number of ops available to use.
 	 */
 	public int opnumber = -1;
@@ -69,45 +73,50 @@ public class Operations {
 	 * @param coup indicates whether one can conduct a Coup using this instance of Operations.
 	 * @param space indicates whether one can send this instance of Operations to space.
 	 */
-	public Operations(int superpower, int ops, boolean infl, boolean realign, boolean coup, boolean space) {
+	public Operations(int superpower, int ops, boolean infl, boolean realign, boolean coup, boolean space, boolean f) {
 		sp = superpower;
 		opnumber = ops;
 		influence = infl;
 		realignment = realign;
 		coupdetat = coup;
 		spaceable = space;
+		free = f;
 	}
 	/**
 	 * Places the given amounts of influence in their respective countries.
 	 * @param countries is an array containing the IDs of the countries targeted.
 	 * @param amt is an array containing the amount of influence used on each country.
 	 */
-	public void influence(int[] countries, int[] amt) {
+	public boolean influence(int[] countries, int[] amt) {
 		if (!influence) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
-			return;
+			return false;
 		}
 		int ops = 0;
 		
 		for (int i=0; i<countries.length; i++) {
-			ops += (Math.max(0, MapManager.map.get(countries[i]).influence[(sp+1)%2]-MapManager.map.get(countries[i]).influence[sp]-MapManager.map.get(countries[i]).getStab()+1))*2 + amt[i]-Math.max(0, MapManager.map.get(countries[i]).influence[(sp+1)%2]-MapManager.map.get(countries[i]).influence[sp]-MapManager.map.get(countries[i]).getStab()+1);
-			if (MapManager.map.get(countries[i]).getRegion()!=5) {
+			ops += (Math.max(0, 
+					MapManager.get(countries[i]).influence[(sp+1)%2]
+							- MapManager.get(countries[i]).influence[sp]
+							- MapManager.get(countries[i]).stab+1))*2 + amt[i]
+							- Math.max(0, MapManager.get(countries[i]).influence[(sp+1)%2]-MapManager.get(countries[i]).influence[sp]-MapManager.get(countries[i]).stab+1);
+			if (MapManager.get(countries[i]).region!=5) {
 				allsea=false;
-				if(MapManager.map.get(countries[i]).getRegion()!=4) {
+				if(MapManager.get(countries[i]).region!=4) {
 					allasia=false;
 				}
 			}
-			if (!(MapManager.map.get(countries[i]).influence[sp]>0)) {
+			if (!(MapManager.get(countries[i]).influence[sp]>0)) {
 				boolean flag = false;
-				for (int adj : MapManager.map.get(countries[i]).getAdj()) {
-					if (MapManager.map.get(adj).influence[sp]!=0) {
+				for (int adj : MapManager.get(countries[i]).adj) {
+					if (MapManager.get(adj).influence[sp]!=0) {
 						flag = true;
 						break;
 					}
 				}
 				if (!flag) {
 					GameData.txtchnl.sendMessage(":x: Can you even reach that country with your influence?...");
-					return;
+					return false;
 				}
 			}
 		}
@@ -115,11 +124,11 @@ public class Operations {
 		if (allsea && HandManager.Effects.contains(9)&&sp==1) ops--;
 		if (ops<opnumber) {
 			GameData.txtchnl.sendMessage(":x: Endeavor to use all available ops.");
-			return;
+			return false;
 		}
 		if (ops>opnumber) {
 			GameData.txtchnl.sendMessage(":x: Overstreching yourself is never good.");
-			return;
+			return false;
 		}
 		realignment = false;
 		coupdetat = false;
@@ -130,44 +139,44 @@ public class Operations {
 			builder.changeInfluence(countries[i], sp, amt[i]);
 		}
 		GameData.txtchnl.sendMessage(builder.build());
-		GameData.txtchnl.sendMessage("`Operations Complete`");
+		return true;
 	}
 	/**
 	 * Realigns the given country in an attempt to remove influence.
 	 * @param country is the country targeted by the realignment.
 	 */
-	public void realignment(int country) {
+	public boolean realignment(int country) {
 		if (!realignment) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
-			return;
+			return false;
 		}
-		if (!MapManager.map.get(country).checkIsCoupable()) {
+		if (!MapManager.get(country).checkIsCoupable()) {
 			GameData.txtchnl.sendMessage(":x: DEFCON restricts you from realigning this country.");
-			return;
+			return false;
 		}
-		if (MapManager.map.get(country).influence[(sp+1)%2]==0) {
+		if (MapManager.get(country).influence[(sp+1)%2]==0) {
 			GameData.txtchnl.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.");
-			return;
+			return false;
 		}
-		if (!(MapManager.map.get(country).getRegion()==5)) {
+		if (!(MapManager.get(country).region==5)) {
 			allsea=false;
-			if(!(MapManager.map.get(country).getRegion()==4)) {
+			if(!(MapManager.get(country).region==4)) {
 				allasia=false;
 			}
 		}
 		if (opnumber<1) {
-			if (allsea&&MapManager.map.get(country).getRegion()==5&&HandManager.Effects.contains(9)&&sp==1) {
+			if (allsea&&MapManager.get(country).region==5&&HandManager.Effects.contains(9)&&sp==1) {
 				opnumber++;
 				allsea=false;
 			}
-			else if (allasia&&(MapManager.map.get(country).getRegion()==4||allasia&&MapManager.map.get(country).getRegion()==5)&&HandManager.activecard==6) {
+			else if (allasia&&(MapManager.get(country).region==4||allasia&&MapManager.get(country).region==5)&&HandManager.activecard==6) {
 				opnumber++;
 				allasia=false;
 			}
 			else {
 				GameData.txtchnl.sendMessage("You've run out of ops...");
 				opnumber--;
-				return;
+				return true;
 			}
 		}
 		influence = false;
@@ -176,31 +185,31 @@ public class Operations {
 		Random rand = new Random();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Realignment")
-			.setDescription("Target: "+ MapManager.map.get(country))
+			.setDescription("Target: "+ MapManager.get(country))
 			.setColor(sp==0?Color.blue:Color.red);
 		int[] rolls = new int[] {rand.nextInt(6)+1, rand.nextInt(6)+1};
 		String[] modifiers = {"",""};
-		if (MapManager.map.get(country).influence[0]>MapManager.map.get(country).influence[1]) {
+		if (MapManager.get(country).influence[0]>MapManager.get(country).influence[1]) {
 			rolls[0]++;
-			modifiers[0] += MapManager.map.get(country);
+			modifiers[0] += MapManager.get(country);
 		}
-		if (MapManager.map.get(country).influence[0]<MapManager.map.get(country).influence[1]) {
+		if (MapManager.get(country).influence[0]<MapManager.get(country).influence[1]) {
 			rolls[1]++;
-			modifiers[1] += MapManager.map.get(country);
+			modifiers[1] += MapManager.get(country);
 		}
-		for (int adj : MapManager.map.get(country).getAdj()) {
+		for (int adj : MapManager.get(country).adj) {
 			if (adj==84) {
 				rolls[0]++;
-				modifiers[0] += MapManager.map.get(adj);
+				modifiers[0] += MapManager.get(adj);
 			}
 			else if (adj==85) {
 				rolls[1]++;
-				modifiers[1] += MapManager.map.get(adj);
+				modifiers[1] += MapManager.get(adj);
 			}
 			else {
-				if (MapManager.map.get(adj).isControlledBy()!=-1) {
-					rolls[MapManager.map.get(adj).isControlledBy()]++;
-					modifiers[MapManager.map.get(adj).isControlledBy()] += MapManager.map.get(adj);
+				if (MapManager.get(adj).isControlledBy()!=-1) {
+					rolls[MapManager.get(adj).isControlledBy()]++;
+					modifiers[MapManager.get(adj).isControlledBy()] += MapManager.get(adj);
 				}
 			}
 		}
@@ -209,23 +218,28 @@ public class Operations {
 		if (rolls[0]>rolls[1]) builder.changeInfluence(country, 1, -(rolls[0]-rolls[1]));
 		GameData.txtchnl.sendMessage(builder.build());
 		opnumber--;
+		return false;
 	}
 	/**
 	 * Coups the given country, to attempt to sway that country to the side of sp.
 	 * @param country is the country targeted by the coup.
 	 */
-	public void coup(int country) {
+	public boolean coup(int country) {
 		if (!coupdetat) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
-			return;
+			return false;
 		}
-		if (!MapManager.map.get(country).checkIsCoupable()) {
+		if (!MapManager.get(country).checkIsCoupable()) {
 			GameData.txtchnl.sendMessage(":x: DEFCON restrictions disallow you from couping this nation.");
-			return;
+			return false;
 		}
-		if (!(MapManager.map.get(country).getRegion()==5)) {
+		if (MapManager.get(country).influence[(sp+1)%2]==0) {
+			GameData.txtchnl.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.");
+			return false;
+		}
+		if (!(MapManager.get(country).region==5)) {
 			allsea=false;
-			if(!(MapManager.map.get(country).getRegion()==4)) {
+			if(!(MapManager.get(country).region==4)) {
 				allasia=false;
 			}
 		}
@@ -237,18 +251,18 @@ public class Operations {
 		spaceable = false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Coup d'État")
-			.setDescription("Target: "+ MapManager.map.get(country))
+			.setDescription("Target: "+ MapManager.get(country))
 			.setColor(sp==0?Color.blue:Color.red);
-		if (MapManager.map.get(country).isBattleground()) builder.changeDEFCON(-1)
-				.addMilOps(sp, opnumber);
+		if (MapManager.get(country).isBattleground) builder.changeDEFCON(-1);
+		if (!free) builder.addMilOps(sp, opnumber);
 		int die = (new Random().nextInt(6))+1;
-		int amt = opnumber + die - MapManager.map.get(country).getStab()*2;
+		int amt = opnumber + die - MapManager.get(country).stab*2;
 		builder.addField("Roll: :" + CardEmbedBuilder.numbers[die] + ":", CardEmbedBuilder.intToEmoji(amt), false);
 		
 		if (amt>0) {
-			if (amt>MapManager.map.get(country).influence[(sp+1)%2]) {
-				builder.changeInfluence(country, sp, amt-MapManager.map.get(country).influence[(sp+1)%2]);
-				builder.changeInfluence(country, (sp+1)%2, -MapManager.map.get(country).influence[(sp+1)%2]);
+			if (amt>MapManager.get(country).influence[(sp+1)%2]) {
+				builder.changeInfluence(country, sp, amt-MapManager.get(country).influence[(sp+1)%2]);
+				builder.changeInfluence(country, (sp+1)%2, -MapManager.get(country).influence[(sp+1)%2]);
 			}
 			else {
 				builder.changeInfluence(country, (sp+1)%2, -amt);
@@ -258,14 +272,16 @@ public class Operations {
 			builder.addField(":( Failure!", "", false);
 		}
 		GameData.txtchnl.sendMessage(builder.build());
+		return true;
 	}
 	/**
 	 * Sends the card to space.
+	 * @return the success of the operation.
 	 */
-	public void space() {
+	public boolean space() {
 		if (!spaceable) {
 			GameData.txtchnl.sendMessage(":x: You must do something else with these ops.");
-			return;
+			return false;
 		}
 		realignment = false;
 		coupdetat = false;
@@ -290,11 +306,11 @@ public class Operations {
 			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],"Failure.",false);
 		}
 		GameData.txtchnl.sendMessage(builder.build());
+		return true;
 	}
 	/**
 	 * Flavor text regarding the space race goes here.
 	 * @param spaceLevel is the superpower's advancement on the race.
-	 * @param sp is the superpower conducting the roll.
 	 * @return a string, with relevant flavor text.
 	 */
 	public String getSpaceNames(int spaceLevel) {

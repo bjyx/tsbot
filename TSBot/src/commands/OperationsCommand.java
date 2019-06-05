@@ -29,44 +29,67 @@ public class OperationsCommand extends Command {
 			sendMessage(e, ":x: What's the play?");
 			return;
 		}
-		if (GameData.ops==null) {
+		if (HandManager.playmode!='o') {
 			sendMessage(e, ":x: Trying to change your mind already?");
 			return;
 		}
-		String usage = args[0];
+		String usage = args[1];
+		boolean result = false;
 		if (usage.equals("influence")||usage.equals("i")) {
-			if (args.length%2!=1) {
+			if (args.length<2) {
+				sendMessage(e, ":x: To where?");
+				return;
+			}
+			if (args.length%2!=0) {
 				sendMessage(e, ":x: An influence value must be associated with every listed country.");
 				return;
 			}
-			int[] countries = new int[(args.length-1)/2];
-			int[] amt = new int[(args.length-1)/2];
-			for (int i=1; i<args.length; i+=2) {
-				countries[(i-1)/2] = MapManager.find(args[i]);
-				if (countries[(i-1)/2]==-1) {
+			int[] countries = new int[(args.length-2)/2];
+			int[] amt = new int[(args.length-2)/2];
+			for (int i=2; i<args.length; i+=2) {
+				countries[(i-2)/2] = MapManager.find(args[i]);
+				if (countries[(i-2)/2]==-1) {
 					sendMessage(e, ":x: "+args[i]+" isn't a country or alias of one.");
 					return;
 				}
-				amt[(i-1)/2] = Integer.parseInt(args[i+1]);
+				if (MapManager.get(countries[(i-2)/2]).region==9) {
+					sendMessage(e, ":x: No targeting your opponent. Cheater.");
+					return;
+				}
+				amt[(i-2)/2] = Integer.parseInt(args[i+1]);
+				if (amt[(i-2)/2]<=0) {
+					sendMessage(e, ":x: Positive integers only, please - this is not De-Stalinization.");
+					return;
+				}
 			}
-			GameData.ops.influence(countries, amt);
+			result = GameData.ops.influence(countries, amt);
 		}
 		if (usage.equals("realignment")||usage.equals("r")) {
-			int country = MapManager.find(args[1]);
+			int country = MapManager.find(args[2]);
 			if (country==-1) {
-				sendMessage(e, ":x: "+args[1]+" isn't a country or alias of one.");
+				sendMessage(e, ":x: "+args[2]+" isn't a country or alias of one.");
 				return;
 			}
-			GameData.ops.realignment(country);
-			if (GameData.ops.opnumber!=-1) return;
+			if (MapManager.get(country).region==9) {
+				sendMessage(e, ":x: No targeting your opponent. Cheater.");
+				return;
+			}
+			result = GameData.ops.realignment(country);
 		}
 		if (usage.equals("coup")||usage.equals("c")) {
-			int country = MapManager.find(args[1]);
+			int country = MapManager.find(args[2]);
 			if (country==-1) {
-				sendMessage(e, ":x: "+args[1]+" isn't a country or alias of one.");
+				sendMessage(e, ":x: "+args[2]+" isn't a country or alias of one.");
 				return;
 			}
-			GameData.ops.coup(country);
+			if (MapManager.get(country).region==9) {
+				sendMessage(e, ":x: No targeting your opponent. Cheater.");
+				return;
+			}
+			result = GameData.ops.coup(country);
+		}
+		if (!result) {
+			return;
 		}
 		TimeCommand.operationsDone = true;
 		if (HandManager.playmode == 'l') TimeCommand.eventRequired = true;
@@ -96,11 +119,14 @@ public class OperationsCommand extends Command {
 		return Arrays.asList("TS.operations *<operation type>* *<other arguments>*\n"
 				+ "**Operation Types**\n"
 				+ "- *influence*: arguments alternate between countries and influence values.\n"
-				+ "        - __Example:__ TS.operations influence egypt 1 lb 1 syr 1 urdun 1"
+				+ "        - __Example:__ TS.operations influence egypt 1 lb 1 syr 1 urdun 1\n"
+				+ "        - _This will place one Influence in Egypt, one in Lebanon, one in Syria, and one in Jordan._"
 				+ "- *realignment* argument will consist of one country.\n"
-				+ "        - __Example:__ TS.operations realignment cuba"
+				+ "        - __Example:__ TS.operations realignment cuba\n"
+				+ "        - _This will attempt a realignment on Cuba. Realignments can be repeated as many times as you have Operations._"
 				+ "- *coup*: argument will consist of one country.\n"
-				+ "        - __Example:__ TS.operations coup irn");
+				+ "        - __Example:__ TS.operations coup irn\n"
+				+ "        - _This will attempt a coup on Iran. Coups consume all of the Operations on a card and can therefore be performed once per Action Round._");
 	}
 
 }

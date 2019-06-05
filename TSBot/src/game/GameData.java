@@ -2,25 +2,95 @@ package game;
 
 import java.awt.Color;
 
+import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import events.Decision;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 
 public class GameData {
+	/**
+	 * The location where the majority of the game will be taking place. All public game updates will be placed here.
+	 */
 	public static TextChannel txtchnl;
+	/**
+	 * The location where all information privy to the USA will be placed. This includes the following:
+	 * <ul>
+	 * <li> The US's hand
+	 * <li> The USSR's hand after a playing of CIA Created
+	 * <li> Cards shown to the US by Our Man in Tehran
+	 * </ul>
+	 * <br>
+	 * It is also recommended that the USA write all commands in here to avoid betraying information to the USSR.
+	 */
+	public static TextChannel txtusa = null;
+	/**
+	 * The location where all information privy to the USSR will be placed. This includes the following:
+	 * <ul>
+	 * <li> The US's hand
+	 * <li> The USSR's hand after a playing of Lone Gunman or Aldrich Ames
+	 * </ul>
+	 * <br>
+	 * It is also recommended that the USSR write all commands in here to avoid betraying information to the USA.
+	 */
+	public static TextChannel txtssr = null;
+	/**
+	 * The role allowing access to {@link #txtusa}.
+	 */
+	public static Role roleusa = null;
+	/**
+	 * The role allowing access to {@link #txtussr}.
+	 */
+	public static Role rolessr = null;
 	
+	/**
+	 * Whether the game has started.
+	 */
 	private static boolean started = false;
+	/**
+	 * Whether the game has ended.
+	 */
 	private static boolean ended = false;
-	private static int turn = 0;
-	private static int ar = 0; // 0 - headline, (ar+1)/2 - actual action rounds, ar%2 - phasing player
+	/**
+	 * The current turn, from 1 to 10. 
+	 */
+	private static int turn = 1;
+	/**
+	 * The current action round according to the following:
+	 * <ul>
+	 * <li> 0 stands for the headline phase.
+	 * <li> Each action round after that gets its own number, with odd numbers being for the USSR and even numbers being for the USA.
+	 */
+	private static int ar = 0;
+	/**
+	 * The current DEFCON. When this drops to 1, the game ends immediately.
+	 */
 	private static int defcon = 5;
+	/**
+	 * The military ops attained by each side - an integer from 0 to 5 inclusive.
+	 */
 	private static int[] milops = {0,0};
+	/**
+	 * Each side's progress in the space race - an integer from 0 to 8 inclusive.
+	 */
 	private static int[] space = {0,0};
+	/**
+	 * The current status of the Victory Points marker - a positive number for the US and a negative one for the USSR.
+	 */
 	private static int score = 0;
+	/**
+	 * How many times a given country has sent a card to space that turn.
+	 */
 	private static int[] hasSpaced = {0,0};
+	/**
+	 * An Operations object, denoting any operations that need to be performed as a result of any action. 
+	 */
 	public static Operations ops = null;
+	/**
+	 * A Decision object, denoting any non-operation-related decision required to be made.
+	 */
 	public static Decision dec = null;
 	
 	public static void startGame() {
@@ -76,16 +146,31 @@ public class GameData {
 		hasSpaced[0] = 0;
 		hasSpaced[1] = 0;
 		HandManager.reset();
+		txtchnl = null;
 	}
 	public static void advanceTurn() {
 		
 		changeScore(OpsToVP()); // stage E
 		int scoring = HandManager.checkScoring();
 		if (scoring!=0) {
-			
+			if (scoring==3) {
+				endGame(-1, 3);
+			}
+			endGame(scoring%2, 3);
 		} // stage F
 		HandManager.China %= 2; // stage G
-		if (turn==10) return; //stage I
+		if (turn==10) {
+			CardList.getCard(2).onEvent(new String[] {}); //Europe Scoring
+			if (ended) return; //if someone controls Europe, it's over.
+			CardList.getCard(1).onEvent(new String[] {}); //Asia Scoring
+			CardList.getCard(3).onEvent(new String[] {}); //Middle East Scoring
+			CardList.getCard(37).onEvent(new String[] {}); //Central America Scoring
+			CardList.getCard(79).onEvent(new String[] {}); //Africa Scoring
+			CardList.getCard(81).onEvent(new String[] {}); //South America Scoring
+			if (HandManager.China==0) score++;
+			else score--;
+			checkScore(true, false);
+		}
 		turn++; // stage H
 		ar = 1; 
 		hasSpaced[0] = 0; 
@@ -183,6 +268,30 @@ public class GameData {
 	public static int getScore() {
 		return score;
 	}
+	public static void checkScore(boolean f, boolean w) {
+		if (score<=-20) {
+			endGame(1, 0);
+			return;
+		}
+		if (score>=20) {
+			endGame(0, 0);
+			return;
+		}
+		int x = 0;
+		if (!f) return;
+		if (w) x=4;
+		if (score<0) {
+			endGame(1,x);
+			return;
+		}
+		if (score>0) {
+			endGame(0,x);
+			return;
+		}
+		if (score==0) {
+			endGame(-1,x);
+		}
+	}
 	public static void toSpace(int sp) {
 		hasSpaced[sp]++;
 	}
@@ -194,7 +303,7 @@ public class GameData {
 	public static boolean hasSpace(int sp) {
 		return (space[sp]>=2&&space[(sp+1)%2]<2)?hasSpaced[sp]==2:hasSpaced[sp]==1;
 	}
-	public static void setOps(int sp, int o, boolean i, boolean r, boolean c, boolean s) {
-		ops = new Operations(sp, o, i, r, c, s);
+	public static void setOps(int sp, int o, boolean i, boolean r, boolean c, boolean s, boolean f) {
+		ops = new Operations(sp, o, i, r, c, s, f);
 	}
 }
