@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 
 public class FiveYearPlan extends Card {
 	public static int card;
@@ -16,7 +17,7 @@ public class FiveYearPlan extends Card {
 			.setDescription("Russians Hungry, But Not Starving")
 			.setColor(Color.BLUE)
 			.setFooter("\"In that terrible year [in 1933] nearly half the population of my native village, Privolnoye, starved to death, including two sisters and one brother of my father.\"\n"
-					+ "- Mikhail Gorbachev, 1995", null);
+					+ "- Mikhail Gorbachev, 1995", Launcher.url("countries/su.png"));
 		if (HandManager.SUNHand.isEmpty()) {
 			builder.addField("The Soviet hand is empty!", "Can't discard a card if there is no card to discard.", false);
 			GameData.txtchnl.sendMessage(builder.build());

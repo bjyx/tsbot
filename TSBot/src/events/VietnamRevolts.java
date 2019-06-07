@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 
 public class VietnamRevolts extends Card {
 
@@ -13,8 +14,8 @@ public class VietnamRevolts extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Dien Bien Phu falls")
 			.setDescription("Negotiations now underway in Geneva to decide fate of French Indochina")
-			.setFooter("\"The enemy has overrun us. We are blowing up everything. *Vive la France!*\"\n"
-					+ "- Unknown radio operator, 1954", "images/countries/fr.png")
+			.setFooter("\"You can kill ten of my men for every one I kill of yours. But even at those odds, you will lose and I will win.\"\n"
+					+ "- Hô Chi Minh, 195X", Launcher.url("countries/vn.png"))
 			.setColor(Color.red);
 		builder.changeInfluence(45, 1, 2); //Vietnam 0/+2
 		builder.addField("Viet Minh", "All Soviet Operations exclusively used in Southeast Asia will now have one extra point to use.", false);

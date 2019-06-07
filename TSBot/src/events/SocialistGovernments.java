@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 import map.MapManager;
 
 public class SocialistGovernments extends Card {
@@ -24,7 +25,7 @@ public class SocialistGovernments extends Card {
 		builder.setTitle("Socialist Governments")
 			.setDescription("Coalition formed in " + MapManager.get(countries[0]).name + ".")
 			.setFooter("\"De Gasperi’s policy is patience ... He seems to be feeling his way among the explosive problems he has to deal with, but perhaps this wary mine-detecting method is the stabilising force that holds the country in balance.\"\n"
-					+ "- Anne McCormick, 1949", "images/countries/gb.png")
+					+ "- Anne McCormick, 1949", Launcher.url("countries/gb.png"))
 			.setColor(Color.RED);
 		for (int i=0; i<countries.length; i++) {
 			builder.bulkChangeInfluence(countries, 0, values);

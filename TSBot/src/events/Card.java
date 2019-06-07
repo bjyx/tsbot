@@ -1,6 +1,7 @@
 package events;
 
 import cards.HandManager;
+import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
@@ -31,7 +32,7 @@ public abstract class Card {
 	public MessageEmbed toEmbed() {
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle(":" + numbers[getOps()] + "::Influence" + getAssociationString() + ": `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
-				.setImage("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/cards/" + getId())
+				.setImage(Launcher.url("cards/" + getId()))
 				.setDescription(getDescription())
 				.addField("Arguments:",getArguments(),false);
 		return builder.build();

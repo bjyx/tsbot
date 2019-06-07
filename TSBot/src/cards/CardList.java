@@ -34,8 +34,8 @@ public class CardList {
 		CardList.addCard(new VietnamRevolts());
 		CardList.addCard(new Blockade());
 		
-		//CardList.addCard(new KoreanWar());
-		//CardList.addCard(new RomanianAbdication());
+		CardList.addCard(new KoreanWar());
+		CardList.addCard(new RomanianAbdication());
 		//CardList.addCard(new ArabIsraeliWar());
 		//CardList.addCard(new Comecon());
 		//CardList.addCard(new Nasser());

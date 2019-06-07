@@ -1,13 +1,17 @@
 package commands;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import cards.HandManager;
 import game.GameData;
 import game.PlayerList;
+import main.Launcher;
 import net.dv8tion.jda.core.entities.ChannelType;
+import net.dv8tion.jda.core.entities.Icon;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.PermissionOverride;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -100,6 +104,22 @@ public class StartCommand extends Command {
 		}
 		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getUSA()), GameData.roleusa);
 		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getSSR()), GameData.rolessr);
+		// add the emoji needed for proper function.
+		try {
+			new GuildController(e.getGuild()).createEmote("TScardback", Icon.from(new File("tsbot/TSBot/src/images/emoji/TScardback.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("flag_dd", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_dd.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("flag_yu", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_yu.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("flag_zr", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_zr.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("flag_su", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_su.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("flag_bu", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_bu.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("InfluenceR", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceR.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("InfluenceA", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceA.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("InfluenceRC", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceRC.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("InfluenceAC", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceAC.png")), e.getGuild().getPublicRole());
+			new GuildController(e.getGuild()).createEmote("tank", Icon.from(new File("tsbot/TSBot/src/images/emoji/tank.png")), e.getGuild().getPublicRole());
+		} catch (IOException e1) {
+			System.out.print("Error creating emoji.");
+		}
 		HandManager.addToDeck(0);
 		HandManager.deal();
 		SetupCommand.USSR = true;
