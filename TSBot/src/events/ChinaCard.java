@@ -5,14 +5,14 @@ import game.GameData;
 public class ChinaCard extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		// this should never trigger but is nonetheless required
-		GameData.txtchnl.sendMessage(":warning: Aaaaaaaaaagh how did you even do that is this game bugged");
+		GameData.txtchnl.sendMessage(":warning: Aaaaaaaaaagh how did you even do that is this game bugged I put effort into this to make sure this wasn't bugged just drop a comment on GitHub and I'll rectify it for you just AAAAAAAAAA :fire: :fire: :fire:").complete();
 	}
 
 	@Override
-	public boolean isPlayable() {
-		// this should also not be used
+	public boolean isPlayable(int sp) {
+		// this should be used so you can't play it for the event. China is not headlineable either.
 		return false;
 	}
 
@@ -66,7 +66,7 @@ public class ChinaCard extends Card {
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "Again, you are not using this for an event. Any attempt to do so will result in this card being played for operations.";
+		return "Again, you are not using this for an event. Any attempt to do so will be invalidated.";
 	}
 
 }

@@ -9,7 +9,7 @@ import main.Launcher;
 public class VietnamRevolts extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Dien Bien Phu falls")
@@ -24,7 +24,7 @@ public class VietnamRevolts extends Card {
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

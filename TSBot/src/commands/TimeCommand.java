@@ -3,9 +3,12 @@ package commands;
 import java.util.Arrays;
 import java.util.List;
 
+import cards.CardList;
 import cards.HandManager;
+import events.Decision;
 import game.GameData;
 import game.PlayerList;
+import map.MapManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class TimeCommand extends Command {
@@ -21,10 +24,10 @@ public class TimeCommand extends Command {
 	public static boolean operationsRequired = false;
 	public static boolean spaceRequired = false;
 	public static boolean spaceDone = false;
-	public static boolean decisionRequired = false;
-	public static boolean decisionDone = false;
 	public static boolean trapDone = true;
 	public static boolean NORAD = true;
+	
+	public static boolean isCardDiscarded = true;
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.hasGameEnded()) {
@@ -40,7 +43,7 @@ public class TimeCommand extends Command {
 			return;
 		}
 		if (!cardPlayed) {
-			sendMessage(e, ":x: You are required to play a card every turn.");
+			sendMessage(e, ":x: You are required to play a card.");
 			return;
 		}
 		if (!hl1||!hl2) {
@@ -48,15 +51,11 @@ public class TimeCommand extends Command {
 			return;
 		}
 		if (!trapDone) {
-			sendMessage(e, ":x: You must discard a card to Quagmire/Bear Trap.");
+			sendMessage(e, ":x: I hate Quagmire and Bear Trap as much as you do, but you're still supposed to discard to that.");
 			return;
 		}
 		if (eventRequired&&!eventDone) {
 			sendMessage(e, ":x: You played a card for the event; you must finish it.");
-			return;
-		}
-		if (decisionRequired&&!decisionDone) {
-			sendMessage(e, ":x: There is still an unresolved event. TS.decision exists.");
 			return;
 		}
 		if (operationsRequired&&!operationsDone) {
@@ -68,16 +67,112 @@ public class TimeCommand extends Command {
 			return;
 		}
 		if (!NORAD) {
-			sendMessage(e, ":flag_ca: You have Canada as an ally for a reason, you know.");
+			sendMessage(e, ":flag_ca: You have Canada as an ally for a reason, you know. Eh.");
 			return;
 		}
-		GameData.advanceTime();
-		if (GameData.isHeadlinePhase()) hl1 = (hl2 = false);
-		// TODO return here later after done with Quagmire and BearTrap classes
-		// if (HandManager.Effects.contains(42) && !GameData.isHeadlinePhase() && (GameData.phasing()==0)) trapDone = false;
-		// else if (HandManager.Effects.contains(44) && !GameData.isHeadlinePhase() && (GameData.phasing()==1)) trapDone = false;
+		if (!isCardDiscarded) {
+			sendMessage(e, ":x: You may choose to discard a card - make that decision first.");
+			return;
+		}
+		GameData.checkScore(false, false);
 		
-		else if ((GameData.phasing()==1 && !HandManager.SUNHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.USAHand.isEmpty())) cardPlayed = false;
+		if ((HandManager.effectActive(490) && !HandManager.handContains(0, 49))||(HandManager.effectActive(491) && !HandManager.handContains(1, 49))) {
+			HandManager.removeEffect(490);
+			HandManager.removeEffect(491);
+		}
+		
+		GameData.advanceTime();
+		
+		if (GameData.ccw && HandManager.China==-1 && MapManager.get(86).isControlledBy()==1) {
+			HandManager.China = 1;
+		}
+		if (GameData.isHeadlinePhase()) {
+			if (GameData.hasAbility(0, 6)) {
+				isCardDiscarded = false;
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
+				GameData.dec = new Decision(0, 0);
+				return;
+			}
+			if (GameData.hasAbility(1, 6)) {
+				isCardDiscarded = false;
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
+				GameData.dec = new Decision(1, 0);
+				return;
+			}
+			GameData.startTurn();
+			cardPlayed = false;
+			if (!(GameData.getSpace(0)>=4&&GameData.getSpace(1)<4)) {
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a headline card.").complete();
+			}
+			if (!(GameData.getSpace(1)>=4&&GameData.getSpace(0)<4)) {
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a headline card.").complete();
+			}
+			
+			
+		}
+		else if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
+			boolean canDiscard = false;
+			boolean scoring = false;
+			for (Integer c : HandManager.USAHand) {
+				if (CardList.getCard(c).getOpsMod(0)>=2) {
+					canDiscard = true;
+				}
+				else if (CardList.getCard(c).getOps()==0) {
+					scoring = true;
+				}
+			}
+			if (canDiscard) {
+				trapDone = false;
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you must discard a card worth two Operations points or more to Quagmire. (TS.decide [card])").complete();
+			}
+			else if (scoring) {
+				trapDone = false;
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
+			}
+			else {
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
+			}
+		}
+		else if (HandManager.Effects.contains(44) && (GameData.phasing()==1)) {
+			boolean canDiscard = false;
+			boolean scoring = false;
+			for (Integer c : HandManager.SUNHand) {
+				if (CardList.getCard(c).getOpsMod(0)>=2) {
+					canDiscard = true;
+				}
+				else if (CardList.getCard(c).getOps()==0) {
+					scoring = true;
+				}
+			}
+			if (canDiscard) {
+				trapDone = false;
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you must discard a card worth two Operations points or more to Bear Trap. (TS.decide [card])").complete();
+			}
+			else if (scoring) {
+				trapDone = false;
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
+			}
+			else {
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
+			}
+		}
+		
+		else if ((GameData.phasing()==1 && !HandManager.SUNHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.USAHand.isEmpty())) {
+			cardPlayed = false;
+			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
+			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
+		}
+		else {
+			cardPlayed = false;
+			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+		}
+		eventDone = false;
+		operationsDone = false;
+		eventRequired = false;
+		operationsRequired = false;
+		spaceRequired = false;
+		spaceDone = false;
 	}
 
 	@Override

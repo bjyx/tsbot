@@ -3,22 +3,25 @@ package events;
 import java.awt.Color;
 
 import game.GameData;
+import main.Launcher;
 
 public class DuckAndCover extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("*Duck and Cover*")
-			.setDescription("There was a turtle by the name of Bert...")
-			.setColor(Color.blue);
+			.setDescription("Civil defense film")
+			.setColor(Color.blue)
+			.setFooter("\"He did what we all must learn to do / You—and you—and you—and you! / Duck, and cover! \"\n"
+					+ "- *Duck and Cover*", Launcher.url("countries/bert.png"));
 		builder.changeDEFCON(-1);
 		builder.changeVP(5-GameData.getDEFCON());
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

@@ -1,5 +1,7 @@
 package events;
 
+import java.util.ArrayList;
+
 import game.GameData;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -41,9 +43,9 @@ public class CardEmbedBuilder extends EmbedBuilder {
 		GameData.addMilOps(sp, mil);
 		return (CardEmbedBuilder) this.addField(":tank::Influence" + (sp==0?"A:":"R:") + intToEmoji(mil),"Now at " + GameData.getMilOps(sp),false);
 	}
-	public CardEmbedBuilder bulkChangeInfluence(int[] country, int sp, int[] amt) {
-		for (int i=0; i<country.length; i++) {
-			this.changeInfluence(country[i],sp,amt[i]);
+	public CardEmbedBuilder bulkChangeInfluence(ArrayList<Integer> order, int sp, ArrayList<Integer> values) {
+		for (int i=0; i<order.size(); i++) {
+			this.changeInfluence(order.get(i),sp,values.get(i));
 		}
 		return this;
 	}

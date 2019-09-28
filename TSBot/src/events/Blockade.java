@@ -5,14 +5,14 @@ import game.GameData;
 public class Blockade extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		GameData.dec = new Decision(0, 10);
-		GameData.txtchnl.sendMessage("Pending response.");
-		GameData.txtusa.sendMessage("Awaiting response from " + GameData.roleusa.getAsMention() + " for the Berlin Blockade. (`TS.decide/decision/choose airlift [card]` to lift the blockade, or `concede` to remove your influence in West Germany.)");
+		GameData.txtchnl.sendMessage("Pending response.").complete();
+		GameData.txtusa.sendMessage("Awaiting response from " + GameData.roleusa.getAsMention() + " for the Berlin Blockade. (`TS.decide/decision/choose airlift [card]` to lift the blockade, or `concede` to remove your influence in West Germany.)").complete();
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		// TODO Auto-generated method stub
 		return true;
 	}

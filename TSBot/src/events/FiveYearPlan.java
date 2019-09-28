@@ -11,7 +11,7 @@ public class FiveYearPlan extends Card {
 	public static int card;
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Five Year Plan")
 			.setDescription("Russians Hungry, But Not Starving")
@@ -20,27 +20,25 @@ public class FiveYearPlan extends Card {
 					+ "- Mikhail Gorbachev, 1995", Launcher.url("countries/su.png"));
 		if (HandManager.SUNHand.isEmpty()) {
 			builder.addField("The Soviet hand is empty!", "Can't discard a card if there is no card to discard.", false);
-			GameData.txtchnl.sendMessage(builder.build());
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 			return;
 		}
 		card = HandManager.SUNHand.get((int) (Math.random()*HandManager.SUNHand.size()));
-		if (CardList.getCard(card).getAssociation()==0&&CardList.getCard(card).isPlayable()) {
-			HandManager.SUNHand.remove(HandManager.SUNHand.indexOf(card));
+		if (CardList.getCard(card).getAssociation()==0&&CardList.getCard(card).isPlayable(0)) {
 			GameData.dec = new Decision(0, 5);
 		}
 		else {
 			HandManager.discard(1, card);
-			
 		}
 		builder.addField("Centralization","The Soviets lose **" + CardList.getCard(card) + "** attempting to improve their economy.",false);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 		if (CardList.getCard(card).getAssociation()==0) {
-			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play the event you just pulled from the Soviet hand.");
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play the event you just pulled from the Soviet hand.").complete();
 		}
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

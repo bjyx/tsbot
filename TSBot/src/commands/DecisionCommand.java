@@ -1,14 +1,26 @@
 package commands;
 
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
+import events.CambridgeFive;
+import events.CardEmbedBuilder;
 import events.Decision;
 import events.FiveYearPlan;
+import events.GrainSales;
+import events.MissileEnvy;
+import events.OlympicGames;
+import events.OurManInTehran;
 import game.GameData;
 import game.PlayerList;
+import main.Launcher;
+import map.MapManager;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * The command that handles any decisions to be made with regards to any card that cannot be handled by the event command list. The following cards have such an effect:
@@ -26,16 +38,18 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  * <li> {@code 106 NORAD} - country for influence placement (literal disconnect)
  * <li> {@code 108 Our Man in Tehran} - any of the five cards seen (contingent on seeing cards)
  * </ul>
- * The command will also handle all "operations" that come about as a result of events:
+ * The command will also handle all "operations" that come about as a result of events, as these may be contingent on seeing cards:
  * <ul>
  * <li> {@code 020 Olympic Games} - 4 Ops, any action (after a boycott)
  * <li> {@code 026 CIA Created} - 1 Op, any action
+ * <li> {@code 047 Junta} - 2 Ops, realignments/coup in Latin America
  * <li> {@code 049 Missile Envy} - variable, any action
- * <li> {@code 057 Olympic Games} - 4 Ops, any action
+ * <li> {@code 057 ABM Treaty} - 4 Ops, any action
  * <li> {@code 062 Lone Gunman} - 1 Op, any action
- * <li> {@code 067 Grain Sales to Soviets} - variable, any action (including space)
+ * <li> {@code 067 Grain Sales to Soviets} - variable, quite literally *any* action
  * <li> {@code 089 Soviets Shoot Down KAL-007} - 4 Ops, influence/realignments
  * <li> {@code 090 Glasnost} - 4 Ops, influence/realignments
+ * <li> {@code 096 Tear Down This Wall} - 3 Ops, realignments/coup in Europe
  * </ul>
  * The command will also handle all events that come about as a result of another event:
  * <ul>
@@ -43,6 +57,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  * <li> {@code 047 Missile Envy} - Phasing player's event OR neutral event
  * <li> {@code 067 Grain Sales to Soviets} - Any event
  * <li> {@code 085 Star Wars} - Non-scoring cards
+ * 
+ * The command will also handle discarding of the card at the end of the turn. 
  * @author [REDACTED]
  *
  */
@@ -62,42 +78,224 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: Excuse me, but who are *you* playing as? China's abstracted as a card and the rest of the world has a board space each.");
 			return;
 		}
-		if (GameData.dec == null) {
-			sendMessage(e, ":x: No pending decisions. Are you sure you've satisfied the conditions for that?");
-			return;
-		}
 		if (args.length==1) {
 			sendMessage(e, ":x: Indecision is not an option.");
 			return;
 		}
-		if (GameData.dec.card==5) {
-			if (e.getAuthor().equals(PlayerList.getSSR())) {
-				sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+		if ((HandManager.Effects.contains(400)||HandManager.Effects.contains(401))&&args[1].equals("resolve")) {
+			if (args.length==2) {
+				sendMessage(e, ":x: Write a country. Yes, you still write in the country even if you only have one option.");
 				return;
 			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			
+			int i = MapManager.find(args[2]);
+			if (i==-1) {
+				sendMessage(e, ":x: That's not a country.");
+				return;
+			}
+			builder.setTitle("Crisis Resolved")
+			.setDescription("Missiles pulled out of " + MapManager.get(i).name)
+			.setFooter("","")
+			.setColor(Color.green);
+			if (HandManager.Effects.contains(400)) {
+				if (e.getAuthor().equals(PlayerList.getSSR())) {
+					sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+					return;
+				}
+				if (i!=19&&i!=17) {
+					sendMessage(e, ":x: Those are not where your missiles are...");
+					return;
+				}
+				if (MapManager.get(i).influence[0]<2) {
+					sendMessage(e, ":x: So apparently you can't pull your missiles out of a country you installed them in. So much for peace.");
+					return;
+				}
+				builder.changeInfluence(i, 0, -2);
+			}
+			else {
+				if (e.getAuthor().equals(PlayerList.getUSA())) {
+					sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+					return;
+				}
+				if (i!=65) {
+					sendMessage(e, ":x: Those are not where your missiles are...");
+					return;
+				}
+				if (MapManager.get(i).influence[1]<2) {
+					sendMessage(e, ":x: So apparently you can't pull your missiles out of a country you installed them in. So much for peace.");
+					return;
+				}
+				builder.changeInfluence(i, 1, -2);
+			}
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			return;
+		}
+		if (!TimeCommand.trapDone && !GameData.isHeadlinePhase()) {
+			int x;
+			if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
+				if (e.getAuthor().equals(PlayerList.getSSR())) {
+					sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+					return;
+				}
+				try {
+					x = Integer.parseInt(args[1]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: That's not a number.");
+					return;
+				}
+				if (!HandManager.USAHand.contains(x)) {
+					sendMessage(e, ":x: Don't generate cards out of thin air.");
+					return;
+				}
+				boolean canDiscard = false;
+				for (Integer c : HandManager.USAHand) {
+					if (CardList.getCard(c).getOpsMod(0)>=2) {
+						canDiscard = true;
+					}
+				}
+				if (canDiscard) {
+					if (CardList.getCard(x).getOpsMod(0)<2) {
+						sendMessage(e, ":x: This is not going to help here.");
+						return;
+					}
+					if (x!=49 && CardList.getCard(49).getOpsMod(0)>=2 && HandManager.effectActive(490)) {
+						sendMessage(e, ":x: https://www.gmtgames.com/nnts/FAQv5.pdf, ruling on Missile Envy use under Quagmire.");
+						return;
+					}
+					HandManager.discard(0, x);
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Quagmire!").setDescription("Discarded " + CardList.getCard(x));
+					int die = (int)(6*Math.random()+1);
+					builder.addField("Roll: " + CardEmbedBuilder.intToEmoji(die), die<=4?"Success - Quagmire cancelled!":"Failure", false).setColor(die<=4?Color.blue:Color.red);
+					if (die<=4) HandManager.removeEffect(42);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					TimeCommand.trapDone=true;
+				}
+				else {
+					if (CardList.getCard(x).getOpsMod(0)!=0) {
+						sendMessage(e, ":x: You must play your scoring cards.");
+						return;
+					}
+					CardList.getCard(x).onEvent(0, new String[] {});
+					HandManager.discard(0, x);
+					TimeCommand.trapDone=true;
+				}
+				
+			}
+			else if (HandManager.Effects.contains(44) && (GameData.phasing()==1)) {
+				if (e.getAuthor().equals(PlayerList.getUSA())) {
+					sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+					return;
+				}
+				try {
+					x = Integer.parseInt(args[1]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: That's not a number.");
+					return;
+				}
+				if (!HandManager.SUNHand.contains(x)) {
+					sendMessage(e, ":x: Don't generate cards out of thin air.");
+					return;
+				}
+				boolean canDiscard = false;
+				for (Integer c : HandManager.SUNHand) {
+					if (CardList.getCard(c).getOpsMod(1)>=2) {
+						canDiscard = true;
+					}
+				}
+				if (canDiscard) {
+					if (CardList.getCard(x).getOpsMod(1)<2) {
+						sendMessage(e, ":x: This is not going to help here.");
+						return;
+					}
+					if (x!=49 && CardList.getCard(49).getOpsMod(1)>=2 && HandManager.effectActive(491)) {
+						sendMessage(e, ":x: https://www.gmtgames.com/nnts/FAQv5.pdf, ruling on Missile Envy use under Bear Trap.");
+						return;
+					}
+					HandManager.discard(1, x);
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Bear Trap!").setDescription("Discarded " + CardList.getCard(x));
+					int die = (int)(6*Math.random()+1);
+					builder.addField("Roll: " + CardEmbedBuilder.intToEmoji(die), die<=4?"Success - Bear Trap cancelled!":"Failure", false).setColor(die<=4?Color.red:Color.blue);
+					if (die<=4) HandManager.removeEffect(44);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					TimeCommand.trapDone=true;
+				}
+				else {
+					if (CardList.getCard(x).getOpsMod(1)!=0) {
+						sendMessage(e, ":x: You must play your scoring cards.");
+						return;
+					}
+					CardList.getCard(x).onEvent(1, new String[] {});
+					HandManager.discard(1, x);
+					TimeCommand.trapDone=true;
+				}
+			}
+			else {
+				sendMessage(e, "You shouldn't be seeing this, but you are not a puppeteer.");
+			}
+			return;
+		}
+		if (GameData.dec == null) {
+			sendMessage(e, ":x: No pending decisions. Are you sure you've satisfied the conditions for that?");
+			return;
+		}
+		if (e.getAuthor().equals(PlayerList.getArray().get((GameData.dec.sp+1)%2))) {
+			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+			return;
+		}
+		if (GameData.dec.card==0) {
+			int card;
+			try {
+				card = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Give the number of the card you wish to discard, or 0 if you do not wish to do so.");
+				return;
+			}
+			if (card==0) {
+				sendMessage(e, "Roger.");
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("Space Race Advantage").setDescription("Discarded nothing.");
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+				TimeCommand.isCardDiscarded=true;
+			}
+			else if (card<=CardList.numberOfCards()) {
+				if (!HandManager.discard(GameData.dec.sp, card)) {
+					sendMessage(e, ":x: You don't have this card.");
+					return;
+				}
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("Space Race Advantage").setDescription("Discarded " + CardList.getCard(card));
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+				TimeCommand.isCardDiscarded=true;
+			}
+			else {
+				sendMessage(e, ":x: Give the number of the card you wish to discard.");
+				return;
+			}
+			GameData.startTurn();
+			return;
+		}
+		if (GameData.dec.card==5) {
 			if (!CardList.getCard(FiveYearPlan.card).isFormatted(args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
 			}
-			if (!CardList.getCard(FiveYearPlan.card).isPlayable()) {
+			if (!CardList.getCard(FiveYearPlan.card).isPlayable(0)) {
 				sendMessage(e, "Oops. Forgot you can't play that card for an event. Let's rectify that.");
-				HandManager.Discard.add(FiveYearPlan.card);
+				HandManager.discard(1, FiveYearPlan.card);
 			}
 			else {
 				if (CardList.getCard(FiveYearPlan.card).isRemoved()) {
-					HandManager.Removed.add(FiveYearPlan.card);
+					HandManager.removeFromGame(1, FiveYearPlan.card);
 				}
 				else {
-					HandManager.Discard.add(FiveYearPlan.card);
+					HandManager.discard(1, FiveYearPlan.card);
 				}
-				CardList.getCard(FiveYearPlan.card).onEvent(args);
+				CardList.getCard(FiveYearPlan.card).onEvent(1, args);
 			}
 		}
 		if (GameData.dec.card==10) {
-			if (e.getAuthor().equals(PlayerList.getSSR())) {
-				sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
-				return;
-			}
 			if (args[1].equals("airlift")) {
 				if (args.length < 3) {
 					sendMessage(e, ":x: Allocate some resources to your airlift.");
@@ -111,12 +309,12 @@ public class DecisionCommand extends Command {
 					sendMessage(e, ":x: Now how is that a card!?");
 					return;
 				}
-				if (!HandManager.USAHand.contains(card)) {
-					sendMessage(e, ":x: We don't have that. At least not at our disposal.");
-					return;
-				}
 				if (CardList.getCard(card).getOpsMod(0)<3) {
 					sendMessage(e, ":x: This won't be enough.");
+					return;
+				}
+				if (!HandManager.discard(0, card)) {
+					sendMessage(e, ":x: We don't have that. At least not at our disposal.");
 					return;
 				}
 				Decision.BerlinAirLift(card);
@@ -129,6 +327,400 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
+		if (GameData.dec.card==20) {
+			if (args[1].equals("boycott")) {
+				Decision.OlympicBoycott();
+				GameData.dec = new Decision(OlympicGames.host, 201);
+				GameData.ops = new Operations(GameData.dec.sp, CardList.getCard(34).getOpsMod(GameData.dec.sp), true, true, true, true, false);
+				return;
+			}
+			else if (args[1].equals("compete")) {
+				Decision.OlympicGames();
+			}
+			else {
+				sendMessage(e, ":x: That's not an option.");
+				return;
+			}
+		}
+		if (GameData.dec.card==201) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==26) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==45) {
+			int i;
+			try {
+				i = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: That's not an option. That's not even a number!");
+				return;
+			}
+			if (Math.abs(i)>1) {
+				sendMessage(e, ":x: Ah, nope. The number must be -1, 0, or 1.");
+				return;
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			if (i==-1) {
+				builder.setTitle("Escalation")
+				.setDescription("Espionage incident threatens planned summit")
+				.setFooter("\"\"\n"
+						+ "- ", Launcher.url("countries/XX.png"))
+				.setColor(Color.GRAY);
+			}
+			else if (i==1) {
+				builder.setTitle("Deténte")
+				.setDescription("Soviet-American Summit leads to a decrease in tensions")
+				.setFooter("\"\"\n"
+						+ "- ", Launcher.url("countries/XX.png"))
+				.setColor(Color.GRAY);
+			}
+			else {
+				builder.setTitle("Summit Inconclusive")
+				.setDescription("Meeting ends without reaching an agreement on arms control")
+				.setFooter("\"\"\n"
+						+ "- ", Launcher.url("countries/XX.png"))
+				.setColor(Color.GRAY);
+			}
+			builder.changeDEFCON(i);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (GameData.dec.card==47) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==49) {
+			int i;
+			try {
+				i = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Card IDs are integers. I suppose you forgot that.");
+				return;
+			}
+			if (!(GameData.dec.sp==0?HandManager.USAHand.contains(i):HandManager.SUNHand.contains(i))) {
+				sendMessage(e, ":x: Don't conjure cards out of thin air...");
+				return;
+			}
+			if (CardList.getCard(i).getOps()<MissileEnvy.maxops) {
+				sendMessage(e, ":x: Don't be a trickster. There are cards with a higher OP value.");
+				return;
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Missile Envy")
+				.setDescription("The Arms Race and Nuclear War")
+				.setColor(GameData.dec.sp==0?Color.red:Color.blue)
+				.setFooter("The superpowers often behave like two heavily armed blind men "
+						+ "feeling their way around a room, each believing himself in mortal peril from the other, "
+						+ "whom he assumes to have perfect vision... Of course, over time, "
+						+ "even two armed blind men can do enormous damage to each other, "
+						+ "not to speak of the room.\n" + 
+						"- Henry Kissinger, 1979", Launcher.url("countries/us.png"));
+			builder.addField("Helen Caldicott", GameData.dec.sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
+			MissileEnvy.card = i;
+			HandManager.transfer((GameData.dec.sp+1)%2, 49);
+			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {
+				HandManager.discard(GameData.dec.sp, i);
+				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, true, false);
+			}
+			else {
+				if (CardList.getCard(i).isRemoved()) {
+					HandManager.removeFromGame(GameData.dec.sp, i);
+				}
+				else if (i!=73) {
+					HandManager.discard(GameData.dec.sp, i);
+				}
+				else {
+					HandManager.removeFromHand(GameData.dec.sp, i);
+				}
+			}
+			GameData.dec = new Decision((GameData.dec.sp+1)%2, 491);
+			return;
+		}
+		if (GameData.dec.card==491) {
+			HandManager.addEffect(490 + (GameData.dec.sp+1)%2); //handles part 2
+			if (CardList.getCard(MissileEnvy.card).getAssociation()==(GameData.dec.sp+1)%2) {
+				boolean result = GameData.ops.ops(args);
+				if (!result) return;
+			}
+			else if (CardList.getCard(MissileEnvy.card).isPlayable(GameData.dec.sp)) {
+				CardList.getCard(MissileEnvy.card).onEvent(GameData.dec.sp, args);
+			}
+		}
+		if (GameData.dec.card==57) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==62) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==67) {
+			List<Character> modes = Arrays.asList('r','e','o','s','u');
+
+			if (args.length<2) {
+				sendMessage(e, ":x: You're playing... what, exactly? And how?");
+				return;
+			}
+			int card = GrainSales.card;
+			char mode = args[1].charAt(0);
+			e.getMessage().delete().complete();
+			if (!modes.contains(mode)) {
+				sendMessage(e, ":x: Modes can be any of h, e, o, s, or u. Not the one you chose, though.");
+				return;
+			}
+			if (mode == 'o'&&CardList.getCard(card).getOps()==0) { //All cards have either an op value or is a scoring card that is obligatorily played for the event
+				sendMessage(e, ":x: This card must be played for the event only.");
+				return;
+			}
+			if (mode == 's' && (GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))==8||CardList.getCard(card).getOpsMod(GameData.phasing())<Operations.spaceOps[GameData.getSpace(GameData.phasing())])) {
+				sendMessage(e, ":x: You cannot play this card on the space race.");
+				return;
+			}
+			if (mode=='s'&&GameData.hasSpace(PlayerList.getArray().indexOf(e.getAuthor()))) {
+				sendMessage(e, ":x: Wait until next turn to space this card.");
+				return;
+			}
+			if ((mode=='e'||mode=='u')&&!CardList.getCard(card).isPlayable(0)) {
+				sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
+				return;
+			}
+			if (mode == 'e' && card == 32) {
+				if (args.length<3) {
+					sendMessage(e, "So you drew UN Intervention and intend to event it. On what?");
+					return;
+				}
+				mode='u';
+				try {
+					card = Integer.parseInt(args[2]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: That's no card. Cards are denoted by integers.");
+					return;
+				}
+				if (card<=0 || card > 110) {
+					sendMessage(e, ":x: Cards are indexed from 1 to 110.");
+					return;
+				}
+			}
+			if (mode=='u'&&HandManager.handContains(0, 32)) {
+				sendMessage(e, "Actually have the 'UN Intervention' Card in your hand first.");
+				return;
+			}
+			if (mode=='u'&&CardList.getCard(card).getAssociation()!=(GameData.phasing()+1)%2) {
+				sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
+				return;
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Soviet Union Accepts Grain Deal")
+			.setDescription("9 million tons of grain to be bought per year")
+			.setFooter("", "")
+			.setColor(Color.blue);
+			if (mode=='r') {
+				HandManager.transfer(0, card);
+				GameData.ops = new Operations (0, CardList.getCard(67).getOpsMod(0), true, true, true, true, false);
+				GrainSales.status = 'o';
+				builder.addField("Obtained card: " + CardList.getCard(card), "Card to be returned to the USSR.", false);
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have returned the card. You may conduct operations using Grain Sales to Soviets.").complete();
+			}
+			if (mode=='e') {
+				if (CardList.getCard(card).getAssociation()==1) {
+					if (CardList.getCard(card).isRemoved()) {
+						HandManager.removeFromGame(0, card);
+					}
+					else if (card!=73) {
+						HandManager.discard(0, card);
+					}
+					else HandManager.removeFromHand(0, card);
+					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used for the event before operations.", false);
+					GrainSales.status = 'f';
+				}
+				else {
+					if (CardList.getCard(card).isRemoved()) {
+						HandManager.removeFromGame(0, card);
+					}
+					else if (card!=73) {
+						HandManager.discard(0, card);
+					}
+					else HandManager.removeFromHand(0, card);
+					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used as event.", false);
+					GrainSales.status = 'e';
+				}
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may implement this event.").complete();
+			}
+			if (mode=='o') {
+				if (CardList.getCard(card).getAssociation()==1&&CardList.getCard(card).isPlayable(0)) {
+					if (CardList.getCard(card).isRemoved()) {
+						HandManager.removeFromGame(0, card);
+					}
+					else if (card!=73) {
+						HandManager.discard(0, card);
+					}
+					else HandManager.removeFromHand(0, card);
+					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used for operations before the event.", false);
+					GrainSales.status = 'l'; //event last
+				}
+				else {
+					HandManager.discard(0, card);
+					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used for operations.", false);
+					GrainSales.status = 'o'; //ops only
+				}
+				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.").complete();
+
+			}
+			if (mode=='s') {
+				HandManager.discard(0, card);
+				GrainSales.status = 's';
+				builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used on the space race.", false);
+				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), false, false, false, true, false);
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now send this card to space.").complete();
+
+			}
+			if (mode=='u') {
+				EmbedBuilder un = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
+					.setDescription("The UN collectively agrees on something for once")
+					.setFooter("\"\"\n"
+							+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
+					.setColor(Color.blue)
+					.setImage(Launcher.url("cards/032.png"))
+					.addField("UN Security Council Resolution", "The action described by the card just played has been condemned by the UN, and will not occur.", false);
+				GameData.txtchnl.sendMessage(un.build()).complete();
+				HandManager.discard(0, card);
+				HandManager.discard(0, 32);
+				GrainSales.status = 'o';
+				if (GrainSales.card==32) builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card used on " + CardList.getCard(card), false);
+				else builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card matched with UN Intervention for operations.", false);
+				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.");
+			}
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			GameData.dec = new Decision(0, 671);
+			return;
+		}
+		if (GameData.dec.card==671) {
+			if (GrainSales.status=='e'||GrainSales.status=='f') {
+				if (!CardList.getCard(GrainSales.card).isFormatted(args)) {
+					sendMessage(e, ":x: Format your arguments correctly.");
+					return;
+				}
+				CardList.getCard(GrainSales.card).onEvent(0, args);
+			}
+			if (GrainSales.status=='o'||GrainSales.status=='l') {
+				boolean result = GameData.ops.ops(args);
+				
+				if (!result) {
+					return;
+				}
+			}
+			if (GrainSales.status=='s') {
+				GameData.ops.space();
+			}
+			if (GrainSales.status=='l') {
+				GrainSales.status='e';
+				return;
+			}
+			if (GrainSales.status=='f') {
+				GrainSales.status='o';
+				return;
+			}
+		}
+		if (GameData.dec.card==104) {
+			int i = MapManager.find(args[1]);
+			if (i!=-1 && CambridgeFive.regions[MapManager.get(i).region]) {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Intelligence Secrets Leaked")
+				.setDescription("Attempted operations in " + MapManager.get(i).name + " fail")
+				.setFooter("\"The agents we sent into Albania were armed men intent on murder, sabotage and assassination ..."
+						+ "They knew the risks they were running. I was serving the interests of the Soviet Union "
+						+ "and those interests required that these men were defeated. "
+						+ "To the extent that I helped defeat them, even if it caused their deaths, I have no regrets.\"\n"
+						+ "- Kim Philby, on Operation Valuable", Launcher.url("countries/gb.png"))
+				.setColor(Color.RED);
+				builder.changeInfluence(i, 1, 1);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else {
+				sendMessage(e, ":x: Philby would like to inform you that you aren't reacting to anything related to this intelligence.");
+				return;
+			}
+		}
+		if (GameData.dec.card==106) {
+			int i = MapManager.find(args[1]);
+			if (i!=1 && MapManager.get(i).influence[0]>0) {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Two Minutes to Midnight")
+				.setDescription("Allied forces in " + MapManager.get(i).name + " put on high alert")
+				.setFooter("\"\"\n"
+						+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
+				.setColor(Color.BLUE);
+				builder.changeInfluence(i, 0, 1);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else {
+				sendMessage(e, ":x: You must drop this influence in a country with American influence.");
+				return;
+			}
+		}
+		if (GameData.dec.card==108) {
+			ArrayList<Integer> order = new ArrayList<Integer>();
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Our Man in " + OurManInTehran.capital[OurManInTehran.country-21])
+			.setDescription("The President and his ally in the Middle East")
+			.setFooter("\"We have no other nation on earth... closer to us in planning our mutual military security. "
+					+ "We have no other nation with whom we have closer consultation on regional problems that concern us both. "
+					+ "And there is no leader with whom I have a deeper sense of personal gratitude and personal friendship.\"\n"
+					+ "- James E. Carter, 1978", Launcher.url("countries/us.png"))
+			.setColor(Color.BLUE);
+			for (int i = 1; i<args.length; i++) {
+				try {
+					int x = Integer.parseInt(args[i]);
+					order.add(x);
+					if (order.indexOf(x)!=order.lastIndexOf(x)) {
+						sendMessage(e, ":x: No duplicates.");
+						return;
+					}
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: This is not a card. This isn't even a number!");
+					return;
+				}
+			}
+			String str = "";
+			if (order.size()==1 && order.get(0)==0) {
+				sendMessage(e, "Roger.");
+				builder.addField("", "Discarded nothing.", false);
+			}
+			else {
+				if (OurManInTehran.cards.containsAll(order)) {
+					for (Integer i : order) {
+						HandManager.Discard.add(i);
+						OurManInTehran.cards.remove(i);
+						str += CardList.getCard(i) + "\n";
+					}
+				}
+				else {
+					sendMessage(e, ":x: This definitely didn't turn up in your sneak preview.");
+					return;
+				}
+				builder.addField("Discarded the following:", str, false);
+			}
+			HandManager.Deck.addAll(OurManInTehran.cards);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
 		// TODO more events as enumerated above as they come
 		GameData.dec=null;
 		TimeCommand.eventDone = true;
@@ -137,14 +729,12 @@ public class DecisionCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.decide","TS.decision","TS.choose");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "When prompted, choose between one of two or more options.";
+		return "When prompted, supply input requested by an event.";
 	}
 
 	@Override

@@ -13,6 +13,8 @@ public class SetupCommand extends Command {
 
 	public static boolean USSR = false;
 	public static boolean USA = false;
+	public static boolean hreq = false;
+	public static int handicap = 2;
 	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
@@ -24,11 +26,18 @@ public class SetupCommand extends Command {
 			sendMessage(e, ":hourglass: There's a time and place for everything, but not now.");
 			return;
 		}
-		if (!(USSR||USA)) {
-			GameData.txtchnl.sendMessage("That's not the part of the game you're looking for.");
+		if (e.getChannel().equals(GameData.txtchnl)) {
+			sendMessage(e, ":x: Don't. You're compromising your play.");
 			return;
 		}
-		if (USSR&&e.getAuthor().equals(PlayerList.getSSR())) {
+		if (!(USSR||USA)) {
+			sendMessage(e, "That's not the part of the game you're looking for.");
+			return;
+		}
+		if (hreq) {
+			GameData.ops = new Operations(USA?0:1, Math.abs(handicap), true, false, false, false, false);
+		}
+		else if (USSR&&e.getAuthor().equals(PlayerList.getSSR())) {
 			GameData.ops = new Operations(1, 6, true, false, false, false, false);
 		}
 		else if (USA&&e.getAuthor().equals(PlayerList.getUSA())) {
@@ -50,13 +59,21 @@ public class SetupCommand extends Command {
 				sendMessage(e, ":x: "+args[i]+" isn't a country or alias of one.");
 				return;
 			}
-			if (countries[(i-1)/2] > 20) {
-				sendMessage(e, ":x: You sure you aren't going to reinforce your positions in Europe?");
-				return;
+			if (!hreq) {
+				if (countries[(i-1)/2] > 20) {
+					sendMessage(e, ":x: You sure you aren't going to reinforce your positions in Europe?");
+					return;
+				}
+				if ((USSR && MapManager.get(countries[(i-1)/2]).region==1)||(USA && MapManager.get(countries[(i-1)/2]).region==2)) {
+					sendMessage(e, ":x: Stay on your side of the curtain.");
+					return;
+				}
 			}
-			if ((USSR && MapManager.get(countries[(i-1)/2]).region==1)||(USA && MapManager.get(countries[(i-1)/2]).region==2)) {
-				sendMessage(e, ":x: Stay on your side of the curtain.");
-				return;
+			else {
+				if ((USSR&&MapManager.get(countries[(i-1)/2]).influence[1]==0)||(USA&&MapManager.get(countries[(i-1)/2]).influence[0]==0)) {
+					sendMessage(e, ":x: Handicap influence can only be placed within countries that already hold your influence.");
+					return;
+				}
 			}
 			try {
 				amt[(i-1)/2] = Integer.parseInt(args[i+1]);
@@ -77,11 +94,33 @@ public class SetupCommand extends Command {
 		if (USSR) {
 			USSR = false;
 			USA = true;
-			sendMessage(e, PlayerList.getUSA().getAsMention() + ", please place seven influence markers in Western Europe. (Use TS.setup)");
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please place seven influence markers in Western Europe. (Use TS.setup)").complete();
 		}
 		else if (USA) {
 			USA = false;
-			sendMessage(e, "Both players may now select their headlines. (`TS.play **[card]** h`)");
+			if (handicap==0) {
+				GameData.endSetupPhase();
+				GameData.txtchnl.sendMessage("Both players may now select their headlines. (`TS.play **[card]** h`)").complete();
+			}
+			else {
+				hreq = true;
+				if (handicap>0) {
+					USA = true;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please place your handicap influence. (Use TS.setup)").complete();
+				}
+				else {
+					USSR = true;
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please place your handicap influence. (Use TS.setup)").complete();
+				}
+			}
+		}
+		else if (hreq) {
+			handicap = 0;
+			hreq = false;
+			USSR = false;
+			USA = false;
+			GameData.endSetupPhase();
+			GameData.txtchnl.sendMessage("Both players may now select their headlines. (`TS.play **[card]** h`)").complete();
 		}
 	}
 

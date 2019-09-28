@@ -2,6 +2,8 @@ package events;
 
 import java.awt.Color;
 
+import cards.CardList;
+import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -9,7 +11,7 @@ import map.MapManager;
 public class ArabIsraeliWar extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		int die = (int) (Math.random()*6+1);
 		int mod = die;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -25,85 +27,77 @@ public class ArabIsraeliWar extends Card {
 			mod--;
 			adjacents += MapManager.get(25);
 		}
-		builder.addField("Arab League invades Israel", "Roll: " + CardEmbedBuilder.numbers[die] + (mod==die?"":(" - " + adjacents)), false);
+		builder.addField("Arab League invades Israel", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
 		if (die>=4) {
-			builder.setTitle("")
+			builder.setTitle("Arab-Israeli War: Arab Victory")
 				.setDescription("Palestinian State established in Jerusalem; Congress in uproar")
-				.setFooter("\"To contribute posi­tively to the work of building the state, let those with strength give strength, let those with knowledge give knowledge, let those with money give money, and let all people who truly love their country, their nation and democ­racy unite closely and build an independent and sovereign democratic state.\"\n"
-						+ "- Kim Il-Sung, 1945", Launcher.url("countries/kp.png"))
+				.setFooter("\"It will be a war of annihilation. It will be a momentous massacre in history that will be talked about like the massacres of the Mongols or the Crusades.\"\n"
+						+ "- Azzam Pasha, 1947", Launcher.url("countries/eg.png"))
 				.setColor(Color.red);
 			builder.changeInfluence(42, 1, MapManager.get(42).influence[0]);
 			builder.changeInfluence(42, 0, -MapManager.get(42).influence[0]);
 			builder.changeVP(-2);
 		}
 		else {
-			builder.setTitle("Korean War Devolves Into Stalemate")
-				.setDescription("Armistice declared at Panmunjom")
-				.setFooter("\"That we were able to snatch victory from the jaws of defeat ... does not relieve us from the blame of having placed our own flesh and blood in such a predicament.\"\n"
-						+ "- Major General Floyd L. Parks, 195X",Launcher.url("countries/us.png"))
+			builder.setTitle("Israel Triumphant Against Neighbors")
+				.setDescription("Land ceded from neighboring nations")
+				.setFooter("\"We have always said that in our war with the Arabs we had a secret weapon — no alternative.\"\n"
+						+ "- Golda Meir, 1969",Launcher.url("countries/il.png"))
 				.setColor(Color.blue);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
-	public boolean isPlayable() {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isPlayable(int sp) {
+		// Cannot be played under Camp David Accords
+		return !HandManager.Effects.contains(65); 
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return "013";
 	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "Arab-Israeli War";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isFormatted(String[] args) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "The USSR rolls 1 die and adds 2 Military Ops. Subtract 1 from the roll for every country adjacent to Israel that the US controls, and an additional 1 if the US controls Israel. On a modified roll of 4-6, the USSR gains 2 VP and replace all influence in Israel with your own. \n*Cannot be played if " + CardList.getCard(65) + " is in effect.*";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
-		return null;
+		return "None.";
 	}
 
 }

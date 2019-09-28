@@ -1,24 +1,86 @@
 package events;
 
+import java.awt.Color;
+
 import cards.HandManager;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
+
+/**
+ * The abstract class defining a card in the game. Most other classes in this package are derivatives of this class.
+ * @author [REDACTED]
+ *
+ */
 public abstract class Card {
+	/**
+	 * Strings, representing various numbers betweeon 0 and 6. 
+	 */
 	public static final String[] numbers = {"zero","one","two","three","four","five","six"};
-	public abstract void onEvent(String[] args); //what happens when played for event?
-	public abstract boolean isPlayable();
+	/**
+	 * The event associated with the card.
+	 * @param sp is the superpower *playing* the card (to be distinguished from the phasing player, in the case of self-inflicted Five-Year Plan or Grain Sales).
+	 * @param args includes the parameters for the event.
+	 */
+	public abstract void onEvent(int sp, String[] args);
+	/**
+	 * Determines whether the card is playable at the current moment
+	 * @param sp is the superpower playing the card (only relevant for Red Scare under CCW rules).
+	 * @return true if the card is playable in the current set of circumstances, false otherwise.
+	 */
+	public abstract boolean isPlayable(int sp);
+	/**
+	 * Gives the ID of the card.
+	 * @return A string, containing the ID (a three-digit integer with leading zeroes from 1 to the card count).
+	 */
 	public abstract String getId();
+	/**
+	 * Gives the name of the card.
+	 * @return A string containing the name.
+	 */
 	public abstract String getName();
+	/**
+	 * Gives the number of Operation Points a card has.
+	 * @return An integer.
+	 */
 	public abstract int getOps();
-	public abstract int getEra(); //0 for early, 1 for mid, 2 for late; +3 for optional
-	public abstract int getAssociation(); //0 for US, 1 for USSR, 2 for neutral;
+	/**
+	 * Gives the era of the card.
+	 * @return 0 for an early war card, 1 for a mid war card, 2 for a late war card.
+	 */
+	public abstract int getEra();
+	/**
+	 * Gives the superpower associated with the card.
+	 * @return 0 for a US event, 1 for a USSR event, 2 for a neutral event.
+	 */
+	public abstract int getAssociation();
+	/**
+	 * Whether the event will be reshuffled into the deck after being played for the event.
+	 * @return A boolean value.
+	 */
 	public abstract boolean isRemoved();
+	/**
+	 * Whether the arguments in the event tag are suitable for this event.
+	 * @param args are the arguments presented to the event.
+	 * @return A boolean value.
+	 */
 	public abstract boolean isFormatted(String[] args);
+	/**
+	 * A description of the card and how it works.
+	 * @return A string.
+	 */
 	public abstract String getDescription();
+	/**
+	 * A description of the arguments to be used with the event command.
+	 * @return A string.
+	 */
 	public abstract String getArguments();
 	
+	/**
+	 * 
+	 * @return One of "A", "R", or "N", depending on the association of the given card.
+	 */
 	public String getAssociationString() {
 		if (getAssociation() == 0) return "A";
 		if (getAssociation() == 1) return "R";
@@ -29,16 +91,26 @@ public abstract class Card {
 		return "`" + getId() + " " + getName() + (isRemoved()?"*":"") + " (" + (getOps()==0?"S":getOps()) + getAssociationString() + ")`";
 	}
 	
-	public MessageEmbed toEmbed() {
+	/**
+	 * Turns the information of the card into an embed.
+	 * @return the embed.
+	 */
+	public MessageEmbed toEmbed(int sp) {
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle(":" + numbers[getOps()] + "::Influence" + getAssociationString() + ": `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
-				.setImage(Launcher.url("cards/" + getId()))
+				.setImage(Launcher.url("cards/" + getId() + ".png"))
 				.setDescription(getDescription())
+				.setColor(sp==0?Color.blue:(sp==1?Color.red:Color.gray))
 				.addField("Arguments:",getArguments(),false);
 		return builder.build();
 	}
-	
+	/**
+	 * Applies the effects of Red Scare/Purge and Containment/Brezhnev Doctrine to the cards.
+	 * @param sp
+	 * @return the actual number of Operations able to be used using this card. 
+	 */
 	public int getOpsMod(int sp) {
+		if (getOps()==0) return 0;
 		if (sp==0) {
 			return Math.max(1, Math.min(4, this.getOps() + (HandManager.Effects.contains(25)?1:0) - (HandManager.Effects.contains(310)?1:0)));
 		}

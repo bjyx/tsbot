@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 import map.Country;
 import map.MapManager;
 
@@ -12,14 +13,20 @@ public class MiddleEastScoring extends Card {
 	private static final int domination = 5;
 	private static final int control = 7;
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		int[] totalCountries = {0,0};
 		int[] battlegrounds = {0,0};
 		String[] strings = {"","","",""};
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Middle East Scoring")
 			.setDescription("")
-			.setColor(Color.CYAN);
+			.setColor(Color.CYAN)
+			.setFooter("The world petroleum story is one of the most inhuman known to man: "
+					+ "in it, elementary moral and social principles are jeered at. "
+					+ "If powerful oil trusts no longer despoil and humiliate our country "
+					+ "it is not because these predators have become human, "
+					+ "but because we have won a hard-fought battle which has been going on since the beginning of the century.\n" + 
+					"- Mohammed Reza Pahlavi", Launcher.url("countries/ir.png"));
 		int vp = 0;
 		for (int i = 21; i<31; i++) { //Egypt and Afghanistan, resp.
 			Country c = MapManager.get(i);
@@ -56,7 +63,7 @@ public class MiddleEastScoring extends Card {
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

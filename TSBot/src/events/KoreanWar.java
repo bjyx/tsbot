@@ -2,6 +2,7 @@ package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -9,7 +10,7 @@ import map.MapManager;
 public class KoreanWar extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		int die = (int) (Math.random()*6+1);
 		int mod = die;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -21,7 +22,11 @@ public class KoreanWar extends Card {
 				adjacents += MapManager.get(i);
 			}
 		}
-		builder.addField("North Korea Invades South Korea", "Roll: " + CardEmbedBuilder.numbers[die] + (mod==die?"":(" - " + adjacents)), false);
+		if (GameData.ccw && HandManager.China==-1) { //woo chinese civil war
+			mod--;
+			adjacents += MapManager.get(86);
+		}
+		builder.addField("North Korea Invades South Korea", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
 		if (die>=4) {
 			builder.setTitle("Communist Victory in Korean War")
 				.setDescription("Kim Il-Sung gives victory speech in Seoul; Congress in uproar")
@@ -43,7 +48,7 @@ public class KoreanWar extends Card {
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 
@@ -84,7 +89,7 @@ public class KoreanWar extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The USSR rolls 1 die and adds 2 Military Ops. Subtract 1 from the roll for every country adjacent to South Korea that the US controls. On a modified roll of 4-6, gain 2 VP and replace all influence in South Korea with your own.";
+		return "The USSR rolls 1 die and adds 2 Military Ops. Subtract 1 from the roll for every country adjacent to South Korea that the US controls. On a modified roll of 4-6, the USSR gains 2 VP and replace all influence in South Korea with your own.";
 	}
 
 	@Override

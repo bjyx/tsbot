@@ -58,7 +58,7 @@ public class HandManager {
 	 * <li>{@code 050 We Will Bury You} - If active after the US plays his card, add 3 VP to the USSR if the card is not UN Intervention for the event. √</li>
 	 * <li>{@code 051 Brezhnev Doctrine} - Containment for the USSR.</li>
 	 * <li>{@code 055 Willy Brandt} - Disables {@code 021 NATO} for West Germany. Cancelled by {@code 096 Tear Down This Wall}. - </li>
-	 * <li>{@code 059 Flower Power} - All war cards played for anything besides the space race (unless {@code 013 Arab-Israeli War} was disabled by {@code 065 Camp David Accords} will grant 2 VP to the USSR. Cancelled by {@code 097 "An Evil Empire"}. - </li>
+	 * <li>{@code 059 Flower Power} - All war cards played for anything besides the space race (unless {@code 013 Arab-Israeli War} was disabled by {@code 065 Camp David Accords}) will grant 2 VP to the USSR. Cancelled by {@code 097 "An Evil Empire"}. </li>
 	 * <li>{@code 060 U2 Incident} - If UN Intervention is played during this turn, the USSR gains 1 VP. √</li>
 	 * <li>{@code 065 Camp David Accords} - Disables {@code 013 Arab Israeli War}.</li>
 	 * <li>{@code 068 John Paul II Elected} - Allows the play of {@code 100 Solidarity}.</li>
@@ -78,13 +78,21 @@ public class HandManager {
 	 * <li>{@code 311 Purge} - The USSR gets -1 Operation point on every card for the rest of the turn to a minimum of 1.</li>
 	 * <li>{@code 400 Turkish Missile Crisis} - For the rest of the turn, the US cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Turkey or West Germany.</li>
 	 * <li>{@code 401 Cuban Missile Crisis} - For the rest of the turn, the USSR cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Cuba.</li>
+	 * <li>{@code 490 Missile Envy} - The next US Action Round must use the card Missile Envy on either Operations or Quagmire, if possible. </li>
+	 * <li>{@code 491 Missile Envy} - The next USSR Action Round must use the card Missile Envy on either Operations or Bear Trap, if possible. </li>
 	 * <li>{@code 690 Latin American Death Squads} - All US coups in Central and South America get +1 to the roll; all USSR coups in the same area get -1 to the roll.</li>
 	 * <li>{@code 691 Latin American Death Squads} - All USSR coups in Central and South America get +1 to the roll; all US coups in the same area get -1 to the roll.</li>
+	 * <li>{@code 1001 Yalta 6} - The US goes first in all turns during the early war.
+	 * <li>{@code 1002 Allied Berlin} - Disables {@code 010 Blockade}. Europe Scoring is now modified with Allied Berlin (3/6/6 instead of 3/7/V).
+	 * <li>{@code 1003 VJ 6} - The US ignores DEFCON restrictions during Turn 1. DEFCON cannot drop below 2. Coups galore!
+	 * <li>{@code 1004 Coalition Government} - Socialist Governments has no effect during Turns 1 and 2.
+	 * <li>{@code 1005 Tory Victory} - Disables {@code 028 Suez Crisis}.
 	 * </ul>
 	 */
 	public static ArrayList<Integer> Effects;
 	/**
 	 * The status of the China Card:
+	 * <br> -1 at the start of Chinese Civil War optional rule games.
 	 * <br>	0 if in US hand face up
 	 * <br> 1 if in USSR hand face up
 	 * <br> 2 if in US hand face down
@@ -138,8 +146,27 @@ public class HandManager {
 	 */
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
-			if (c.getEra()==era&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c)); //If the card isn't China and is part of the era listed, add that card
+			if ((c.getEra()==era||(c.getEra()==era+3&&GameData.optional))&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c)); //If the card isn't China and is part of the era listed, add that card
 		}
+	}
+	/**
+	 * Sets up a deck for the Late War scenario.
+	 */
+	public static void lateWarDeck() {
+		for (Card c : CardList.cardList) {
+			if ((c.getEra()%3!=2)&&!c.isRemoved()&&(c.getEra()<3||GameData.optional)&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c));
+		}
+		addToDeck(2); //late war cards
+		Deck.add(44); //bear trap
+		Deck.add(65); //camp david
+		Deck.add(68); //jp2
+		Deck.add(64); //panama canal
+		Effects.add(27); //anpo
+		Effects.add(23); //mp
+		Effects.add(21); // nato
+		Effects.add(16); //wp
+		Effects.add(17); //degaulle
+		Effects.add(59); //fp
 	}
 	/**
 	 * Deals each player a hand of eight or nine cards, depending on the era. If the deck is empty, it reshuffles the discards.
@@ -196,12 +223,14 @@ public class HandManager {
 	 */
 	public static void play(int sp, int card, char mode) {
 		
-		if (Effects.contains(50)&&sp==0&&mode!='h') {
+		if (effectActive(50)&&sp==0&&mode!='h') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("We Will Bury You...");
-			if(card!=32 || mode != 'e') {
+			if(mode != 'u') {
 				builder.setDescription("...and the UN sits idle.")
-					.setFooter("\"If you don't like us, don't accept our invitations, and don't invite us to come to see you. Whether you like it or not, history is on our side.\" \n"
+					.setFooter("\"If you don't like us, don't accept our invitations, "
+							+ "and don't invite us to come to see you. "
+							+ "Whether you like it or not, history is on our side.\" \n"
 							+ "- Nikita Khrushchev, 1956", Launcher.url("countries/su.png"))
 					.setColor(Color.red);
 				builder.changeVP(-3);
@@ -209,88 +238,99 @@ public class HandManager {
 			else {
 				builder.setDescription("UN INTERVENTION!")
 					.setColor(Color.blue)
-					.setFooter("\"We are happy with our way of life. We recognize its shortcomings and are always trying to improve it. But if challenged, we shall fight to the death to preserve it.\"\n"
+					.setFooter("\"We are happy with our way of life. "
+							+ "We recognize its shortcomings and are always trying to improve it. "
+							+ "But if challenged, we shall fight to the death to preserve it.\"\n"
 							+ "- Norris Poulson, 1959", Launcher.url("countries/us.png"));
 			}
-			Effects.remove(Effects.indexOf(50));
-			GameData.txtchnl.sendMessage(builder.build());
-		}
-		
-		if (Effects.contains(60)&&card==32) {
+			removeEffect(50);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		} //We will bury you always goes first lul
+		GameData.checkScore(false, false);
+		if (effectActive(60)&&mode=='u') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("U2 Incident")
-				.setDescription("UN INTERVENTION!")
-				.setFooter("\"I must tell you a secret. When I made my first report I deliberately did not say that the pilot was alive and well ... and now just look how many silly things the Americans have said.\n" + 
-						"\n- Nikita Khrushchev, 1960\"",Launcher.url("countries/su.png"))
+			builder.setTitle("U2 Incident—Khrushchev's Trap!")
+				.setDescription("Downed pilot revealed to be alive")
+				.setFooter("\"I must tell you a secret. When I made my first report "
+						+ "I deliberately did not say that the pilot was alive and well ... "
+						+ "and now just look how many silly things the Americans have said.\"\n" + 
+						"- Nikita Khrushchev, 1960",Launcher.url("countries/su.png"))
 				.setColor(Color.red);
 			builder.changeVP(-1);
-			Effects.remove(Effects.indexOf(60));
-			GameData.txtchnl.sendMessage(builder.build());
+			removeEffect(60);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
 		
-		if (Effects.contains(59)&&((card==13&&!Effects.contains(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
+		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Flower Power")
 				.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
-				.setFooter("\"I think that we're up against the strongest, well-trained, militant, revolutionary group that has ever assembled in America.\" \n"
+				.setFooter("\"I think that we're up against the strongest, well-trained, "
+						+ "militant, revolutionary group that has ever assembled in America.\" \n"
 						+ "- Jim Rhodes, 1970", Launcher.url("countries/us.png"))
 				.setColor(Color.red);
-			builder.changeVP(-1);
-			GameData.txtchnl.sendMessage(builder.build());
-		}
-		
-		if (card==6) {
-			if (China==sp) {
-				China = (China+1)%2+2;
-				activecard=6;
-				playmode = 'o';
-				removeEffect(35);
-				return;
-			}
-		}
-		
-		if (sp==0&&USAHand.contains(card)) {
-			USAHand.remove(card);
-		}
-		if (sp==1&&SUNHand.contains(card)) {
-			SUNHand.remove(card);
+			builder.changeVP(-2);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
 		//super complicated area, will nitgrit later
 		if (mode=='h') {
 			if (CardList.getCard(card).isRemoved()) {
-				Removed.add(card);
+				removeFromGame(sp, card);
 			}
-			else {
-				Discard.add(card);
+			else if (card!=73) {
+				discard(sp, card);
 			}
+			else removeFromHand(sp, card);
 			playmode = 'h';
 			headline[sp]=card;
 			
 			if (headline[(sp+1)%2]!=0) {
-				if (CardList.getCard(headline[0]).getOps()>=CardList.getCard(headline[1]).getOps()) precedence = 0;
-				else precedence = 1;
+				if (headline[0]==103) {
+					precedence = 0;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
+				}
+				else if (CardList.getCard(headline[0]).getOps()>=CardList.getCard(headline[1]).getOps()) {
+					precedence = 0;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
+				}
+				else {
+					precedence = 1;
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
+				}
 				TimeCommand.cardPlayed = true;
 				TimeCommand.hl1 = false;
 				TimeCommand.hl2 = false;
+				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp)).complete();
+				if (!(GameData.hasAbility(sp,4))) GameData.txtchnl.sendMessage(CardList.getCard(headline[(sp+1)%2]).toEmbed((sp+1)%2)).complete();
 			}
+			else if (GameData.hasAbility((sp+1)%2,4)) {
+				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp)).complete();
+				if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline card.").complete();
+				else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline card.").complete();
+			}
+		}
+		else {
+			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp)).complete();
 		}
 		if (mode=='e') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
 				if (CardList.getCard(card).isRemoved()) {
-					Removed.add(card);
+					removeFromGame(sp, card);
 				}
-				else {
-					Discard.add(card);
+				else if (card!=73) {
+					discard(sp, card);
 				}
+				else removeFromHand(sp, card);
 				playmode = 'f';
 			}
 			else {
 				if (CardList.getCard(card).isRemoved()) {
-					Removed.add(card);
+					removeFromGame(sp, card);
 				}
-				else {
-					Discard.add(card);
+				else if (card!=73) {
+					discard(sp, card);
 				}
+				else removeFromHand(sp, card);
 				playmode = 'e';
 			}
 			activecard = card;
@@ -299,77 +339,145 @@ public class HandManager {
 			
 		}
 		if (mode=='o') {
-			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable()) {
+			if (card==6) {
+				China = (China+1)%2+2;
+				if (GameData.phasing()==0&&removeEffect(35)) {
+					GameData.txtchnl.sendMessage(new CardEmbedBuilder()
+							.setTitle("Defense Treaty Abrogated")
+							.setDescription("Taiwan will no longer be a battleground country in any situation.")
+							.setColor(Color.DARK_GRAY)
+							.setFooter("\"Everyone, listen; just let me say one thing. I opposed China, I was wrong.\"\n"
+							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
+							.build()).complete();
+				}
+			}
+			
+			else if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
 				if (CardList.getCard(card).isRemoved()) {
-					Removed.add(card);
+					removeFromGame(sp, card);
 				}
-				else {
-					Discard.add(card);
+				else if (card!=73) {
+					discard(sp, card);
 				}
+				else removeFromHand(sp, card);
 				playmode = 'l'; //event last
 			}
 			else {
-				Discard.add(card);
+				discard(sp, card);
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.operationsRequired = true;
 		}
 		if (mode=='s') {
-			Discard.add(card);
+			if (card==6) {
+				China = (China+1)%2+2;
+			}
+			discard(sp, card);
 			playmode = 's';
 			activecard = card;
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, false, true, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;
 		}
+		if (mode=='u') {
+			EmbedBuilder builder = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
+				.setDescription("The UN collectively agrees on something for once")
+				.setFooter("\"\"\n"
+						+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
+				.setColor(sp==0?Color.blue:Color.red)
+				.setImage(Launcher.url("cards/032.png"))
+				.addField("UN Security Council Resolution", "The action described by the card just played has been condemned by the UN, and will not occur.", false);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			discard(sp, card);
+			discard(sp, 32);
+			playmode = 'o';
+			activecard = card;
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
+			TimeCommand.cardPlayed = true;
+			TimeCommand.operationsRequired = true;
+		}
 		
 	}
-	/**
-	 * Discards the card in question.
-	 * @param sp is the integer representing the player in possession of the card.
-	 * @param card is the card to be discarded. 
-	 */
-	public static void discard(int sp, int card) {
-		if (sp==0&&USAHand.contains(card)) {
-			USAHand.remove(card);
-		}
-		else if (sp==1&&SUNHand.contains(card)) {
-			SUNHand.remove(card);
-		}
-		else return;
-		Discard.add(card);
+	public static boolean handContains(int sp, int card) {
+		if (sp==0) return USAHand.contains(card);
+		if (sp==1) return SUNHand.contains(card);
+		return false;
 	}
-	/**
-	 * Obtains the card requested from the discard. 
-	 * @param sp is the integer representing the player requesting the card. 
-	 * @param card is the card to be reclaimed. 
-	 */
-	public static void getFromDiscard(int sp, int card) {
-		if (Discard.contains(card)) {
-			Discard.remove(card);
-		}
+	public static boolean addToHand(int sp, int card) {
 		if (sp==0) {
 			USAHand.add(card);
 		}
 		if (sp==1) {
 			SUNHand.add(card);
 		}
+		return true;
+	}
+	public static boolean removeFromHand(int sp, int card) {
+		if (sp==0&&USAHand.contains(card)) {
+			USAHand.remove((Integer) card);
+			return true;
+		}
+		else if (sp==1&&SUNHand.contains(card)) {
+			SUNHand.remove((Integer) card);
+			return true;
+		}
+		else return false;
+	}
+	/**
+	 * Discards the card in question.
+	 * @param sp is the integer representing the player in possession of the card.
+	 * @param card is the card to be discarded. 
+	 * @return true if successful, false otherwise.
+	 */
+	public static boolean discard(int sp, int card) {
+		if (removeFromHand(sp, card)) {
+			Discard.add(card);
+			return true;
+		}
+		else return false;
+	}
+	/**
+	 * Removes the card in question from the game.
+	 * @param sp is the integer representing the player in possession of the card.
+	 * @param card is the card to be discarded. 
+	 * @return true if successful, false otherwise.
+	 */
+	public static boolean removeFromGame(int sp, int card) {
+		if (removeFromHand(sp, card)) {
+			Removed.add(card);
+			return true;
+		}
+		else return false;
+	}
+	/**
+	 * Obtains the card requested from the discard. 
+	 * @param sp is the integer representing the player requesting the card. 
+	 * @param card is the card to be reclaimed. 
+	 * @return true if successful, false otherwise.
+	 */
+	public static boolean getFromDiscard(int sp, int card) {
+		if (Discard.contains(card)) {
+			Discard.remove((Integer) card);
+		}
+		else return false;
+		addToHand(sp, card);
+		return true;
 	}
 	/**
 	 * Transfers the card in question to the other player's hand.
 	 * @param source is the integer representing the player in possession of the card.
 	 * @param card is the card in question. 
+	 * @return true if successful, false otherwise.
 	 */
-	public static void transfer(int source, int card) {
-		if (source==0&&USAHand.contains(card)) {
-			USAHand.remove(USAHand.indexOf(card));
-			SUNHand.add(card);
+	public static boolean transfer(int source, int card) {
+		if (removeFromHand(source, card)) {
+			addToHand((source+1)%2, card);
+			return true;
 		}
-		if (source==1&&SUNHand.contains(card)) {
-			USAHand.add(card);
-			SUNHand.remove(SUNHand.indexOf(card));
-		}
+		return false;
 	}
 	/**
 	 * Puts the card in question into the effects pile.
@@ -381,27 +489,34 @@ public class HandManager {
 	/**
 	 * Removes the card in question from {@link #Effects} if such a card exists in the pile.
 	 * @param card is the card in question.
+	 * @return true if successful, false otherwise.
 	 */
-	public static void removeEffect(int card) {
-		if (Effects.contains(card)) Effects.remove(Effects.indexOf(card));
+	public static boolean removeEffect(int card) {
+		if (!effectActive(card)) return false;
+		Effects.remove((Integer) card);
+		return true;
+	}
+	/**
+	 * 
+	 */
+	public static boolean effectActive(int card) {
+		return Effects.contains(card);
 	}
 	/**
 	 * Checks the hands for scoring cards.
 	 * @return 0 if neither hand contains a scoring card;
 	 * <br> 1 if the US's hand contains a scoring card;
-	 * <br> 2 if the USSR's hand contains a scoring card;
+	 * <br> 2 if the USSR's hand contains a scoring card.
 	 * <br> 3 if both hands contain a scoring card.
 	 */
 	public static int checkScoring() {
-		int ret=0;
+		int i=0;
 		for (int c : SUNHand) {
-			if (CardList.getCard(c).getOps()==0) ret += 2; 
-			break;
+			if (CardList.getCard(c).getOps()==0) i+= 2;
 		}
 		for (int c : USAHand) {
-			if (CardList.getCard(c).getOps()==0) ret += 1;
-			break;
+			if (CardList.getCard(c).getOps()==0) i+= 1;
 		}
-		return ret;
+		return i;
 	}
 }

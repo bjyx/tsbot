@@ -9,8 +9,7 @@ import map.MapManager;
 public class Fidel extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
-		// TODO Auto-generated method stub
+	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Cuban Revolution")
 			.setDescription("Fulgencio Batista overthrown; Castro takes power")
@@ -19,11 +18,11 @@ public class Fidel extends Card {
 					+ "- Che Guevara, 1962", Launcher.url("countries/ar.png"));
 		builder.changeInfluence(65, 0, -MapManager.get(65).influence[0]); //remove all American influence in Cuba
 		builder.changeInfluence(65, 1, Math.max(0, 3-MapManager.get(65).influence[1])); //control Cuba with USSR influence
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

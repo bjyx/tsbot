@@ -3,6 +3,7 @@ package cards;
 import java.util.ArrayList;
 
 import events.*;
+import game.GameData;
 /**
  * Implements a list of the cards used in the game.
  * @author [REDACTED]
@@ -18,9 +19,10 @@ public class CardList {
 	 */
 	private static int counter=0;
 	/**
-	 * Initializes the list with all 110 Cards and a null card.
+	 * Initializes the list with all cards and a null card.
 	 */
 	public static void initialize() {
+		cardList.clear();
 		CardList.addCard(null); //just to occupy the 0 slot so I don't get peeved enough to use a map
 		
 		CardList.addCard(new AsiaScoring());
@@ -36,16 +38,16 @@ public class CardList {
 		
 		CardList.addCard(new KoreanWar());
 		CardList.addCard(new RomanianAbdication());
-		//CardList.addCard(new ArabIsraeliWar());
-		//CardList.addCard(new Comecon());
-		//CardList.addCard(new Nasser());
-		//CardList.addCard(new WarsawPact());
-		//CardList.addCard(new DeGaulle());
-		//CardList.addCard(new Paperclip());
-		//CardList.addCard(new TrumanDoctrine());
-		//CardList.addCard(new OlympicGames());
+		CardList.addCard(new ArabIsraeliWar());
+		CardList.addCard(new Comecon());
+		CardList.addCard(new Nasser());
+		CardList.addCard(new WarsawPact());
+		CardList.addCard(new DeGaulle());
+		CardList.addCard(new Paperclip());
+		CardList.addCard(new TrumanDoctrine());
+		CardList.addCard(new OlympicGames());
 		
-		/*CardList.addCard(new NATO());
+		CardList.addCard(new NATO());
 		CardList.addCard(new IndependentReds());
 		CardList.addCard(new MarshallPlan());
 		CardList.addCard(new IndoPakiWar());
@@ -54,20 +56,25 @@ public class CardList {
 		CardList.addCard(new AnpoTreaty());
 		CardList.addCard(new SuezCrisis());
 		CardList.addCard(new EastEuropeanUnrest());
-		CardList.addCard(new Decolonization());*/
+		CardList.addCard(new Decolonization());
 		
-		/*CardList.addCard(new RedScare());
+		CardList.addCard(new RedScare());
 		CardList.addCard(new UNIntervention());
 		CardList.addCard(new DeStalinization());
 		CardList.addCard(new NuclearTestBan());
-		CardList.addCard(new FormosanResolution());
+		//if (insert condition regarding turn zero china crisis here) {
+			CardList.addCard(new FormosanResolution());
+		//}
+		//else {
+		//	CardList.addCard(new NationalistChina());
+		//}
 		CardList.addCard(new BrushWar());
 		CardList.addCard(new CentrAmScoring());
 		CardList.addCard(new SEAsiaScoring());
 		CardList.addCard(new ArmsRace());
-		CardList.addCard(new MissileCrisis());*/
+		CardList.addCard(new MissileCrisis());
 		
-		/*CardList.addCard(new NuclearSubs());
+		CardList.addCard(new NuclearSubs());
 		CardList.addCard(new Quagmire());
 		CardList.addCard(new SALTNegotiations());
 		CardList.addCard(new BearTrap());
@@ -76,9 +83,9 @@ public class CardList {
 		CardList.addCard(new Junta());
 		CardList.addCard(new KitchenDebates());
 		CardList.addCard(new MissileEnvy());
-		CardList.addCard(new WeWillBuryYou());*/
+		CardList.addCard(new WeWillBuryYou());
 		
-		/*CardList.addCard(new BrezhnevDoctrine());
+		CardList.addCard(new BrezhnevDoctrine());
 		CardList.addCard(new PortEmpire());
 		CardList.addCard(new SouthAfricanUnrest());
 		CardList.addCard(new Allende());
@@ -87,9 +94,9 @@ public class CardList {
 		CardList.addCard(new ABMTreaty());
 		CardList.addCard(new CulturalRevolution());
 		CardList.addCard(new FlowerPower());
-		CardList.addCard(new U2Incident());*/
+		CardList.addCard(new U2Incident());
 		
-		/*CardList.addCard(new OPEC());
+		CardList.addCard(new OPEC());
 		CardList.addCard(new LoneGunman());
 		CardList.addCard(new ColonialRearGuards());
 		CardList.addCard(new PanamaCanal());
@@ -98,21 +105,24 @@ public class CardList {
 		CardList.addCard(new GrainSales());
 		CardList.addCard(new JohnPaulII());
 		CardList.addCard(new LADS());
-		CardList.addCard(new OASFounded());*/
+		CardList.addCard(new OASFounded());
 		
-		/*CardList.addCard(new NixonInChina());
+		CardList.addCard(new NixonInChina());
 		CardList.addCard(new Sadat());
 		CardList.addCard(new ShuttleDiplomacy());
 		CardList.addCard(new VoiceOfAmerica());
 		CardList.addCard(new LiberationTheology());
-		CardList.addCard(new UssuriRiverSkirmish());
+		//if (insert condition regarding china crisis here) CardList.addCard(null);
+		//else {
+			CardList.addCard(new UssuriRiverSkirmish());
+		//}
 		CardList.addCard(new Inaugural());
 		CardList.addCard(new AllianceForProgress());
 		CardList.addCard(new AfricaScoring());
-		CardList.addCard(new OneSmallStep());*/
+		CardList.addCard(new OneSmallStep());
 		
-		/*CardList.addCard(new SouthAmScoring());
-		CardList.addCard(new IranHostage());
+		CardList.addCard(new SouthAmScoring());
+		/*CardList.addCard(new IranHostage());
 		CardList.addCard(new IronLady());
 		CardList.addCard(new ReaganBombsLibya());
 		CardList.addCard(new StarWars());
@@ -120,7 +130,7 @@ public class CardList {
 		CardList.addCard(new TheReformer());
 		CardList.addCard(new MarineBarracks());
 		CardList.addCard(new KAL007());
-		CardList.addCard(new Glasnost());*/
+		CardList.addCard(new Glasnost());
 		
 		/*CardList.addCard(new Ortega());
 		CardList.addCard(new Terrorism());
@@ -131,18 +141,54 @@ public class CardList {
 		CardList.addCard(new EvilEmpire());
 		CardList.addCard(new AldrichAmes());
 		CardList.addCard(new PershingII());
-		CardList.addCard(new Wargames());*/
+		CardList.addCard(new Wargames());
 		
 		/*CardList.addCard(new Solidarity());
-		CardList.addCard(new IranIraqWar());
+		CardList.addCard(new IranIraqWar());*/
 		CardList.addCard(new Defectors());
-		CardList.addCard(new CambridgeFive());
-		CardList.addCard(new SpecialRelationship());
-		CardList.addCard(new NORAD());
-		CardList.addCard(new Che());
-		CardList.addCard(new OurManInTehran());
-		CardList.addCard(new YuriAndSamantha());
-		CardList.addCard(new AWACSSale());*/
+		if (GameData.optional) {
+			CardList.addCard(new CambridgeFive());
+			CardList.addCard(new SpecialRelationship());
+			CardList.addCard(new NORAD());
+			CardList.addCard(new Che());
+			CardList.addCard(new OurManInTehran());
+			/*CardList.addCard(new YuriAndSamantha());
+			CardList.addCard(new AWACSSale());*/
+		}
+		else {
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+		}
+		/*
+		if (GameData.promo1) {
+		 CardList.addCard(new NonAligned());
+		 CardList.addCard(new MobutuSeseSeko());
+		 CardList.addCard(new BerlinWall());
+		 CardList.addCard(new StanislavPetrov());
+		}
+		else {
+			CardList.addCard(null);
+		 	CardList.addCard(null);
+		 	CardList.addCard(null);
+		 	CardList.addCard(null);
+		}
+		if (GameData.promo2) {
+		 CardList.addCard(new KremlinFlu());
+		 CardList.addCard(new FirstLightning());
+		 CardList.addCard(new WhoLostChina());
+		 CardList.addCard(new DontWait());
+		}
+		else {
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+			CardList.addCard(null);
+		}*/
 	}
 	/**
 	 * Adds the Card to the list.
@@ -162,7 +208,7 @@ public class CardList {
 	}
 	/**
 	 * A check to see if the number of cards is sufficient to start a game with.
-	 * @return counter-1, representing all the cards in the list sans the null card.
+	 * @return counter-1, representing all the cards in the list sans the first null card.
 	 */
 	public static int numberOfCards() {
 		return counter-1; // counter should be @ 111

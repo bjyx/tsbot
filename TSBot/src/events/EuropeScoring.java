@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 
 import game.GameData;
+import main.Launcher;
 import map.Country;
 import map.MapManager;
 
@@ -10,14 +11,18 @@ public class EuropeScoring extends Card {
 	private static final int presence = 3;
 	private static final int domination = 7;
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		int[] totalCountries = {0,0};
 		int[] battlegrounds = {0,0};
 		String[] strings = {"","","",""};
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Europe Scoring")
 			.setDescription("")
-			.setColor(Color.BLUE);
+			.setColor(new Color(153,110,255))
+			.setFooter("\"Yes, it is Europe, from the Atlantic to the Urals, "
+					+ "it is Europe, it is the whole of Europe, "
+					+ "that will decide the fate of the world.\"\n"
+					+ "- Charles de Gaulle, 1959", Launcher.url("countries/fr.png"));
 		int vp = 0;
 		for (int i = 0; i<21; i++) { //Austria and Egypt, resp.
 			Country c = MapManager.get(i);
@@ -55,12 +60,12 @@ public class EuropeScoring extends Card {
 		if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]) vp -= domination;
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

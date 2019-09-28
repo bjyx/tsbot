@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 import map.Country;
 import map.MapManager;
 
@@ -21,14 +22,18 @@ public class AsiaScoring extends Card {
 		return 2;
 	}
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		int[] totalCountries = {0,0};
 		int[] battlegrounds = {0,0};
 		String[] strings = {"","","",""};
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Asia Scoring")
 			.setDescription("")
-			.setColor(Color.orange);
+			.setColor(Color.orange)
+			.setFooter("\"I can say without equivocation: "
+					+ "the United States firmly supports the orderly progress towards self-government throughout the world. "
+					+ "The United States has no imperialistic ambitions whatsoever in Asia or in any other part of the globe.\"\n"
+					+ "- Richard Nixon, 1953", Launcher.url("countries/us.png"));
 		int vp = 0;
 		for (int i = 31; i<46; i++) { //Afghanistan and Algeria, resp.
 			Country c = MapManager.get(i);
@@ -63,7 +68,7 @@ public class AsiaScoring extends Card {
 		else if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]) vp -= domination;
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 	@Override
 	public String getId() {
@@ -86,7 +91,7 @@ public class AsiaScoring extends Card {
 		return "Scores Asia on a scale of 3/7/9. +1 for battlegrounds, +1 for each country you control that borders the other superpower (Afghanistan, North Korea, Japan).";
 	}
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true; //always playable.
 	}
 	@Override

@@ -6,7 +6,6 @@ import java.util.List;
 import cards.HandManager;
 import game.GameData;
 import game.PlayerList;
-import map.MapManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class OperationsCommand extends Command {
@@ -25,69 +24,24 @@ public class OperationsCommand extends Command {
 			sendMessage(e, ":x: Excuse me, but who are *you* playing as? China's abstracted as a card and the rest of the world has a board space each.");
 			return;
 		}
+		if (e.getChannel().equals(GameData.txtchnl)) {
+			sendMessage(e, ":x: Don't. You're compromising your play.");
+			return;
+		}
 		if (HandManager.activecard==0) {
 			sendMessage(e, ":x: What's the play?");
 			return;
 		}
-		if (HandManager.playmode!='o') {
+		if (!e.getAuthor().equals(PlayerList.getArray().get(GameData.phasing()))) {
+			sendMessage(e, ":x: You don't get these ops. Your opponent does.");
+			return;
+		}
+		if (!TimeCommand.operationsRequired) {
 			sendMessage(e, ":x: Trying to change your mind already?");
 			return;
 		}
-		String usage = args[1];
-		boolean result = false;
-		if (usage.equals("influence")||usage.equals("i")) {
-			if (args.length<2) {
-				sendMessage(e, ":x: To where?");
-				return;
-			}
-			if (args.length%2!=0) {
-				sendMessage(e, ":x: An influence value must be associated with every listed country.");
-				return;
-			}
-			int[] countries = new int[(args.length-2)/2];
-			int[] amt = new int[(args.length-2)/2];
-			for (int i=2; i<args.length; i+=2) {
-				countries[(i-2)/2] = MapManager.find(args[i]);
-				if (countries[(i-2)/2]==-1) {
-					sendMessage(e, ":x: "+args[i]+" isn't a country or alias of one.");
-					return;
-				}
-				if (MapManager.get(countries[(i-2)/2]).region==9) {
-					sendMessage(e, ":x: No targeting your opponent. Cheater.");
-					return;
-				}
-				amt[(i-2)/2] = Integer.parseInt(args[i+1]);
-				if (amt[(i-2)/2]<=0) {
-					sendMessage(e, ":x: Positive integers only, please - this is not De-Stalinization.");
-					return;
-				}
-			}
-			result = GameData.ops.influence(countries, amt);
-		}
-		if (usage.equals("realignment")||usage.equals("r")) {
-			int country = MapManager.find(args[2]);
-			if (country==-1) {
-				sendMessage(e, ":x: "+args[2]+" isn't a country or alias of one.");
-				return;
-			}
-			if (MapManager.get(country).region==9) {
-				sendMessage(e, ":x: No targeting your opponent. Cheater.");
-				return;
-			}
-			result = GameData.ops.realignment(country);
-		}
-		if (usage.equals("coup")||usage.equals("c")) {
-			int country = MapManager.find(args[2]);
-			if (country==-1) {
-				sendMessage(e, ":x: "+args[2]+" isn't a country or alias of one.");
-				return;
-			}
-			if (MapManager.get(country).region==9) {
-				sendMessage(e, ":x: No targeting your opponent. Cheater.");
-				return;
-			}
-			result = GameData.ops.coup(country);
-		}
+		boolean result = GameData.ops.ops(args);
+		
 		if (!result) {
 			return;
 		}

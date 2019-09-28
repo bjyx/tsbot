@@ -19,11 +19,11 @@ public class InfoCommand extends Command {
 		}
 		if (args[1].equals("card")) {
 			int id = Integer.parseInt(args[2]);
-			if (id <= 0 || id > 110) {
-				sendMessage(e, ":x: Cards are indexed from 1 to 110.");
+			if (id <= 0 || id > CardList.numberOfCards()) {
+				sendMessage(e, ":x: Cards are indexed from 1 to " + CardList.numberOfCards() + ".");
 				return;
 			}
-			sendMessage(e, new MessageBuilder().setEmbed(CardList.getCard(id).toEmbed()).build());
+			sendMessage(e, new MessageBuilder().setEmbed(CardList.getCard(id).toEmbed(CardList.getCard(id).getAssociation())).build());
 		}
 		else if (args[1].equals("country")) {
 			int id = MapManager.find(args[2]);
@@ -34,7 +34,7 @@ public class InfoCommand extends Command {
 			sendMessage(e, new MessageBuilder().setEmbed(MapManager.get(id).getInfo()).build());
 		}
 		else {
-			sendMessage(e, ":x: Write your arguments correctly. :/");
+			sendMessage(e, ":x: Write your arguments correctly. ˙>̇");
 			return;
 		}
 	}

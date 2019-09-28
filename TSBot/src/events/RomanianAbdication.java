@@ -9,7 +9,7 @@ import map.MapManager;
 public class RomanianAbdication extends Card {
 
 	@Override
-	public void onEvent(String[] args) {
+	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Michael I Abdicates Throne of Romania")
 			.setDescription("People's Republic declared in Bucharest")
@@ -22,7 +22,7 @@ public class RomanianAbdication extends Card {
 	}
 
 	@Override
-	public boolean isPlayable() {
+	public boolean isPlayable(int sp) {
 		return true;
 	}
 

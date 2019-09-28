@@ -21,8 +21,10 @@ public abstract class Command extends ListenerAdapter
     {
         if (e.getAuthor().isBot() && !respondToBots())
             return;
-        if (containsCommand(e.getMessage()))
+        if (containsCommand(e.getMessage())) {
+        	e.getMessage().delete().complete();
             onCommand(e, commandArgs(e.getMessage()));
+        }
     }
 
     protected boolean containsCommand(Message message)
