@@ -36,7 +36,12 @@ public class CardList {
 		CardList.addCard(new VietnamRevolts());
 		CardList.addCard(new Blockade());
 		
+		//if (v-j day==6) {
+		//	CardList.addCard(null);
+		//}
+		//else {
 		CardList.addCard(new KoreanWar());
+		//}
 		CardList.addCard(new RomanianAbdication());
 		CardList.addCard(new ArabIsraeliWar());
 		CardList.addCard(new Comecon());
@@ -62,7 +67,7 @@ public class CardList {
 		CardList.addCard(new UNIntervention());
 		CardList.addCard(new DeStalinization());
 		CardList.addCard(new NuclearTestBan());
-		//if (insert condition regarding turn zero china crisis here) {
+		//if (chinese civil war crisis == 6) {
 			CardList.addCard(new FormosanResolution());
 		//}
 		//else {
@@ -112,7 +117,7 @@ public class CardList {
 		CardList.addCard(new ShuttleDiplomacy());
 		CardList.addCard(new VoiceOfAmerica());
 		CardList.addCard(new LiberationTheology());
-		//if (insert condition regarding china crisis here) CardList.addCard(null);
+		//if (chinese civil war crisis == 1) CardList.addCard(null);
 		//else {
 			CardList.addCard(new UssuriRiverSkirmish());
 		//}
