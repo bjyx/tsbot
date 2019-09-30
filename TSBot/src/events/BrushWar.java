@@ -26,9 +26,12 @@ public class BrushWar extends Card {
 		builder.addField("Insurgency in " + MapManager.get(target).name, "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
 		if (die>=3) {
 			builder.setTitle("Insurgents overthrow government in " + MapManager.get(target).name)
-				.setDescription("")
-				.setFooter("\"\"\n"
-						+ "- XXXX, 19XX",Launcher.url("countries/XX.png"))
+				.setDescription("New government aligns closely with " + (sp==0?"American":"Soviet") + " interests")
+				.setFooter("\"The people colonized by Abyssinia will be free. "
+						+ "Eritrea will be free, and they cannot refuse to let them be free. "
+						+ "Western Somalia will be free, and they cannot refuse to grant it freedom. "
+						+ "The numerous Abo will be free because this is history, and no one can prevent the sunshine from reaching us.\"\n"
+						+ "- Siad Barre, 1978",Launcher.url("countries/so.png"))
 				.setColor(sp==0?Color.blue:Color.red);
 			builder.changeInfluence(target, sp, MapManager.get(target).influence[(sp+1)%2]);
 			builder.changeInfluence(target, (sp+1)%2, -MapManager.get(target).influence[(sp+1)%2]);
@@ -37,8 +40,10 @@ public class BrushWar extends Card {
 		else {
 			builder.setTitle("Insurgency Repulsed")
 				.setDescription("Brush war resolved with minor political changes")
-				.setFooter("\"XXXX\"\n"
-						+ "- XXXX, 19XX",Launcher.url("countries/XX.png"))
+				.setFooter("\"Henceforth we will tackle our enemies that come face to face with us and we will not be stabbed in from behind by internal foes... "
+						+ "To this end, we will arm the allies and comrades of the broad masses without giving respite to reactionaries, "
+						+ "and avenge the blood of our comrades double - and triple - fold.\"\n"
+						+ "- Mengistu Haile Mariam, 1977",Launcher.url("countries/et.png"))
 				.setColor(sp==0?Color.red:Color.blue);
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();

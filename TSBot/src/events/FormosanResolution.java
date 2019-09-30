@@ -19,7 +19,7 @@ public class FormosanResolution extends Card {
 			.setColor(Color.BLUE);
 		builder.addField("Mutual Defense Treaty", "Taiwan will count as a battleground for scoring purposes so long as the US controls it.", false);
 		HandManager.addEffect(35);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override

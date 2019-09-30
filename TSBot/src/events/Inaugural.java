@@ -36,7 +36,7 @@ public class Inaugural extends Card {
 				HandManager.Discard.clear();
 			}
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override

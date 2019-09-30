@@ -16,8 +16,8 @@ public class CampDavidAccords extends Card {
 		builder.setTitle("Camp David Accords Signed")
 		.setDescription("US-mediated negotiations show promise in ending Arab-Israeli enmity")
 		.setColor(Color.blue)
-		.setFooter("\"Let them sign what they like. False peace will not last.\"\n"
-				+ "- Yasser Arafat, 1979", Launcher.url("countries/ps.png"));
+		.setFooter("\"I am convinced that we owe it to this generation and the generations to come, not to leave a stone unturned in our pursuit of peace.\"\n"
+				+ "- Anwar al-Sadat, 1978", Launcher.url("countries/eg.png"));
 		builder.changeVP(1);
 		builder.changeInfluence(21, 0, 1); // Egypt
 		builder.changeInfluence(25, 0, 1); // Israel

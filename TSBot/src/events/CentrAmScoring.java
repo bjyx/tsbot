@@ -20,7 +20,8 @@ public class CentrAmScoring extends Card {
 		builder.setTitle("Central America Scoring")
 			.setDescription("")
 			.setColor(new Color(214, 255, 110))
-			.setFooter("\"Imperialism cannot conceive of a free people, a sovereign people, an independent people. Because, simply and plainly, for them the people is nothing more than an empty phrase.\"\n" + 
+			.setFooter("\"Imperialism cannot conceive of a free people, a sovereign people, an independent people. "
+					+ "Because, simply and plainly, for them the people is nothing more than an empty phrase.\"\n" + 
 					"- Daniel Ortega, 1979", Launcher.url("countries/ni.png"));
 		int vp = 0;
 		for (int i = 64; i<74; i++) { //CostaRica and Argentina, resp.

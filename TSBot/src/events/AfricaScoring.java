@@ -2,7 +2,6 @@ package events;
 
 import java.awt.Color;
 
-import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.Country;

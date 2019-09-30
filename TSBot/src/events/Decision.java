@@ -66,8 +66,8 @@ public class Decision {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Olympics Boycotted!")
 			.setDescription("")
-			.setFooter("\"\" \n"
-					+ "- XXXX, 19XX",Launcher.url("countries/XX.png"))
+			.setFooter("\"To act differently would be tantamount to approving of the anti-Olympic actions of the U.S. authorities and organizers of the games.\" \n"
+					+ "- Tass, 1984",Launcher.url("countries/su.png"))
 			.setColor(Color.DARK_GRAY);
 		builder.changeDEFCON(-1);
 		GameData.txtchnl.sendMessage(builder.build()).complete();

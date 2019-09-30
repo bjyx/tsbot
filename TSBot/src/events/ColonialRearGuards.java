@@ -17,7 +17,9 @@ public class ColonialRearGuards extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Colonial Rear Guards")
 			.setDescription("")
-			.setFooter("", Launcher.url(""))
+			.setFooter("\"From now on, Frenchman [sic] must know that they don't have the right "
+					+ "to condemn in the same terms as ten years ago the destruction of Oradour and the torture by the Gestapo.\"\n"
+					+ "- Hubert Beuve-Mery, 1957", Launcher.url("countries/dz.png"))
 			.setColor(Color.blue);
 		for (int c : order) {
 			builder.changeInfluence(c, 0, 1);

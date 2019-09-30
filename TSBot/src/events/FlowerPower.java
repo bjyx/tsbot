@@ -19,7 +19,7 @@ public class FlowerPower extends Card {
 					+ "- Abbie Hoffman, 1967", Launcher.url("countries/us.png"));
 		builder.addField("Flower Brigade","All cards involving 'war' will give the USSR 2 victory points.",false);
 		HandManager.addEffect(59);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override

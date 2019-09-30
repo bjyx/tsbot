@@ -20,14 +20,14 @@ public class GrainSales extends Card {
 			GameData.dec = new Decision (0, 671);
 			GameData.ops = new Operations (0, CardList.getCard(67).getOpsMod(0), true, true, true, true, false);
 			status = 'o';
-			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", the USSR is out of cards. You may conduct operations using Grain Sales to Soviets.");
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", the USSR is out of cards. You may conduct operations using Grain Sales to Soviets.").complete();
 		}
 		else {
 			int random = (int) (Math.random()*HandManager.SUNHand.size());
 			card = HandManager.SUNHand.get(random);
 			HandManager.transfer(1, card);
 			GameData.dec = new Decision (0, 67);
-			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have obtained " + CardList.getCard(card) + " from the Soviet hand. Choose how you will use it.");
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have obtained " + CardList.getCard(card) + " from the Soviet hand. Choose how you will use it.").complete();
 		}
 	}
 
