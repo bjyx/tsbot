@@ -146,7 +146,7 @@ public class HandManager {
 	 */
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
-			if ((c.getEra()==era||(c.getEra()==era+3&&GameData.optional))&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c)); //If the card isn't China and is part of the era listed, add that card
+			if (c.getEra()==era&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c)); //If the card isn't China and is part of the era listed, add that card
 		}
 	}
 	/**
