@@ -29,7 +29,7 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: Don't. You're compromising your play.");
 			return;
 		}
-		if (!TimeCommand.eventRequired && !TimeCommand.hl1 && !TimeCommand.hl2) {
+		if (!TimeCommand.eventRequired && TimeCommand.hl1 && TimeCommand.hl2) {
 			sendMessage(e, ":x: Trying to change your mind already?");
 			return;
 		}

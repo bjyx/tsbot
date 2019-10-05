@@ -12,7 +12,7 @@ import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class PlayCommand extends Command {
-	private static final List<Character> modes = Arrays.asList('h','e','o','s','u');
+	private static final List<Character> modes = Arrays.asList('h','e','o','s');
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		
@@ -78,7 +78,6 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: Cards are indexed from 1 to 110.");
 			return;
 		}
-		e.getMessage().delete().complete();
 		if (!modes.contains(mode)) {
 			sendMessage(e, ":x: Modes can be any of h, e, o, or s. Not the one you chose, though.");
 			return;

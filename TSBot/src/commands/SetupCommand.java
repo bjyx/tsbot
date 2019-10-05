@@ -94,7 +94,7 @@ public class SetupCommand extends Command {
 		.setFooter("\"A shadow has fallen upon the scenes so lately lighted by the Allied victory…. From Stettin in the Baltic to Trieste in the Adriatic an iron curtain has descended across the Continent.\"\n"
 				+ "- Winston Churchill, 1946",Launcher.url("people/churchill.png"))
 		.setColor(USSR?Color.red:(USA?Color.blue:(handicap>0?Color.blue:Color.red)));
-		if (USSR) {
+		if (USSR&&!hreq) {
 			if (sum!=6) {
 				sendMessage(e, ":x: You get six influence in the Eastern Bloc. You'll get more later, don't worry.");
 				return;
@@ -106,7 +106,7 @@ public class SetupCommand extends Command {
 			USA = true;
 			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please place seven influence markers in Western Europe. (Use TS.setup)").complete();
 		}
-		else if (USA) {
+		else if (USA&&!hreq) {
 			if (sum!=7) {
 				sendMessage(e, ":x: You get seven influence in the Western Bloc. You'll get more later, don't worry.");
 				return;
@@ -118,6 +118,7 @@ public class SetupCommand extends Command {
 			if (handicap==0) {
 				GameData.endSetupPhase();
 				GameData.txtchnl.sendMessage("Both players may now select their headlines. (`TS.play **[card]** h`)").complete();
+				TimeCommand.cardPlayed = false;
 			}
 			else {
 				hreq = true;
@@ -145,6 +146,7 @@ public class SetupCommand extends Command {
 			USA = false;
 			GameData.endSetupPhase();
 			GameData.txtchnl.sendMessage("Both players may now select their headlines. (`TS.play **[card]** h`)").complete();
+			TimeCommand.cardPlayed = false;
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

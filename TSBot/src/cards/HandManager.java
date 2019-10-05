@@ -174,7 +174,7 @@ public class HandManager {
 	 */
 	public static void deal() {
 		Random random = new Random();
-		int handsize = (GameData.getEra()==0)?8:9;
+		int handsize = (GameData.getEra()<=0)?8:9;
 		while (handsize > SUNHand.size()||handsize > USAHand.size()) {
 			if (handsize > SUNHand.size()&&!Deck.isEmpty()) {
 				SUNHand.add(Deck.remove(random.nextInt(Deck.size())));
@@ -193,7 +193,7 @@ public class HandManager {
 	 * @return A MessageEmbed, containing the details of the US's hand.
 	 */
 	public static MessageEmbed getUSAHand() {
-		EmbedBuilder builder = new EmbedBuilder().setTitle("USA Hand");
+		EmbedBuilder builder = new EmbedBuilder().setTitle("USA Hand").setColor(Color.blue);
 		for (int c : USAHand) {
 			builder.addField(CardList.getCard(c).toString(), CardList.getCard(c).getDescription(), false);
 		}
@@ -207,7 +207,7 @@ public class HandManager {
 	 * @return A MessageEmbed, containing the details of the USSR's hand.
 	 */
 	public static MessageEmbed getSUNHand() {
-		EmbedBuilder builder = new EmbedBuilder().setTitle("USSR Hand");
+		EmbedBuilder builder = new EmbedBuilder().setTitle("USSR Hand").setColor(Color.red);
 		for (int c : SUNHand) {
 			builder.addField(CardList.getCard(c).toString(), CardList.getCard(c).getDescription(), false);
 		}

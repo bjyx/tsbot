@@ -52,6 +52,13 @@ public class StartCommand extends Command {
 			sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 72.");
 			return;
 		}
+		try {
+			if (args.length>=3 && Math.abs(Integer.parseInt(args[2]))<=10) SetupCommand.handicap=Integer.parseInt(args[2]);
+		}
+		catch (NumberFormatException err) {
+			sendMessage(e, ":x: Leave this field blank if you want to. A handicap is the amount of influence one player gets in addition to starting; its absolute value must be at most 10.");
+			return;
+		}
 		sendMessage(e, ":hourglass: Seven minutes to midnight... and counting.");
 		
 		GameData.txtchnl = e.getTextChannel();
