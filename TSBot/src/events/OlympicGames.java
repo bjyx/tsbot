@@ -10,12 +10,12 @@ public class OlympicGames extends Card {
 	public void onEvent(int sp, String[] args) {
 		GameData.dec = new Decision((sp+1)%2, 20);
 		host = sp;
-		GameData.txtchnl.sendMessage("Pending response.");
+		GameData.txtchnl.sendMessage("Pending response.").complete();
 		if (GameData.dec.sp==0) {
-			GameData.txtusa.sendMessage("Awaiting response from " + (GameData.roleusa.getAsMention()) + " regarding participation in the Moscow Olympics. (`TS.decide/decision/choose boycott [card]` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)");
+			GameData.txtusa.sendMessage((GameData.roleusa.getAsMention()) + ", state your decision regarding participation in the Moscow Olympics. (`TS.decide/decision/choose boycott [card]` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)").complete();
 		}
 		else {
-			GameData.txtssr.sendMessage("Awaiting response from " + (GameData.rolessr.getAsMention()) + " regarding participation in the Los Angeles Olympics. (`TS.decide/decision/choose boycott [card]` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)");
+			GameData.txtssr.sendMessage((GameData.rolessr.getAsMention()) + ", state your decision regarding participation in the Los Angeles Olympics. (`TS.decide/decision/choose boycott [card]` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)").complete();
 		}
 		
 	}
@@ -60,7 +60,7 @@ public class OlympicGames extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

@@ -13,12 +13,13 @@ public class RomanianAbdication extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Michael I Abdicates Throne of Romania")
 			.setDescription("People's Republic declared in Bucharest")
-			.setFooter("\"If the people want me to come back, of course, I will come back. Romanians have had enough suffering imposed on them to have the right to be consulted on their future.\"\n"
-					+ "- Mihai I, 1990", Launcher.url("countries/ro.png"))
+			.setFooter("\"If the people want me to come back, of course, I will come back. "
+					+ "Romanians have had enough suffering imposed on them to have the right to be consulted on their future.\"\n"
+					+ "- Mihai I, 1990", Launcher.url("people/michael.png"))
 			.setColor(Color.red);
 		builder.changeInfluence(14, 0, -MapManager.get(14).influence[0]);
 		builder.changeInfluence(14, 1, Math.max(0, 3-MapManager.get(14).influence[1]));
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class RomanianAbdication extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

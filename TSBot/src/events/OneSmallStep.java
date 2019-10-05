@@ -19,16 +19,16 @@ public class OneSmallStep extends Card {
 					+ "because that goal will serve to organize and measure the best of our energies and skills, "
 					+ "because that challenge is one that we are willing to accept, one we are unwilling to postpone, "
 					+ "and one which we intend to win, and the others, too.\"\n"
-					+ "- John F. Kennedy, 1962", Launcher.url("countries/us.png"))
+					+ "- John F. Kennedy, 1962", Launcher.url("people/jfk.png"))
 			.setColor(sp==0?Color.blue:Color.red);
 		builder.addField("\"...one giant leap for mankind.\"", Operations.getSpaceNames(spaceLevel+1, sp),false);
-		if (GameData.getSpace(sp)<=GameData.getSpace((sp+1)%2)-2) {
-			builder.changeVP(-(sp*2-1)*Operations.spaceVP2[spaceLevel+1]);
+		GameData.addSpace(sp);
+		if (GameData.aheadInSpace()==(sp+1)%2) {
+			builder.changeVP(-(sp*2-1)*Operations.spaceVP2[spaceLevel]);
 		}
-		else builder.changeVP(-(sp*2-1)*Operations.spaceVP[spaceLevel+1]);
+		else builder.changeVP(-(sp*2-1)*Operations.spaceVP[spaceLevel]);
 		GameData.addSpace(sp);
-		GameData.addSpace(sp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class OneSmallStep extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

@@ -19,7 +19,7 @@ public class AnpoTreaty extends Card {
 					+ "We extend to Japan the hand of friendship and trust that with the closing of this chapter in the history of man, "
 					+ "the last page of which we write today, and with the beginning of the new one, "
 					+ "the first page of which we dictate tomorrow, her people and ours may march together to enjoy the full dignity of human life in peace and prosperity.\"\n"
-					+ "- J. R. Jayawardene, regarding the Treaty of San Francisco, 1951", Launcher.url("countries/lk.png"));
+					+ "- J. R. Jayawardene, regarding the Treaty of San Francisco, 1951", Launcher.url("people/jayawardene.png"));
 		builder.changeInfluence(36, 0, Math.max(MapManager.get(36).stab+MapManager.get(36).influence[1]-MapManager.get(36).influence[0],0));
 		builder.addField("San Francisco System","Japan can no longer be the target of Coups or Realignments by the USSR",false);
 		HandManager.addEffect(27);
@@ -66,7 +66,7 @@ public class AnpoTreaty extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

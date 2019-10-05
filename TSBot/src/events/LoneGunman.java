@@ -16,14 +16,14 @@ public class LoneGunman extends Card {
 		builder.setTitle("John F. Kennedy Assassinated!")
 			.setDescription("")
 			.setFooter("\"The public must be satisfied that Oswald was the assassin; that he did not have confederates who are still at large.\" \n"
-					+ "- Nicholas Katzenbach, 1963",Launcher.url("countries/us.png"))
+					+ "- Nicholas Katzenbach, 1963",Launcher.url("people/katzenbach.png"))
 			.setColor(Color.red);
-		GameData.txtssr.sendMessage(HandManager.getUSAHand());
+		GameData.txtssr.sendMessage(HandManager.getUSAHand()).complete();
 		GameData.dec = new Decision(1, 62);
 		GameData.ops = new Operations(1, CardList.getCard(62).getOpsMod(1), true, true, true, false, false);
 		builder.addField("Lee Harvey Oswald", "The USSR may now look at the USA's hand.", false);
-		GameData.txtchnl.sendMessage(builder.build());
-		GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now conduct operations.");
+		GameData.txtchnl.sendMessage(builder.build()).complete();
+		GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now conduct operations.").complete();
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class LoneGunman extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

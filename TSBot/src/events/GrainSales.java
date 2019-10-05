@@ -67,7 +67,7 @@ public class GrainSales extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 
@@ -82,6 +82,7 @@ public class GrainSales extends Card {
 	public String getArguments() {
 		return "Event: None.\n"
 				+ "Decision 1: Play the card, or write 'r' where the mode would otherwise go. (Use TS.decide in place of the regular command.)\n"
+				+ " \\**Note: In order to match with UN Intervention in your hand, use 'u'. This is a standard adapted from a deprecated version of the play command. *"
 				+ "Decision 2: Handle the effects. (Use TS.decide in place of the regular command.)\n";
 	}
 

@@ -21,67 +21,68 @@ public class HandManager {
 	/**
 	 * The cards in the hand of the US player.
 	 */
-	public static ArrayList<Integer> USAHand;
+	public static ArrayList<Integer> USAHand = new ArrayList<Integer>();
 	/**
 	 * The cards in the hand of the USSR player.
 	 */
-	public static ArrayList<Integer> SUNHand;
+	public static ArrayList<Integer> SUNHand = new ArrayList<Integer>();
 	/**
 	 * The cards in the deck.
 	 */
-	public static ArrayList<Integer> Deck;
+	public static ArrayList<Integer> Deck = new ArrayList<Integer>();
 	/**
 	 * The cards in the discard pile.
 	 */
-	public static ArrayList<Integer> Discard;
+	public static ArrayList<Integer> Discard = new ArrayList<Integer>();
 	/**
 	 * The cards with starred events that have been triggered.
 	 */
-	public static ArrayList<Integer> Removed;
+	public static ArrayList<Integer> Removed = new ArrayList<Integer>();
 	/**
 	 * The cards with ongoing effects.
 	 * <br>
 	 * Valid cards to put here:
 	 * <ul>
 	 * <li>{@code 009 Vietnam Revolts} - Soviets get +1 Operations point if all are used in SEA. √</li>
-	 * <li>{@code 016 Warsaw Pact} - Allows the play of {@code 021 NATO}.</li>
-	 * <li>{@code 017 De Gaulle Leads France} - Disables {@code 021 NATO} for France.</li>
-	 * <li>{@code 021 NATO} - Disallows the USSR from couping, realigning, or using {@code 036 Brush War} on US-controlled countries in Europe.</li>
-	 * <li>{@code 023 Marshall Plan} - Allows the play of {@code 021 NATO}.</li>
-	 * <li>{@code 025 Containment} - The US gets one extra Operations point on every card, to a maximum of four.</li>
-	 * <li>{@code 027 Anpō Treaty} - Disallows the USSR from couping or realigning Japan.</li>
-	 * <li>{@code 035 Formosa Resolution} - Taiwan, if American-controlled, counts as a battleground. Cancel after the US plays the China Card.</li>
-	 * <li>{@code 041 Nuclear Submarines} - The US's coups no longer lower DEFCON.</li>
-	 * <li>{@code 042 Quagmire} - Traps the US: every turn they must discard a card worth 2 Ops or more and roll less than a 5 to attempt to break the trap. If this cannot be done, he must play his scoring cards instead.</li>
+	 * <li>{@code 016 Warsaw Pact} - Allows the play of {@code 021 NATO}. √</li>
+	 * <li>{@code 017 De Gaulle Leads France} - Disables {@code 021 NATO} for France. √</li>
+	 * <li>{@code 021 NATO} - Disallows the USSR from couping, realigning, or using {@code 036 Brush War} on US-controlled countries in Europe. √</li>
+	 * <li>{@code 023 Marshall Plan} - Allows the play of {@code 021 NATO}. √</li>
+	 * <li>{@code 025 Containment} - The US gets one extra Operations point on every card, to a maximum of four. √</li>
+	 * <li>{@code 027 Anpō Treaty} - Disallows the USSR from couping or realigning Japan. √</li>
+	 * <li>{@code 035 Formosa Resolution} - Taiwan, if American-controlled, counts as a battleground. Cancel after the US plays the China Card. √</li>
+	 * <li>{@code 041 Nuclear Submarines} - The US's coups no longer lower DEFCON. √</li>
+	 * <li>{@code 042 Quagmire} - Traps the US: every turn they must discard a card worth 2 Ops or more and roll less than a 5 to attempt to break the trap. If this cannot be done, he must play his scoring cards instead. √</li>
 	 * <li>{@code 043 SALT Negotiations} - All coups, by both sides, will have a -1 modifier. √</li>
-	 * <li>{@code 044 Bear Trap} - Quagmire for the USSR.</li>
+	 * <li>{@code 044 Bear Trap} - Quagmire for the USSR. √</li>
 	 * <li>{@code 050 We Will Bury You} - If active after the US plays his card, add 3 VP to the USSR if the card is not UN Intervention for the event. √</li>
-	 * <li>{@code 051 Brezhnev Doctrine} - Containment for the USSR.</li>
-	 * <li>{@code 055 Willy Brandt} - Disables {@code 021 NATO} for West Germany. Cancelled by {@code 096 Tear Down This Wall}. - </li>
-	 * <li>{@code 059 Flower Power} - All war cards played for anything besides the space race (unless {@code 013 Arab-Israeli War} was disabled by {@code 065 Camp David Accords}) will grant 2 VP to the USSR. Cancelled by {@code 097 "An Evil Empire"}. </li>
+	 * <li>{@code 051 Brezhnev Doctrine} - Containment for the USSR. √</li>
+	 * <li>{@code 055 Willy Brandt} - Disables {@code 021 NATO} for West Germany. Cancelled by {@code 096 Tear Down This Wall}. √ </li>
+	 * <li>{@code 059 Flower Power} - All war cards played for anything besides the space race (unless {@code 013 Arab-Israeli War} was disabled by {@code 065 Camp David Accords}) will grant 2 VP to the USSR. Cancelled by {@code 097 "An Evil Empire"}. √</li>
 	 * <li>{@code 060 U2 Incident} - If UN Intervention is played during this turn, the USSR gains 1 VP. √</li>
-	 * <li>{@code 065 Camp David Accords} - Disables {@code 013 Arab Israeli War}.</li>
-	 * <li>{@code 068 John Paul II Elected} - Allows the play of {@code 100 Solidarity}.</li>
-	 * <li>{@code 073 Shuttle Diplomacy} - Upon the next scoring of Asia or the Middle East, remove one battleground from the USSR's country count.</li>
-	 * <li>{@code 082 Iran Hostage Crisis} - Double the effect of {@code 092 Terrorism} on the US.</li>
-	 * <li>{@code 083 The Iron Lady} - Disables {@code 007 Socialist Governments}.</li>
-	 * <li>{@code 086 North Sea Oil} - Disables {@code 061 OPEC}.</li>
-	 * <li>{@code 087 The Reformer} - Improves the effect of {@code 090 Glasnost}, but disallows the USSR from couping any European countries.</li>
-	 * <li>{@code 093 Iran-Contra Affair} - All US realignment rolls incur a -1 penalty for the rest of the turn.</li>
-	 * <li>{@code 094 Chernobyl} - Disallows the USSR from placing influence in a specific region for the rest of the turn.</li>
-	 * <li>{@code 096 Tear Down This Wall} - Disables {@code 055 Willy Brandt}.</li>
-	 * <li>{@code 097 "An Evil Empire"} - Disables {@code 059 Flower Power}.</li>
-	 * <li>{@code 106 NORAD} - Whenever DEFCON drops to 2 on an Action Round, place one influence in any country with US Influence as long as Canada is controlled. Cancelled by {@code 042 Quagmire}.</li>
-	 * <li>{@code 109 Yuri and Samantha} - All US coup rolls give the USSR 1 VP each for the rest of the turn. </li>
-	 * <li>{@code 110 AWACS Sale to Saudis} - Disables {@code 056 Muslim Revolution}.</li>
-	 * <li>{@code 310 Red Scare} - The US gets -1 Operation point on every card for the rest of the turn to a minimum of 1.</li>
-	 * <li>{@code 311 Purge} - The USSR gets -1 Operation point on every card for the rest of the turn to a minimum of 1.</li>
-	 * <li>{@code 400 Turkish Missile Crisis} - For the rest of the turn, the US cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Turkey or West Germany.</li>
-	 * <li>{@code 401 Cuban Missile Crisis} - For the rest of the turn, the USSR cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Cuba.</li>
-	 * <li>{@code 490 Missile Envy} - The next US Action Round must use the card Missile Envy on either Operations or Quagmire, if possible. </li>
-	 * <li>{@code 491 Missile Envy} - The next USSR Action Round must use the card Missile Envy on either Operations or Bear Trap, if possible. </li>
-	 * <li>{@code 690 Latin American Death Squads} - All US coups in Central and South America get +1 to the roll; all USSR coups in the same area get -1 to the roll.</li>
-	 * <li>{@code 691 Latin American Death Squads} - All USSR coups in Central and South America get +1 to the roll; all US coups in the same area get -1 to the roll.</li>
+	 * <li>{@code 065 Camp David Accords} - Disables {@code 013 Arab Israeli War}. √</li>
+	 * <li>{@code 068 John Paul II Elected} - Allows the play of {@code 101 Solidarity}. √</li>
+	 * <li>{@code 073 Shuttle Diplomacy} - Upon the next scoring of Asia or the Middle East, remove one battleground from the USSR's country count. √</li>
+	 * <li>{@code 082 Iran Hostage Crisis} - Double the effect of {@code 092 Terrorism} on the US. √</li>
+	 * <li>{@code 083 The Iron Lady} - Disables {@code 007 Socialist Governments}. √</li>
+	 * <li>{@code 086 North Sea Oil} - Disables {@code 061 OPEC}. √</li>
+	 * <li>{@code 861 North Sea Oil} - The non-constant effect that allows the eighth action round. √</li>
+	 * <li>{@code 087 The Reformer} - Improves the effect of {@code 090 Glasnost}, but disallows the USSR from couping any European countries. √</li>
+	 * <li>{@code 093 Iran-Contra Affair} - All US realignment rolls incur a -1 penalty for the rest of the turn. √</li>
+	 * <li>{@code 094 Chernobyl} - Disallows the USSR from placing influence in a specific region for the rest of the turn. √</li>
+	 * <li>{@code 096 Tear Down This Wall} - Disables {@code 055 Willy Brandt}. √</li>
+	 * <li>{@code 097 "An Evil Empire"} - Disables {@code 059 Flower Power}. √</li>
+	 * <li>{@code 106 NORAD} - Whenever DEFCON drops to 2 on an Action Round, place one influence in any country with US Influence as long as Canada is controlled. Cancelled by {@code 042 Quagmire}. √</li>
+	 * <li>{@code 109 Yuri and Samantha} - All US coup rolls give the USSR 1 VP each for the rest of the turn. √</li>
+	 * <li>{@code 110 AWACS Sale to Saudis} - Disables {@code 056 Muslim Revolution}. √</li>
+	 * <li>{@code 310 Red Scare} - The US gets -1 Operation point on every card for the rest of the turn to a minimum of 1. √</li>
+	 * <li>{@code 311 Purge} - The USSR gets -1 Operation point on every card for the rest of the turn to a minimum of 1. √</li>
+	 * <li>{@code 400 Turkish Missile Crisis} - For the rest of the turn, the US cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Turkey or West Germany. √</li>
+	 * <li>{@code 401 Cuban Missile Crisis} - For the rest of the turn, the USSR cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Cuba. √</li>
+	 * <li>{@code 490 Missile Envy} - The next US Action Round must use the card Missile Envy on either Operations or Quagmire, if possible. √</li>
+	 * <li>{@code 491 Missile Envy} - The next USSR Action Round must use the card Missile Envy on either Operations or Bear Trap, if possible. √</li>
+	 * <li>{@code 690 Latin American Death Squads} - All US coups in Central and South America get +1 to the roll; all USSR coups in the same area get -1 to the roll. √</li>
+	 * <li>{@code 691 Latin American Death Squads} - All USSR coups in Central and South America get +1 to the roll; all US coups in the same area get -1 to the roll. √</li>
 	 * <li>{@code 1001 Yalta 6} - The US goes first in all turns during the early war.
 	 * <li>{@code 1002 Allied Berlin} - Disables {@code 010 Blockade}. Europe Scoring is now modified with Allied Berlin (3/6/6 instead of 3/7/V).
 	 * <li>{@code 1003 VJ 6} - The US ignores DEFCON restrictions during Turn 1. DEFCON cannot drop below 2. Coups galore!
@@ -89,7 +90,7 @@ public class HandManager {
 	 * <li>{@code 1005 Tory Victory} - Disables {@code 028 Suez Crisis}.
 	 * </ul>
 	 */
-	public static ArrayList<Integer> Effects;
+	public static ArrayList<Integer> Effects = new ArrayList<Integer>();
 	/**
 	 * The status of the China Card:
 	 * <br> -1 at the start of Chinese Civil War optional rule games.
@@ -128,12 +129,12 @@ public class HandManager {
 	 * Resets everything to its initial state.
 	 */
 	public static void reset() {
-		USAHand.clear();
-		SUNHand.clear();
-		Deck.clear();
-		Discard.clear();
-		Removed.clear();
-		Effects.clear();
+		USAHand = new ArrayList<Integer>();
+		SUNHand = new ArrayList<Integer>();
+		Deck = new ArrayList<Integer>();
+		Discard = new ArrayList<Integer>();
+		Removed = new ArrayList<Integer>();
+		Effects = new ArrayList<Integer>();
 		China = 1;
 		headline[1] = 0;
 		headline[0] = 0;
@@ -226,12 +227,12 @@ public class HandManager {
 		if (effectActive(50)&&sp==0&&mode!='h') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("We Will Bury You...");
-			if(mode != 'u') {
+			if(card != 32 || mode != 'e') {
 				builder.setDescription("...and the UN sits idle.")
 					.setFooter("\"If you don't like us, don't accept our invitations, "
 							+ "and don't invite us to come to see you. "
 							+ "Whether you like it or not, history is on our side.\" \n"
-							+ "- Nikita Khrushchev, 1956", Launcher.url("countries/su.png"))
+							+ "- Nikita Khrushchev, 1956", Launcher.url("people/khrushchev.png"))
 					.setColor(Color.red);
 				builder.changeVP(-3);
 			}
@@ -241,20 +242,20 @@ public class HandManager {
 					.setFooter("\"We are happy with our way of life. "
 							+ "We recognize its shortcomings and are always trying to improve it. "
 							+ "But if challenged, we shall fight to the death to preserve it.\"\n"
-							+ "- Norris Poulson, 1959", Launcher.url("countries/us.png"));
+							+ "- Norris Poulson, 1959", Launcher.url("people/poulson.png"));
 			}
 			removeEffect(50);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		} //We will bury you always goes first lul
 		GameData.checkScore(false, false);
-		if (effectActive(60)&&mode=='u') {
+		if (effectActive(60)&&card==32&&mode=='e') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("U2 Incident—Khrushchev's Trap!")
 				.setDescription("Downed pilot revealed to be alive")
 				.setFooter("\"I must tell you a secret. When I made my first report "
 						+ "I deliberately did not say that the pilot was alive and well ... "
 						+ "and now just look how many silly things the Americans have said.\"\n" + 
-						"- Nikita Khrushchev, 1960",Launcher.url("countries/su.png"))
+						"- Nikita Khrushchev, 1960",Launcher.url("people/khrushchev.png"))
 				.setColor(Color.red);
 			builder.changeVP(-1);
 			removeEffect(60);
@@ -267,7 +268,7 @@ public class HandManager {
 				.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
 				.setFooter("\"I think that we're up against the strongest, well-trained, "
 						+ "militant, revolutionary group that has ever assembled in America.\" \n"
-						+ "- Jim Rhodes, 1970", Launcher.url("countries/us.png"))
+						+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))
 				.setColor(Color.red);
 			builder.changeVP(-2);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -381,23 +382,6 @@ public class HandManager {
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, false, true, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;
-		}
-		if (mode=='u') {
-			EmbedBuilder builder = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
-				.setDescription("The UN collectively agrees on something for once")
-				.setFooter("\"\"\n"
-						+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
-				.setColor(sp==0?Color.blue:Color.red)
-				.setImage(Launcher.url("cards/032.png"))
-				.addField("UN Security Council Resolution", "The action described by the card just played has been condemned by the UN, and will not occur.", false);
-			GameData.txtchnl.sendMessage(builder.build()).complete();
-			discard(sp, card);
-			discard(sp, 32);
-			playmode = 'o';
-			activecard = card;
-			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
-			TimeCommand.cardPlayed = true;
-			TimeCommand.operationsRequired = true;
 		}
 		
 	}

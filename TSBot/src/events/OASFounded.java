@@ -16,12 +16,12 @@ public class OASFounded extends Card {
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("OAS Founded")
-		.setFooter("\"\"\n"
-				+ "- XXXX, XXXX", Launcher.url("countries/XX.png"))
+		.setFooter("\"Democracy for peace, security, and development.\"\n"
+				+ "- Motto of the OAS", Launcher.url("people/oas.png"))
 		.setColor(Color.BLUE)
 		.setDescription("21 countries sign charter at Ninth Pan-American Conference");
 		builder.bulkChangeInfluence(order, 0, values);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class OASFounded extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		if (args.length%2!=1) return false;

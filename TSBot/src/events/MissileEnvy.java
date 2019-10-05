@@ -17,9 +17,9 @@ public class MissileEnvy extends Card {
 		}
 		GameData.dec = new Decision((sp+1)%2, 490);
 		if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", your opponent has played " + CardList.getCard(49) + ". "
-				+ "Select a card with "+CardEmbedBuilder.intToEmoji(maxops)+" Operations Points to give to your opponent.");
+				+ "Select a card with "+CardEmbedBuilder.intToEmoji(maxops)+" Operations Points to give to your opponent.").complete();
 		else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", your opponent has played " + CardList.getCard(49) + ". "
-				+ "Select a card with "+CardEmbedBuilder.intToEmoji(maxops)+" Operations Points to give to your opponent.");
+				+ "Select a card with "+CardEmbedBuilder.intToEmoji(maxops)+" Operations Points to give to your opponent.").complete();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class MissileEnvy extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

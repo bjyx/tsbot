@@ -14,10 +14,10 @@ public class FormosanResolution extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Congress passes Formosa Resolution")
 			.setDescription("US committed to defend the Republic of China from communism")
-			.setFooter("\"\"\n"
-					+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
+			.setFooter("\"As long as we have Taiwan, the Communists can never win.\"\n"
+					+ "- Chiang Kai-Shek", Launcher.url("people/chiang.png"))
 			.setColor(Color.BLUE);
-		builder.addField("Mutual Defense Treaty", "Taiwan will count as a battleground for scoring purposes so long as the US controls it.", false);
+		builder.addField("Mutual Defense Treaty", "Taiwan will count as a battleground for scoring purposes only so long as the US controls it.", false);
 		HandManager.addEffect(35);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
@@ -65,7 +65,7 @@ public class FormosanResolution extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

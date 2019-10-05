@@ -19,7 +19,7 @@ public class Defectors extends Card {
 					.setDescription("")
 					.setColor(Color.blue)
 					.setFooter("\"It was like a bomb on top of everything else.\"\n"
-							+ "- William L. M. King, re. Igor Gouzenko, 1945", Launcher.url("countries/ca.png"))
+							+ "- William L. M. King, re. Igor Gouzenko, 1945", Launcher.url("people/king.png"))
 					.addField("Leaked Intelligence", "The headline "+CardList.getCard(HandManager.headline[1])+" cannot be carried out this turn.", false)
 					.build()).complete();
 		}
@@ -30,7 +30,7 @@ public class Defectors extends Card {
 					.setDescription("")
 					.setColor(Color.blue)
 					.setFooter("\"It doesn't matter if every ballet is a success or not. The new experience gives me a lot.\"\n"
-							+ "- Mikhail Baryshnikov, 1976", Launcher.url("countries/lv.png"))
+							+ "- Mikhail Baryshnikov, 1976", Launcher.url("people/baryshnikov.png"))
 					.build()).complete();
 		}
 	}
@@ -78,7 +78,7 @@ public class Defectors extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

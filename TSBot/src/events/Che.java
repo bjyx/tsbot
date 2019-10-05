@@ -20,7 +20,7 @@ public class Che extends Card {
 		.setFooter("\"If we want to express how we want our children to be, "
 				+ "we must say with all the heart of vehement revolutionaries: "
 				+ "we want them to be like Che!\"\n"
-				+ "- Fidel Castro", Launcher.url("countries/cu.png"))
+				+ "- Fidel Castro", Launcher.url("people/castro.png"))
 		.setColor(Color.RED);
 		
 		if (doable.isEmpty()) {
@@ -82,7 +82,7 @@ public class Che extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=46; i<84; i++) {

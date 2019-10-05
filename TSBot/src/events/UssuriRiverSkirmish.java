@@ -18,7 +18,7 @@ public class UssuriRiverSkirmish extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("China Attacks Soviet Border Post")
 		.setFooter("\"Weapons are an important factor in war, but not the decisive factor; it is people, not things that are decisive.\"\n"
-				+ "- Mao Zedong, 1938", Launcher.url("countries/cn.png"))
+				+ "- Mao Zedong, 1938", Launcher.url("people/mao.png"))
 		.setColor(Color.BLUE)
 		.setDescription("Border friction on the Ussuri River");
 		if (HandManager.China%2==0 || HandManager.China==-1) {
@@ -29,7 +29,7 @@ public class UssuriRiverSkirmish extends Card {
 			HandManager.China = 0;
 		}
 		
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class UssuriRiverSkirmish extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		if (HandManager.China == -1 || HandManager.China%2==0) {
 			order = new ArrayList<Integer>();
 			values = new ArrayList<Integer>();

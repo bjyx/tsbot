@@ -82,9 +82,55 @@ Cards:
 079 - Own work
 080 - 
 081 - Own work
+082
+083
+084
+085
+086
+087
+088
+089
+090
+091
+092
+093
+094
+095
+096
+097
+098
+099
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
 
 Leader images:
+churchill: By BiblioArchives / LibraryArchives - https://www.flickr.com/photos/28853433@N02/19086236948/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=41991931
+havel: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - VACLAC HAVEL, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74769308
 
 Turn Zero:
+035A
+C0
+C1
+C2
+C3
+C4
+C5
 
 f folder: Own work

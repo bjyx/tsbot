@@ -14,12 +14,12 @@ public class NuclearSubs extends Card {
 		builder.setTitle("USS Nautilus Launched")
 			.setDescription("Admiral Hyman Rickover to oversee construction of nuclear navy")
 			.setColor(Color.blue)
-			.setFooter("\"\"\n"
-					+ "- XXXX, 19XX", Launcher.url("countries/XX.png"));
+			.setFooter("\"Underway On Nuclear Power.\"\n"
+					+ "- Eugene P. Wilkinson, 1955", Launcher.url("people/wilkinson.png"));
 		builder.addField("Nuclear Triad","Coups performed by the US will not drop DEFCON for the rest of this turn."
 				+ (HandManager.Effects.contains(400)?"\n\n**:warning: The USA is currently dealing with the Cuban Missile Crisis. Any coup conducted by the USA will still lose them the game.**":""),false);
 		HandManager.addEffect(41);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class NuclearSubs extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

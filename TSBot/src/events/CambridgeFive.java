@@ -106,7 +106,7 @@ public class CambridgeFive extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

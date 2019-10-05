@@ -30,8 +30,8 @@ public class KoreanWar extends Card {
 		if (die>=4) {
 			builder.setTitle("Communist Victory in Korean War")
 				.setDescription("Kim Il-Sung gives victory speech in Seoul; Congress in uproar")
-				.setFooter("\"To contribute posi­tively to the work of building the state, let those with strength give strength, let those with knowledge give knowledge, let those with money give money, and let all people who truly love their country, their nation and democ­racy unite closely and build an independent and sovereign democratic state.\"\n"
-						+ "- Kim Il-Sung, 1945", Launcher.url("countries/kp.png"))
+				.setFooter("\"If we let Korea down, the Soviet[s] will keep right on going and swallow up one [place] after another... If we were to let Asia go, the Near East would collapse and no telling what would happen in Europe.\"\n"
+						+ "- Harry Truman, 1950", Launcher.url("people/truman.png"))
 				.setColor(Color.red);
 			builder.changeInfluence(42, 1, MapManager.get(42).influence[0]);
 			builder.changeInfluence(42, 0, -MapManager.get(42).influence[0]);
@@ -40,11 +40,13 @@ public class KoreanWar extends Card {
 		else {
 			builder.setTitle("Korean War Devolves Into Stalemate")
 				.setDescription("Armistice declared at Panmunjom")
-				.setFooter("\"That we were able to snatch victory from the jaws of defeat ... does not relieve us from the blame of having placed our own flesh and blood in such a predicament.\"\n"
-						+ "- Major General Floyd L. Parks, 195X",Launcher.url("countries/us.png"))
+				.setFooter("\"Of the nations of the world, Korea alone, up to now, is the sole one which has risked its all against communism. "
+						+ "The magnificence of the courage and fortitude of the Korean people defies description. "
+						+ "They have chosen to risk death rather than slavery. Their last words to me were: 'Don't scuttle the Pacific!'\"\n"
+						+ "- Douglas MacArthur, 1951",Launcher.url("people/macarthur.png"))
 				.setColor(Color.blue);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -83,7 +85,7 @@ public class KoreanWar extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

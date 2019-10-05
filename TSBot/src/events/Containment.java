@@ -14,7 +14,7 @@ public class Containment extends Card {
 			.setDescription("Mr. X")
 			.setColor(Color.blue)
 			.setFooter("\"In summary, we have here a political force committed fanatically to the belief that with US there can be no permanent modus vivendi, that it is desirable and necessary that the internal harmony of our society be disrupted, our traditional way of life be destroyed, the international authority of our state be broken, if Soviet power is to be secure.\"\n"
-					+ "- George F. Kennan, 1946", Launcher.url("countries/us.png"));
+					+ "- George F. Kennan, 1946", Launcher.url("people/kennan.png"));
 		builder.addField("Long Telegram","The US adds 1 Operations point to any card played for operations. ",false);
 		HandManager.addEffect(25);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -56,7 +56,7 @@ public class Containment extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

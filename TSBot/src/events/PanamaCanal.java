@@ -14,11 +14,11 @@ public class PanamaCanal extends Card {
 		.setDescription("Carter and Torrijos agree to a gradual handover")
 		.setColor(Color.blue)
 		.setFooter("\"We have never been, are not and will never be an associated state, colony or protectorate, and we do not intend to add a star to the United States flag.\"\n"
-				+ "- Omar Torrijos, 1973", Launcher.url("countries/pa.png"));
+				+ "- Omar Torrijos, 1973", Launcher.url("people/torrijos.png"));
 		builder.changeInfluence(64, 0, 1); // Costa Rica
 		builder.changeInfluence(73, 0, 1); // Panama
 		builder.changeInfluence(83, 0, 1); // Venezuela
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class PanamaCanal extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

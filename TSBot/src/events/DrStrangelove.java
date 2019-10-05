@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 
 import game.GameData;
+import main.Launcher;
 
 public class DrStrangelove extends Card {
 
@@ -11,7 +12,9 @@ public class DrStrangelove extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("*Dr. Strangelove*")
 			.setDescription("Or, How I Learned To Stop Worrying and Love the Bomb")
-			.setColor(Color.gray);
+			.setColor(Color.gray)
+			.setFooter("\"Gentlemen, you can't fight in here! This is the War Room!\"\n"
+					+ "- Merkin Muffley, *Dr. Strangelove*", Launcher.url("people/strangelove.png"));
 		builder.changeDEFCON(Integer.parseInt(args[1])-GameData.getDEFCON());
 		builder.addMilOps(sp, 5);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -53,7 +56,7 @@ public class DrStrangelove extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		int x;
 		try{
 			x = Integer.parseInt(args[1]);

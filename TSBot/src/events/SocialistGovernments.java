@@ -21,7 +21,7 @@ public class SocialistGovernments extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Socialist Governments")
 		.setFooter("\"De Gasperi’s policy is patience ... He seems to be feeling his way among the explosive problems he has to deal with, but perhaps this wary mine-detecting method is the stabilising force that holds the country in balance.\"\n"
-				+ "- Anne McCormick, 1949", Launcher.url("countries/gb.png"))
+				+ "- Anne McCormick, 1949", Launcher.url("leaders/times.png"))
 		.setColor(Color.RED);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "Western Europe is devoid of US Influence for some reason. How did that happen?", false);
@@ -30,7 +30,7 @@ public class SocialistGovernments extends Card {
 			builder.setDescription("Coalition formed in " + MapManager.get(order.get(0)).name + ".");
 			builder.bulkChangeInfluence(order, 0, values);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class SocialistGovernments extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();

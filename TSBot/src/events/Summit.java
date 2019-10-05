@@ -138,18 +138,18 @@ public class Summit extends Card {
 		
 		if (die_usa>die_ssr) {
 			builder.changeVP(2);
-			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention()+", decide how you want to change DEFCON. (TS.decide 0 or -1 or 1)");
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention()+", decide how you want to change DEFCON. (TS.decide 0 or -1 or 1)").complete();
 			GameData.dec = new Decision(0, 45);
 		}
 		else if (die_ssr>die_usa) {
 			builder.changeVP(-2);
-			GameData.txtssr.sendMessage(GameData.rolessr.getAsMention()+", decide how you want to change DEFCON. (TS.decide 0 or -1 or 1)");
+			GameData.txtssr.sendMessage(GameData.rolessr.getAsMention()+", decide how you want to change DEFCON. (TS.decide 0 or -1 or 1)").complete();
 			GameData.dec = new Decision(1, 45);
 		}
 		else {
 			builder.addField("Inconclusive meeting", "No change in VP", false);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -190,7 +190,7 @@ public class Summit extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

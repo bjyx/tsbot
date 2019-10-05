@@ -24,7 +24,7 @@ public class OPEC extends Card {
 				+ "the vital need for the producing countries to operate the levers of price control, "
 				+ "and lastly, the great possibilities of a union of raw material producing countries. "
 				+ "This action should be viewed by the developing countries as an example and a spurce of hope.\"\n"
-				+ "- Houari Boumediene, 1974", Launcher.url("countries/dz.png"))
+				+ "- Houari Boumediene, 1974", Launcher.url("people/boumediene.png"))
 		.setColor(Color.red);
 		int x = 0;
 		String str = "";
@@ -36,12 +36,12 @@ public class OPEC extends Card {
 		}
 		builder.addField("Cooperating countries: ", str, false);
 		builder.changeVP(-x);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return HandManager.effectActive(86);
+		return !HandManager.effectActive(86);
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class OPEC extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

@@ -16,10 +16,10 @@ public class TrumanDoctrine extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("")
-			.setDescription("")
-			.setFooter("\"\"\n"
-					+ "- XXXXX, 19XX",Launcher.url("countries/XX.png"))
+		builder.setTitle("Truman addresses Congress")
+			.setDescription("Outlines reasons for aid to Greece and Turkey")
+			.setFooter("\"I believe that it must be the policy of the United States to support free peoples who are resisting attempted subjugation by armed minorities or by outside pressures.\"\n"
+					+ "- Harry S. Truman, 1947",Launcher.url("people/truman.png"))
 			.setColor(Color.BLUE);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "No uncontrolled countries with USSR influence in Europe.", false);
@@ -27,7 +27,7 @@ public class TrumanDoctrine extends Card {
 		else {
 			builder.changeInfluence(target, 1, -MapManager.get(target).influence[1]);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class TrumanDoctrine extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		for (int i=0; i<21; i++) {
 			if (MapManager.get(i).isControlledBy()==-1 && MapManager.get(i).influence[1]>0) {

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 import map.MapManager;
 
 public class SpecialRelationship extends Card {
@@ -13,14 +14,15 @@ public class SpecialRelationship extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("").setDescription("").setFooter("", "").setColor(Color.blue);
+		builder.setTitle("").setDescription("").setFooter("\"Mr. Prime Minister, I am delighted to welcome you here today as an old friend; as an old friend not only in government, but as an old friend personally.\"\n"
+				+ "- Richard Nixon, 1970", Launcher.url("leaders/nixon.png")).setColor(Color.blue);
 		if (HandManager.Effects.contains(21)) {
 			builder.changeInfluence(target, 0, 2).changeVP(2);
 		}
 		else {
 			builder.changeInfluence(target, 0, 1);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -66,7 +68,7 @@ public class SpecialRelationship extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		target = MapManager.find(args[1]);
 		if (HandManager.Effects.contains(21)) {
 			if (MapManager.get(target).region==0||MapManager.get(target).region==1) return true;

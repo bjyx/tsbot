@@ -8,7 +8,7 @@ public class MapManager {
 	private static ArrayList<Country> map;
 	
 	public static void initialize() {//literally list every damn country here.
-		map.clear();
+		map = new ArrayList<Country>();
 		//Europe - 0
 		map.add(new Country(
 				"Austria", 

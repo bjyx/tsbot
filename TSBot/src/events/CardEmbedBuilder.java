@@ -11,14 +11,14 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	
 	public CardEmbedBuilder() {
 		super();
-		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR"), null, "images/countries/" + (GameData.phasing()==0?"us.png":"su.png"));
+		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR"));
 	}
 	
 	public static String intToEmoji(int i) {
 		if (Math.abs(i)>10) return intToEmoji(i/10) + ":" + numbers[Math.abs(i)%10] + ":";
 		String str="";
-		if (i<0) str += ":heavy_minus:";
-		else str += ":heavy_plus:";
+		if (i<0) str += ":heavy_minus_sign:";
+		else str += ":heavy_plus_sign:";
 		return str + ":" + numbers[Math.abs(i)] + ":";
 		
 	}
@@ -30,7 +30,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder changeInfluence(int country, int sp, int amt) {
 		if (amt==0) return this;
 		MapManager.get(country).changeInfluence(sp, amt);
-		return (CardEmbedBuilder) this.addField(":flag_" + MapManager.get(country).id + "::Influence" + (sp==0?"A":"R") + ":" + intToEmoji(amt),"Now at " + MapManager.get(country).influence[0] + "/" + MapManager.get(country).influence[1],true);
+		return (CardEmbedBuilder) this.addField(MapManager.get(country) + ":Influence" + (sp==0?"A":"R") + ":" + intToEmoji(amt),"Now at " + MapManager.get(country).influence[0] + "/" + MapManager.get(country).influence[1],true);
 	}
 	public CardEmbedBuilder changeDEFCON(int amt) {
 		if (amt==0) return this;

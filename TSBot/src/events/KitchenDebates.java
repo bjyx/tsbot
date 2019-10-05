@@ -13,11 +13,11 @@ public class KitchenDebates extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Kitchen Debates!").setDescription("Khrushchev and Nixon Talk Technology")
 		.setFooter("\"Certainly it will, and everything I say is to be translated into Russian and broadcast across the Soviet Union. That's a fair bargain.\"\n"
-				+ "- Richard M. Nixon, 1959", Launcher.url("countries/us.png"))
+				+ "- Richard M. Nixon, 1959", Launcher.url("people/nixon.png"))
 		.setColor(Color.blue);
 		builder.changeVP(2);
 		builder.addField("Nixon's Chest Jab","Poke! Poke! Poke!",false);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class KitchenDebates extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

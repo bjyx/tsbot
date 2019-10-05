@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import cards.CardList;
+import cards.HandManager;
+import game.GameData;
 import map.MapManager;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -13,6 +15,15 @@ public class InfoCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		// TODO Auto-generated method stub
+		
+		if (args.length<2) {
+			sendMessage(e, ":x: Not enough arguments.");
+			return;
+		}
+		if (args[1].equals("ames") && HandManager.effectActive(98) && e.getChannel().equals(GameData.txtssr)) {
+			GameData.txtssr.sendMessage(HandManager.getUSAHand()).complete();
+			return;
+		}
 		if (args.length<3) {
 			sendMessage(e, ":x: Not enough arguments.");
 			return;

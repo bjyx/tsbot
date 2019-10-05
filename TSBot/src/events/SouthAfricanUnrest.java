@@ -7,6 +7,7 @@ import java.util.Arrays;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import main.Launcher;
 import map.MapManager;
 
 public class SouthAfricanUnrest extends Card {
@@ -18,15 +19,16 @@ public class SouthAfricanUnrest extends Card {
 	public void onEvent(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Anti-Apartheid Demonstrations Violently Quelled")
-			.setDescription("Hundreds dead after police shoot into crowd in Sharpeville")
+		builder.setTitle("Anti-Apartheid Demonstrations Flare Up")
+			.setDescription("Black majority campaigns against South African racist policy")
 			.setColor(Color.red)
-			.setFooter("", "");
+			.setFooter("\"Mandela has overstepped the mark. He has broken the law. The judiciary of this country has put him where he belongs according to the rules of democracy.\"\n"
+					+ "- P. W. Botha, 1980", Launcher.url("leaders/botha.png"));
 		builder.changeInfluence(option, 1, 2);
 		if (option!=58) {
 			builder.changeInfluence(58, 1, 1);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -72,7 +74,7 @@ public class SouthAfricanUnrest extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		if (args.length<2) return false;
 		option = MapManager.find(args[1]);
 		if (VALID_OPTIONS.contains(option)) {

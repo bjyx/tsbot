@@ -42,18 +42,18 @@ public class PlayCommand extends Command {
 					sendMessage(e, ":x: How would you like to play this card?");
 					return;
 				}
-				if (e.getAuthor().equals(PlayerList.getUSA())?(HandManager.USAHand.isEmpty()):(HandManager.SUNHand.isEmpty())) {
-					sendMessage(e, "I see. You have no cards (and choose not to use the China Card)...");
-					TimeCommand.cardPlayed = true;
+				if (!TimeCommand.cardPlayedSkippable) {
+					sendMessage(e, "Skip intent noted.");
+					TimeCommand.cardPlayedSkippable = true;
 					GameData.txtchnl.sendMessage(new CardEmbedBuilder()
-							.setTitle("No cards to play!")
-							.setDescription(e.getAuthor().equals(PlayerList.getUSA())?"The USA ":"The USSR " + "has no cards in their hand.")
+							.setTitle("Inactivity")
+							.setDescription(e.getAuthor().equals(PlayerList.getUSA())?"The USA ":"The USSR " + "elects not to play a card.")
 							.build())
 					.complete();
 					return;
 				}
 				else {
-					sendMessage(e, ":x: Are you stuck in zugzwang? Too bad, you have to play a card.");
+					sendMessage(e, ":x: Are you stuck in zugzwang? Too bad, you have to play a card. Even if it's Lone Gunman or CIA—trust me, I hate those cards as much as the next guy.");
 					return;
 				}
 			} catch (NumberFormatException e2) {
@@ -80,7 +80,7 @@ public class PlayCommand extends Command {
 		}
 		e.getMessage().delete().complete();
 		if (!modes.contains(mode)) {
-			sendMessage(e, ":x: Modes can be any of h, e, o, s, or u. Not the one you chose, though.");
+			sendMessage(e, ":x: Modes can be any of h, e, o, or s. Not the one you chose, though.");
 			return;
 		}
 		if (GameData.getAR()%2!=PlayerList.getArray().indexOf(e.getAuthor())&&!GameData.isHeadlinePhase()) {
@@ -95,6 +95,10 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: You have Missile Envy.");
 			return;
 		}
+		if (TimeCommand.cardPlayed) {
+			sendMessage(e, ":x: This is hardly your priority right now.");
+			return;
+		}
 		if (mode == 'h'&&!GameData.isHeadlinePhase()) {
 			sendMessage(e, ":x: Can't play headlines in non-headline phases.");
 			return;
@@ -105,10 +109,6 @@ public class PlayCommand extends Command {
 		}
 		if (mode == 'h'&&(card == 32 || card == 6)) { //UN Intervention and the China Card cannot be played in the headline
 			sendMessage(e, ":x: That is not a card you can play in the headline.");
-			return;
-		}
-		if (mode == 'e' && card == 32) {
-			sendMessage(e, ":x: UN Intervention is a separate function. Use `TS.play [card here] u` instead of whatever you managed to type.");
 			return;
 		}
 		if (mode == 'h'&&HandManager.headline[PlayerList.getArray().indexOf(e.getAuthor())]!=0) {
@@ -127,16 +127,8 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: Wait until next turn to space this card.");
 			return;
 		}
-		if ((mode=='e'||mode=='u')&&!CardList.getCard(card).isPlayable(PlayerList.getArray().indexOf(e.getAuthor()))) {
+		if ((mode=='e')&&!CardList.getCard(card).isPlayable(PlayerList.getArray().indexOf(e.getAuthor()))) {
 			sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
-			return;
-		}
-		if (mode=='e'&&card==83&&GameData.phasing()==1) {
-			sendMessage(e, "Oh no, I see what you're about to do and I state you have no reason to do so. "
-					+ "`083 The Iron Lady` provides 1 USSR Influence in Argentina that can then be exploited by knowledge of the lackluster main code to spread directly into Chile and Uruguay. "
-					+ "You'll have to do the operations first. There's absolutely no reason for you to use the event first - no sane USSR player would ever contest the UK, "
-					+ "and you can only place influence using Operations if the country you place them in is adjacent to (or already is) a country containing your influence **at the start of your turn**. "
-					+ "And no, I am not rewriting my code for one exception.");
 			return;
 		}
 		if (mode=='u'&&HandManager.handContains(GameData.phasing(), 32)) {

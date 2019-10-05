@@ -33,7 +33,11 @@ public class AsiaScoring extends Card {
 			.setFooter("\"I can say without equivocation: "
 					+ "the United States firmly supports the orderly progress towards self-government throughout the world. "
 					+ "The United States has no imperialistic ambitions whatsoever in Asia or in any other part of the globe.\"\n"
-					+ "- Richard Nixon, 1953", Launcher.url("countries/us.png"));
+					+ "- Richard Nixon, 1953", Launcher.url("people/nixon.png"));
+		if (HandManager.effectActive(35)) {
+			builder.addField("Formosa Resolution", "Taiwan is a battleground for scoring purposes.", false);
+			MapManager.get(43).isBattleground = true;
+		}
 		int vp = 0;
 		for (int i = 31; i<46; i++) { //Afghanistan and Algeria, resp.
 			Country c = MapManager.get(i);
@@ -53,11 +57,12 @@ public class AsiaScoring extends Card {
 		}
 		builder.addField(":flag_us:", strings[0]+"|"+strings[2], false);
 		builder.addField(":flag_su:", strings[1]+"|"+strings[3], false);
-		if (HandManager.Effects.contains(73)) {
+		if (HandManager.effectActive(73)) {
 			battlegrounds[1]--; //shuttle diplomacy removes a battleground from Asia
 			totalCountries[1]--; //a battleground is still a country...
-			HandManager.Effects.remove(HandManager.Effects.indexOf(73)); //shuttle diplomacy is one use only
+			HandManager.removeEffect(73); //shuttle diplomacy is one use only
 			HandManager.Discard.add(73);
+			if (MapManager.get(36).isControlledBy()==1) vp++; // shame on you if you managed to lose *JAPAN* to the USSR
 			builder.addField("Shuttle Diplomacy", "One less battleground to worry about!", false);
 		}
 		vp += battlegrounds[0]-battlegrounds[1];
@@ -69,6 +74,7 @@ public class AsiaScoring extends Card {
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
+		MapManager.get(43).isBattleground = false; //reset Taiwan to non-battleground
 	}
 	@Override
 	public String getId() {
@@ -95,7 +101,7 @@ public class AsiaScoring extends Card {
 		return true; //always playable.
 	}
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 	@Override

@@ -11,7 +11,6 @@ public class IndependentReds extends Card {
 	
 	private static final int[] possible = {2, 4, 10, 14, 20}; //bg, cs, hu, ro, yu;
 	
-	private boolean lessThanReq;
 	private ArrayList<Integer> doable;
 	
 	private static int target;
@@ -19,23 +18,18 @@ public class IndependentReds extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("")
+		builder.setTitle(MapManager.get(target).name + " splits from Soviet Bloc")
 			.setDescription("")
-			.setFooter("\"\"\n"
-					+ "- XXXXX, 19XX",Launcher.url("countries/XX.png"))
+			.setFooter("\"Stop sending people to kill me. We've already captured five of them, one of them with a bomb and another with a rifle. [...] If you don't stop sending killers, I'll send one to Moscow, and I won't have to send a second.\"\n"
+					+ "- Josip Broz Tito, 19XX",Launcher.url("people/tito.png"))
 			.setColor(Color.BLUE);
-		if (lessThanReq) {
-			if (doable.isEmpty()) {
-				builder.addField("No countries to target!", "None of the targetable countries are valid targets for US Influence placement.", false);
-			}
-			else for (int i : doable) {
-				builder.changeInfluence(i, 0, MapManager.get(i).influence[1]-MapManager.get(i).influence[0]);
-			}
+		if (doable.isEmpty()) {
+			builder.addField("No countries to target!", "None of the targetable countries are valid targets for US Influence placement.", false);
 		}
 		else {
 			builder.changeInfluence(target, 0, MapManager.get(target).influence[1]-MapManager.get(target).influence[0]);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -75,7 +69,7 @@ public class IndependentReds extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		for (int i : possible) {
 			if (MapManager.get(i).influence[1]-MapManager.get(i).influence[0]>0) {
@@ -83,10 +77,10 @@ public class IndependentReds extends Card {
 			}
 		}
 		if (doable.size()<=1) {
-			lessThanReq = true;
+			if (doable.isEmpty()) target=0;
+			else target = doable.get(0);
 			return true;
 		}
-		lessThanReq = false;
 		if (args.length<2) return false;
 		if (doable.contains(MapManager.find(args[1]))) {
 			target = MapManager.find(args[1]);

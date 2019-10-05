@@ -14,11 +14,11 @@ public class LADS extends Card {
 		builder.setTitle("Latin American Death Squads")
 			.setDescription("")
 			.setFooter("\"If it is necessary to turn the country into a cemetery in order to pacify it, I will not hesitate to do so.\"\n"
-					+ "- Carlos Manuel Arana Osorio", Launcher.url("countries/gt.png"))
+					+ "- Carlos Manuel Arana Osorio", Launcher.url("people/arana.png"))
 			.setColor(sp==0?Color.blue:Color.red);
 		builder.addField("Extrajudicial Actions", "For the rest of the turn, "+(sp==0?"American":"Soviet") + " coups in Latin America get a +1 bonus, while "+(sp==0?"Soviet":"American") + " coups in Latin America get a -1 malus. ", false);
 		HandManager.addEffect(690+sp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class LADS extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

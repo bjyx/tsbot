@@ -53,7 +53,7 @@ public class ChinaCard extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// this should also not be used...
 		return false;
 	}

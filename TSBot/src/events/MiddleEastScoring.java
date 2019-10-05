@@ -26,7 +26,7 @@ public class MiddleEastScoring extends Card {
 					+ "If powerful oil trusts no longer despoil and humiliate our country "
 					+ "it is not because these predators have become human, "
 					+ "but because we have won a hard-fought battle which has been going on since the beginning of the century.\n" + 
-					"- Mohammed Reza Pahlavi", Launcher.url("countries/ir.png"));
+					"- Mohammed Reza Pahlavi", Launcher.url("people/pahlavi.png"));
 		int vp = 0;
 		for (int i = 21; i<31; i++) { //Egypt and Afghanistan, resp.
 			Country c = MapManager.get(i);
@@ -58,7 +58,7 @@ public class MiddleEastScoring extends Card {
 		else if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]) vp -= domination;
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 
 	}
 
@@ -98,7 +98,7 @@ public class MiddleEastScoring extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

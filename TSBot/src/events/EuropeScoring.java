@@ -22,7 +22,7 @@ public class EuropeScoring extends Card {
 			.setFooter("\"Yes, it is Europe, from the Atlantic to the Urals, "
 					+ "it is Europe, it is the whole of Europe, "
 					+ "that will decide the fate of the world.\"\n"
-					+ "- Charles de Gaulle, 1959", Launcher.url("countries/fr.png"));
+					+ "- Charles de Gaulle, 1959", Launcher.url("people/degaulle.png"));
 		int vp = 0;
 		for (int i = 0; i<21; i++) { //Austria and Egypt, resp.
 			Country c = MapManager.get(i);
@@ -100,7 +100,7 @@ public class EuropeScoring extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true; //no extra info needed
 	}
 

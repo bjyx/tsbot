@@ -11,11 +11,11 @@ public class DeGaulle extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("")
-			.setDescription("")
+		builder.setTitle("France declares Fifth Republic")
+			.setDescription("De Gaulle to be at helm of government")
 			.setColor(Color.red)
-			.setFooter("\"\"\n"
-					+ "- Charles de Gaulle, 19XX", Launcher.url("countries/fr.png"));
+			.setFooter("\"Men can have friends, statesmen cannot.\"\n"
+					+ "- Charles de Gaulle, 1967", Launcher.url("people/degaulle.png"));
 		builder.changeInfluence(8, 0, -2); //remove 2 American influence in France
 		builder.changeInfluence(8, 1, 1); //add 1 USSR influence in France
 		builder.addField("France leaves NATO","France can now be couped/realigned by the Soviet Union if under US control.",false);
@@ -60,7 +60,7 @@ public class DeGaulle extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

@@ -33,7 +33,7 @@ public class WarsawPact extends Card {
 		}
 		builder.addField("Western Reaction", "**NATO is now formable.**", false);
 		HandManager.addEffect(16);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class WarsawPact extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
@@ -100,6 +100,7 @@ public class WarsawPact extends Card {
 			for (int i=2; i<args.length; i+=2) {
 				int c = MapManager.find(args[i]);
 				order.add(c);
+				if (!(MapManager.get(c).region==0||MapManager.get(c).region==2)) return false;
 				try{
 					values.add(Integer.parseInt(args[i+1]));
 				}
@@ -109,7 +110,6 @@ public class WarsawPact extends Card {
 				if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 			}
 			int sum = 0;
-			if (!doable.containsAll(order)) return false;
 			for (int i=0; i<order.size(); i++) {
 				if (values.get(i)<=0) return false; //no non-positive numbers please
 				if (values.get(i)>2) return false; // cannot add >2 influence to a given country

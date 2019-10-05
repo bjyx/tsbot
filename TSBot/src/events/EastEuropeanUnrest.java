@@ -16,9 +16,10 @@ public class EastEuropeanUnrest extends Card {
 	public void onEvent(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Council for Mutual Economic Assistance founded")
-			.setDescription("")
-			.setFooter("", Launcher.url(""))
+		builder.setTitle("Unrest in Eastern Europe")
+			.setDescription("Demonstrations against communist governments intensify")
+			.setFooter("\"People who today are falling into depression and defeatism, commenting that there are not enough guarantees, that everything could end badly, that we might again end up in a marasmus of censorship and trials, that this or that could happen, are simply weak people, who can live only in illusions of certainty.\"\n"
+					+ "- Milan Kundera, 1968", Launcher.url("people/kundera.png"))
 			.setColor(Color.blue);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "No USSR Influence in Eastern Europe. How did *that* happen?", false);
@@ -72,7 +73,7 @@ public class EastEuropeanUnrest extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=0; i<21; i++) {

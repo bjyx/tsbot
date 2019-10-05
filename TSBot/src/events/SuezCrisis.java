@@ -23,7 +23,7 @@ public class SuezCrisis extends Card {
 		builder.setTitle("Anglo-French Forces Withdraw From Egypt")
 		.setDescription("Eden set to resign amid diplomatic pressure in a victory for Nasser")
 		.setFooter("\"We couldn't on one hand, complain about the Soviets intervening in Hungary and, on the other hand, approve of the British and the French picking that particular time to intervene against Nasser.\"\n"
-				+ "- Richard Nixon, 1956", Launcher.url("countries/us.png"))
+				+ "- Richard Nixon, 1956", Launcher.url("people/nixon.png"))
 		.setColor(Color.RED);
 			if (doable.isEmpty()) {
 				builder.addField("No countries to target!", "For some reason, the UK, France, and Israel are not associated with the US. France and Israel I can get, but the UK?", false);
@@ -31,7 +31,7 @@ public class SuezCrisis extends Card {
 			else {
 				builder.bulkChangeInfluence(order, 0, values);
 			}
-			GameData.txtchnl.sendMessage(builder.build());
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class SuezCrisis extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();

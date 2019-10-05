@@ -19,10 +19,10 @@ public class LiberationTheology extends Card {
 		.setDescription("The preferential option for the poor")
 		.setFooter("\"History is the scene of the revelation God makes of the mystery of his person. "
 				+ "His word reaches us in the measure of our involvement in the evolution of history.\"\n"
-				+ "- Gustavo Gutiérrez, 1975", Launcher.url("countries/pe.png"))
+				+ "- Gustavo Gutiérrez, 1975", Launcher.url("people/gutierrez.png"))
 		.setColor(Color.RED);
 		builder.bulkChangeInfluence(order, 1, values);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class LiberationTheology extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		if (args.length%2!=1) return false;

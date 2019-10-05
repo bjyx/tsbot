@@ -18,7 +18,7 @@ public class CIACreated extends Card {
 			.setFooter("\"We had constructed for ourselves a picture of the USSR, "
 					+ "and whatever happened had to be made to fit into this picture. "
 					+ "Intelligence estimators can hardly commit a more abominable sin.\" \n"
-					+ "- Abbot Smith, regarding CIA Operations in Indonesia, 1958",Launcher.url("countries/us.png"))
+					+ "- Abbot Smith, regarding CIA Operations in Indonesia, 1958",Launcher.url("people/smith.png"))
 			.setColor(Color.blue);
 		GameData.txtusa.sendMessage(HandManager.getSUNHand()).complete();
 		GameData.dec = new Decision(0, 26);
@@ -64,7 +64,7 @@ public class CIACreated extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

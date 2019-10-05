@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 
 import game.GameData;
+import main.Launcher;
 
 public class PortEmpire extends Card {
 
@@ -12,10 +13,11 @@ public class PortEmpire extends Card {
 		builder.setTitle("Angola and Mozambique Gain Independence")
 		.setDescription("New Portuguese government agrees to independence-granting accords")
 		.setColor(Color.red)
-		.setFooter("", "");
+		.setFooter("\"Victory is certain.\""
+				+ "\n- Slogan of the MPLA", Launcher.url("people/neto.png"));
 		builder.changeInfluence(47, 1, 2); //Alvor Agreement
 		builder.changeInfluence(55, 1, 2); //Lusaka Accord
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class PortEmpire extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

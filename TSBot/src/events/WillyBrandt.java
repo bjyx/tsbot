@@ -16,11 +16,11 @@ public class WillyBrandt extends Card {
 			.setDescription("New policy repudiates longstanding Hallstein Doctrine")
 			.setColor(Color.red)
 			.setFooter("\"Berlin expects more than words. It expects political action.\"\n"
-					+ "- Willy Brandt, 1961", Launcher.url("countries/de.png"));
+					+ "- Willy Brandt, 1961", Launcher.url("people/brandt.png"));
 		builder.changeInfluence(19, 1, 1); //add 1 USSR influence in West Germany
 		builder.addField("Ostpolitik","West Germany can now be couped/realigned by the Soviet Union if under US control.",false);
 		HandManager.addEffect(55);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class WillyBrandt extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

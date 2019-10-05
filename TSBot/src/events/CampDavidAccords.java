@@ -17,7 +17,7 @@ public class CampDavidAccords extends Card {
 		.setDescription("US-mediated negotiations show promise in ending Arab-Israeli enmity")
 		.setColor(Color.blue)
 		.setFooter("\"I am convinced that we owe it to this generation and the generations to come, not to leave a stone unturned in our pursuit of peace.\"\n"
-				+ "- Anwar al-Sadat, 1978", Launcher.url("countries/eg.png"));
+				+ "- Anwar al-Sadat, 1978", Launcher.url("people/sadat.png"));
 		builder.changeVP(1);
 		builder.changeInfluence(21, 0, 1); // Egypt
 		builder.changeInfluence(25, 0, 1); // Israel
@@ -63,7 +63,7 @@ public class CampDavidAccords extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

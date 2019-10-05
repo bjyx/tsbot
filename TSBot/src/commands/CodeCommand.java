@@ -10,7 +10,7 @@ public class CodeCommand extends Command {
 
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		MessageBuilder message = new MessageBuilder().append("https://github.com/bjyx/tsbot");
+		MessageBuilder message = new MessageBuilder().append("Want to suggest better quotes or report a bug? Drop a comment here: https://github.com/bjyx/tsbot");
 		sendMessage(e, message.build());
 	}
 

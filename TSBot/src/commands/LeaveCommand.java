@@ -10,7 +10,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class LeaveCommand extends Command {
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.hasGameEnded()) {
@@ -21,10 +20,11 @@ public class LeaveCommand extends Command {
 			sendMessage(e, ":x: This isn't a game of chicken. Once you're in the Cold War you see it through to the end.");
 			return;
 		}
-		if (!Arrays.asList(PlayerList.getArray()).contains(e.getAuthor())) {
+		if (!(PlayerList.getArray().get(0).equals(e.getAuthor())||PlayerList.getArray().get(1).equals(e.getAuthor()))) {
 			sendMessage(e, ":x: You're not on the list.");
 			return;
 		}
+		sendMessage(e, ":o: Done.");
 		PlayerList.removePlayer(e.getAuthor());
 	}
 

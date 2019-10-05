@@ -2,6 +2,7 @@ package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -31,7 +32,7 @@ public class BrushWar extends Card {
 						+ "Eritrea will be free, and they cannot refuse to let them be free. "
 						+ "Western Somalia will be free, and they cannot refuse to grant it freedom. "
 						+ "The numerous Abo will be free because this is history, and no one can prevent the sunshine from reaching us.\"\n"
-						+ "- Siad Barre, 1978",Launcher.url("countries/so.png"))
+						+ "- Siad Barre, 1978",Launcher.url("people/barre.png"))
 				.setColor(sp==0?Color.blue:Color.red);
 			builder.changeInfluence(target, sp, MapManager.get(target).influence[(sp+1)%2]);
 			builder.changeInfluence(target, (sp+1)%2, -MapManager.get(target).influence[(sp+1)%2]);
@@ -43,7 +44,7 @@ public class BrushWar extends Card {
 				.setFooter("\"Henceforth we will tackle our enemies that come face to face with us and we will not be stabbed in from behind by internal foes... "
 						+ "To this end, we will arm the allies and comrades of the broad masses without giving respite to reactionaries, "
 						+ "and avenge the blood of our comrades double - and triple - fold.\"\n"
-						+ "- Mengistu Haile Mariam, 1977",Launcher.url("countries/et.png"))
+						+ "- Mengistu Haile Mariam, 1977",Launcher.url("people/mengistu.png"))
 				.setColor(sp==0?Color.red:Color.blue);
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -90,10 +91,11 @@ public class BrushWar extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		if (args.length<2) return false;
 		target = MapManager.find(args[1]);
 		if (MapManager.get(target).stab>2) return false;
+		if (MapManager.get(target).region<=2 && MapManager.get(target).isControlledBy()==0 && sp==1 && HandManager.effectActive(21)) return false; //NATO lol
 		return true;
 	}
 

@@ -15,12 +15,12 @@ public class VietnamRevolts extends Card {
 		builder.setTitle("Dien Bien Phu falls")
 			.setDescription("Negotiations now underway in Geneva to decide fate of French Indochina")
 			.setFooter("\"You can kill ten of my men for every one I kill of yours. But even at those odds, you will lose and I will win.\"\n"
-					+ "- Hô Chi Minh, 195X", Launcher.url("countries/vn.png"))
+					+ "- Hô Chi Minh, 195X", Launcher.url("people/hochiminh.png"))
 			.setColor(Color.red);
 		builder.changeInfluence(45, 1, 2); //Vietnam 0/+2
 		builder.addField("Viet Minh", "All Soviet Operations exclusively used in Southeast Asia will now have one extra point to use.", false);
 		HandManager.addEffect(9);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class VietnamRevolts extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

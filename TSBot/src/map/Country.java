@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import events.CardEmbedBuilder;
 import game.GameData;
+import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public class Country {
 	//practical
-	public static final String[] regions = {"Officially Neutral Europe","Western Europe","Eastern Europe","Middle East","Asia","Southeast Asia","Africa","Central America","South America","Superpower"};
+	public static final String[] regions = {"Europe","Europe (Western)","Europe (Eastern)","Middle East","Asia","Southeast Asia","Africa","Central America","South America","Superpower"};
 	public static int count=0;
 	public int[] influence = {0,0};
 	public int id; //yes, countries have a unique identifier so it can work with twistrug; problem?
@@ -88,9 +90,9 @@ public class Country {
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle(name+" ("+iso+")")
 				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "country in " + regions[region])
-				.setThumbnail("https://raw.githubusercontent.com/bjyx/tsbot/master/TSBot/images/countries/"+iso)
+				.setThumbnail(Launcher.url("countries/"+iso+".png"))
 				.setColor(getColor())
-				.addField("Influence", ":InfluenceA:"+influence[0]+":InfluenceR:"+influence[1], false)
+				.addField("Influence", ":InfluenceA:"+CardEmbedBuilder.intToEmoji(influence[0])+":InfluenceR:"+CardEmbedBuilder.intToEmoji(influence[1]), false)
 				.addField("", desc, false);
 		String str = "";
 		for (int i : adj) {

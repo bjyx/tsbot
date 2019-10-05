@@ -26,7 +26,7 @@ public class ArmsRace extends Card {
 		builder.setTitle((x==0?"USA":"USSR") + (isAhead?" Pulls Ahead in Arms Race":" Stays Ahead in Arms Race"))
 			.setDescription(x==0?"Recent research shows Moscow overexaggerated nuclear arsenal size":"Pravda boasts of massive and technologically superior nuclear arsenal")
 			.setFooter("\"Imagine a room awash in gasoline, and there are two implacable enemies in that room. One of them has nine thousand matches. The other has seven thousand matches. Each of them is concerned about who's ahead, who's stronger. Well that's the kind of situation we are actually in.\"\n"
-					+ "- Carl Sagan, 1983", Launcher.url("countries/us.png"))
+					+ "- Carl Sagan, 1983", Launcher.url("people/sagan.png"))
 			.setColor(isAhead?(sp==0?Color.blue:Color.red):Color.gray);
 		builder.changeVP((x==0?1:-1)*(isAhead?(hasMetReq?3:1):0));
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -75,7 +75,7 @@ public class ArmsRace extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

@@ -13,7 +13,7 @@ public class CardList {
 	/**
 	 * Accesses the list itself.
 	 */
-	public static ArrayList<Card> cardList;
+	public static ArrayList<Card> cardList = new ArrayList<Card>();
 	/**
 	 * The number of cards in the cardlist. There should be 111 after initiation.
 	 */
@@ -22,8 +22,8 @@ public class CardList {
 	 * Initializes the list with all cards and a null card.
 	 */
 	public static void initialize() {
-		cardList.clear();
-		CardList.addCard(null); //just to occupy the 0 slot so I don't get peeved enough to use a map
+		cardList = new ArrayList<Card>();
+		CardList.addCard(new Placeholder()); //just to occupy the 0 slot so I don't get peeved enough to use a map
 		
 		CardList.addCard(new AsiaScoring());
 		CardList.addCard(new EuropeScoring());
@@ -37,7 +37,7 @@ public class CardList {
 		CardList.addCard(new Blockade());
 		
 		//if (v-j day==6) {
-		//	CardList.addCard(null);
+		//	CardList.addCard(new Placeholder());
 		//}
 		//else {
 		CardList.addCard(new KoreanWar());
@@ -117,7 +117,7 @@ public class CardList {
 		CardList.addCard(new ShuttleDiplomacy());
 		CardList.addCard(new VoiceOfAmerica());
 		CardList.addCard(new LiberationTheology());
-		//if (chinese civil war crisis == 1) CardList.addCard(null);
+		//if (chinese civil war crisis == 1) CardList.addCard(new Placeholder());
 		//else {
 			CardList.addCard(new UssuriRiverSkirmish());
 		//}
@@ -127,7 +127,7 @@ public class CardList {
 		CardList.addCard(new OneSmallStep());
 		
 		CardList.addCard(new SouthAmScoring());
-		/*CardList.addCard(new IranHostage());
+		CardList.addCard(new IranHostage());
 		CardList.addCard(new IronLady());
 		CardList.addCard(new ReaganBombsLibya());
 		CardList.addCard(new StarWars());
@@ -137,7 +137,7 @@ public class CardList {
 		CardList.addCard(new KAL007());
 		CardList.addCard(new Glasnost());
 		
-		/*CardList.addCard(new Ortega());
+		CardList.addCard(new Ortega());
 		CardList.addCard(new Terrorism());
 		CardList.addCard(new IranContra());
 		CardList.addCard(new Chernobyl());
@@ -148,8 +148,8 @@ public class CardList {
 		CardList.addCard(new PershingII());
 		CardList.addCard(new Wargames());
 		
-		/*CardList.addCard(new Solidarity());
-		CardList.addCard(new IranIraqWar());*/
+		CardList.addCard(new Solidarity());
+		CardList.addCard(new IranIraqWar());
 		CardList.addCard(new Defectors());
 		if (GameData.optional) {
 			CardList.addCard(new CambridgeFive());
@@ -157,17 +157,17 @@ public class CardList {
 			CardList.addCard(new NORAD());
 			CardList.addCard(new Che());
 			CardList.addCard(new OurManInTehran());
-			/*CardList.addCard(new YuriAndSamantha());
-			CardList.addCard(new AWACSSale());*/
+			CardList.addCard(new YuriAndSamantha());
+			CardList.addCard(new AWACSSale());
 		}
 		else {
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
 		}
 		/*
 		if (GameData.promo1) {
@@ -216,6 +216,6 @@ public class CardList {
 	 * @return counter-1, representing all the cards in the list sans the first null card.
 	 */
 	public static int numberOfCards() {
-		return counter-1; // counter should be @ 111
+		return counter-1; // counter should be around 111
 	}
 }

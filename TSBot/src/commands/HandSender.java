@@ -17,8 +17,8 @@ public class HandSender extends ListenerAdapter {
         if (e.getAuthor().isBot() && !respondToBots())
             return;
         if (GameData.hasGameStarted() && !GameData.hasGameEnded() && e.getMessage().getContentRaw().startsWith("TS.")) {
-        	lastUSAHand.delete().complete();
-        	lastSSRHand.delete().complete();
+        	if (lastUSAHand!=null) lastUSAHand.delete().complete();
+        	if (lastSSRHand!=null) lastSSRHand.delete().complete();
         	lastUSAHand = GameData.txtusa.sendMessage(HandManager.getUSAHand()).complete();
         	lastSSRHand = GameData.txtssr.sendMessage(HandManager.getSUNHand()).complete();
         }

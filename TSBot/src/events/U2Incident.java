@@ -16,7 +16,7 @@ public class U2Incident extends Card {
 		.setColor(Color.red);
 		builder.changeVP(-1);
 		builder.addField("Cover-up Story", "If either side plays " + CardList.getCard(32) + " for the event later this turn, the USSR gains 1 VP.", false);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class U2Incident extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

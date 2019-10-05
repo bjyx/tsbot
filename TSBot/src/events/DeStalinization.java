@@ -18,8 +18,11 @@ public class DeStalinization extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Khrushchev Denounces Stalinist Policies")
 		.setDescription("Rejects predecessor's cult of personality and paranoia")
-		.setFooter("\"\"\n"
-				+ "- Richard Nixon, 1956", Launcher.url("countries/us.png"))
+		.setFooter("\"When we analyze the practice of Stalin in regard to the direction of the party and the country, "
+				+ "when we pause to consider everything which Stalin perpetrated, we must be convinced that Lenin's fear were justified. "
+				+ "The negative characteristics of Stalin, which, in Lenin's time, were only incipient, "
+				+ "transformed themselves during the last years into a grave abuse of power by Stalin, which caused untold harm.\"\n"
+				+ "- Nikita Khrushchev, 1956", Launcher.url("people/khrushchev.png"))
 		.setColor(Color.RED);
 			if (fringeCase) {
 				builder.addField("No countries to target!", "For some reason, there is either no Soviet influence to move at all, or the whole world is under the sway of the USA. Some Soviet Premier. :s", false);
@@ -76,7 +79,7 @@ public class DeStalinization extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		if (args.length==1) return true;

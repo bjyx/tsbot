@@ -18,7 +18,8 @@ public class PuppetGovernments extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Puppet Governments")
 			.setDescription("")
-			.setFooter("", Launcher.url(""))
+			.setFooter("\"In the South, the United States sought a leader for the new government who was both anti‐French and anti‐Communist. It selected Ngo Dinh Diem, who had an enviable record as a young civil servant.\"\n"
+					+ "- *New York Times*", Launcher.url("people/times.png"))
 			.setColor(Color.blue);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "Congratulations! You have filled every country on the board with some form of influence.", false);
@@ -27,7 +28,7 @@ public class PuppetGovernments extends Card {
 			builder.changeInfluence(c, 0, 1);
 		}
 		HandManager.Effects.add(23);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class PuppetGovernments extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=0; i<84; i++) {

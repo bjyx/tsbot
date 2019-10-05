@@ -22,7 +22,7 @@ public class AfricaScoring extends Card {
 			.setDescription("")
 			.setColor(Color.YELLOW)
 			.setFooter("\"None of us has yet begun to grasp the full impact of this horror—on the quality of life in Africa, its economic potential and its social and political stability.\"\n" + 
-					"- Kofi Annan", Launcher.url("countries/gh.png"));
+					"- Kofi Annan", Launcher.url("people/annan.png"));
 		int vp = 0;
 		for (int i = 46; i<64; i++) { //Algeria and Costa Rica, resp.
 			Country c = MapManager.get(i);
@@ -86,7 +86,7 @@ public class AfricaScoring extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

@@ -23,7 +23,7 @@ public class SouthAmScoring extends Card {
 			.setColor(Color.green)
 			.setFooter("\"We already had success in creating a democratic, national government that is revolutionary and popular. "
 					+ "That is how socialism begins, not with decrees.\n\"" + 
-					"- Salvador Allende, 1970", Launcher.url("countries/cl.png"));
+					"- Salvador Allende, 1970", Launcher.url("leaders/allende.png"));
 		int vp = 0;
 		for (int i = 74; i<84; i++) { //Argentina and USA, resp.
 			Country c = MapManager.get(i);
@@ -48,7 +48,7 @@ public class SouthAmScoring extends Card {
 		else if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]) vp -= domination;
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 
 	}
 
@@ -88,7 +88,7 @@ public class SouthAmScoring extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

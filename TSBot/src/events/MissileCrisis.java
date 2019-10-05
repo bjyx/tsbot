@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 
 public class MissileCrisis extends Card {
 
@@ -13,12 +14,13 @@ public class MissileCrisis extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle(sp==0?"Turkish Missile Crisis!":"Cuban Missile Crisis!")
 		.setDescription(sp==0?"American Missiles Threaten Moscow":"Soviet Missiles in Cuba Within Striking Distance of Washington")
-		.setFooter("", "")
+		.setFooter("\"The path we have chosen for the present is full of hazards, as all paths are--but it is the one most consistent with our character and courage as a nation and our commitments around the world. The cost of freedom is always high--and Americans have always paid it. And one path we shall never choose, and that is the path of surrender or submission.\"\n" + 
+				"- John F. Kennedy, 1962", Launcher.url("people/jfk.png"))
 		.setColor(sp==0?Color.blue:Color.red);
 		builder.changeDEFCON(2-GameData.getDEFCON());
 		builder.addField("One Minute to Midnight", "**All attempts by " + (sp==0?"the USSR":"the USA") + "to conduct a coup will lose them the game by Thermonuclear War.**", false);
 		HandManager.addEffect(400+((sp+1)%2));
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class MissileCrisis extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

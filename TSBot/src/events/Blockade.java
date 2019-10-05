@@ -7,8 +7,8 @@ public class Blockade extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		GameData.dec = new Decision(0, 10);
-		GameData.txtchnl.sendMessage("Pending response.").complete();
-		GameData.txtusa.sendMessage("Awaiting response from " + GameData.roleusa.getAsMention() + " for the Berlin Blockade. (`TS.decide/decision/choose airlift [card]` to lift the blockade, or `concede` to remove your influence in West Germany.)").complete();
+		GameData.txtssr.sendMessage("Pending response.").complete();
+		GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", the Soviets are blockading Berlin. What will you do? (`TS.decide/decision/choose airlift [card]` to lift the blockade, or `concede` to remove your influence in West Germany.)").complete();
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class Blockade extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}
@@ -62,7 +62,7 @@ public class Blockade extends Card {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "The US must decide between discarding a card worth 3 Ops or higher, or removing all US Influence in West Germany.";
+		return "The US must decide between discarding a card worth at least 3 Ops, or removing all US Influence in West Germany.";
 	}
 
 	@Override

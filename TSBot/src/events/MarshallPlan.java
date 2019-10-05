@@ -17,9 +17,10 @@ public class MarshallPlan extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("")
-			.setDescription("")
-			.setFooter("", Launcher.url(""))
+		builder.setTitle("Marshall Plan implemented")
+			.setDescription("Assistance to be provided for European recovery by the United States")
+			.setFooter("\"Our policy is not directed against any country, but against hunger, poverty, desperation and chaos. Any government that is willing to assist in recovery will find full co-operation on the part of the United States.\"\n"
+					+ "- George Marshall, 1947", Launcher.url("people/marshall.png"))
 			.setColor(Color.blue);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "All of Western Europe is red for some reason. How did *that* happen?", false);
@@ -29,7 +30,7 @@ public class MarshallPlan extends Card {
 		}
 		builder.addField("Aid to Western Europe", "**NATO can now be formed.**", false);
 		HandManager.Effects.add(23);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class MarshallPlan extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=0; i<21; i++) {

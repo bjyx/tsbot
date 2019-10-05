@@ -15,7 +15,7 @@ public class CulturalRevolution extends Card {
 		.setDescription("\"Anti-Communist\" elements purged from the CPC and other institutions")
 		.setColor(Color.red)
 		.setFooter("\"It is to the advantage of despots to keep people ignorant; it is to our advantage to make them intelligent. We must lead all of them gradually away from ignorance.\"\n" + 
-				"- Mao Zedong, 196X",Launcher.url("countries/cn.png"));
+				"- Mao Zedong, 196X",Launcher.url("people/mao.png"));
 		if (HandManager.China%2==0) {
 			builder.addField("May 16 Notification", "The China Card has been given to the USSR face-up.", false);
 			HandManager.China = 1;
@@ -62,7 +62,7 @@ public class CulturalRevolution extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

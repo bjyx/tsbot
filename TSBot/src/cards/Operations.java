@@ -1,9 +1,11 @@
 package cards;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 
 import events.CardEmbedBuilder;
+import events.Chernobyl;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -70,10 +72,17 @@ public class Operations {
 	 * A set of restrictions under which this instance of ops operates: <br>
 	 * 0 - no restrictions <br>
 	 * 47 - Junta - restrictions to Latin America <br>
-	 * 96 - Tear Down This Wall - restrictions to Europe <br>
-	 * 94 - Chernobyl - restrictions to the region specified
+	 * 96 - Tear Down This Wall - restrictions to Europe
 	 */
 	private int restrictions = 0;
+	/**
+	 * The set of countries in which the USA is allowed to place influence.
+	 */
+	public static ArrayList<Integer> allowedUSA;
+	/**
+	 * The set of countries in which the USSR is allowed to place influence.
+	 */
+	public static ArrayList<Integer> allowedSUN;
 	
 	private TextChannel txtsp = (sp==0)?GameData.txtusa:GameData.txtssr;
 	/**
@@ -152,6 +161,10 @@ public class Operations {
 				}
 				if (countries[(i-2)/2]==86 && amt[(i-2)/2]>3-MapManager.get(86).influence[1]) {
 					txtsp.sendMessage(":x: The Chinese Civil War only needs three influence markers to win.").complete();
+					return false;
+				}
+				if (HandManager.effectActive(94) && Chernobyl.regionBan[MapManager.get(countries[(i-2)/2]).region]) {
+					txtsp.sendMessage(":x: Maybe you should deal with that nuclear reactor first.").complete();
 					return false;
 				}
 				try {
@@ -264,21 +277,12 @@ public class Operations {
 					allasia=false;
 				}
 			}
-			if (!(MapManager.get(countries[i]).influence[sp]>0)) {
-				boolean flag = false;
-				for (int adj : MapManager.get(countries[i]).adj) {
-					if (MapManager.get(adj).influence[sp]!=0) {
-						flag = true;
-						break;
-					}
-				}
-				if (!flag) {
-					txtsp.sendMessage(":x: Can you even reach that country with your influence?...").complete();
-					return false;
-				}
+			if ((sp==0&&!allowedUSA.contains(countries[i]))||(sp==1&&!allowedSUN.contains(countries[i]))) {
+				txtsp.sendMessage(":x: Can you even reach that country with your influence?...").complete();
+				return false;
 			}
 		}
-		if (allasia && HandManager.activecard==6) ops--; //handles China Card fringe case
+		if (allasia && HandManager.activecard==6) ops--; //handles China Card  case
 		if (allsea && HandManager.Effects.contains(9)&&sp==1) ops--;
 		if (ops<opnumber) {
 			txtsp.sendMessage(":x: Endeavor to use all available ops.").complete();
@@ -312,12 +316,55 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
-		if (!MapManager.get(country).checkIsCoupable()) {
+		if (restrictions==47) {
+			boolean flag = true;
+			for (int i=64; i<84; i++) {
+				if (MapManager.get(i).influence[(sp+1)%2]>0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+				return true;
+			}
+		}
+		else if (restrictions==96) {
+			boolean flag = true;
+			for (int i=0; i<21; i++) {
+				if (MapManager.get(i).influence[(sp+1)%2]>0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+				return true;
+			}
+		}
+		else {
+			boolean flag = true;
+			for (int i=0; i<84; i++) {
+				if (MapManager.get(i).influence[(sp+1)%2]>0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have influence on the board.").complete();
+				return true;
+			}
+		}
+		if (!MapManager.get(country).checkIsCoupable() && !(MapManager.get(country).region<=2 && restrictions==96)) {
 			txtsp.sendMessage(":x: DEFCON restricts you from realigning this country.").complete();
 			return false;
 		}
-		if (MapManager.get(country).region<=2 && MapManager.get(country).isControlledBy()==0 && (country!=8 || !HandManager.Effects.contains(17)) && (country != 19 || !HandManager.Effects.contains(55)) && sp == 1) {
+		if (MapManager.get(country).region<=2 && HandManager.effectActive(21) && MapManager.get(country).isControlledBy()==0 && (country!=8 || !HandManager.Effects.contains(17)) && (country != 19 || !HandManager.Effects.contains(55)) && sp == 1) {
 			txtsp.sendMessage(":x: This country is under the protection of NATO.").complete();
+			return false;
+		}
+		if (country==36 && sp==1 && HandManager.effectActive(27)) {
+			txtsp.sendMessage(":x: Japan's under one defense pact you don't want to violate...").complete();
 			return false;
 		}
 		if (MapManager.get(country).influence[(sp+1)%2]==0) {
@@ -363,6 +410,10 @@ public class Operations {
 			rolls[1]++;
 			modifiers[1] += MapManager.get(country);
 		}
+		if (HandManager.effectActive(93)) {
+			rolls[0]--;
+			builder.addField("Iran-Contra Affair!", "-1", false);
+		}
 		for (int adj : MapManager.get(country).adj) {
 			if (adj==84) {
 				rolls[0]++;
@@ -395,19 +446,27 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
-		if (!MapManager.get(country).checkIsCoupable()) {
+		if (!MapManager.get(country).checkIsCoupable()&&!(MapManager.get(country).region<=2 && restrictions==96)) {
 			txtsp.sendMessage(":x: DEFCON restrictions disallow you from couping this nation.").complete();
 			return false;
 		}
-		if (MapManager.get(country).region<=2 && MapManager.get(country).isControlledBy()==0 && (country!=8 || !HandManager.Effects.contains(17)) && (country != 19 || !HandManager.Effects.contains(55)) && sp == 1) {
+		if (MapManager.get(country).region<=2 && HandManager.effectActive(21) && MapManager.get(country).isControlledBy()==0 && (country!=8 || !HandManager.Effects.contains(17)) && (country != 19 || !HandManager.Effects.contains(55)) && sp == 1) {
 			txtsp.sendMessage(":x: This country is under the protection of NATO.").complete();
+			return false;
+		}
+		if (country==36 && sp==1 && HandManager.effectActive(27)) {
+			txtsp.sendMessage(":x: Japan's under one defense pact you don't want to violate...").complete();
+			return false;
+		}
+		if (MapManager.get(country).region<=2  && HandManager.effectActive(87) && sp == 1) {
+			txtsp.sendMessage(":x: Gorbachev is in power, and he isn't repeating the mistakes of 1956 and 1968.").complete();
 			return false;
 		}
 		if (MapManager.get(country).influence[(sp+1)%2]==0) {
 			txtsp.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.").complete();
 			return false;
 		}
-		if ((HandManager.Effects.contains(400) && sp==0) || (HandManager.Effects.contains(401) && sp==1)) {
+		if (HandManager.Effects.contains(400+sp)) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder().setTitle((sp==0?"American ":"Soviet ") + "Missiles Launched Against " + MapManager.get(country).name)
 					.setDescription((sp==0?"Soviet":"American")+" reprisal imminent")
 					.setColor(Color.BLACK)
@@ -434,10 +493,24 @@ public class Operations {
 		builder.setTitle("Coup d'État!")
 			.setDescription("Target: "+ MapManager.get(country))
 			.setColor(sp==0?Color.blue:Color.red);
-		if (MapManager.get(country).isBattleground) builder.changeDEFCON(-1);
+		if (HandManager.effectActive(41) && sp==0) builder.addField("Nuclear Submarines!", "This coup does not affect DEFCON.", false);
+		else if (MapManager.get(country).isBattleground) builder.changeDEFCON(-1);
 		if (!free) builder.addMilOps(sp, opnumber);
 		int die = (new Random().nextInt(6))+1;
-		int amt = opnumber + die - MapManager.get(country).stab*2 - (HandManager.Effects.contains(43)?1:0);
+		int amt = opnumber + die - MapManager.get(country).stab*2 - (HandManager.effectActive(43)?1:0);
+		if (HandManager.effectActive(43)) builder.addField("SALT Negotiations","-1",false);
+		if (HandManager.effectActive(690+sp) && MapManager.get(country).region>6) {
+			builder.addField("Latin American Death Squads", "+1", false);
+			amt++;
+		}
+		if (HandManager.effectActive(690+((sp+1)%2)) && MapManager.get(country).region>6) {
+			builder.addField("Latin American Death Squads", "-1", false);
+			amt--;
+		}
+		if (HandManager.effectActive(109)) {
+			builder.addField("Yuri and Samantha", "", false);
+			builder.changeVP(-1);
+		}
 		builder.addField("Roll: :" + CardEmbedBuilder.numbers[die] + ":", CardEmbedBuilder.intToEmoji(amt), false);
 		
 		if (amt>0) {
@@ -498,8 +571,8 @@ public class Operations {
 		if (s==0) {
 			if (spaceLevel==0) return "Explorer 1 launched.";
 			if (spaceLevel==1) return "AM-18 launched.";
-			if (spaceLevel==2) return "\"You know, being a test pilot isn't always the healthiest business in the world.\" \n- Alan Shepard";
-			if (spaceLevel==3) return "Success.";
+			if (spaceLevel==2) return "\"I just wanted to be the first one to fly for America, not because I'd end up in the pages of history books.\" \n- Alan Shepard, 1991";
+			if (spaceLevel==3) return "\"Godspeed, John Glenn.\"\n- Scott Carpenter, 1962";
 			if (spaceLevel==4) return "Lunar Orbiter 1 launched.";
 			if (spaceLevel==5) return "\"Houston, Tranquility Base here. The Eagle has landed.\" \n- Neil Armstrong, 1969";
 			if (spaceLevel==6) return "Space Shuttle launched.";
@@ -509,12 +582,27 @@ public class Operations {
 			if (spaceLevel==0) return "Sputnik launched.";
 			if (spaceLevel==1) return "Sputnik 2 launched.";
 			if (spaceLevel==2) return "\"Poyekhali [Let's go]!\" \n- Yuri Gagarin, 1961";
-			if (spaceLevel==3) return "Success.";
+			if (spaceLevel==3) return "\"I am a friend, comrades, a friend!\" \n-Yuri Gagarin, 1961";
 			if (spaceLevel==4) return "Luna 10 launched.";
 			if (spaceLevel==5) return "N1 launched.";
 			if (spaceLevel==6) return "Success.";
 			if (spaceLevel==7) return "Salyut 6 launched.";
 		}
 		return null;
+	}
+	
+	public static ArrayList<Integer> influencePossible (int sp) {
+		ArrayList<Integer> x = new ArrayList<Integer>();
+		for (int i=0; i<84; i++) {
+			if (MapManager.get(i).influence[sp]>0) x.add(i);
+			else for (Integer c : MapManager.get(i).adj) {
+				if (MapManager.get(c).influence[sp]>0) {
+					x.add(i);
+					break;
+				}
+			}
+		}
+		if (GameData.ccw && MapManager.get(86).influence[sp]<3&&sp==1) x.add(86);
+		return x;
 	}
 }

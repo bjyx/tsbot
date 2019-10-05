@@ -14,12 +14,12 @@ public class WeWillBuryYou extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("\"We Will Bury You\", Says Khrushchev").setDescription("Polish Embassy Reception Turns Chilly")
 			.setFooter("\"About the capitalist states, it doesn't depend on you whether or not we exist.\"\n"
-					+ "- Nikita Khrushchev, 1956", Launcher.url("countries/su.png"))
+					+ "- Nikita Khrushchev, 1956", Launcher.url("people/khrushchev.png"))
 			.setColor(Color.red);
 		builder.changeDEFCON(-1);
 		builder.addField("Walk-out","If "+CardList.getCard(32)+" is not played for the event on the US's next action round, the USSR gains 3 VP before any US point award.",false);
 		HandManager.addEffect(50);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class WeWillBuryYou extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

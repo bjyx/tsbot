@@ -12,15 +12,15 @@ public class NATO extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("")
-			.setDescription("")
+		builder.setTitle("North Atlantic Treaty activated")
+			.setDescription("Alliance formed to counter communist expansion")
 			.setColor(Color.blue)
-			.setFooter("\"\"\n"
-					+ "- XXXX, 19XX", Launcher.url("countries/XX.png"));
+			.setFooter("\"Never have we been part of such a broad, solid and binding security alliance, which at the same time respects in its essence the sovereignty and will of our nation.\"\n"
+					+ "- Václav Havel [anachronism]", Launcher.url("people/havel.png"));
 		builder.addField("NATO Founded","European countries under US Control can no longer be couped, realigned, or targeted by " + CardList.getCard(36) + ", if the originator of those events is the USSR.",false);
 		builder.addField("A Very Special Relationship","The effect of " + CardList.getCard(105) + " has been improved.",false);
 		HandManager.addEffect(21);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 
 	}
 
@@ -61,7 +61,7 @@ public class NATO extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

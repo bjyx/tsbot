@@ -18,10 +18,10 @@ public class ShuttleDiplomacy extends Card {
 					+ "they aspire to be the international system... "
 					+ "That is how the United States has conducted its foreign policy in the Americas, "
 					+ "and China through most of its history in Asia.\"\n"
-					+ "- Henry Kissinger, 1994", Launcher.url("countries/us.png"));
+					+ "- Henry Kissinger, 1994", Launcher.url("leaders/kissinger.png"));
 		builder.addField("Intermediary","Upon the next scoring of Asia or the Middle East, subtract one from the USSR battleground count.",false);
 		HandManager.addEffect(73);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class ShuttleDiplomacy extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

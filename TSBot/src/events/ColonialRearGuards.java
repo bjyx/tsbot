@@ -19,7 +19,7 @@ public class ColonialRearGuards extends Card {
 			.setDescription("")
 			.setFooter("\"From now on, Frenchman [sic] must know that they don't have the right "
 					+ "to condemn in the same terms as ten years ago the destruction of Oradour and the torture by the Gestapo.\"\n"
-					+ "- Hubert Beuve-Mery, 1957", Launcher.url("countries/dz.png"))
+					+ "- Hubert Beuve-Mery, 1957", Launcher.url("people/lemonde.png"))
 			.setColor(Color.blue);
 		for (int c : order) {
 			builder.changeInfluence(c, 0, 1);
@@ -68,7 +68,7 @@ public class ColonialRearGuards extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=33; i<64; i++) {

@@ -21,7 +21,7 @@ public class SEAsiaScoring extends Card {
 			.setColor(new Color(255, 196, 0))
 			.setFooter("Our cause is just; our people are united from North to South; "
 					+ "we have a tradition of undaunted struggle and the great sympathy and support of the fraternal socialist countries and progressive people all over the world. We shall win!\n" + 
-					"- Hô Chi Minh, 1966", Launcher.url("countries/vn.png"));
+					"- Hô Chi Minh, 1966", Launcher.url("leaders/hochiminh.png"));
 		int vp = 0;
 		for (int i = 31; i<46; i++) { //Afghanistan and Algeria, resp.
 			Country c = MapManager.get(i);
@@ -40,7 +40,7 @@ public class SEAsiaScoring extends Card {
 		builder.addField(":flag_su:", strings[1]+"|"+strings[3], false);
 		vp += battlegrounds[0]+totalCountries[0]-battlegrounds[1]-totalCountries[1];
 		builder.changeVP(vp);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class SEAsiaScoring extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

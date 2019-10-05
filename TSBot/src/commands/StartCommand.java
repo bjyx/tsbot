@@ -27,6 +27,7 @@ import turnzero.TurnZero;
 public class StartCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
+
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");
 			return;
@@ -82,12 +83,12 @@ public class StartCommand extends Command {
 					.complete();
 		}
 		else {
-			TextChannel x = e.getGuild().getTextChannelsByName("ts-usa", true).get(0);
-			for (PermissionOverride po : x.getPermissionOverrides()) {
-				if (po.getRole().equals(e.getGuild().getPublicRole())) x.putPermissionOverride(po.getRole()).setPermissions(0, 2146958847).queue();
-				else po.delete();
+			GameData.txtusa = e.getGuild().getTextChannelsByName("ts-usa", true).get(0);
+			for (PermissionOverride po : GameData.txtusa.getPermissionOverrides()) {
+				po.delete().complete();
 			}
-			x.createPermissionOverride(GameData.roleusa).setPermissions(68672, 0).complete();
+			GameData.txtusa.putPermissionOverride(e.getGuild().getPublicRole()).setPermissions(0, 2146958847).queue();
+			GameData.txtusa.putPermissionOverride(GameData.roleusa).setPermissions(68672, 0).queue();
 		}
 		if (e.getGuild().getTextChannelsByName("ts-ussr", true).isEmpty()) {
 			GameData.txtssr = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"ts-ussr", e.getGuild(), ChannelType.TEXT)
@@ -99,12 +100,12 @@ public class StartCommand extends Command {
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847).complete();
 		}
 		else {
-			TextChannel x = e.getGuild().getTextChannelsByName("ts-ussr", true).get(0);
-			for (PermissionOverride po : x.getPermissionOverrides()) {
-				if (po.getRole().equals(e.getGuild().getPublicRole())) x.putPermissionOverride(po.getRole()).setPermissions(0, 2146958847).queue();
-				else po.delete();
+			GameData.txtssr = e.getGuild().getTextChannelsByName("ts-ussr", true).get(0);
+			for (PermissionOverride po : GameData.txtssr.getPermissionOverrides()) {
+				po.delete().complete();
 			}
-			x.createPermissionOverride(GameData.rolessr).setPermissions(68672, 0);
+			GameData.txtssr.putPermissionOverride(e.getGuild().getPublicRole()).setPermissions(0, 2146958847).queue();
+			GameData.txtssr.putPermissionOverride(GameData.rolessr).setPermissions(68672, 0).queue();
 		}	
 		GameData.startGame();
 		PlayerList.detSides();
@@ -117,17 +118,17 @@ public class StartCommand extends Command {
 		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getSSR()), GameData.rolessr).complete();
 		// add the emoji needed for proper function.
 		try {
-			if (e.getGuild().getEmotesByName("TScardback", false).isEmpty()) new GuildController(e.getGuild()).createEmote("TScardback", Icon.from(new File("tsbot/TSBot/src/images/emoji/TScardback.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("flag_dd", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_dd", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_dd.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("flag_yu", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_yu", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_yu.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("flag_zr", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_zr", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_zr.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("flag_su", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_su", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_su.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("flag_bu", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_bu", Icon.from(new File("tsbot/TSBot/src/images/emoji/flag_bu.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("InfluenceR", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceR", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceR.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("InfluenceA", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceA", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceA.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("InfluenceRC", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceRC", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceRC.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("InfluenceAC", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceAC", Icon.from(new File("tsbot/TSBot/src/images/emoji/InfluenceAC.png")), e.getGuild().getPublicRole()).complete();
-			if (e.getGuild().getEmotesByName("tank", true).isEmpty()) new GuildController(e.getGuild()).createEmote("tank", Icon.from(new File("tsbot/TSBot/src/images/emoji/tank.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("TScardback", false).isEmpty()) new GuildController(e.getGuild()).createEmote("TScardback", Icon.from(new File("./src/images/emoji/TSCardback.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("flag_dd", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_dd", Icon.from(new File("./src/images/emoji/flag_dd.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("flag_yu", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_yu", Icon.from(new File("./src/images/emoji/flag_yu.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("flag_zr", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_zr", Icon.from(new File("./src/images/emoji/flag_zr.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("flag_su", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_su", Icon.from(new File("./src/images/emoji/flag_su.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("flag_bu", false).isEmpty()) new GuildController(e.getGuild()).createEmote("flag_bu", Icon.from(new File("./src/images/emoji/flag_bu.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("InfluenceR", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceR", Icon.from(new File("./src/images/emoji/InfluenceR.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("InfluenceA", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceA", Icon.from(new File("./src/images/emoji/InfluenceA.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("InfluenceRC", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceRC", Icon.from(new File("./src/images/emoji/InfluenceRC.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("InfluenceAC", false).isEmpty()) new GuildController(e.getGuild()).createEmote("InfluenceAC", Icon.from(new File("./src/images/emoji/InfluenceAC.png")), e.getGuild().getPublicRole()).complete();
+			if (e.getGuild().getEmotesByName("tank", true).isEmpty()) new GuildController(e.getGuild()).createEmote("tank", Icon.from(new File("./src/images/emoji/tank.png")), e.getGuild().getPublicRole()).complete();
 		} catch (IOException e1) {
 			System.out.print("Error creating emoji.");
 		}

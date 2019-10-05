@@ -30,8 +30,8 @@ public class OurManInTehran extends Card {
 			builder.addField(""+CardList.getCard(c), CardList.getCard(c).getDescription(), false);
 		}
 		GameData.dec = new Decision(0, 108);
-		GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", here are the next five cards in the deck. Select the ones you wish to discard, or use `0` in case you want to leave all of them in the deck. (TS.decide **[ID]** **[ID]** ... )");
-		GameData.txtusa.sendMessage(builder.build());
+		GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", here are the next five cards in the deck. Select the ones you wish to discard, or use `0` in case you want to leave all of them in the deck. (TS.decide **[ID]** **[ID]** ... )").complete();
+		GameData.txtusa.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class OurManInTehran extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

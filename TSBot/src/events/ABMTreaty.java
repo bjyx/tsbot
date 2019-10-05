@@ -20,7 +20,7 @@ public class ABMTreaty extends Card {
 					+ "may be developed. The reason and conscience of mankind "
 					+ "dictate the need to erect an insuperable barrier "
 					+ "to the development of such a weapon.\"\n" + 
-					"- Leonid Brezhnev, 1979", Launcher.url("countries/su.png"));
+					"- Leonid Brezhnev, 1979", Launcher.url("people/brezhnev.png"));
 		builder.changeDEFCON(1);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		GameData.ops = new Operations(sp, CardList.getCard(57).getOpsMod(sp), true, true, true, false, false);
@@ -64,7 +64,7 @@ public class ABMTreaty extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

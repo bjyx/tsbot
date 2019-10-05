@@ -18,14 +18,19 @@ public class MuslimRevolution extends Card {
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Revolution in " + MapManager.get(order.get(0)).name)
-		.setFooter("\"\"\n"
-				+ "- XXXX, XXXX", Launcher.url("countries/XX.png"))
+		.setFooter("\"I cannot avoid wondering about the feelings of those "
+				+ "who are now the apparent rulers of Iran. "
+				+ "They are, despite their mistakes and the crimes which they have instigated, "
+				+ "men of faith who claim to be sent by God. "
+				+ "I hope they will eventually realize that the revolution which they believe they have brought about "
+				+ "is not to the glory of God, but serves the forces of evil.\"\n"
+				+ "- Mohammad Reza Pahlavi, 1980", Launcher.url("people/pahlavi.png"))
 		.setColor(Color.RED)
 		.setDescription("Secular government toppled");
 		for (int i : order) {
 			builder.changeInfluence(i, 0, -MapManager.get(i).influence[0]);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -64,7 +69,7 @@ public class MuslimRevolution extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		targetable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (Integer i : VALID_TARGETS) {

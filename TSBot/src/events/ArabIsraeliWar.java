@@ -32,7 +32,7 @@ public class ArabIsraeliWar extends Card {
 			builder.setTitle("Arab-Israeli War: Arab Victory")
 				.setDescription("Palestinian State established in Jerusalem; Congress in uproar")
 				.setFooter("\"It will be a war of annihilation. It will be a momentous massacre in history that will be talked about like the massacres of the Mongols or the Crusades.\"\n"
-						+ "- Azzam Pasha, 1947", Launcher.url("countries/eg.png"))
+						+ "- Azzam Pasha, 1947", Launcher.url("people/azzam.png"))
 				.setColor(Color.red);
 			builder.changeInfluence(42, 1, MapManager.get(42).influence[0]);
 			builder.changeInfluence(42, 0, -MapManager.get(42).influence[0]);
@@ -42,7 +42,7 @@ public class ArabIsraeliWar extends Card {
 			builder.setTitle("Israel Triumphant Against Neighbors")
 				.setDescription("Land ceded from neighboring nations")
 				.setFooter("\"We have always said that in our war with the Arabs we had a secret weapon — no alternative.\"\n"
-						+ "- Golda Meir, 1969",Launcher.url("countries/il.png"))
+						+ "- Golda Meir, 1969",Launcher.url("people/meir.png"))
 				.setColor(Color.blue);
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -86,7 +86,7 @@ public class ArabIsraeliWar extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

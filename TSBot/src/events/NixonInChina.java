@@ -19,7 +19,7 @@ public class NixonInChina extends Card {
 				+ "as what we will do in the years ahead to build a bridge across 16,000 miles "
 				+ "and 22 years of hostilities which have divided us in the past. "
 				+ "And what we have said today is that we shall build that bridge.\"\n" + 
-				"- Richard M. Nixon, 1972",Launcher.url("countries/us.png"));
+				"- Richard M. Nixon, 1972",Launcher.url("people/nixon.png"));
 		if (HandManager.China%2==0 || HandManager.China==-1) {
 			builder.changeVP(2);
 		}
@@ -27,7 +27,7 @@ public class NixonInChina extends Card {
 			builder.addField("Meeting with Mao", "The China Card has been given to the US, face-down.", false);
 			HandManager.China = 2;
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class NixonInChina extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

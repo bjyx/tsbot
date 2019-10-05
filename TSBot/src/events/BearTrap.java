@@ -16,7 +16,7 @@ public class BearTrap extends Card {
 			.setColor(Color.blue)
 			.setFooter("\"The main scourge of our country is perennial foreign intervention... "
 					+ "Only final cessation of foreign aggression will allow us to start solving all other problems of Afghanistan, economic and political.\"\n"
-					+ "- Ahmad Shah Massoud", Launcher.url("countries/af.png"));
+					+ "- Ahmad Shah Massoud", Launcher.url("people/massoud.png"));
 		builder.addField("Mujahideen","The USSR must discard a card worth at least 2 Ops every action round and roll 1-4 to cancel this effect.",false);
 		HandManager.addEffect(44);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -64,7 +64,7 @@ public class BearTrap extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

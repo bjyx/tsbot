@@ -5,6 +5,7 @@ import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import events.Decision;
 import game.GameData;
 import game.PlayerList;
@@ -16,6 +17,7 @@ public class TimeCommand extends Command {
 	 * An indicator for whether the text of the event on the card in question has occurred
 	 */
 	public static boolean cardPlayed = true;
+	public static boolean cardPlayedSkippable = true;
 	public static boolean hl1 = true;
 	public static boolean hl2 = true;
 	public static boolean eventDone = false;
@@ -44,6 +46,10 @@ public class TimeCommand extends Command {
 		}
 		if (!cardPlayed) {
 			sendMessage(e, ":x: You are required to play a card.");
+			return;
+		}
+		if (!cardPlayedSkippable) {
+			sendMessage(e, ":x: Declare your intent to skip. Alternatively, play a card.");
 			return;
 		}
 		if (!hl1||!hl2) {
@@ -86,6 +92,8 @@ public class TimeCommand extends Command {
 		if (GameData.ccw && HandManager.China==-1 && MapManager.get(86).isControlledBy()==1) {
 			HandManager.China = 1;
 		}
+		Operations.allowedUSA = Operations.influencePossible(0);
+		Operations.allowedSUN = Operations.influencePossible(1);
 		if (GameData.isHeadlinePhase()) {
 			if (GameData.hasAbility(0, 6)) {
 				isCardDiscarded = false;
@@ -107,8 +115,6 @@ public class TimeCommand extends Command {
 			if (!(GameData.getSpace(1)>=4&&GameData.getSpace(0)<4)) {
 				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a headline card.").complete();
 			}
-			
-			
 		}
 		else if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
 			boolean canDiscard = false;
@@ -156,14 +162,18 @@ public class TimeCommand extends Command {
 				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
 			}
 		}
-		
+		else if (GameData.getAR()>14) {
+			cardPlayedSkippable = false;
+			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+		}
 		else if ((GameData.phasing()==1 && !HandManager.SUNHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.USAHand.isEmpty())) {
 			cardPlayed = false;
 			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
 			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
 		}
 		else {
-			cardPlayed = false;
+			cardPlayedSkippable = false;
 			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
 			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
 		}

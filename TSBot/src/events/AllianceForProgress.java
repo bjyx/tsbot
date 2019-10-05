@@ -17,7 +17,7 @@ public class AllianceForProgress extends Card {
 				+ "a vast crucible of revolutionary ideas and efforts, "
 				+ "a tribute to the power of the creative energies of free men and women, "
 				+ "an example to all the world that liberty and progress walk hand in hand.\"\n"
-				+ "- John F. Kennedy, 1961", Launcher.url("countries/us.png"))
+				+ "- John F. Kennedy, 1961", Launcher.url("people/jfk.png"))
 		.setColor(Color.blue);
 		int x = 0;
 		String str = "";
@@ -68,7 +68,7 @@ public class AllianceForProgress extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

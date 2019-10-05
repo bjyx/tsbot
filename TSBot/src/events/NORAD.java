@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import main.Launcher;
 
 public class NORAD extends Card {
 
@@ -14,7 +15,10 @@ public class NORAD extends Card {
 		GameData.txtchnl.sendMessage(new CardEmbedBuilder()
 				.addField("Aerospace Defense Command","As long as Canada is under US control, the US may add 1 Influence to any country already containing US Influence upon DEFCON dropping to 2 during an Action Round.",false)
 				.setTitle("").setDescription("")
-				.setFooter("","").setColor(Color.BLUE).build());
+				.setFooter("\"See that sign up here - up here. 'DEFCON.' That indicates our current **def**ense **con**dition. "
+						+ "It should read 'DEFCON 5', which means peace. It's still on 4 because of that little stunt you pulled. "
+						+ "Actually, if we hadn't caught it in time, it might have gone to DEFCON 1. You know what that means, David? World War III.\"\n"
+						+ "- Dr. John McKittrick, *WarGames*",Launcher.url("people/wargames1.png")).setColor(Color.BLUE).build()).complete();
 		HandManager.addEffect(106);
 	}
 
@@ -61,7 +65,7 @@ public class NORAD extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

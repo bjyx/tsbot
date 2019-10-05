@@ -17,7 +17,7 @@ public class Allende extends Card {
 				+ "the great avenues will again be opened through which will pass "
 				+ "free men to construct a better society. Long live Chile! "
 				+ "Long live the people! Long live the workers!\"\n"
-				+ "-Salvador Allende, 1973", Launcher.url("countries/cl.png"));
+				+ "-Salvador Allende, 1973", Launcher.url("people/allende.png"));
 		builder.changeInfluence(77, 1, 2);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
@@ -58,7 +58,7 @@ public class Allende extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

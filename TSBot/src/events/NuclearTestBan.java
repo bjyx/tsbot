@@ -13,11 +13,11 @@ public class NuclearTestBan extends Card {
 		builder.setTitle("Partial Test Ban Treaty Signed")
 			.setDescription("Treaty bans nuclear tests in the atmosphere, in outer space, and under water")
 			.setFooter("\"And if that journey is a thousand miles, or even more, let history record that we, in this land, at this time, took the first step.\"\n"
-					+ "- John F. Kennedy, 1963", Launcher.url("countries/us.png"))
+					+ "- John F. Kennedy, 1963", Launcher.url("people/jfk.png"))
 			.setColor(Color.GRAY);
 		builder.changeVP((sp==0?1:-1)*(GameData.getDEFCON()-2));
 		builder.changeDEFCON(2);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class NuclearTestBan extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

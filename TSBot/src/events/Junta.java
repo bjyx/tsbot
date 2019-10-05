@@ -18,10 +18,11 @@ public class Junta extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Military Junta Established in " + MapManager.get(target).name)
 			.setDescription("New Government Sympathetic to " + (sp==0?"American":"Soviet") + " Interests")
-			.setFooter("", Launcher.url(""))
+			.setFooter("\"As many people as necessary must die in Argentina so that the country will again be secure.\"\n" + 
+					"- Jorge Rafael Videla, 1975", Launcher.url("people/videla.png"))
 			.setColor(sp==0?Color.blue:Color.red);
 		builder.changeInfluence(target, sp, 2);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
 		for (int i=64; i<84; i++) {
 			if (MapManager.get(i).influence[(sp+1)%2]>0) {
@@ -32,12 +33,12 @@ public class Junta extends Card {
 		if(opponentInfluence) {
 			GameData.ops=new Operations(sp, CardList.getCard(47).getOpsMod(sp), false, true, true, false, true, 47);
 			GameData.dec=new Decision(sp, 47);
-			if (sp==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.");
-			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.");
+			if (sp==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.").complete();
 		}
 		else {
-			if (sp==0) GameData.txtusa.sendMessage("Your opponent has not infiltrated Latin America yet.");
-			else GameData.txtssr.sendMessage("Your opponent has not infiltrated Latin America yet.");
+			if (sp==0) GameData.txtusa.sendMessage("Your opponent has not infiltrated Latin America yet.").complete();
+			else GameData.txtssr.sendMessage("Your opponent has not infiltrated Latin America yet.").complete();
 		}
 		
 	}
@@ -78,7 +79,7 @@ public class Junta extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		if (args.length < 2) return false;
 		target = MapManager.find(args[1]);
 		if (target==-1) return false;

@@ -19,7 +19,7 @@ public class Inaugural extends Card {
 		builder.setTitle("Kennedy's Inaugural Address")
 			.setDescription("And so, my fellow Americans: ask not what your country can do for you — ask what you can do for your country.")
 			.setFooter("\"...we observe today not a victory of party, but a celebration of freedom — symbolizing an end, as well as a beginning — signifying renewal, as well as change.\"\n"
-					+ "- John F. Kennedy, 1961", Launcher.url("countries/us.png"))
+					+ "- John F. Kennedy, 1961", Launcher.url("people/jfk.png"))
 			.setColor(Color.BLUE);
 		int x = order.size();
 		String cards = "";
@@ -76,7 +76,7 @@ public class Inaugural extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		order = new ArrayList<Integer>();
 		if (args.length<2) return false;
 		if (args[1].equals("0")) return true;

@@ -16,6 +16,7 @@ import events.GrainSales;
 import events.MissileEnvy;
 import events.OlympicGames;
 import events.OurManInTehran;
+import events.StarWars;
 import game.GameData;
 import game.PlayerList;
 import main.Launcher;
@@ -277,7 +278,7 @@ public class DecisionCommand extends Command {
 			return;
 		}
 		if (GameData.dec.card==5) {
-			if (!CardList.getCard(FiveYearPlan.card).isFormatted(args)) {
+			if (!CardList.getCard(FiveYearPlan.card).isFormatted(0, args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
 			}
@@ -292,7 +293,7 @@ public class DecisionCommand extends Command {
 				else {
 					HandManager.discard(1, FiveYearPlan.card);
 				}
-				CardList.getCard(FiveYearPlan.card).onEvent(1, args);
+				CardList.getCard(FiveYearPlan.card).onEvent(0, args);
 			}
 		}
 		if (GameData.dec.card==10) {
@@ -317,10 +318,24 @@ public class DecisionCommand extends Command {
 					sendMessage(e, ":x: We don't have that. At least not at our disposal.");
 					return;
 				}
-				Decision.BerlinAirLift(card);
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Berlin Airlift")
+					.setDescription("West Berlin successfully supplied for over a year; Soviets forced to lift blockade")
+					.setFooter("\"We can haul anything.\" \n"
+							+ "- Curtis LeMay, 1948",Launcher.url("people/lemay.png"))
+					.setColor(Color.blue);
+				builder.addField("Soviets lift blockade of Berlin.", "Discarded card: "+CardList.getCard(card), false);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			else if (args[1].equals("concede")) {
-				Decision.BerlinConcede();
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Berlin Blockade")
+					.setDescription("Concessions made to the Soviet Union to prevent starvation")
+					.setFooter("\"What happens to Berlin, happens to Germany; what happens to Germany, happens to Europe.\" \n"
+							+ "- Vyacheslav Molotov, 1948",Launcher.url("people/molotov.png"))
+					.setColor(Color.red);
+				builder.changeInfluence(20, 0, -MapManager.get(20).influence[0]);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			else {
 				sendMessage(e, ":x: That's not an option.");
@@ -329,13 +344,36 @@ public class DecisionCommand extends Command {
 		}
 		if (GameData.dec.card==20) {
 			if (args[1].equals("boycott")) {
-				Decision.OlympicBoycott();
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Olympics Boycotted!")
+					.setDescription("")
+					.setFooter("\"To act differently would be tantamount to approving of the anti-Olympic actions of the U.S. authorities and organizers of the games.\" \n"
+							+ "- Tass, 1984",Launcher.url("people/tass.png"))
+					.setColor(Color.DARK_GRAY);
+				builder.changeDEFCON(-1);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+				GameData.txtchnl.sendMessage("Awaiting " + (GameData.phasing()==0?GameData.roleusa.getAsMention():GameData.rolessr.getAsMention())+" to play 4 Operations points (remember to adjust to account for Red Scare/Purge/Containment/Brezhnev Doctrine).").complete();
 				GameData.dec = new Decision(OlympicGames.host, 201);
 				GameData.ops = new Operations(GameData.dec.sp, CardList.getCard(34).getOpsMod(GameData.dec.sp), true, true, true, true, false);
 				return;
 			}
 			else if (args[1].equals("compete")) {
-				Decision.OlympicGames();
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				int[] die = {0,0};
+				
+				while (die[0] == die[1]) {
+					die[0] = (int) (Math.random()*6 + 1);
+					die[1] = (int) (Math.random()*6 + 1);
+					die[OlympicGames.host] += 2;
+					builder.addField(":flag_us::"+CardEmbedBuilder.numbers[die[0]]+"::flag_su::"+CardEmbedBuilder.numbers[die[1]]+":",die[0]==die[1]?"A tie - roll again.":("And "+(die[0]>die[1]?"the Americans":"the Soviets")+ " take home the gold!"),false);
+				}
+				builder.setTitle("Olympics in " + (OlympicGames.host==0?"Los Angeles": "Moscow"))
+					.setDescription("")
+					.setFooter("\"You were born to be a player. You were meant to be here. This moment is yours.\"\n"
+							+ "- Herb Brooks, 1980",Launcher.url("people/brooks.png"))
+					.setColor(die[0]>die[1]?Color.BLUE:Color.RED);
+				builder.changeVP(die[0]>die[1]?2:-2);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			else {
 				sendMessage(e, ":x: That's not an option.");
@@ -349,6 +387,12 @@ public class DecisionCommand extends Command {
 			}
 		}
 		if (GameData.dec.card==26) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==32) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
@@ -430,7 +474,7 @@ public class DecisionCommand extends Command {
 			HandManager.transfer((GameData.dec.sp+1)%2, 49);
 			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {
 				HandManager.discard(GameData.dec.sp, i);
-				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, true, false);
+				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, false, false);
 			}
 			else {
 				if (CardList.getCard(i).isRemoved()) {
@@ -443,6 +487,17 @@ public class DecisionCommand extends Command {
 					HandManager.removeFromHand(GameData.dec.sp, i);
 				}
 			}
+			if (HandManager.effectActive(59)&&((i==13&&!HandManager.effectActive(65))||i==11||i==24||i==36||i==102)&&GameData.dec.sp==0) {
+				CardEmbedBuilder fp = new CardEmbedBuilder();
+				fp.setTitle("Flower Power")
+					.setDescription("Anti-war protests erupt against the " + CardList.getCard(i).getName() + "!")
+					.setFooter("\"I think that we're up against the strongest, well-trained, "
+							+ "militant, revolutionary group that has ever assembled in America.\" \n"
+							+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))
+					.setColor(Color.red);
+				fp.changeVP(-2);
+				GameData.txtchnl.sendMessage(fp.build()).complete();
+			}
 			GameData.dec = new Decision((GameData.dec.sp+1)%2, 491);
 			return;
 		}
@@ -453,6 +508,7 @@ public class DecisionCommand extends Command {
 				if (!result) return;
 			}
 			else if (CardList.getCard(MissileEnvy.card).isPlayable(GameData.dec.sp)) {
+				if (!CardList.getCard(MissileEnvy.card).isFormatted(GameData.dec.sp, args))
 				CardList.getCard(MissileEnvy.card).onEvent(GameData.dec.sp, args);
 			}
 		}
@@ -498,31 +554,24 @@ public class DecisionCommand extends Command {
 				sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
 				return;
 			}
-			if (mode == 'e' && card == 32) {
-				if (args.length<3) {
-					sendMessage(e, "So you drew UN Intervention and intend to event it. On what?");
-					return;
-				}
-				mode='u';
-				try {
-					card = Integer.parseInt(args[2]);
-				}
-				catch (NumberFormatException err) {
-					sendMessage(e, ":x: That's no card. Cards are denoted by integers.");
-					return;
-				}
-				if (card<=0 || card > 110) {
-					sendMessage(e, ":x: Cards are indexed from 1 to 110.");
-					return;
-				}
-			}
-			if (mode=='u'&&HandManager.handContains(0, 32)) {
+			if (mode=='u'&&!HandManager.handContains(0, 32)) {
 				sendMessage(e, "Actually have the 'UN Intervention' Card in your hand first.");
 				return;
 			}
 			if (mode=='u'&&CardList.getCard(card).getAssociation()!=(GameData.phasing()+1)%2) {
 				sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
 				return;
+			}
+			if (HandManager.effectActive(59)&&((card==13&&!HandManager.effectActive(65))||card==11||card==24||card==36||card==102)&&mode!='s'&&mode!='r') {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Flower Power")
+					.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
+					.setFooter("\"I think that we're up against the strongest, well-trained, "
+							+ "militant, revolutionary group that has ever assembled in America.\" \n"
+							+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))
+					.setColor(Color.red);
+				builder.changeVP(-2);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Soviet Union Accepts Grain Deal")
@@ -592,18 +641,19 @@ public class DecisionCommand extends Command {
 			}
 			if (mode=='u') {
 				EmbedBuilder un = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
-					.setDescription("The UN collectively agrees on something for once")
-					.setFooter("\"\"\n"
-							+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
-					.setColor(Color.blue)
-					.setImage(Launcher.url("cards/032.png"))
-					.addField("UN Security Council Resolution", "The action described by the card just played has been condemned by the UN, and will not occur.", false);
+						.setDescription("The UN collectively agrees on something for once")
+						.setFooter("\"It is not the Soviet Union or indeed any other big Powers who need the United Nations for their protection. "
+								+ "It is all the others. In this sense, the Organization is first of all their Organization "
+								+ "and I deeply believe in the wisdom with which they will be able to use it and guide it. "
+								+ "I shall remain in my post during the term of my office as a servant of the Organization in the interests of all those other nations, as long as they wish me to do so.\"\n"
+								+ "- Dag Hammarskjöld, 1960", Launcher.url("people/hammarskjold.png"))
+						.setColor(Color.blue)
+						.addField("UN Security Council Resolution", "The event of "+ CardList.getCard(GrainSales.card)+" has been condemned by the UN, and will not occur.", false);
 				GameData.txtchnl.sendMessage(un.build()).complete();
 				HandManager.discard(0, card);
 				HandManager.discard(0, 32);
 				GrainSales.status = 'o';
-				if (GrainSales.card==32) builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card used on " + CardList.getCard(card), false);
-				else builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card matched with UN Intervention for operations.", false);
+				builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card matched with UN Intervention for operations.", false);
 				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.");
 			}
@@ -613,7 +663,7 @@ public class DecisionCommand extends Command {
 		}
 		if (GameData.dec.card==671) {
 			if (GrainSales.status=='e'||GrainSales.status=='f') {
-				if (!CardList.getCard(GrainSales.card).isFormatted(args)) {
+				if (!CardList.getCard(GrainSales.card).isFormatted(0, args)) {
 					sendMessage(e, ":x: Format your arguments correctly.");
 					return;
 				}
@@ -635,6 +685,137 @@ public class DecisionCommand extends Command {
 			}
 			if (GrainSales.status=='f') {
 				GrainSales.status='o';
+				return;
+			}
+		}
+		if (GameData.dec.card==85) {
+			if (!CardList.getCard(StarWars.target).isFormatted(0, args)) {
+				sendMessage(e, ":x: Format your arguments correctly.");
+				return;
+			}
+			else {
+				CardList.getCard(StarWars.target).onEvent(0, args);
+			}
+		}
+		if (GameData.dec.card==89) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==90) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==95) {
+			if (args[1].equals("aid")) {
+				if (args.length < 3) {
+					sendMessage(e, ":x: Allocate some resources to that relief package.");
+					return;
+				}
+				int card;
+				try {
+					card = Integer.parseInt(args[2]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: Now how is that a card!?");
+					return;
+				}
+				if (CardList.getCard(card).getOpsMod(0)<3) {
+					sendMessage(e, ":x: This won't be enough.");
+					return;
+				}
+				if (!HandManager.discard(0, card)) {
+					sendMessage(e, ":x: We don't have that. At least not at our disposal.");
+					return;
+				}
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Latin American Debt Crisis")
+					.setDescription("IMF Intervention turns Latin America tp free-market capitalism")
+					.setFooter("\"\"\n"
+							+ "- X, 1982",Launcher.url("people/null.png"))
+					.setColor(Color.blue);
+				builder.addField("Debt crisis relieved.", "Discarded card: "+CardList.getCard(card), false);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else if (args[1].equals("concede")) {
+				GameData.dec = new Decision(1, 951);
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", the US has failed to address the debt crisis. Select two countries in South America to double your influence in.").complete();
+			}
+			else {
+				sendMessage(e, ":x: That's not an option.");
+				return;
+			}
+		}
+		if (GameData.dec.card==951) {
+			ArrayList<Integer> doable = new ArrayList<Integer>();
+			ArrayList<Integer> order = new ArrayList<Integer>();
+			for (int i=74; i<84; i++) {
+				if (MapManager.get(i).influence[1]>0) doable.add(i);
+			}
+			if (doable.size()<=2) order = doable;
+			else {
+				if (args.length < 3) {
+					sendMessage(e, ":x: Two countries—seize that opportunity.");
+					return;
+				}
+				int k = MapManager.find(args[1]);
+				int l = MapManager.find(args[2]);
+				if (k==l) {
+					sendMessage(e, ":x: Duplicate.");
+					return;
+				}
+				if (k==-1 || l==-1) {
+					sendMessage(e, ":x: Non-existent country.");
+					return;
+				}
+				if (doable.contains(k)&&doable.contains(l)) {
+					order.add(k);
+					order.add(l);
+				}
+				else {
+					sendMessage(e, ":x: Invalid country.");
+					return;
+				}
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Latin American Debt Crisis")
+				.setDescription("Debt forces economic restructuring in Latin American Countries")
+				.setFooter("\"\"\n"
+						+ "- X, 19XX",Launcher.url("people/null.png"))
+				.setColor(Color.red);
+			for (Integer i : order) {
+				builder.changeInfluence(i, 1, MapManager.get(i).influence[1]);
+			}
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (GameData.dec.card==96) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==98) {
+			int card;
+			try {
+				card = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Give the number of the card you wish to discard.");
+				return;
+			}
+			if (0<card && card<=CardList.numberOfCards()) {
+				if (!HandManager.discard(0, card)) {
+					sendMessage(e, ":x: Ames hasn't told you of this card. Better to make use of what intelligence you have.");
+					return;
+				}
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("Compromised Operations").setDescription("Discarded " + CardList.getCard(card) + " to Aldrich Ames.");
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else {
+				sendMessage(e, ":x: Give the number of the card you wish to discard.");
 				return;
 			}
 		}

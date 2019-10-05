@@ -62,10 +62,11 @@ public abstract class Card {
 	public abstract boolean isRemoved();
 	/**
 	 * Whether the arguments in the event tag are suitable for this event.
+	 * @param sp is only important for UN Intervention, as it requires knowledge of the hand of the person who played the card. 
 	 * @param args are the arguments presented to the event.
 	 * @return A boolean value.
 	 */
-	public abstract boolean isFormatted(String[] args);
+	public abstract boolean isFormatted(int sp, String[] args);
 	/**
 	 * A description of the card and how it works.
 	 * @return A string.
@@ -88,7 +89,7 @@ public abstract class Card {
 	}
 	
 	public String toString() {
-		return "`" + getId() + " " + getName() + (isRemoved()?"*":"") + " (" + (getOps()==0?"S":getOps()) + getAssociationString() + ")`";
+		return "`" + getId() + " " + getName() + (isRemoved()?"\\*":"") + " (" + (getOps()==0?"S":getOps()) + getAssociationString() + ")`";
 	}
 	
 	/**

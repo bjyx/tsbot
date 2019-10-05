@@ -20,12 +20,12 @@ public class JohnPaulII extends Card {
 					+ "and Christian traditions. I was afraid to accept that responsibility, "
 					+ "yet I do so in a spirit of obedience to the Lord "
 					+ "and total faithfulness to Mary, our most Holy Mother. \"\n"
-					+ "- Karol Josef Wojtyła, 1978", Launcher.url("countries/pl.png"));
+					+ "- Karol Josef Wojtyła, 1978", Launcher.url("people/jp2.png"));
 		builder.changeInfluence(10, 1, -2); //remove 2 USSR influence in Poland
 		builder.changeInfluence(10, 0, 1); //add 1 USA influence in Poland
 		builder.addField("Catholic clout","Anti-communist sentiment in Poland is building. " + CardList.getCard(101) + " may now be played for the event.",false);
 		HandManager.addEffect(68);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class JohnPaulII extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

@@ -24,7 +24,7 @@ public class VoiceOfAmerica extends Card {
 				+ "but they try to keep people from listening through intimidation or worse. "
 				+ "But people figure out ways to listen despite the odds. "
 				+ "They're very resourceful.\"\n"
-				+ "- David Jackson", Launcher.url("countries/us.png"))
+				+ "- David Jackson", Launcher.url("people/voa.png"))
 		.setColor(Color.blue);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "Congratulations. You've managed to dodge Voice of America. Was it worth losing the rest of the world to capitalism?", false);
@@ -32,7 +32,7 @@ public class VoiceOfAmerica extends Card {
 		else {
 			builder.bulkChangeInfluence(order, 1, values);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -78,7 +78,7 @@ public class VoiceOfAmerica extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
@@ -111,7 +111,7 @@ public class VoiceOfAmerica extends Card {
 		for (int i=0; i<order.size(); i++) {
 			if (values.get(i)>=0) return false; //no non-negative numbers please
 			if (values.get(i)<-2) return false; // cannot remove >2 influence from a given country
-			if (MapManager.get(order.get(i)).influence[0]+values.get(i)<0) return false; //don't give me negative influence values
+			if (MapManager.get(order.get(i)).influence[1]+values.get(i)<0) return false; //don't give me negative influence values
 			sum += values.get(i);
 		}
 		if (sum!=-4) return false; // up to 4 influence may be removed...

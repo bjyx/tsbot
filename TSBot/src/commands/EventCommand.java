@@ -41,7 +41,7 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: Oh, you're not the one playing this event. Your opponent is.");
 			return;
 		}
-		if (!CardList.getCard(HandManager.activecard).isFormatted(args)) {
+		if (!CardList.getCard(HandManager.activecard).isFormatted(PlayerList.getArray().indexOf(e.getAuthor()), args)) {
 			sendMessage(e, ":x: Format your arguments correctly.");
 			return;
 		}

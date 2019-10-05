@@ -17,7 +17,7 @@ public class BrezhnevDoctrine extends Card {
 			.setFooter("\"In this outward appearance of chaos…there is a certain order. "
 					+ "It all began like this in Hungary also, but then came the first and second echelons, "
 					+ "and then, finally the social democrats.\"\n"
-					+ "- Yuri Andropov, 1968", Launcher.url("countries/su.png"));
+					+ "- Yuri Andropov, 1968", Launcher.url("people/andropov.png"));
 		builder.addField("Hard Line","The USSR adds 1 Operations point to any card played for operations. ",false);
 		HandManager.addEffect(51);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -64,7 +64,7 @@ public class BrezhnevDoctrine extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

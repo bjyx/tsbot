@@ -33,8 +33,8 @@ public class GameData {
 	/**
 	 * The location where all information privy to the USSR will be placed. This includes the following:
 	 * <ul>
-	 * <li> The US's hand
-	 * <li> The USSR's hand after a playing of Lone Gunman or Aldrich Ames
+	 * <li> The USSR's hand
+	 * <li> The US's hand after a playing of Lone Gunman or Aldrich Ames
 	 * </ul>
 	 * <br>
 	 * It is also recommended that the USSR write all commands in here to avoid betraying information to the USA.
@@ -164,7 +164,7 @@ public class GameData {
 		ended = true;
 		if (victor==-1) {
 			txtchnl.sendMessage(new EmbedBuilder()
-					.setTitle("GAME OVER - NO CONTEST!")
+					.setTitle("GAME OVER - DRAW!")
 					.setImage(Launcher.url("draw.png"))
 					.setColor(Color.gray)
 					.build());
@@ -184,11 +184,11 @@ public class GameData {
 	 * @return a String, detailing the cause of the game's end.
 	 */
 	private static String getCause(int cause) {
-		if (cause==0) return "Ideological Domination."; //VP = 20 OR VP > the other after turn 10
+		if (cause==0) return "Ideological Domination."; //VP == 20 OR VP > the other after turn 10
 		if (cause==1) return "Cold War got hot."; //DEFCON == 1
 		if (cause==2) return "Tore Down That Wall like the Kool-Aid Man; Oh YEAH!"; //winning Europe scoring
 		if (cause==3) return "Withheld a scoring card. Oops.";
-		if (cause==4) return "Only winning move was not to play."; //wargamed
+		if (cause==4) return "Learned futility."; //wargamed
 		return null;
 	}
 
@@ -262,15 +262,16 @@ public class GameData {
 		if (HandManager.removeEffect(43)) builder.addField("SALT Treaty Expires","Coup rolls are no longer penalized.",false);	//SALT
 		if (HandManager.removeEffect(51)) builder.addField("Brezhnev Dies","USSR loses +1 Operations bonus.",false);;	//Brezhnev
 		if (HandManager.removeEffect(60)) builder.addField("Prisoner Exchange","Powers traded for Abel. UN Intervention will no longer incur a VP penalty.",false);	//U2
-		if (HandManager.removeEffect(93)) builder.addField("","US rolls on realignments are no longer penalized.",false);	//Iran Contra
+		if (HandManager.removeEffect(93)) builder.addField("Mistakes were made","US rolls on realignments are no longer penalized.",false);	//Iran Contra
 		if (HandManager.removeEffect(94)) builder.addField("","USSR influence placements are no longer restricted by region.",false);	//Chernobyl
-		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808 Crashes","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
+		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808 ","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
 		if (HandManager.removeEffect(310)) builder.addField("Army Hearings","US malus to Operations removed.",false);	//Red Scare/Purge
 		if (HandManager.removeEffect(311)) builder.addField("Purges End","USSR malus to Operations removed.",false);
 		if (HandManager.removeEffect(400)) builder.addField("Missiles removed","Coups now allowed by the US.",false);	//Missile Crisis
 		if (HandManager.removeEffect(401)) builder.addField("Missiles removed","Coups now allowed by the USSR.",false);
 		if (HandManager.removeEffect(690)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the US.",false);	//LADS
 		if (HandManager.removeEffect(691)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the USSR.",false);
+		if (HandManager.removeEffect(860)); // just stop the eighth action round effect
 		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "Thermonuclear war is now very much a possibility. US battleground coups will now lower DEFCON.", false);
 		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);
 		if (turn==4) {
@@ -322,11 +323,11 @@ public class GameData {
 			advanceTurn();
 			return;
 		}
-		if (HandManager.Effects.contains(83)&&(ar==14||ar==15)) {
+		if (HandManager.Effects.contains(860)&&(ar==14||ar==15)) {
 			ar = 16; 
 			return; //North Sea Oil's effect, end of AR7
 		}
-		if (hasAbility(1, 8)&&ar==14) {
+		if (hasAbility(1, 8)&&ar==14) { //Space Station
 			ar=15;
 			return;
 		}
@@ -334,7 +335,7 @@ public class GameData {
 			ar=16;
 			return;
 		}
-		if (ar>=14) {
+		if (ar>=14) { //AR7 or later in late war
 			advanceTurn();
 			return;
 		}

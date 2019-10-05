@@ -18,11 +18,11 @@ public class Quagmire extends Card {
 			.setFooter("\"To say that we are closer to victory today is to believe, in the face of the evidence, "
 					+ "the optimists who have been wrong in the past. To suggest we are on the edge of defeat is to yield to unreasonable pessimism. "
 					+ "To say that we are mired in stalemate seems the only realistic, yet unsatisfactory, conclusion.\"\n"
-					+ "- Walter Cronkite, 1968", Launcher.url("countries/us.png"));
+					+ "- Walter Cronkite, 1968", Launcher.url("people/cronkite.png"));
 		builder.addField("Ho Chi Minh Trail","The US must discard a card worth at least 2 Ops every action round and roll 1-4 to cancel this effect."
 				+(HandManager.removeEffect(106)?"\nThe effects of " + CardList.getCard(106) + " are cancelled.":""),false);
 		HandManager.addEffect(42);
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class Quagmire extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		// TODO Auto-generated method stub
 		return true;
 	}

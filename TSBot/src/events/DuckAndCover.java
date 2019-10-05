@@ -14,7 +14,7 @@ public class DuckAndCover extends Card {
 			.setDescription("Civil defense film")
 			.setColor(Color.blue)
 			.setFooter("\"He did what we all must learn to do / You—and you—and you—and you! / Duck, and cover! \"\n"
-					+ "- *Duck and Cover*", Launcher.url("countries/bert.png"));
+					+ "- *Duck and Cover*", Launcher.url("people/bert.png"));
 		builder.changeDEFCON(-1);
 		builder.changeVP(5-GameData.getDEFCON());
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -56,7 +56,7 @@ public class DuckAndCover extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

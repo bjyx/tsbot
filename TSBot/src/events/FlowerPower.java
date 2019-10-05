@@ -14,9 +14,9 @@ public class FlowerPower extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Anti-War Movement Mobilizes")
 			.setDescription("")
-			.setColor(Color.blue)
+			.setColor(Color.red)
 			.setFooter("\"We shall not wilt. Let a thousand flowers bloom.\"\n"
-					+ "- Abbie Hoffman, 1967", Launcher.url("countries/us.png"));
+					+ "- Abbie Hoffman, 1967", Launcher.url("people/hoffman.png"));
 		builder.addField("Flower Brigade","All cards involving 'war' will give the USSR 2 victory points.",false);
 		HandManager.addEffect(59);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -24,7 +24,7 @@ public class FlowerPower extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return HandManager.effectActive(97); //An Evil Empire
+		return !HandManager.effectActive(97); //An Evil Empire
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class FlowerPower extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 

@@ -16,14 +16,14 @@ public class SALTNegotiations extends Card {
 		builder.setTitle("Successful Negotiations in Helsinki")
 			.setDescription("Strategic Arms Limitations Talks - the First Step to De-Escalation")
 			.setFooter("\"We shall continue, in this era of negotiation, to work for the limitation of nuclear arms, and to reduce the danger of confrontation between the great powers.\"\n"
-					+ "- Richard M. Nixon, 1973", Launcher.url("countries/us.png"))
+					+ "- Richard M. Nixon, 1973", Launcher.url("people/nixon.png"))
 			.setColor(Color.GRAY);
 		builder.changeDEFCON(2);
 		builder.addField("Anti-Ballistic Missile Treaty", "All coups ", false);
 		HandManager.addEffect(43);
 		builder.addField("", (sp==0?"The USA ":"The USSR ") + "retrieves " + CardList.getCard(Integer.parseInt(args[1])) + " from the discard pile.", false);
 		HandManager.getFromDiscard(sp, Integer.parseInt(args[1]));
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class SALTNegotiations extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		if (HandManager.Discard.isEmpty()) {
 			emptyDiscard = true;
 			return true;

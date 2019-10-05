@@ -27,8 +27,9 @@ public class IndoPakiWar extends Card {
 		if (die>=4) {
 			builder.setTitle("Kashmir conflict resolved in favor of " + (target==34?"Pakistan":"India"))
 				.setDescription("")
-				.setFooter("\"It must be realized that the Indian Armoured Corps had been seduced by Pakistani propaganda and entered the conflict in considerable trepidation, believing the Patton (i.e. M-47s and M-48s) to be vastly superior in terms of firepower, protection and mobility to any tank possessed by the Indians.\"\n"
-						+ "- Peter Sarson *et al.*, 19XX",Launcher.url("countries/gb.png"))
+				.setFooter("\"The number of women who have been kidnapped and raped makes my heart bleed. "
+						+ "The wild forces thus let loose on the State are marching on with the aim of capturing Srinagar, the summer Capital of my Government, as first step to over-running the whole State [of Kashmir].\"\n"
+						+ "- Maharaja Hari Singh, 1947",Launcher.url("people/harisingh.png"))
 				.setColor(sp==0?Color.blue:Color.red);
 			builder.changeInfluence(target, sp, MapManager.get(target).influence[(sp+1)%2]);
 			builder.changeInfluence(target, (sp+1)%2, -MapManager.get(target).influence[(sp+1)%2]);
@@ -38,10 +39,10 @@ public class IndoPakiWar extends Card {
 			builder.setTitle("Offensive Repulsed")
 				.setDescription("Simla Accord marks return to status quo antebellum")
 				.setFooter("\"`CONTINUING PROPAGANDA RE ACHIEVEMENTS OF PAK FORCES SEEMS TO HAVE CONVINCED MOST THAT ONLY PAK FORBEARANCE SAVED THE INDIANS FROM DISASTER.`\"\n"
-						+ "- Telegram from the US Embassy in Karachi, 1965",Launcher.url("countries/us.png"))
+						+ "- Telegram from the US Embassy in Karachi, 1965",Launcher.url("people/wargames2.png"))
 				.setColor(sp==0?Color.red:Color.blue);
 		}
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class IndoPakiWar extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		if (args.length<2) return false;
 		target = MapManager.find(args[1]);
 		if (target!=34 && target != 40) return false;

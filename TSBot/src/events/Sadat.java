@@ -15,10 +15,10 @@ public class Sadat extends Card {
 			.setDescription("Egyptian president frustrated with lack of Soviet aid in war against Israel")
 			.setColor(Color.blue)
 			.setFooter("\"Russians can give you arms, but only the United States can give you a solution.\"\n"
-					+ "- *Learning from Sadat: The Dividends of American Resolve*", Launcher.url("countries/eg.png"));
+					+ "- *Learning from Sadat: The Dividends of American Resolve*", Launcher.url("people/sadat.png"));
 		builder.changeInfluence(21, 1, -MapManager.get(65).influence[1]); //remove all Soviet influence in Egypt
 		builder.changeInfluence(21, 0, 1); //add 1 US influence to Egypt
-		GameData.txtchnl.sendMessage(builder.build());
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class Sadat extends Card {
 	}
 
 	@Override
-	public boolean isFormatted(String[] args) {
+	public boolean isFormatted(int sp, String[] args) {
 		return true;
 	}
 
