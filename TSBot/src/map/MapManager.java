@@ -972,7 +972,7 @@ public class MapManager {
 				new String[] {"china", "chn", "cn","prc","zhongguo", "zhonghuarenmingongheguo","peoplesrepublicofchina"}, 
 				new Integer[] {85}, //su
 				"", 
-				new int[] {-2147483648,GameData.ccw?0:3} //If you're the US you probably can't put things here anyways
+				new int[] {0,GameData.ccw?0:3} //If you're the US you probably can't put things here anyways
 				));
 	}
 	public static Country get(int id) {
