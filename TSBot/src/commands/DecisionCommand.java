@@ -904,6 +904,13 @@ public class DecisionCommand extends Command {
 		}
 		// TODO more events as enumerated above as they come
 		GameData.dec=null;
+		if (GameData.isHeadlinePhase()) {
+			if (TimeCommand.hl1) TimeCommand.hl2 = true;
+			else TimeCommand.hl1 = true;
+			if (HandManager.precedence==0&&TimeCommand.hl2==false) GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please play your headline.").complete();
+			else if (HandManager.precedence==1) GameData.txtusa.sendMessage(PlayerList.getUSA().getAsMention() + ", please play your headline.").complete();
+			return;
+		}
 		TimeCommand.eventDone = true;
 		if (HandManager.playmode == 'f') TimeCommand.operationsRequired = true;
 	}
