@@ -3,9 +3,9 @@ package events;
 import java.awt.Color;
 
 import cards.HandManager;
+import commands.StartCommand;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
 
 
 /**
@@ -96,14 +96,12 @@ public abstract class Card {
 	 * Turns the information of the card into an embed.
 	 * @return the embed.
 	 */
-	public MessageEmbed toEmbed(int sp) {
-		EmbedBuilder builder = new EmbedBuilder()
-				.setTitle(":" + numbers[getOps()] + "::Influence" + getAssociationString() + ": `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
+	public EmbedBuilder toEmbed(int sp) {
+		return new EmbedBuilder()
+				.setTitle(":" + numbers[getOps()] + ":<:Influence" + this.getAssociationString() + "C:" + StartCommand.emojiID[9+this.getAssociation()] + "> `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
 				.setImage(Launcher.url("cards/" + getId() + ".png"))
 				.setDescription(getDescription())
-				.setColor(sp==0?Color.blue:(sp==1?Color.red:Color.gray))
-				.addField("Arguments:",getArguments(),false);
-		return builder.build();
+				.setColor(sp==0?Color.blue:(sp==1?Color.red:Color.gray));
 	}
 	/**
 	 * Applies the effects of Red Scare/Purge and Containment/Brezhnev Doctrine to the cards.

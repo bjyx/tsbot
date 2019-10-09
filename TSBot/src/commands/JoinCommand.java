@@ -5,8 +5,9 @@ import java.util.List;
 
 import game.GameData;
 import game.PlayerList;
-
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.managers.GuildController;
 
 public class JoinCommand extends Command {
 	@Override
@@ -18,6 +19,10 @@ public class JoinCommand extends Command {
 		if (GameData.hasGameStarted()) {
 			sendMessage(e, ":x: Cannot join a game that has already started.");
 			return;
+		}
+		for (Member m : e.getGuild().getMembers()) {
+			if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
+			if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
 		}
 		if (PlayerList.getArray().contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're already on the list.");

@@ -288,30 +288,33 @@ public class HandManager {
 			if (headline[(sp+1)%2]!=0) {
 				if (headline[0]==103) {
 					precedence = 0;
+					activecard = headline[0];
 					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
 				}
 				else if (CardList.getCard(headline[0]).getOps()>=CardList.getCard(headline[1]).getOps()) {
 					precedence = 0;
+					activecard = headline[0];
 					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
 				}
 				else {
+					activecard = headline[1];
 					precedence = 1;
 					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
 				}
 				TimeCommand.cardPlayed = true;
 				TimeCommand.hl1 = false;
 				TimeCommand.hl2 = false;
-				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp)).complete();
-				if (!(GameData.hasAbility(sp,4))) GameData.txtchnl.sendMessage(CardList.getCard(headline[(sp+1)%2]).toEmbed((sp+1)%2)).complete();
+				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
+				if (!(GameData.hasAbility(sp,4))) GameData.txtchnl.sendMessage(CardList.getCard(headline[(sp+1)%2]).toEmbed((sp+1)%2).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
 			}
 			else if (GameData.hasAbility((sp+1)%2,4)) {
-				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp)).complete();
+				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
 				if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline card.").complete();
 				else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline card.").complete();
 			}
 		}
 		else {
-			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp)).complete();
+			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
 		}
 		if (mode=='e') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
