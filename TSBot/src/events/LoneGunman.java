@@ -15,8 +15,8 @@ public class LoneGunman extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("John F. Kennedy Assassinated!")
 			.setDescription("")
-			.setFooter("\"The public must be satisfied that Oswald was the assassin; that he did not have confederates who are still at large.\" \n"
-					+ "- Nicholas Katzenbach, 1963",Launcher.url("people/katzenbach.png"))
+			.setFooter("\"As I said in Poland last summer, I am convinced Oswald was solely responsible for what happened and that he did not have any outside help or assistance. He was a malcontent who could not get along here or in the Soviet Union.\" \n"
+					+ "- Robert F. Kennedy, 1964",Launcher.url("people/rfk.png"))
 			.setColor(Color.red);
 		GameData.txtssr.sendMessage(HandManager.getUSAHand()).complete();
 		GameData.dec = new Decision(1, 62);

@@ -121,8 +121,71 @@ Cards:
 118
 
 Leader images:
+allende: By S.Allende_7_dias_ilustrados.JPG: Revista Argentina "Siete días ilustrados"derivative work: Rec79 (talk) - S.Allende_7_dias_ilustrados.JPG, Public Domain, https://commons.wikimedia.org/w/index.php?curid=10899068
+
+andropov: By Published by the Embassy of the Union of Soviet Socialist Republics to the United States of America - losslessly cropped from File:Soviet Life, 1983-08, № 323.pdf, Public Domain, https://commons.wikimedia.org/w/index.php?curid=27778443
+
+annan: By US Mission in Geneva - https://www.flickr.com/photos/us-mission/7474208582/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=31838940
+
+arableague: By Flad - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=5644208
+
+barre: By Government of Somalia - http://www.gettyimages.co.uk/detail/news-photo/portrait-of-president-jaale-siad-barre-the-architect-of-news-photo/451084637, Public Domain, https://commons.wikimedia.org/w/index.php?curid=46681348
+
+baryshnikov: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - MIKHAIL Baryshnikov, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74877673
+
+brezhnev: By Bundesarchiv, Bild 183-F0417-0001-011 / Kohls, Ulrich / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=60791751
+
+carter: By Department of Defense. Department of the Navy. Naval Photographic Center - This file was derived from: JimmyCarterPortrait.jpg:, Public Domain, https://commons.wikimedia.org/w/index.php?curid=8791775
+
+castro: By Warren K. Leffler - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID ppmsc.03256.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=63434166
+
+che: By Alberto Korda - Museo Che Guevara, Havana Cuba, Public Domain, https://commons.wikimedia.org/w/index.php?curid=6816940
+
+chiang: By 傑克 威克爾斯 - http://hottopic.chinatimes.com/20151230002764-260812, Public Domain, https://commons.wikimedia.org/w/index.php?curid=59320694
+
 churchill: By BiblioArchives / LibraryArchives - https://www.flickr.com/photos/28853433@N02/19086236948/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=41991931
+
+cia: By United States Federal government - http://www.law.cornell.edu/uscode/50/403m.html, Public Domain, https://commons.wikimedia.org/w/index.php?curid=981534
+
+degaulle: By Bundesarchiv, B 145 Bild-F010324-0002 / Steiner, Egon / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=9848371
+
+gorbachev: By The Official CTBTO Photostream - Reagan and Gorbachev Arrive, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=64270071
+
 havel: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - VACLAC HAVEL, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74769308
+
+hoffman: By Richard O. Barry from San Diego, California, United States - Abbie Hoffman, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=7227885
+
+jayawardene: By Copyright Holder & Original Uploader of the Full Version of this Photograph is Anuradha Dullewe Wijeyeratne at en.Wikipedia - Anuradha with President Jayewardene.jpg, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=23741943
+
+jfk: By Cecil Stoughton, White House - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 194255., Public Domain, https://commons.wikimedia.org/w/index.php?curid=1394145
+
+kennan: By Harris & Ewing - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID hec.12925.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=6793416
+
+khrushchev: By Bundesarchiv, Bild 183-B0628-0015-035 / Heinz Junge / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=5432370
+
+king: By Farm Security Administration - Office of War Information Photograph Collection (Library of Congress) - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID fsa.8e00856.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=9519546
+
+kundera: By Elisa Cabot - https://commons.wikimedia.org/wiki/File:Milan_Kundera.jpg, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=29640609
+
+lemonde: By Le Monde - Le Monde, Public Domain, https://commons.wikimedia.org/w/index.php?curid=32315331
+
+mao: By неизвестный (unknown) - http://sarbaharapath.com/wp-content/uploads/2015/11/Mao2.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=53879271
+
+meir: By Marion S. Trikosko - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID ppmsc.03265.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=1820659
+
+mengistu: By אדעולם at Hebrew Wikipedia, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=17936703
+
+ortega: By Roosewelt Pinheiro/ABr - Agência Brasil, Lula recebe o presidente da Nicarágua, Daniel Ortega, CC BY 3.0 br, https://commons.wikimedia.org/w/index.php?curid=68513721
+
+reagan: By Unknown - http://www.dodmedia.osd.mil/DVIC_View/Still_Details.cfm?SDAN=DASC9003096&JPGPath=/Assets/Still/1990/Army/DA-SC-90-03096.JPG, Public Domain, https://commons.wikimedia.org/w/index.php?curid=257844
+
+rfk: By This is a retouched picture, which means that it has been digitally altered from its original version. Modifications: Cropped and artifacts removed. Modifications made by Elcobbola. - Image:Robert F. Kennedy appearing before Platform Committee, August 19, 1964.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=4524203
+
+sadat: By Unknown - This file has been extracted from another file: Anwar Sadat and Cyrus Vance.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=1849239
+
+sagan: By NASA/JPL - Image:Planetary society.jpghttp://technology.jpl.nasa.gov/gallery/index.cfm?page=imageDetail&ItemID=43&catId=9http://www2.jpl.nasa.gov/technology/images_videos/iv_pages/P22626ac.html also here, Public Domain, https://commons.wikimedia.org/w/index.php?curid=1180936
+
+strangelove: By Directed by Stanley Kubrick, distributed by Columbia Pictures - Dr. Strangelove trailer from 40th Anniversary Special Edition DVD, 2004, Public Domain, https://commons.wikimedia.org/w/index.php?curid=11862660
 
 Turn Zero:
 035A

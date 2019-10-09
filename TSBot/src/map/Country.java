@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import commands.StartCommand;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
@@ -73,14 +74,19 @@ public class Country {
 	}
 	
 	public String toString() {
+		if (this.id==6) return "<:flag_dd:"+StartCommand.emojiID[1]+">";
+		if (this.id==20) return "<:flag_yu:"+StartCommand.emojiID[2]+">";
+		if (this.id==62) return "<:flag_zr:"+StartCommand.emojiID[3]+">";
+		if (this.id==33) return "<:flag_bu:"+StartCommand.emojiID[5]+">";
+		if (this.id==85) return "<:flag_su:"+StartCommand.emojiID[4]+">";
 		return ":flag_" + iso + ":"; //flag emoji
 	}
 	public Color getColor() {
-		if (region<=2) return Color.blue;
+		if (region<=2) return new Color(153,110,255);
 		if (region==3) return Color.cyan;
 		if (region==4||region==5) return Color.orange;
 		if (region==6) return Color.yellow;
-		if (region==7) return Color.green;
+		if (region==7) return new Color(214, 255, 110);
 		if (region==8) return Color.green;
 		return Color.darkGray;
 	}
@@ -88,12 +94,13 @@ public class Country {
 	//flavor again
 	public MessageEmbed getInfo() {
 		EmbedBuilder builder = new EmbedBuilder()
+				.setAuthor("Information", null, Launcher.url("emoji/InfluenceNC.png"))
 				.setTitle(name+" ("+iso+")")
 				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "country in " + regions[region])
 				.setThumbnail(Launcher.url("countries/"+iso+".png"))
 				.setColor(getColor())
-				.addField("Influence", ":InfluenceA:"+CardEmbedBuilder.intToEmoji(influence[0])+":InfluenceR:"+CardEmbedBuilder.intToEmoji(influence[1]), false)
-				.addField("", desc, false);
+				.addField("Influence", "<:InfluenceA"+ (this.isControlledBy()==0?"C":"") +":"+StartCommand.emojiID[(this.isControlledBy()==0?9:6)]+">"+CardEmbedBuilder.intToEmoji(influence[0])+"<:InfluenceA"+ (this.isControlledBy()==1?"C":"") +":"+StartCommand.emojiID[(this.isControlledBy()==1?10:7)]+">"+CardEmbedBuilder.intToEmoji(influence[1]), false)
+				.setFooter(desc, Launcher.url("emoji/InfluenceNC.png"));
 		String str = "";
 		for (int i : adj) {
 			str += MapManager.get(i);
