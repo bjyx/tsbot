@@ -365,7 +365,7 @@ public class DecisionCommand extends Command {
 					die[0] = (int) (Math.random()*6 + 1);
 					die[1] = (int) (Math.random()*6 + 1);
 					die[OlympicGames.host] += 2;
-					builder.addField(":flag_us::"+CardEmbedBuilder.numbers[die[0]]+"::flag_su::"+CardEmbedBuilder.numbers[die[1]]+":",die[0]==die[1]?"A tie - roll again.":("And "+(die[0]>die[1]?"the Americans":"the Soviets")+ " take home the gold!"),false);
+					builder.addField(":flag_us::"+CardEmbedBuilder.numbers[die[0]]+":-:" + CardEmbedBuilder.numbers[die[1]]+":" + MapManager.get(85),die[0]==die[1]?"A tie - roll again.":("And "+(die[0]>die[1]?"the Americans":"the Soviets")+ " take home the gold!"),false);
 				}
 				builder.setTitle("Olympics in " + (OlympicGames.host==0?"Los Angeles": "Moscow"))
 					.setDescription("")
@@ -415,22 +415,16 @@ public class DecisionCommand extends Command {
 			if (i==-1) {
 				builder.setTitle("Escalation")
 				.setDescription("Espionage incident threatens planned summit")
-				.setFooter("\"\"\n"
-						+ "- ", Launcher.url("countries/XX.png"))
 				.setColor(Color.GRAY);
 			}
 			else if (i==1) {
 				builder.setTitle("Deténte")
 				.setDescription("Soviet-American Summit leads to a decrease in tensions")
-				.setFooter("\"\"\n"
-						+ "- ", Launcher.url("countries/XX.png"))
 				.setColor(Color.GRAY);
 			}
 			else {
 				builder.setTitle("Summit Inconclusive")
 				.setDescription("Meeting ends without reaching an agreement on arms control")
-				.setFooter("\"\"\n"
-						+ "- ", Launcher.url("countries/XX.png"))
 				.setColor(Color.GRAY);
 			}
 			builder.changeDEFCON(i);
@@ -468,7 +462,7 @@ public class DecisionCommand extends Command {
 						+ "whom he assumes to have perfect vision... Of course, over time, "
 						+ "even two armed blind men can do enormous damage to each other, "
 						+ "not to speak of the room.\n" + 
-						"- Henry Kissinger, 1979", Launcher.url("countries/us.png"));
+						"- Henry Kissinger, 1979", Launcher.url("people/kissinger.png"));
 			builder.addField("Helen Caldicott", GameData.dec.sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
 			MissileEnvy.card = i;
 			HandManager.transfer((GameData.dec.sp+1)%2, 49);
@@ -535,7 +529,7 @@ public class DecisionCommand extends Command {
 			char mode = args[1].charAt(0);
 			e.getMessage().delete().complete();
 			if (!modes.contains(mode)) {
-				sendMessage(e, ":x: Modes can be any of h, e, o, s, or u. Not the one you chose, though.");
+				sendMessage(e, ":x: Modes can be any of r, e, o, s, or u. Not the one you chose, though.");
 				return;
 			}
 			if (mode == 'o'&&CardList.getCard(card).getOps()==0) { //All cards have either an op value or is a scoring card that is obligatorily played for the event
@@ -576,7 +570,6 @@ public class DecisionCommand extends Command {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Soviet Union Accepts Grain Deal")
 			.setDescription("9 million tons of grain to be bought per year")
-			.setFooter("", "")
 			.setColor(Color.blue);
 			if (mode=='r') {
 				HandManager.transfer(0, card);
@@ -584,6 +577,7 @@ public class DecisionCommand extends Command {
 				GrainSales.status = 'o';
 				builder.addField("Obtained card: " + CardList.getCard(card), "Card to be returned to the USSR.", false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have returned the card. You may conduct operations using Grain Sales to Soviets.").complete();
+				GameData.dec = new Decision(0, 671);
 			}
 			if (mode=='e') {
 				if (CardList.getCard(card).getAssociation()==1) {
@@ -596,6 +590,7 @@ public class DecisionCommand extends Command {
 					else HandManager.removeFromHand(0, card);
 					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used for the event before operations.", false);
 					GrainSales.status = 'f';
+					GameData.dec = new Decision(1, 671);
 				}
 				else {
 					if (CardList.getCard(card).isRemoved()) {
@@ -607,6 +602,7 @@ public class DecisionCommand extends Command {
 					else HandManager.removeFromHand(0, card);
 					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used as event.", false);
 					GrainSales.status = 'e';
+					GameData.dec = new Decision(0, 671);
 				}
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may implement this event.").complete();
 			}
@@ -621,11 +617,13 @@ public class DecisionCommand extends Command {
 					else HandManager.removeFromHand(0, card);
 					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used for operations before the event.", false);
 					GrainSales.status = 'l'; //event last
+					GameData.dec = new Decision(0, 671);
 				}
 				else {
 					HandManager.discard(0, card);
 					builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used for operations.", false);
 					GrainSales.status = 'o'; //ops only
+					GameData.dec = new Decision(0, 671);
 				}
 				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.").complete();
@@ -637,7 +635,7 @@ public class DecisionCommand extends Command {
 				builder.addField("Obtained card: " + CardList.getCard(card), "Card to be used on the space race.", false);
 				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), false, false, false, true, false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now send this card to space.").complete();
-
+				GameData.dec = new Decision(0, 671);
 			}
 			if (mode=='u') {
 				EmbedBuilder un = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
@@ -656,9 +654,9 @@ public class DecisionCommand extends Command {
 				builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card matched with UN Intervention for operations.", false);
 				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.");
+				GameData.dec = new Decision(0, 671);
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
-			GameData.dec = new Decision(0, 671);
 			return;
 		}
 		if (GameData.dec.card==671) {
@@ -681,9 +679,11 @@ public class DecisionCommand extends Command {
 			}
 			if (GrainSales.status=='l') {
 				GrainSales.status='e';
+				GameData.dec = new Decision(1, 671);
 				return;
 			}
 			if (GrainSales.status=='f') {
+				GameData.dec = new Decision(0, 671);
 				GrainSales.status='o';
 				return;
 			}
@@ -733,9 +733,7 @@ public class DecisionCommand extends Command {
 				}
 				CardEmbedBuilder builder = new CardEmbedBuilder();
 				builder.setTitle("Latin American Debt Crisis")
-					.setDescription("IMF Intervention turns Latin America tp free-market capitalism")
-					.setFooter("\"\"\n"
-							+ "- X, 1982",Launcher.url("people/null.png"))
+					.setDescription("IMF Intervention turns Latin America to free-market capitalism")
 					.setColor(Color.blue);
 				builder.addField("Debt crisis relieved.", "Discarded card: "+CardList.getCard(card), false);
 				GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -783,8 +781,6 @@ public class DecisionCommand extends Command {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Latin American Debt Crisis")
 				.setDescription("Debt forces economic restructuring in Latin American Countries")
-				.setFooter("\"\"\n"
-						+ "- X, 19XX",Launcher.url("people/null.png"))
 				.setColor(Color.red);
 			for (Integer i : order) {
 				builder.changeInfluence(i, 1, MapManager.get(i).influence[1]);
@@ -829,7 +825,7 @@ public class DecisionCommand extends Command {
 						+ "They knew the risks they were running. I was serving the interests of the Soviet Union "
 						+ "and those interests required that these men were defeated. "
 						+ "To the extent that I helped defeat them, even if it caused their deaths, I have no regrets.\"\n"
-						+ "- Kim Philby, on Operation Valuable", Launcher.url("countries/gb.png"))
+						+ "- Kim Philby, on Operation Valuable", Launcher.url("people/philby.png"))
 				.setColor(Color.RED);
 				builder.changeInfluence(i, 1, 1);
 				GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -845,8 +841,6 @@ public class DecisionCommand extends Command {
 				CardEmbedBuilder builder = new CardEmbedBuilder();
 				builder.setTitle("Two Minutes to Midnight")
 				.setDescription("Allied forces in " + MapManager.get(i).name + " put on high alert")
-				.setFooter("\"\"\n"
-						+ "- XXXX, 19XX", Launcher.url("countries/XX.png"))
 				.setColor(Color.BLUE);
 				builder.changeInfluence(i, 0, 1);
 				GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -864,7 +858,7 @@ public class DecisionCommand extends Command {
 			.setFooter("\"We have no other nation on earth... closer to us in planning our mutual military security. "
 					+ "We have no other nation with whom we have closer consultation on regional problems that concern us both. "
 					+ "And there is no leader with whom I have a deeper sense of personal gratitude and personal friendship.\"\n"
-					+ "- James E. Carter, 1978", Launcher.url("countries/us.png"))
+					+ "- James E. Carter, 1978", Launcher.url("people/carter.png"))
 			.setColor(Color.BLUE);
 			for (int i = 1; i<args.length; i++) {
 				try {
@@ -907,8 +901,14 @@ public class DecisionCommand extends Command {
 		if (GameData.isHeadlinePhase()) {
 			if (TimeCommand.hl1) TimeCommand.hl2 = true;
 			else TimeCommand.hl1 = true;
-			if (HandManager.precedence==0&&TimeCommand.hl2==false) GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please play your headline.").complete();
-			else if (HandManager.precedence==1) GameData.txtusa.sendMessage(PlayerList.getUSA().getAsMention() + ", please play your headline.").complete();
+			if (HandManager.precedence==0&&TimeCommand.hl2==false) {
+				GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please play your headline.").complete();
+				HandManager.activecard=HandManager.headline[1];
+			}
+			else if (HandManager.precedence==1) {
+				HandManager.activecard=HandManager.headline[0];
+				GameData.txtusa.sendMessage(PlayerList.getUSA().getAsMention() + ", please play your headline.").complete();
+			}
 			return;
 		}
 		TimeCommand.eventDone = true;

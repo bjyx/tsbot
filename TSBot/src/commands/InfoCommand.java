@@ -40,22 +40,82 @@ public class InfoCommand extends Command {
 			EmbedBuilder builder = new CardEmbedBuilder()
 					.setTitle("Game State")
 					.setColor(Color.WHITE)
-					.addField("Score: " + (GameData.getScore()<0?"<:InfluenceRC:"+StartCommand.emojiID[10]+">":(GameData.getScore()>0?"<:InfluenceAC:" + StartCommand.emojiID[9]+">":"")) + CardEmbedBuilder.intToEmoji(Math.abs(GameData.getScore())), "", false)
+					.addField("Score: " + (GameData.getScore()<0?StartCommand.emojiID[10]:(GameData.getScore()>0?StartCommand.emojiID[9]:"")) + CardEmbedBuilder.intToEmoji(Math.abs(GameData.getScore())), "", false)
 					.addField("DEFCON " + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), "", false)
-					.addField("Military Operations: ", "<:InfluenceA"+(GameData.getMilOps(0)>GameData.getDEFCON()?"C:" + StartCommand.emojiID[9]:":" + StartCommand.emojiID[6]) + ">" + CardEmbedBuilder.intToEmoji(GameData.getMilOps(0)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()) + "\n"
-							+ "<:InfluenceR"+(GameData.getMilOps(1)>GameData.getDEFCON()?"C:" + StartCommand.emojiID[10]:":" + StartCommand.emojiID[7]) + ">" + CardEmbedBuilder.intToEmoji(GameData.getMilOps(1)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), false)
-					.addField("Space Race: " + "<:InfluenceA"+(GameData.getSpace(0)>GameData.getSpace(1)?"C:" + StartCommand.emojiID[9]:":" + StartCommand.emojiID[6]) + ">" + CardEmbedBuilder.intToEmoji(GameData.getSpace(0))+"\n"
-							+ "<:InfluenceR"+(GameData.getSpace(1)>GameData.getSpace(0)?"C:" + StartCommand.emojiID[10]:":" + StartCommand.emojiID[7]) + ">" + CardEmbedBuilder.intToEmoji(GameData.getSpace(1)), "", false);
+					.addField("Military Operations: ", (GameData.getMilOps(0)>GameData.getDEFCON()?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getMilOps(0)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()) + "\n"
+							+ (GameData.getMilOps(1)>GameData.getDEFCON()?StartCommand.emojiID[10]:StartCommand.emojiID[7])+CardEmbedBuilder.intToEmoji(GameData.getMilOps(1)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), false)
+					.addField("Space Race: " + (GameData.hasSpace(0)?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(0))+(GameData.hasAbility(0, 2)?":dog2:":"")+(GameData.hasAbility(0, 4)?":rocket:":"")+(GameData.hasAbility(0, 6)?":full_moon:":"")+(GameData.hasAbility(0, 8)?":satellite_orbital:":"")+"\n"
+							+ (GameData.hasSpace(0)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+(GameData.hasAbility(0, 2)?":dog2:":"")+(GameData.hasAbility(0, 4)?":rocket:":"")+(GameData.hasAbility(0, 6)?":full_moon:":"")+(GameData.hasAbility(0, 8)?":satellite_orbital:":""), "", false);
 			String map = "";
-			for (int i=0; i<84; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?"<:InfluenceAC:" + StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?"<:InfluenceRC:" + StartCommand.emojiID[10]:"<:InfluenceN:" + StartCommand.emojiID[8])) +"> " + (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			for (int i=0; i<21; i++) {
+				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
 			}
-			if (GameData.ccw) map += ":flag_cn:" + (MapManager.get(86).isControlledBy()==1?"**":"") + MapManager.get(86).influence[1] + (MapManager.get(86).isControlledBy()==1?"**\n":"\n");;
-			builder.addField("Map:", map, false);
-			
-			//for (Integer i : HandManager.Effects) {
-				//TODO things
-			//}
+			builder.addField("Europe: ", map, false);
+			map = "";
+			for (int i=21; i<31; i++) {
+				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			}
+			builder.addField("Middle East: ", map, false);
+			map = "";
+			for (int i=31; i<46; i++) {
+				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			}
+			builder.addField("Asia: ", map, false);
+			map = "";
+			for (int i=46; i<64; i++) {
+				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			}
+			builder.addField("Africa: ", map, false);
+			map = "";
+			for (int i=64; i<74; i++) {
+				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			}
+			builder.addField("Central America: ", map, false);
+			map = "";
+			for (int i=74; i<84; i++) {
+				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			}
+			builder.addField("South America: ", map, false);
+			if (GameData.ccw) builder.addField("China:",":flag_cn:" + (MapManager.get(86).isControlledBy()==1?"**":"") + MapManager.get(86).influence[1] + (MapManager.get(86).isControlledBy()==1?"**\n":"\n"),false);
+			String effects = "";
+			for (Integer i : HandManager.Effects) {
+				if (i==400||i==401) effects+=":rocket: Missile Crisis";
+				if (i==41) effects+=":anchor: Nuclear Submarines";
+				if (i==43) effects+=":atom: Salt Negotiations";
+				if (i==690||i==691) effects += ":earth_americas: Latin American Death Squads";
+				if (i==93) effects+=":flag_ni: Iran-Contra Affair";
+				if (i==94) effects+=":radioactive: Chernobyl";
+				if (i==50) effects+=":coffin: \"We Will Bury You\"";
+				if (i==60) effects+=":airplane: U-2 Incident";
+				if (i==82) effects+=":flag_ir: Iran Hostage Crisis";
+				if (i==87) effects+=StartCommand.emojiID[4] + "The Reformer";
+				if (i==59) effects+=":blossom: Flower Power";
+				if (i==109) effects+=":dove: Yuri and Samantha";
+				if (i==27) effects+=":flag_jp: Anpo";
+				if (i==21) effects+=":earth_africa: NATO\n";
+				if (i==17) effects+=":flag_fr: Charles de Gaulle\n";
+				if (i==55) effects+=":flag_de: Willy Brandt\n";
+				if (i==16&&!HandManager.effectActive(21)) effects+=":flag_pl: NATO formable\n";
+				if (i==23&&!HandManager.effectActive(21)) effects+=":money_with_wings: NATO formable\n";
+				if (i==68) effects+=":flag_va: John Paul II\n";
+				if (i==65) effects+=":flag_il: Camp David Accords\n";
+				if (i==83) effects+=":flag_gb: Iron Lady\n";
+				if (i==96) effects+=StartCommand.emojiID[1] + " \"Tear Down This Wall\"\n";
+				if (i==97) effects+=":flag_us: \"An Evil Empire\"\n";
+				if (i==110) effects+=":flag_sa: AWACS Sold\n";
+				if (i==42) effects+=":helicopter: Quagmire\n";
+				if (i==44) effects+=":flag_af: Bear Trap\n";
+				if (i==25) effects+=StartCommand.emojiID[9] + " Containment";
+				if (i==51) effects+=StartCommand.emojiID[10] + " Brezhnev Doctrine";
+				if (i==310) effects+=StartCommand.emojiID[6] + " Red Scare";
+				if (i==311) effects+=StartCommand.emojiID[7] + " Purge";
+				if (i==9) effects+=":flag_vn: Vietnam Revolts\n";
+				if (i==35) effects+=":flag_tw: Formosan Resolution";
+				if (i==73) effects+=":earth_asia: Shuttle Diplomacy";
+				if (i==106) effects+=":flag_ca: NORAD";
+
+			}
+			builder.addField("Effects:", effects, false);
 			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
 		if (args[1].equals("cards")) {

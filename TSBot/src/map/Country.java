@@ -74,11 +74,11 @@ public class Country {
 	}
 	
 	public String toString() {
-		if (this.id==6) return "<:flag_dd:"+StartCommand.emojiID[1]+">";
-		if (this.id==20) return "<:flag_yu:"+StartCommand.emojiID[2]+">";
-		if (this.id==62) return "<:flag_zr:"+StartCommand.emojiID[3]+">";
-		if (this.id==33) return "<:flag_bu:"+StartCommand.emojiID[5]+">";
-		if (this.id==85) return "<:flag_su:"+StartCommand.emojiID[4]+">";
+		if (this.id==6) return StartCommand.emojiID[1];
+		if (this.id==20) return StartCommand.emojiID[2];
+		if (this.id==62) return StartCommand.emojiID[3];
+		if (this.id==33) return StartCommand.emojiID[5];
+		if (this.id==85) return StartCommand.emojiID[4];
 		return ":flag_" + iso + ":"; //flag emoji
 	}
 	public Color getColor() {
@@ -97,10 +97,11 @@ public class Country {
 				.setAuthor("Information", null, Launcher.url("emoji/InfluenceNC.png"))
 				.setTitle(name+" ("+iso+")")
 				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "country in " + regions[region])
-				.setThumbnail(Launcher.url("countries/"+iso+".png"))
 				.setColor(getColor())
-				.addField("Influence", "<:InfluenceA"+ (this.isControlledBy()==0?"C":"") +":"+StartCommand.emojiID[(this.isControlledBy()==0?9:6)]+">"+CardEmbedBuilder.intToEmoji(influence[0])+"<:InfluenceA"+ (this.isControlledBy()==1?"C":"") +":"+StartCommand.emojiID[(this.isControlledBy()==1?10:7)]+">"+CardEmbedBuilder.intToEmoji(influence[1]), false)
+				.addField("Influence", StartCommand.emojiID[(this.isControlledBy()==0?9:6)]+CardEmbedBuilder.intToEmoji(influence[0])+StartCommand.emojiID[(this.isControlledBy()==1?10:7)]+CardEmbedBuilder.intToEmoji(influence[1]), false)
 				.setFooter(desc, Launcher.url("emoji/InfluenceNC.png"));
+		if (Launcher.f) builder.setImage(Launcher.url("countries/"+iso+".png"));
+		else builder.setThumbnail(Launcher.url("countries/"+iso+".png"));
 		String str = "";
 		for (int i : adj) {
 			str += MapManager.get(i);

@@ -34,8 +34,8 @@ public class ArabIsraeliWar extends Card {
 				.setFooter("\"It will be a war of annihilation. It will be a momentous massacre in history that will be talked about like the massacres of the Mongols or the Crusades.\"\n"
 						+ "- Azzam Pasha, 1947", Launcher.url("people/arableague.png"))
 				.setColor(Color.red);
-			builder.changeInfluence(42, 1, MapManager.get(42).influence[0]);
-			builder.changeInfluence(42, 0, -MapManager.get(42).influence[0]);
+			builder.changeInfluence(25, 1, MapManager.get(25).influence[0]);
+			builder.changeInfluence(25, 0, -MapManager.get(25).influence[0]);
 			builder.changeVP(-2);
 		}
 		else {

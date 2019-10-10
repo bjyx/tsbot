@@ -44,6 +44,10 @@ public class TimeCommand extends Command {
 			sendMessage(e, ":x: Excuse me, but who are *you* playing as? China's abstracted as a card and the rest of the world has a board space each.");
 			return;
 		}
+		if (GameData.getTurn()==0) {
+			sendMessage(e, ":x: This is not something to be doing right now; you don't even have influence on the board!");
+			return;
+		}
 		if (!cardPlayed) {
 			sendMessage(e, ":x: You are required to play a card.");
 			return;

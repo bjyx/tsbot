@@ -75,7 +75,8 @@ public class GrainSales extends Card {
 	public String getDescription() {
 		return "The US selects a random card from the Soviet hand, "
 				+ "and may play it like a normal card or return it. "
-				+ "If returned (or if the Soviets do not have a card in hand), the US may conduct operations using this card.";
+				+ "If returned (or if the Soviets do not have a card in hand), "
+				+ "the US may conduct operations using this card.";
 	}
 
 	@Override

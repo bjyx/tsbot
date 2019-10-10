@@ -25,7 +25,7 @@ import turnzero.TurnZero;
 
 public class StartCommand extends Command {
 	
-	public static long[] emojiID = new long[13];
+	public static String[] emojiID = new String[13];
 	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
@@ -123,32 +123,32 @@ public class StartCommand extends Command {
 		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getSSR()), GameData.rolessr).complete();
 		// add the emoji needed for proper function.
 		try {
-			if (e.getGuild().getEmotesByName("TScardback", false).isEmpty()) emojiID[0] = new GuildController(e.getGuild()).createEmote("TScardback", Icon.from(new File("./src/images/emoji/TSCardback.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[0] = e.getGuild().getEmotesByName("TScardback", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("flag_dd", false).isEmpty()) emojiID[1] = new GuildController(e.getGuild()).createEmote("flag_dd", Icon.from(new File("./src/images/emoji/flag_dd.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[1] = e.getGuild().getEmotesByName("flag_dd", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("flag_yu", false).isEmpty()) emojiID[2] =  new GuildController(e.getGuild()).createEmote("flag_yu", Icon.from(new File("./src/images/emoji/flag_yu.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[2] = e.getGuild().getEmotesByName("flag_yu", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("flag_zr", false).isEmpty()) emojiID[3] = new GuildController(e.getGuild()).createEmote("flag_zr", Icon.from(new File("./src/images/emoji/flag_zr.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[3] = e.getGuild().getEmotesByName("flag_zr", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("flag_su", false).isEmpty()) emojiID[4] = new GuildController(e.getGuild()).createEmote("flag_su", Icon.from(new File("./src/images/emoji/flag_su.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[4] = e.getGuild().getEmotesByName("flag_su", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("flag_bu", false).isEmpty()) emojiID[5] = new GuildController(e.getGuild()).createEmote("flag_bu", Icon.from(new File("./src/images/emoji/flag_bu.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[5] = e.getGuild().getEmotesByName("flag_bu", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("InfluenceA", false).isEmpty()) emojiID[6] = new GuildController(e.getGuild()).createEmote("InfluenceA", Icon.from(new File("./src/images/emoji/InfluenceA.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[6] = e.getGuild().getEmotesByName("InfluenceA", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("InfluenceR", false).isEmpty()) emojiID[7] = new GuildController(e.getGuild()).createEmote("InfluenceR", Icon.from(new File("./src/images/emoji/InfluenceR.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[7] = e.getGuild().getEmotesByName("InfluenceR", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("InfluenceN", false).isEmpty()) emojiID[8] = new GuildController(e.getGuild()).createEmote("InfluenceN", Icon.from(new File("./src/images/emoji/InfluenceN.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[8] = e.getGuild().getEmotesByName("InfluenceN", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("InfluenceAC", false).isEmpty()) emojiID[9] = new GuildController(e.getGuild()).createEmote("InfluenceAC", Icon.from(new File("./src/images/emoji/InfluenceAC.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[9] = e.getGuild().getEmotesByName("InfluenceAC", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("InfluenceRC", false).isEmpty()) emojiID[10] = new GuildController(e.getGuild()).createEmote("InfluenceRC", Icon.from(new File("./src/images/emoji/InfluenceRC.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[10] = e.getGuild().getEmotesByName("InfluenceRC", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("InfluenceNC", false).isEmpty()) emojiID[11] = new GuildController(e.getGuild()).createEmote("InfluenceNC", Icon.from(new File("./src/images/emoji/InfluenceNC.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[11] = e.getGuild().getEmotesByName("InfluenceNC", false).get(0).getIdLong();
-			if (e.getGuild().getEmotesByName("tank", true).isEmpty()) emojiID[12] = new GuildController(e.getGuild()).createEmote("tank", Icon.from(new File("./src/images/emoji/tank.png")), e.getGuild().getPublicRole()).complete().getIdLong();
-			else emojiID[12] = e.getGuild().getEmotesByName("tank", false).get(0).getIdLong();
+			if (e.getGuild().getEmotesByName("TScardback", false).isEmpty()) emojiID[0] = new GuildController(e.getGuild()).createEmote("TScardback", Icon.from(new File("./src/images/emoji/TSCardback.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[0] = e.getGuild().getEmotesByName("TScardback", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("flag_dd", false).isEmpty()) emojiID[1] = new GuildController(e.getGuild()).createEmote("flag_dd", Icon.from(new File("./src/images/emoji/flag_dd.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[1] = e.getGuild().getEmotesByName("flag_dd", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("flag_yu", false).isEmpty()) emojiID[2] =  new GuildController(e.getGuild()).createEmote("flag_yu", Icon.from(new File("./src/images/emoji/flag_yu.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[2] = e.getGuild().getEmotesByName("flag_yu", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("flag_zr", false).isEmpty()) emojiID[3] = new GuildController(e.getGuild()).createEmote("flag_zr", Icon.from(new File("./src/images/emoji/flag_zr.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[3] = e.getGuild().getEmotesByName("flag_zr", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("flag_su", false).isEmpty()) emojiID[4] = new GuildController(e.getGuild()).createEmote("flag_su", Icon.from(new File("./src/images/emoji/flag_su.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[4] = e.getGuild().getEmotesByName("flag_su", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("flag_bu", false).isEmpty()) emojiID[5] = new GuildController(e.getGuild()).createEmote("flag_bu", Icon.from(new File("./src/images/emoji/flag_bu.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[5] = e.getGuild().getEmotesByName("flag_bu", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("InfluenceA", false).isEmpty()) emojiID[6] = new GuildController(e.getGuild()).createEmote("InfluenceA", Icon.from(new File("./src/images/emoji/InfluenceA.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[6] = e.getGuild().getEmotesByName("InfluenceA", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("InfluenceR", false).isEmpty()) emojiID[7] = new GuildController(e.getGuild()).createEmote("InfluenceR", Icon.from(new File("./src/images/emoji/InfluenceR.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[7] = e.getGuild().getEmotesByName("InfluenceR", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("InfluenceN", false).isEmpty()) emojiID[8] = new GuildController(e.getGuild()).createEmote("InfluenceN", Icon.from(new File("./src/images/emoji/InfluenceN.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[8] = e.getGuild().getEmotesByName("InfluenceN", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("InfluenceAC", false).isEmpty()) emojiID[9] = new GuildController(e.getGuild()).createEmote("InfluenceAC", Icon.from(new File("./src/images/emoji/InfluenceAC.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[9] = e.getGuild().getEmotesByName("InfluenceAC", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("InfluenceRC", false).isEmpty()) emojiID[10] = new GuildController(e.getGuild()).createEmote("InfluenceRC", Icon.from(new File("./src/images/emoji/InfluenceRC.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[10] = e.getGuild().getEmotesByName("InfluenceRC", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("InfluenceNC", false).isEmpty()) emojiID[11] = new GuildController(e.getGuild()).createEmote("InfluenceNC", Icon.from(new File("./src/images/emoji/InfluenceNC.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[11] = e.getGuild().getEmotesByName("InfluenceNC", false).get(0).getAsMention();
+			if (e.getGuild().getEmotesByName("tank", true).isEmpty()) emojiID[12] = new GuildController(e.getGuild()).createEmote("tank", Icon.from(new File("./src/images/emoji/tank.png")), e.getGuild().getPublicRole()).complete().getAsMention();
+			else emojiID[12] = e.getGuild().getEmotesByName("tank", false).get(0).getAsMention();
 		} catch (IOException e1) {
 			System.out.print("Error creating emoji.");
 		}

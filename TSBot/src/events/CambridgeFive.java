@@ -58,9 +58,11 @@ public class CambridgeFive extends Card {
 			.setDescription("")
 			.setColor(flag?Color.RED:Color.GRAY)
 			.addField(flag?"Operations have been compromised in the following regions:":"No secrets to leak. Unfortunate.",a,false);
-		GameData.dec = new Decision(1, 104);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", place 1 influence in one of the regions revealed to you.").complete();
+		if(flag) {
+			GameData.dec = new Decision(1, 104);
+			GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", place 1 influence in one of the regions revealed to you.").complete();
+		}
 	}
 
 	@Override

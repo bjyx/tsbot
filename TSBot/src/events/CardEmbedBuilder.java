@@ -12,7 +12,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	
 	public CardEmbedBuilder() {
 		super();
-		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2  + (GameData.phasing()==0?"US":"USSR")))));
+		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + (GameData.getAR() + 1)/2  + (GameData.phasing()==0?" US":" USSR"))));
 	}
 	
 	public static String intToEmoji(int i) {
@@ -31,7 +31,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder changeInfluence(int country, int sp, int amt) {
 		if (amt==0) return this;
 		MapManager.get(country).changeInfluence(sp, amt);
-		return (CardEmbedBuilder) this.addField(MapManager.get(country) + "<:Influence" + (sp==0?"AC:"+StartCommand.emojiID[9]:"RC:"+StartCommand.emojiID[10])+ ">" + intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).influence[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).influence[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
+		return (CardEmbedBuilder) this.addField(MapManager.get(country) + (sp==0?StartCommand.emojiID[9]:StartCommand.emojiID[10])+intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).influence[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).influence[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
 	}
 	public CardEmbedBuilder changeDEFCON(int amt) {
 		if (amt==0) return this;
@@ -42,7 +42,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder addMilOps(int sp, int mil) {
 		if (mil==0) return this;
 		GameData.addMilOps(sp, mil);
-		return (CardEmbedBuilder) this.addField("<:tank:"+StartCommand.emojiID[12]+"><:Influence" + (sp==0?"AC:"+StartCommand.emojiID[9]:"RC:"+StartCommand.emojiID[10])+ ">" + intToEmoji(mil),"Now at " + GameData.getMilOps(sp),false);
+		return (CardEmbedBuilder) this.addField(StartCommand.emojiID[12]+ (sp==0?StartCommand.emojiID[9]:StartCommand.emojiID[10])+intToEmoji(mil),"Now at " + GameData.getMilOps(sp),false);
 	}
 	public CardEmbedBuilder bulkChangeInfluence(ArrayList<Integer> order, int sp, ArrayList<Integer> values) {
 		for (int i=0; i<order.size(); i++) {

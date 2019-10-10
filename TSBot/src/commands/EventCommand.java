@@ -5,6 +5,7 @@ import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -62,7 +63,10 @@ public class EventCommand extends Command {
 				return;
 			}
 			TimeCommand.eventDone = true;
-			if (HandManager.playmode == 'f') TimeCommand.operationsRequired = true;
+			if (HandManager.playmode == 'f') {
+				TimeCommand.operationsRequired = true;
+				GameData.ops = new Operations((PlayerList.getArray().indexOf(e.getAuthor())+1)%2, CardList.getCard(HandManager.activecard).getOpsMod(PlayerList.getArray().indexOf(e.getAuthor())), true, true, true, false, false);
+			}
 		}
 	}
 

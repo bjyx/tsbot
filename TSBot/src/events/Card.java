@@ -98,7 +98,7 @@ public abstract class Card {
 	 */
 	public EmbedBuilder toEmbed(int sp) {
 		return new EmbedBuilder()
-				.setTitle(":" + numbers[getOps()] + ":<:Influence" + this.getAssociationString() + "C:" + StartCommand.emojiID[9+this.getAssociation()] + "> `" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
+				.setTitle(":" + numbers[getOps()] + ":" + StartCommand.emojiID[9+this.getAssociation()] + "`" + getId() + " " + getName() + (isRemoved()?"*":"") + "`")
 				.setImage(Launcher.url("cards/" + getId() + ".png"))
 				.setDescription(getDescription())
 				.setColor(sp==0?Color.blue:(sp==1?Color.red:Color.gray));
