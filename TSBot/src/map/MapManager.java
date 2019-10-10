@@ -178,7 +178,7 @@ public class MapManager {
 		map.add(new Country(
 				"Spain/Portugal", 
 				1, 
-				"es::flag_pr", 
+				"es::flag_pt", 
 				2, 
 				false, 
 				new String[] {"spainportugal", "es", "esp", "españa", "espana", "spain", "portugal", "pr", "prt"}, 
@@ -256,7 +256,7 @@ public class MapManager {
 		map.add(new Country(
 				"Gulf States", 
 				3, 
-				"ae", 
+				"kw", 
 				3, 
 				false, 
 				new String[] {"gulfstates", "ae", "are", "unitedarabemirates", "imarat", "uae", "oman","uman","omn","om","qatar","qat","qa","bahrain","bhr","bahrayn","bh","kuwait","kwt","kw"}, 
