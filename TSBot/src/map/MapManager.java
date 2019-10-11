@@ -22,7 +22,7 @@ public class MapManager {
 				new int[] {0,0}
 				));
 		map.add(new Country(
-				"Benelux", 
+				"Benelux", //Belgium's flag is employed on official TS boards.
 				1, 
 				"be", 
 				3, 
@@ -254,7 +254,7 @@ public class MapManager {
 				new int[] {0,0}
 				));
 		map.add(new Country(
-				"Gulf States", 
+				"Gulf States", //which will use Kuwait for all cosmetic purposes, thank opec
 				3, 
 				"kw", 
 				3, 
@@ -619,7 +619,7 @@ public class MapManager {
 				new int[] {0,0}
 				));
 		map.add(new Country(
-				"Southeast African States", 
+				"Southeast African States", // uses Mozambique due to Portuguese Empire Collapses
 				6, 
 				"mz", 
 				1, 
@@ -630,7 +630,7 @@ public class MapManager {
 				new int[] {0,0}
 				));
 		map.add(new Country(
-				"Saharan States", 
+				"Saharan States", //uses Chad for cosmetic purposes; thank Libya
 				6, 
 				"td", //chad
 				1, 
@@ -685,7 +685,7 @@ public class MapManager {
 				new int[] {0,0}
 				));
 		map.add(new Country(
-				"West African States", 
+				"West African States", //I honestly just picked a random country for this one.
 				6, 
 				"ml", 
 				2, 
@@ -940,12 +940,11 @@ public class MapManager {
 				new int[] {0,0}
 				));
 		//Superpowers - 84 - really only relevant in case I need flags for Brush War
-		//TODO set up precautions in case someone tries funny business in the superpowers :P
 		map.add(new Country(
 				"United States of America", 
 				9, 
 				"us", 
-				7, 
+				7, //cannot coup. ever. 14 > 6 [die] + 6 [Vietnam-busted China card is the maximum ops number on any country] + 1 [Brezhnev or Containment, even though it doesn't apply to the China Card]
 				false, 
 				new String[] {"unitedstates", "usa", "us","america","democrat", "capitalist"}, 
 				new Integer[] {3, 36, 65, 71}, //ca, jp, cu, mx
@@ -1917,7 +1916,6 @@ public class MapManager {
 				new int[] {2,0}
 				));
 		//Superpowers - 84 - really only relevant in case I need flags for Brush War/realignments
-		//TODO set up precautions in case someone tries funny business in the superpowers :P
 		map.add(new Country(
 				"United States of America", 
 				9, 
@@ -1949,7 +1947,7 @@ public class MapManager {
 				new String[] {"china", "chn", "cn","prc","zhongguo", "zhonghuarenmingongheguo","peoplesrepublicofchina"}, 
 				new Integer[] {85}, //su
 				"", 
-				new int[] {-2147483648,3} //If you're the US you probably can't put things here anyways
+				new int[] {0,3} //If you're the US you probably can't put things here anyways
 				));
 	}
 }
