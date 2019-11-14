@@ -12,7 +12,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	
 	public CardEmbedBuilder() {
 		super();
-		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + (GameData.getAR() + 1)/2  + (GameData.phasing()==0?" US":" USSR"))));
+		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.isHeadlinePhase()?"Headline":("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR"))));
 	}
 	
 	public static String intToEmoji(int i) {

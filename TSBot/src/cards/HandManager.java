@@ -275,13 +275,7 @@ public class HandManager {
 		}
 		//super complicated area, will nitgrit later
 		if (mode=='h') {
-			if (CardList.getCard(card).isRemoved()) {
-				removeFromGame(sp, card);
-			}
-			else if (card!=73) {
-				discard(sp, card);
-			}
-			else removeFromHand(sp, card);
+			removeFromHand(sp, card);
 			playmode = 'h';
 			headline[sp]=card;
 			
@@ -304,17 +298,17 @@ public class HandManager {
 				TimeCommand.cardPlayed = true;
 				TimeCommand.hl1 = false;
 				TimeCommand.hl2 = false;
-				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
-				if (!(GameData.hasAbility(sp,4))) GameData.txtchnl.sendMessage(CardList.getCard(headline[(sp+1)%2]).toEmbed((sp+1)%2).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
+				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
+				if (!(GameData.hasAbility(sp,4))) GameData.txtchnl.sendMessage(CardList.getCard(headline[(sp+1)%2]).toEmbed((sp+1)%2).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
 			}
 			else if (GameData.hasAbility((sp+1)%2,4)) {
-				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
+				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
 				if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline card.").complete();
 				else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline card.").complete();
 			}
 		}
 		else {
-			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2))) + (GameData.phasing()==0?"US":"USSR")).build()).complete();
+			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
 		}
 		if (mode=='e') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
@@ -340,7 +334,15 @@ public class HandManager {
 			activecard = card;
 			TimeCommand.cardPlayed = true;
 			TimeCommand.eventRequired = true;
-			
+			if (CardList.getCard(activecard).getAssociation()==2) {
+				if (GameData.phasing()==0) 	GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
+				else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
+			}
+			else {
+				if (CardList.getCard(activecard).getAssociation()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
+				else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
+
+			}
 		}
 		if (mode=='o') {
 			if (card==6) {
@@ -371,6 +373,8 @@ public class HandManager {
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
+			if (GameData.phasing()==0) 	GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your operations.").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your operations.").complete();
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.operationsRequired = true;
@@ -382,6 +386,8 @@ public class HandManager {
 			discard(sp, card);
 			playmode = 's';
 			activecard = card;
+			if (GameData.phasing()==0) 	GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your operations.").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your operations.").complete();
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, false, true, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;

@@ -39,6 +39,7 @@ public class SpaceCommand extends Command {
 		}
 		GameData.ops.space();
 		TimeCommand.spaceDone = true;
+		TimeCommand.prompt();
 	}
 
 	@Override

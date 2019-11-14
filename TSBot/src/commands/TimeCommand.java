@@ -30,6 +30,11 @@ public class TimeCommand extends Command {
 	public static boolean NORAD = true;
 	
 	public static boolean isCardDiscarded = true;
+	
+	public static boolean canAdvance() {
+		return cardPlayed&&cardPlayedSkippable&&(hl1&&hl2)&&trapDone&&NORAD&&!(eventRequired^eventDone)&&!(operationsDone^operationsRequired)&&!(spaceDone^spaceRequired)&&isCardDiscarded;
+	}
+	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.hasGameEnded()) {
@@ -101,23 +106,23 @@ public class TimeCommand extends Command {
 		if (GameData.isHeadlinePhase()) {
 			if (GameData.hasAbility(0, 6)) {
 				isCardDiscarded = false;
-				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
+				//GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
 				GameData.dec = new Decision(0, 0);
 				return;
 			}
 			if (GameData.hasAbility(1, 6)) {
 				isCardDiscarded = false;
-				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
+				//GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
 				GameData.dec = new Decision(1, 0);
 				return;
 			}
 			GameData.startTurn();
 			cardPlayed = false;
 			if (!(GameData.getSpace(0)>=4&&GameData.getSpace(1)<4)) {
-				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a headline card.").complete();
+				//GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a headline card.").complete();
 			}
 			if (!(GameData.getSpace(1)>=4&&GameData.getSpace(0)<4)) {
-				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a headline card.").complete();
+				//GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a headline card.").complete();
 			}
 		}
 		else if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
@@ -168,18 +173,18 @@ public class TimeCommand extends Command {
 		}
 		else if (GameData.getAR()>14) {
 			cardPlayedSkippable = false;
-			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
-			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+			//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+			//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
 		}
 		else if ((GameData.phasing()==1 && !HandManager.SUNHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.USAHand.isEmpty())) {
 			cardPlayed = false;
-			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
-			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
+			//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
+			//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
 		}
 		else {
 			cardPlayedSkippable = false;
-			if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
-			else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+			//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+			//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
 		}
 		eventDone = false;
 		operationsDone = false;
@@ -187,6 +192,7 @@ public class TimeCommand extends Command {
 		operationsRequired = false;
 		spaceRequired = false;
 		spaceDone = false;
+		TimeCommand.prompt();
 	}
 
 	@Override
@@ -211,6 +217,51 @@ public class TimeCommand extends Command {
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
 		return Arrays.asList("TS.time");
+	}
+
+	public static void prompt() {
+		if (!cardPlayed) {
+			if (GameData.isHeadlinePhase()) {
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline. (TS.play [card] h)").complete();
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline. (TS.play [card] h)").complete();
+			}
+			else if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play a card. (TS.play [card] [use])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play a card. (TS.play [card] [use])").complete();
+		}
+		if (!cardPlayedSkippable) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play a card. Set card to 0 to skip turn. (TS.play [card] [use])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play a card. Set card to 0 to skip turn. (TS.play [card] [use])").complete();
+		}
+		if (!hl1||!hl2) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event. (TS.event [args])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play a card. (TS.event [args])").complete();
+		}
+		if (!trapDone) {
+			//if statements are cool.
+		}
+		if (eventRequired&&!eventDone) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event. (TS.event [args])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event. (TS.event [args])").complete();
+		}
+		if (operationsRequired&&!operationsDone) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your operations. (TS.ops [args])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your operations. (TS.ops [args])").complete();
+		}
+		if (spaceRequired&&!spaceDone) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
+		}
+		if (!NORAD) {
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", DEFCON has dropped to 2. You may place an Influence Point pursuant to the restrictions of NORAD.");
+		}
+		if (!isCardDiscarded) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
+		}
+		if (canAdvance()) {
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();
+		}
 	}
 
 }

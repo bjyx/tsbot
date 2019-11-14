@@ -275,6 +275,20 @@ public class DecisionCommand extends Command {
 				return;
 			}
 			GameData.startTurn();
+			TimeCommand.cardPlayed = false;
+			if (!(GameData.getSpace(0)>=4&&GameData.getSpace(1)<4)) {
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a headline card.").complete();
+			}
+			if (!(GameData.getSpace(1)>=4&&GameData.getSpace(0)<4)) {
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a headline card.").complete();
+			}
+			TimeCommand.eventDone = false;
+			TimeCommand.operationsDone = false;
+			TimeCommand.eventRequired = false;
+			TimeCommand.operationsRequired = false;
+			TimeCommand.spaceRequired = false;
+			TimeCommand.spaceDone = false;
+			GameData.dec=null;
 			return;
 		}
 		if (GameData.dec.card==5) {
@@ -902,17 +916,17 @@ public class DecisionCommand extends Command {
 			if (TimeCommand.hl1) TimeCommand.hl2 = true;
 			else TimeCommand.hl1 = true;
 			if (HandManager.precedence==0&&TimeCommand.hl2==false) {
-				GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please play your headline.").complete();
 				HandManager.activecard=HandManager.headline[1];
 			}
 			else if (HandManager.precedence==1) {
 				HandManager.activecard=HandManager.headline[0];
-				GameData.txtusa.sendMessage(PlayerList.getUSA().getAsMention() + ", please play your headline.").complete();
-			}
+			}	
+			TimeCommand.prompt();
 			return;
 		}
 		TimeCommand.eventDone = true;
 		if (HandManager.playmode == 'f') TimeCommand.operationsRequired = true;
+		TimeCommand.prompt();
 	}
 
 	@Override

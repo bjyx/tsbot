@@ -21,11 +21,11 @@ public class MiddleEastScoring extends Card {
 		builder.setTitle("Middle East Scoring")
 			.setDescription("")
 			.setColor(Color.CYAN)
-			.setFooter("The world petroleum story is one of the most inhuman known to man: "
+			.setFooter("\"The world petroleum story is one of the most inhuman known to man: "
 					+ "in it, elementary moral and social principles are jeered at. "
 					+ "If powerful oil trusts no longer despoil and humiliate our country "
 					+ "it is not because these predators have become human, "
-					+ "but because we have won a hard-fought battle which has been going on since the beginning of the century.\n" + 
+					+ "but because we have won a hard-fought battle which has been going on since the beginning of the century.\"\n" + 
 					"- Mohammed Reza Pahlavi", Launcher.url("people/pahlavi.png"));
 		int vp = 0;
 		for (int i = 21; i<31; i++) { //Egypt and Afghanistan, resp.
@@ -42,7 +42,7 @@ public class MiddleEastScoring extends Card {
 			}
 		}
 		builder.addField(":flag_us:", strings[0]+"|"+strings[2], false);
-		builder.addField(":flag_su:", strings[1]+"|"+strings[3], false);
+		builder.addField(MapManager.get(85).toString(), strings[1]+"|"+strings[3], false);
 		if (HandManager.Effects.contains(73)) {
 			battlegrounds[1]--; //shuttle diplomacy removes a battleground from ME
 			totalCountries[1]--; //a battleground is still a country...

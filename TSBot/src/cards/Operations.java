@@ -124,6 +124,7 @@ public class Operations {
 		spaceable = space;
 		free = f;
 		restrictions = restr;
+		txtsp = (sp==0)?GameData.txtusa:GameData.txtssr;
 	}
 	/**
 	 * Handles the Operations Command; moved here in order to also handle any events brought about by the decision command.

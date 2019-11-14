@@ -47,6 +47,7 @@ public class OperationsCommand extends Command {
 		}
 		TimeCommand.operationsDone = true;
 		if (HandManager.playmode == 'l') TimeCommand.eventRequired = true;
+		TimeCommand.prompt();
 	}
 
 	@Override

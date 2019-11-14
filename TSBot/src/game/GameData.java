@@ -375,6 +375,7 @@ public class GameData {
 	 * @param defcon2 is the new value of {@link #defcon}
 	 */
 	public static void setDEFCON(int defcon2) {
+		if (defcon==defcon2) return;
 		defcon = Math.max(1, Math.min(5, defcon2));
 		if (defcon==1) endGame((phasing()+1)%2, 1);
 		if (defcon==2&&!isHeadlinePhase()&&MapManager.get(3).isControlledBy()==0) {

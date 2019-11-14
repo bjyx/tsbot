@@ -21,6 +21,23 @@ public class InfoCommand extends Command {
 		else if (i<36) return (char) ('a'+i-10);
 		else return (char) ('A'+i-36);
 	}
+	
+	public String url() {
+		String url = "http://twistrug.jjt.io/#/board/00000000/" 
+				+ urlParser(GameData.getScore()+20)
+				+ urlParser(GameData.getDEFCON())
+				+ urlParser(GameData.getTurn())
+				+ urlParser(GameData.getAR())
+				+ urlParser(GameData.getMilOps(0))
+				+ urlParser(GameData.getMilOps(1))
+				+ urlParser(GameData.getSpace(0))
+				+ urlParser(GameData.getSpace(1));
+		for (int i=0; i<84; i++) {
+			url += urlParser(MapManager.get(i).influence[0]);
+			url += urlParser(MapManager.get(i).influence[1]);
+		}
+		return url;
+	}
 
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
@@ -36,9 +53,9 @@ public class InfoCommand extends Command {
 			return;
 		}
 		//game data
-		if (args[1].equals("game")) {
+		else if (args[1].equals("game")) {
 			EmbedBuilder builder = new CardEmbedBuilder()
-					.setTitle("Game State")
+					.setTitle("Game State", url())
 					.setColor(Color.WHITE)
 					.addField("Score: " + (GameData.getScore()<0?StartCommand.emojiID[10]:(GameData.getScore()>0?StartCommand.emojiID[9]:"")) + CardEmbedBuilder.intToEmoji(Math.abs(GameData.getScore())), "", false)
 					.addField("DEFCON " + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), "", false)
@@ -79,19 +96,19 @@ public class InfoCommand extends Command {
 			if (GameData.ccw) builder.addField("China:",":flag_cn:" + (MapManager.get(86).isControlledBy()==1?"**":"") + MapManager.get(86).influence[1] + (MapManager.get(86).isControlledBy()==1?"**\n":"\n"),false);
 			String effects = "";
 			for (Integer i : HandManager.Effects) {
-				if (i==400||i==401) effects+=":rocket: Missile Crisis";
-				if (i==41) effects+=":anchor: Nuclear Submarines";
-				if (i==43) effects+=":atom: Salt Negotiations";
-				if (i==690||i==691) effects += ":earth_americas: Latin American Death Squads";
-				if (i==93) effects+=":flag_ni: Iran-Contra Affair";
-				if (i==94) effects+=":radioactive: Chernobyl";
-				if (i==50) effects+=":coffin: \"We Will Bury You\"";
-				if (i==60) effects+=":airplane: U-2 Incident";
-				if (i==82) effects+=":flag_ir: Iran Hostage Crisis";
-				if (i==87) effects+=StartCommand.emojiID[4] + "The Reformer";
-				if (i==59) effects+=":blossom: Flower Power";
-				if (i==109) effects+=":dove: Yuri and Samantha";
-				if (i==27) effects+=":flag_jp: Anpo";
+				if (i==400||i==401) effects+=":rocket: Missile Crisis\n";
+				if (i==41) effects+=":anchor: Nuclear Submarines\n";
+				if (i==43) effects+=":atom: Salt Negotiations\n";
+				if (i==690||i==691) effects += ":earth_americas: Latin American Death Squads\n";
+				if (i==93) effects+=":flag_ni: Iran-Contra Affair\n";
+				if (i==94) effects+=":radioactive: Chernobyl\n";
+				if (i==50) effects+=":coffin: \"We Will Bury You\"\n";
+				if (i==60) effects+=":airplane: U-2 Incident\n";
+				if (i==82) effects+=":flag_ir: Iran Hostage Crisis\n";
+				if (i==87) effects+=StartCommand.emojiID[4] + "The Reformer\n";
+				if (i==59) effects+=":blossom: Flower Power\n";
+				if (i==109) effects+=":dove: Yuri and Samantha\n";
+				if (i==27) effects+=":flag_jp: Anpo\n";
 				if (i==21) effects+=":earth_africa: NATO\n";
 				if (i==17) effects+=":flag_fr: Charles de Gaulle\n";
 				if (i==55) effects+=":flag_de: Willy Brandt\n";
@@ -105,43 +122,27 @@ public class InfoCommand extends Command {
 				if (i==110) effects+=":flag_sa: AWACS Sold\n";
 				if (i==42) effects+=":helicopter: Quagmire\n";
 				if (i==44) effects+=":flag_af: Bear Trap\n";
-				if (i==25) effects+=StartCommand.emojiID[9] + " Containment";
-				if (i==51) effects+=StartCommand.emojiID[10] + " Brezhnev Doctrine";
-				if (i==310) effects+=StartCommand.emojiID[6] + " Red Scare";
-				if (i==311) effects+=StartCommand.emojiID[7] + " Purge";
+				if (i==25) effects+=StartCommand.emojiID[9] + " Containment\n";
+				if (i==51) effects+=StartCommand.emojiID[10] + " Brezhnev Doctrine\n";
+				if (i==310) effects+=StartCommand.emojiID[6] + " Red Scare\n";
+				if (i==311) effects+=StartCommand.emojiID[7] + " Purge\n";
 				if (i==9) effects+=":flag_vn: Vietnam Revolts\n";
-				if (i==35) effects+=":flag_tw: Formosan Resolution";
-				if (i==73) effects+=":earth_asia: Shuttle Diplomacy";
-				if (i==106) effects+=":flag_ca: NORAD";
+				if (i==35) effects+=":flag_tw: Formosan Resolution\n";
+				if (i==73) effects+=":earth_asia: Shuttle Diplomacy\n";
+				if (i==106) effects+=":flag_ca: NORAD\n";
 
 			}
 			builder.addField("Effects:", effects, false);
 			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
-		if (args[1].equals("cards")) {
+		else if (args[1].equals("cards")) {
 			//TODO things
 		}
-		if (args[1].equals("map")) {
-			String url = "http://twistrug.jjt.io/#/board/00000000/" 
-					+ urlParser(GameData.getScore()+20)
-					+ urlParser(GameData.getDEFCON())
-					+ urlParser(GameData.getTurn())
-					+ urlParser(GameData.getAR())
-					+ urlParser(GameData.getMilOps(0))
-					+ urlParser(GameData.getMilOps(1))
-					+ urlParser(GameData.getSpace(0))
-					+ urlParser(GameData.getSpace(1));
-			for (int i=0; i<84; i++) {
-				url += urlParser(MapManager.get(i).influence[0]);
-				url += urlParser(MapManager.get(i).influence[1]);
-			}
-			sendMessage(e, url);
-		}
-		if (args.length<3) {
+		else if (args.length<3) {
 			sendMessage(e, ":x: Not enough arguments.");
 			return;
 		}
-		if (args[1].equals("card")) {
+		else if (args[1].equals("card")) {
 			int id = Integer.parseInt(args[2]);
 			if (id <= 0 || id > CardList.numberOfCards()) {
 				sendMessage(e, ":x: Cards are indexed from 1 to " + CardList.numberOfCards() + ".");

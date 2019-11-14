@@ -42,31 +42,43 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: Oh, you're not the one playing this event. Your opponent is.");
 			return;
 		}
-		if (!CardList.getCard(HandManager.activecard).isFormatted(PlayerList.getArray().indexOf(e.getAuthor()), args)) {
-			sendMessage(e, ":x: Format your arguments correctly.");
-			return;
+		if (!CardList.getCard(HandManager.activecard).isPlayable(CardList.getCard(HandManager.activecard).getAssociation()==2?GameData.phasing():CardList.getCard(HandManager.activecard).getAssociation())) {
+			HandManager.Discard.add(HandManager.activecard);
+			sendMessage(e, "This event is not playable.");
 		}
-		CardList.getCard(HandManager.activecard).onEvent(PlayerList.getArray().indexOf(e.getAuthor()), args);
-		
+		else {
+			if (!CardList.getCard(HandManager.activecard).isFormatted(PlayerList.getArray().indexOf(e.getAuthor()), args)) {
+				sendMessage(e, ":x: Format your arguments correctly.");
+				return;
+			}
+			if (CardList.getCard(HandManager.activecard).isRemoved()) {
+				HandManager.Removed.add(HandManager.activecard);
+			}
+			else if (HandManager.activecard!=73) {
+				HandManager.Discard.add(HandManager.activecard);
+			}
+			CardList.getCard(HandManager.activecard).onEvent(PlayerList.getArray().indexOf(e.getAuthor()), args);
+		}
 		if (GameData.dec==null) {
 			if (GameData.isHeadlinePhase()) {
 				if (TimeCommand.hl1) TimeCommand.hl2 = true;
 				else {TimeCommand.hl1 = true;
 				if (HandManager.precedence==0&&TimeCommand.hl2==false) {
-					GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please play your headline.").complete();
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline.").complete();
 					HandManager.activecard=HandManager.headline[1];
 				}
 				else if (HandManager.precedence==1) {
 					HandManager.activecard=HandManager.headline[0];
-					GameData.txtusa.sendMessage(PlayerList.getUSA().getAsMention() + ", please play your headline.").complete();
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline.").complete();
 				}}
 				return;
 			}
 			TimeCommand.eventDone = true;
 			if (HandManager.playmode == 'f') {
 				TimeCommand.operationsRequired = true;
-				GameData.ops = new Operations((PlayerList.getArray().indexOf(e.getAuthor())+1)%2, CardList.getCard(HandManager.activecard).getOpsMod(PlayerList.getArray().indexOf(e.getAuthor())), true, true, true, false, false);
+				GameData.ops = new Operations(GameData.phasing(), CardList.getCard(HandManager.activecard).getOpsMod(GameData.phasing()), true, true, true, false, false);
 			}
+			TimeCommand.prompt();
 		}
 	}
 

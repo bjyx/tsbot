@@ -17,7 +17,8 @@ public class Decolonization extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Decolonization")
 			.setDescription("")
-			.setFooter("", Launcher.url(""))
+			.setFooter("\"The wind of change is blowing through this continent. Whether we like it or not, this growth of national consciousness is a political fact.\"\n"
+					+ "- Harold Macmillan, 1960", Launcher.url("people/macmillan.png"))
 			.setColor(Color.red);
 		for (int c : order) {
 			builder.changeInfluence(c, 1, 1);

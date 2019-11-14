@@ -177,10 +177,10 @@ public class CardList {
 		 CardList.addCard(new StanislavPetrov());
 		}
 		else {
-			CardList.addCard(null);
-		 	CardList.addCard(null);
-		 	CardList.addCard(null);
-		 	CardList.addCard(null);
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
 		}
 		if (GameData.promo2) {
 		 CardList.addCard(new KremlinFlu());
@@ -189,10 +189,10 @@ public class CardList {
 		 CardList.addCard(new DontWait());
 		}
 		else {
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
-			CardList.addCard(null);
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
 		}*/
 	}
 	/**

@@ -23,7 +23,7 @@ public class SouthAfricanUnrest extends Card {
 			.setDescription("Black majority campaigns against South African racist policy")
 			.setColor(Color.red)
 			.setFooter("\"Mandela has overstepped the mark. He has broken the law. The judiciary of this country has put him where he belongs according to the rules of democracy.\"\n"
-					+ "- P. W. Botha, 1980", Launcher.url("leaders/botha.png"));
+					+ "- P. W. Botha, 1980", Launcher.url("people/botha.png"));
 		builder.changeInfluence(option, 1, 2);
 		if (option!=58) {
 			builder.changeInfluence(58, 1, 1);
