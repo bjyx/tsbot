@@ -45,18 +45,18 @@ public class AsiaScoring extends Card {
 				totalCountries[c.isControlledBy()]++;
 				if (c.isBattleground) {
 					battlegrounds[c.isControlledBy()]++;
-					strings[c.isControlledBy()+2] += c;
+					strings[c.isControlledBy()] += c;
 				}
 				else {
-					strings[c.isControlledBy()] += c;
+					strings[c.isControlledBy()+2] += c;
 				}
 				if (c.id==31 && c.isControlledBy()==0) vp++; //af
 				if (c.id==39 && c.isControlledBy()==0) vp++; //kp
 				if (c.id==36 && c.isControlledBy()==1) vp--; //jp
 			}
 		}
-		builder.addField(":flag_us:", strings[0]+"|"+strings[2], false);
-		builder.addField(":flag_su:", strings[1]+"|"+strings[3], false);
+		builder.addField(":flag_us:", strings[0]+" | "+strings[2], false);
+		builder.addField(MapManager.get(85).toString(), strings[1]+" | "+strings[3], false);
 		if (HandManager.effectActive(73)) {
 			battlegrounds[1]--; //shuttle diplomacy removes a battleground from Asia
 			totalCountries[1]--; //a battleground is still a country...

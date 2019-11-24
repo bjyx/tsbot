@@ -96,39 +96,53 @@ public class InfoCommand extends Command {
 			if (GameData.ccw) builder.addField("China:",":flag_cn:" + (MapManager.get(86).isControlledBy()==1?"**":"") + MapManager.get(86).influence[1] + (MapManager.get(86).isControlledBy()==1?"**\n":"\n"),false);
 			String effects = "";
 			for (Integer i : HandManager.Effects) {
+				//top priority!
+				//coup modifiers
 				if (i==400||i==401) effects+=":rocket: Missile Crisis\n";
 				if (i==41) effects+=":anchor: Nuclear Submarines\n";
 				if (i==43) effects+=":atom: Salt Negotiations\n";
 				if (i==690||i==691) effects += ":earth_americas: Latin American Death Squads\n";
+				//other ops modifiers
 				if (i==93) effects+=":flag_ni: Iran-Contra Affair\n";
 				if (i==94) effects+=":radioactive: Chernobyl\n";
+				//UN
 				if (i==50) effects+=":coffin: \"We Will Bury You\"\n";
 				if (i==60) effects+=":airplane: U-2 Incident\n";
+				//Effect improvement
 				if (i==82) effects+=":flag_ir: Iran Hostage Crisis\n";
 				if (i==87) effects+=StartCommand.emojiID[4] + "The Reformer\n";
+				//VP for US actions
 				if (i==59) effects+=":blossom: Flower Power\n";
 				if (i==109) effects+=":dove: Yuri and Samantha\n";
+				//Coup protection
 				if (i==27) effects+=":flag_jp: Anpo\n";
+				//	Interacts with NATO
 				if (i==21) effects+=":earth_africa: NATO\n";
 				if (i==17) effects+=":flag_fr: Charles de Gaulle\n";
 				if (i==55) effects+=":flag_de: Willy Brandt\n";
+				//Activators
 				if (i==16&&!HandManager.effectActive(21)) effects+=":flag_pl: NATO formable\n";
 				if (i==23&&!HandManager.effectActive(21)) effects+=":money_with_wings: NATO formable\n";
 				if (i==68) effects+=":flag_va: John Paul II\n";
+				//Deactivators
 				if (i==65) effects+=":flag_il: Camp David Accords\n";
 				if (i==83) effects+=":flag_gb: Iron Lady\n";
 				if (i==96) effects+=StartCommand.emojiID[1] + " \"Tear Down This Wall\"\n";
 				if (i==97) effects+=":flag_us: \"An Evil Empire\"\n";
 				if (i==110) effects+=":flag_sa: AWACS Sold\n";
-				if (i==42) effects+=":helicopter: Quagmire\n";
+				//fluxing quagmire
+				if (i==42) effects+=":helicopter: Quagmire\n"; //also deactivator
 				if (i==44) effects+=":flag_af: Bear Trap\n";
+				//Op Modifiers
 				if (i==25) effects+=StartCommand.emojiID[9] + " Containment\n";
 				if (i==51) effects+=StartCommand.emojiID[10] + " Brezhnev Doctrine\n";
 				if (i==310) effects+=StartCommand.emojiID[6] + " Red Scare\n";
 				if (i==311) effects+=StartCommand.emojiID[7] + " Purge\n";
 				if (i==9) effects+=":flag_vn: Vietnam Revolts\n";
+				//score affecting
 				if (i==35) effects+=":flag_tw: Formosan Resolution\n";
 				if (i==73) effects+=":earth_asia: Shuttle Diplomacy\n";
+				//NORAD
 				if (i==106) effects+=":flag_ca: NORAD\n";
 
 			}

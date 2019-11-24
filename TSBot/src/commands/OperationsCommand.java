@@ -40,6 +40,10 @@ public class OperationsCommand extends Command {
 			sendMessage(e, ":x: Trying to change your mind already?");
 			return;
 		}
+		if (args.length<3) {
+			sendMessage(e, ":x: How might you use these, might I ask?");
+			return;
+		}
 		boolean result = GameData.ops.ops(args);
 		
 		if (!result) {

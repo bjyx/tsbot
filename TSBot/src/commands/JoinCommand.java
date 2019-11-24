@@ -1,5 +1,6 @@
 package commands;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,10 +9,32 @@ import game.PlayerList;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
+import net.dv8tion.jda.core.requests.Route;
+import net.dv8tion.jda.core.requests.restaction.RoleAction;
 
 public class JoinCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
+		if (GameData.roleusa==null) {
+			if (e.getGuild().getRolesByName("TSUSA", true).isEmpty()) {
+				GameData.roleusa = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
+						.setName("TSUSA").setColor(Color.BLUE).setMentionable(true).complete();
+			}
+			else {
+				GameData.roleusa = e.getGuild().getRolesByName("TSUSA", true).get(0);
+			}
+			if (e.getGuild().getRolesByName("TSSSR", true).isEmpty()) {
+				GameData.rolessr = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
+						.setName("TSSSR").setColor(Color.RED).setMentionable(true).complete();
+			}
+			else {
+				GameData.rolessr = e.getGuild().getRolesByName("TSSSR", true).get(0);
+			}
+			for (Member m : e.getGuild().getMembers()) {
+				if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
+				if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
+			}
+		}
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");
 			return;
@@ -19,10 +42,6 @@ public class JoinCommand extends Command {
 		if (GameData.hasGameStarted()) {
 			sendMessage(e, ":x: Cannot join a game that has already started.");
 			return;
-		}
-		for (Member m : e.getGuild().getMembers()) {
-			if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
-			if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
 		}
 		if (PlayerList.getArray().contains(e.getAuthor())) {
 			sendMessage(e, ":x: You're already on the list.");

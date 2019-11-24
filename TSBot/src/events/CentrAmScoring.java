@@ -30,17 +30,17 @@ public class CentrAmScoring extends Card {
 				totalCountries[c.isControlledBy()]++;
 				if (c.isBattleground) {
 					battlegrounds[c.isControlledBy()]++;
-					strings[c.isControlledBy()+2] += c;
+					strings[c.isControlledBy()] += c;
 				}
 				else {
-					strings[c.isControlledBy()] += c;
+					strings[c.isControlledBy()+2] += c;
 				}
 				if (c.id==65 && c.isControlledBy()==1) vp--; //cu
 				if (c.id==71 && c.isControlledBy()==1) vp--; //mx
 			}
 		}
-		builder.addField(":flag_us:", strings[0]+"|"+strings[2], false);
-		builder.addField(":flag_su:", strings[1]+"|"+strings[3], false);
+		builder.addField(":flag_us:", strings[0]+" | "+strings[2], false);
+		builder.addField(MapManager.get(85).toString(), strings[1]+" | "+strings[3], false);
 		vp += battlegrounds[0]-battlegrounds[1];
 		if (battlegrounds[0]==3) vp += control;
 		else if (battlegrounds[0]>battlegrounds[1]&&totalCountries[0]>totalCountries[1]) vp += domination;

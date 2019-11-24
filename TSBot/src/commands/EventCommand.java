@@ -64,13 +64,12 @@ public class EventCommand extends Command {
 				if (TimeCommand.hl1) TimeCommand.hl2 = true;
 				else {TimeCommand.hl1 = true;
 				if (HandManager.precedence==0&&TimeCommand.hl2==false) {
-					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline.").complete();
 					HandManager.activecard=HandManager.headline[1];
 				}
 				else if (HandManager.precedence==1) {
 					HandManager.activecard=HandManager.headline[0];
-					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline.").complete();
 				}}
+				TimeCommand.prompt();
 				return;
 			}
 			TimeCommand.eventDone = true;

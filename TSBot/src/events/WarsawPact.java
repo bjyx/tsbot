@@ -22,7 +22,7 @@ public class WarsawPact extends Card {
 				+ "- XXXX, XXXX", Launcher.url("countries/XX.png"))
 		.setColor(Color.RED);
 		if (args[1].equals("remove") ) {
-			builder.setDescription("Stalin takes hard line on " + order.get(0) + " autonomy");
+			builder.setDescription("Stalin takes hard line on " + MapManager.get(order.get(0)).name + "'s autonomy");
 			for (int i : order) {
 				builder.changeInfluence(i, 0, -MapManager.get(i).influence[0]);
 			}

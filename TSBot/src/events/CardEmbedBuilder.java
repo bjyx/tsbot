@@ -26,12 +26,12 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder changeVP(int amt) {
 		if (amt==0) return this;
 		GameData.changeScore(amt);
-		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:" + intToEmoji(amt),"Now at " + GameData.getScore(),false);
+		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:"+StartCommand.emojiID[amt>0?9:10] + intToEmoji(amt),"Now at " + GameData.getScore(),false);
 	}
 	public CardEmbedBuilder changeInfluence(int country, int sp, int amt) {
 		if (amt==0) return this;
 		MapManager.get(country).changeInfluence(sp, amt);
-		return (CardEmbedBuilder) this.addField(MapManager.get(country) + (sp==0?StartCommand.emojiID[9]:StartCommand.emojiID[10])+intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).influence[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).influence[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
+		return (CardEmbedBuilder) this.addField(MapManager.get(country) + ((sp==0?StartCommand.emojiID[amt>0?9:6]:StartCommand.emojiID[amt>0?10:7]))+intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).influence[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).influence[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
 	}
 	public CardEmbedBuilder changeDEFCON(int amt) {
 		if (amt==0) return this;

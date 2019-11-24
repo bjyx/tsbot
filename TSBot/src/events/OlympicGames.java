@@ -68,7 +68,7 @@ public class OlympicGames extends Card {
 	public String getDescription() {
 		return "Gives your opponent a choice:\n"
 				+ "- Participate in your Olympic Games, wherein both sides roll a die and you add 2 to your die roll, with the higher roll gaining 2 VP (ties are rerolled);\n"
-				+ "- Boycott your Olympic Games, which lowers the DEFCON level by one and allows you to conduct Operations with 4 Ops (modified accordingly).";
+				+ "- Boycott your Olympic Games, which **lowers the DEFCON level by one** and allows you to conduct Operations with 4 Ops (modified accordingly).";
 	}
 
 	@Override

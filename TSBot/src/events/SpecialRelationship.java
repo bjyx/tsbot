@@ -14,7 +14,7 @@ public class SpecialRelationship extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("").setDescription("").setFooter("\"Mr. Prime Minister, I am delighted to welcome you here today as an old friend; as an old friend not only in government, but as an old friend personally.\"\n"
+		builder.setTitle("A Very Special Relationship").setDescription("Britain lends its support to the US in Europe").setFooter("\"Mr. Prime Minister, I am delighted to welcome you here today as an old friend; as an old friend not only in government, but as an old friend personally.\"\n"
 				+ "- Richard Nixon, 1970", Launcher.url("leaders/nixon.png")).setColor(Color.blue);
 		if (HandManager.Effects.contains(21)) {
 			builder.changeInfluence(target, 0, 2).changeVP(2);

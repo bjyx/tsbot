@@ -233,14 +233,16 @@ public class TimeCommand extends Command {
 			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play a card. Set card to 0 to skip turn. (TS.play [card] [use])").complete();
 		}
 		if (!hl1||!hl2) {
-			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event. (TS.event [args])").complete();
-			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play a card. (TS.event [args])").complete();
+			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline. (TS.event [args])").complete();
+			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline. (TS.event [args])").complete();
 		}
 		if (!trapDone) {
 			//if statements are cool.
 		}
 		if (eventRequired&&!eventDone) {
-			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event. (TS.event [args])").complete();
+			if (CardList.getCard(HandManager.activecard).getAssociation()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event. (TS.event [args])").complete();
+			else if (CardList.getCard(HandManager.activecard).getAssociation()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event. (TS.event [args])").complete();
+			else if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event. (TS.event [args])").complete();
 			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event. (TS.event [args])").complete();
 		}
 		if (operationsRequired&&!operationsDone) {

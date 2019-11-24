@@ -112,7 +112,7 @@ public class SuezCrisis extends Card {
 			if (MapManager.get(order.get(i)).influence[0]+values.get(i)<0) return false; //don't give me negative influence values
 			sum += values.get(i);
 		}
-		if (sum!=4) return false; // up to 4 influence may be removed
+		if (sum!=-4) return false; // up to 4 influence may be removed
 		return true;
 	}
 
@@ -125,7 +125,7 @@ public class SuezCrisis extends Card {
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "Influence values ((*country* *value*)+). All entries in *country* must be either the UK, France, or Israel, and all entries in *value* must be positive integers at most 2 that do not exceed American influence in the associated country. The entries in *value* must sum to a number at most 4.\n" 
+		return "Influence values ((*country* *value*)+). All entries in *country* must be either the UK, France, or Israel, and all entries in *value* must be negative integers at least -2 that do not exceed American influence in the associated country. The entries in *value* must sum to a number at least -4.\n" 
 				+ "Example: TS.event gbr 2 il 1 france 1";
 	}
 
