@@ -162,7 +162,7 @@ public class InfoCommand extends Command {
 				sendMessage(e, ":x: Cards are indexed from 1 to " + CardList.numberOfCards() + ".");
 				return;
 			}
-			sendMessage(e, new MessageBuilder().setEmbed(CardList.getCard(id).toEmbed(CardList.getCard(id).getAssociation()).setAuthor("Information", null, Launcher.url("emoji/InfluenceNC.png"))
+			sendMessage(e, new MessageBuilder().setEmbed(CardList.getCard(id).toEmbed(CardList.getCard(id).getAssociation()).setAuthor("Information", null, Launcher.url("emoji/InflNC.png"))
 					.addField("Arguments:",CardList.getCard(id).getArguments(),false).build()).build());
 		}
 		else if (args[1].equals("country")) {

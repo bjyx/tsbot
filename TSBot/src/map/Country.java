@@ -94,12 +94,12 @@ public class Country {
 	//flavor again
 	public MessageEmbed getInfo() {
 		EmbedBuilder builder = new EmbedBuilder()
-				.setAuthor("Information", null, Launcher.url("emoji/InfluenceNC.png"))
+				.setAuthor("Information", null, Launcher.url("emoji/InflNC.png"))
 				.setTitle(name+" ("+iso+")")
 				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "country in " + regions[region])
 				.setColor(getColor())
 				.addField("Influence", StartCommand.emojiID[(this.isControlledBy()==0?9:6)]+CardEmbedBuilder.intToEmoji(influence[0])+StartCommand.emojiID[(this.isControlledBy()==1?10:7)]+CardEmbedBuilder.intToEmoji(influence[1]), false)
-				.setFooter(desc, Launcher.url("emoji/InfluenceNC.png"));
+				.setFooter(desc, Launcher.url("emoji/InflNC.png"));
 		if (Launcher.f) builder.setImage(Launcher.url("countries/"+iso+".png"));
 		else builder.setThumbnail(Launcher.url("countries/"+iso+".png"));
 		String str = "";
