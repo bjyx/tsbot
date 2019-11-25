@@ -21,6 +21,7 @@ public class OneSmallStep extends Card {
 					+ "and one which we intend to win, and the others, too.\"\n"
 					+ "- John F. Kennedy, 1962", Launcher.url("people/jfk.png"))
 			.setColor(sp==0?Color.blue:Color.red);
+		builder.addField("\"One small step for man...", Operations.getSpaceNames(spaceLevel, sp), false);
 		builder.addField("\"...one giant leap for mankind.\"", Operations.getSpaceNames(spaceLevel+1, sp),false);
 		GameData.addSpace(sp);
 		if (GameData.aheadInSpace()==(sp+1)%2) {

@@ -16,13 +16,13 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class InfoCommand extends Command {
 	
-	private char urlParser(int i) {
+	private static char urlParser(int i) {
 		if (i<10) return (char) ('0'+i);
 		else if (i<36) return (char) ('a'+i-10);
 		else return (char) ('A'+i-36);
 	}
 	
-	public String url() {
+	public static String url() {
 		String url = "http://twistrug.jjt.io/#/board/00000000/" 
 				+ urlParser(GameData.getScore()+20)
 				+ urlParser(GameData.getDEFCON())

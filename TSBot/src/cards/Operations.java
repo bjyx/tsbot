@@ -549,7 +549,7 @@ public class Operations {
 		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));
 		if (die <= spaceRoll[spaceLevel]) {
 			builder.setColor(sp==0?Color.blue:Color.red)
-				.addField("Roll: "+CardEmbedBuilder.numbers[die],getSpaceNames(spaceLevel, sp),false);
+				.addField("Roll: :"+CardEmbedBuilder.numbers[die]+":",getSpaceNames(spaceLevel, sp),false);
 			if (GameData.aheadInSpace()==(sp+1)%2) {
 				builder.changeVP(-(sp*2-1)*spaceVP2[spaceLevel]);
 			}

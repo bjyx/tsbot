@@ -925,7 +925,10 @@ public class DecisionCommand extends Command {
 			return;
 		}
 		TimeCommand.eventDone = true;
-		if (HandManager.playmode == 'f') TimeCommand.operationsRequired = true;
+		if (HandManager.playmode == 'f') {
+			TimeCommand.operationsRequired = true;
+			GameData.ops = new Operations(GameData.phasing(), CardList.getCard(HandManager.activecard).getOpsMod(GameData.phasing()), true, true, true, false, false);
+		}
 		TimeCommand.prompt();
 	}
 

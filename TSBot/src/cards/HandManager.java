@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import cards.CardList;
+import commands.InfoCommand;
 import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
@@ -283,17 +284,14 @@ public class HandManager {
 				if (headline[0]==103) {
 					precedence = 0;
 					activecard = headline[0];
-					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
 				}
 				else if (CardList.getCard(headline[0]).getOps()>=CardList.getCard(headline[1]).getOps()) {
 					precedence = 0;
 					activecard = headline[0];
-					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
 				}
 				else {
 					activecard = headline[1];
 					precedence = 1;
-					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
 				}
 				TimeCommand.cardPlayed = true;
 				TimeCommand.hl1 = false;
@@ -303,12 +301,11 @@ public class HandManager {
 			}
 			else if (GameData.hasAbility((sp+1)%2,4)) {
 				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
-				if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your headline card.").complete();
-				else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your headline card.").complete();
 			}
+			else return;
 		}
 		else {
-			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
+			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR"))), InfoCommand.url()).build()).complete();
 		}
 		if (mode=='e') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
@@ -334,15 +331,6 @@ public class HandManager {
 			activecard = card;
 			TimeCommand.cardPlayed = true;
 			TimeCommand.eventRequired = true;
-			if (CardList.getCard(activecard).getAssociation()==2) {
-				if (GameData.phasing()==0) 	GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
-				else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
-			}
-			else {
-				if (CardList.getCard(activecard).getAssociation()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your event.").complete();
-				else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your event.").complete();
-
-			}
 		}
 		if (mode=='o') {
 			if (card==6) {
@@ -373,8 +361,6 @@ public class HandManager {
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
-			if (GameData.phasing()==0) 	GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your operations.").complete();
-			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your operations.").complete();
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.operationsRequired = true;
@@ -386,13 +372,11 @@ public class HandManager {
 			discard(sp, card);
 			playmode = 's';
 			activecard = card;
-			if (GameData.phasing()==0) 	GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please play your operations.").complete();
-			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please play your operations.").complete();
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, false, true, false);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;
 		}
-		
+		TimeCommand.prompt();
 	}
 	public static boolean handContains(int sp, int card) {
 		if (sp==0) return USAHand.contains(card);

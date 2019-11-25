@@ -2,17 +2,25 @@ package events;
 
 import java.util.ArrayList;
 
+import commands.InfoCommand;
 import commands.StartCommand;
 import game.GameData;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public class CardEmbedBuilder extends EmbedBuilder {
 	public static final String[] numbers = {"zero","one","two","three","four","five","six","seven","eight","nine"};
 	
 	public CardEmbedBuilder() {
 		super();
-		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.isHeadlinePhase()?"Headline":("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR"))));
+		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.isHeadlinePhase()?"Headline":("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR"))), InfoCommand.url());
+	}
+	
+	@Override
+	public MessageEmbed build() {
+		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.isHeadlinePhase()?"Headline":("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR"))), InfoCommand.url());
+		return super.build();
 	}
 	
 	public static String intToEmoji(int i) {

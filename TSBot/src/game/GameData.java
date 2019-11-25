@@ -251,9 +251,12 @@ public class GameData {
 			if (HandManager.China==0) score++;
 			else score--;
 			checkScore(true, false);
+			return;
 		}
 		turn++; // stage H
 		ar = 0; 
+		HandManager.headline[0]=0;
+		HandManager.headline[1]=0;
 		hasSpaced[0] = 0; 
 		hasSpaced[1] = 0;
 		if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
@@ -264,7 +267,7 @@ public class GameData {
 		if (HandManager.removeEffect(60)) builder.addField("Prisoner Exchange","Powers traded for Abel. UN Intervention will no longer incur a VP penalty.",false);	//U2
 		if (HandManager.removeEffect(93)) builder.addField("Mistakes were made","US rolls on realignments are no longer penalized.",false);	//Iran Contra
 		if (HandManager.removeEffect(94)) builder.addField("","USSR influence placements are no longer restricted by region.",false);	//Chernobyl
-		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808 ","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
+		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
 		if (HandManager.removeEffect(310)) builder.addField("Army Hearings","US malus to Operations removed.",false);	//Red Scare/Purge
 		if (HandManager.removeEffect(311)) builder.addField("Purges End","USSR malus to Operations removed.",false);
 		if (HandManager.removeEffect(400)) builder.addField("Missiles removed","Coups now allowed by the US.",false);	//Missile Crisis
@@ -272,7 +275,7 @@ public class GameData {
 		if (HandManager.removeEffect(690)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the US.",false);	//LADS
 		if (HandManager.removeEffect(691)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the USSR.",false);
 		if (HandManager.removeEffect(860)); // just stop the eighth action round effect
-		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "Thermonuclear war is now very much a possibility. US battleground coups will now lower DEFCON.", false);
+		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "**Thermonuclear war is now very much a possibility.**\nUS battleground coups will now lower DEFCON.", false);
 		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);
 		if (turn==4) {
 			HandManager.addToDeck(1);
@@ -476,17 +479,9 @@ public class GameData {
 		int x = 0;
 		if (!f) return;
 		if (w) x=4;
-		if (score<0) {
-			endGame(1,x);
-			return;
-		}
-		if (score>0) {
-			endGame(0,x);
-			return;
-		}
-		if (score==0) {
-			endGame(-1,x);
-		}
+		if (score<0) endGame(1,x);
+		else if (score>0) endGame(0,x);
+		else endGame(-1,x);
 	}
 	/**
 	 * Marks the superpower as having sent a card to space for that turn.

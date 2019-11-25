@@ -107,7 +107,7 @@ public class UNIntervention extends Card {
 
 	@Override
 	public String getArguments() {
-		return "You aren't going to write TS.play 32 e. You write TS.play [other card here] u, which takes you straight to the operations.";
+		return "The card to nullify. It must be in your hand and contain your opponent's event. ";
 	}
 
 }
