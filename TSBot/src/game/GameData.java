@@ -231,6 +231,7 @@ public class GameData {
 	 */
 	public static void advanceTurn() {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
+		System.out.print("this is a test");
 		builder.setTitle("End of Turn Summary");
 		builder.changeVP(OpsToVP()); // stage E
 		checkScore(false, false);
@@ -253,12 +254,14 @@ public class GameData {
 			checkScore(true, false);
 			return;
 		}
+		System.out.print("this is a test");
 		turn++; // stage H
 		ar = 0; 
 		HandManager.headline[0]=0;
 		HandManager.headline[1]=0;
 		hasSpaced[0] = 0; 
 		hasSpaced[1] = 0;
+		System.out.print("this is a test");
 		if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
 		if (HandManager.removeEffect(25)) builder.addField("Ineffective Policy", "New administration calls for rollback. US loses +1 Operations bonus.", false);	//Containment
 		if (HandManager.removeEffect(41)) builder.addField("Soviets Develop Nuclear Submarines","US coups in battleground countries will now lower DEFCON.",false);	//Nuclear Subs
@@ -287,13 +290,14 @@ public class GameData {
 			builder.addField("Late War","Late War cards now available for use.",false);
 		}
 		txtchnl.sendMessage(builder.build());
+		System.out.print("this is a test");
 	}
 	
 	/**
 	 * Performs all functions necessary at the start of the turn.
 	 */
 	public static void startTurn() {
-		if (defcon!=5) new CardEmbedBuilder().changeDEFCON(1).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build(); //stage A
+		txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(defcon!=5?1:0).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build()); //stage A
 		HandManager.deal(); // stage B; also reshuffles automatically
 	}
 	
