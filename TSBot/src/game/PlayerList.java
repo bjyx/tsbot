@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import cards.HandManager;
+import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
@@ -44,7 +45,7 @@ public class PlayerList {
 	public static MessageEmbed getPlayers(boolean started) {
 		EmbedBuilder builder = new EmbedBuilder().setTitle("Superpowers").setColor(Color.magenta);
 		if (started) {
-			builder.setDescription(":flag_us: " + players[0] + "\n:flag_su: " + players[1]);
+			builder.setDescription(":flag_us: " + players[0].getAsTag() + "\n" + MapManager.get(85) + " " + players[1].getAsTag());
 		}
 		else {
 			builder.setDescription(players[0] + "\n" + players[1]);

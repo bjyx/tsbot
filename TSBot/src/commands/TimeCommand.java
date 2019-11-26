@@ -97,7 +97,7 @@ public class TimeCommand extends Command {
 		}
 		
 		GameData.advanceTime();
-		
+		HandManager.activecard = 0;
 		if (GameData.ccw && HandManager.China==-1 && MapManager.get(86).isControlledBy()==1) {
 			HandManager.China = 1;
 		}

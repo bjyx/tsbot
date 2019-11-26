@@ -49,11 +49,10 @@ public class StartCommand extends Command {
 		int settings = 1;
 		try {
 			if (args.length>=2 && Integer.parseInt(args[1])%128<72 && Integer.parseInt(args[1])<256) settings=Integer.parseInt(args[1]);
-			else {
+			else if (args.length>=2){
 				sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 72.");
 				return;
 			}
-
 		}
 		catch (NumberFormatException err) {
 			sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 72.");
@@ -61,7 +60,7 @@ public class StartCommand extends Command {
 		}
 		try {
 			if (args.length>=3 && Math.abs(Integer.parseInt(args[2]))<=10) SetupCommand.handicap=Integer.parseInt(args[2]);
-			else {
+			else if (args.length>=3) {
 				sendMessage(e, ":x: Leave this field blank if you want to. A handicap is the amount of influence one player gets in addition to starting; its absolute value must be at most 10.");
 				return;
 			}
