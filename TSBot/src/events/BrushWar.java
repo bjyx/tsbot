@@ -25,7 +25,7 @@ public class BrushWar extends Card {
 			}
 		}
 		builder.addField("Insurgency in " + MapManager.get(target).name, "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
-		if (die>=3) {
+		if (mod>=3) {
 			builder.setTitle("Insurgents overthrow government in " + MapManager.get(target).name)
 				.setDescription("New government aligns closely with " + (sp==0?"American":"Soviet") + " interests")
 				.setFooter("\"The people colonized by Abyssinia will be free. "

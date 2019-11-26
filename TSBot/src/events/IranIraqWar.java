@@ -24,7 +24,7 @@ public class IranIraqWar extends Card {
 			}
 		}
 		builder.addField(target==23?"Iraq Invades Iran":"Iran Invades Iraq", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
-		if (die>=4) {
+		if (mod>=4) {
 			builder.setTitle(target==23?"Iraq demonstrates superiority":"Hussein Overthrown")
 				.setDescription(target==23?"Khuzestan annexed to Iraq":"Shi'ite rebellion causes fall of Ba'ath Party")
 				.setFooter("\"Since 1986, you have not stopped proclaiming victory, and now you are calling upon population to resist until victory. Is that not an admission of failure on your part?\"\n"

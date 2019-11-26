@@ -28,7 +28,7 @@ public class ArabIsraeliWar extends Card {
 			adjacents += MapManager.get(25);
 		}
 		builder.addField("Arab League invades Israel", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
-		if (die>=4) {
+		if (mod>=4) {
 			builder.setTitle("Arab-Israeli War: Arab Victory")
 				.setDescription("Palestinian State established in Jerusalem; Congress in uproar")
 				.setFooter("\"It will be a war of annihilation. It will be a momentous massacre in history that will be talked about like the massacres of the Mongols or the Crusades.\"\n"

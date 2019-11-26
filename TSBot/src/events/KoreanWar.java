@@ -27,7 +27,7 @@ public class KoreanWar extends Card {
 			adjacents += MapManager.get(86);
 		}
 		builder.addField("North Korea Invades South Korea", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
-		if (die>=4) {
+		if (mod>=4) {
 			builder.setTitle("Communist Victory in Korean War")
 				.setDescription("Kim Il-Sung gives victory speech in Seoul; Congress in uproar")
 				.setFooter("\"If we let Korea down, the Soviet[s] will keep right on going and swallow up one [place] after another... If we were to let Asia go, the Near East would collapse and no telling what would happen in Europe.\"\n"

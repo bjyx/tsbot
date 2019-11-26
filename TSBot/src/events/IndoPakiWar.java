@@ -24,7 +24,7 @@ public class IndoPakiWar extends Card {
 			}
 		}
 		builder.addField(target==34?"Pakistan Invades India":"India Invades Pakistan", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
-		if (die>=4) {
+		if (mod>=4) {
 			builder.setTitle("Kashmir conflict resolved in favor of " + (target==34?"Pakistan":"India"))
 				.setDescription("")
 				.setFooter("\"The number of women who have been kidnapped and raped makes my heart bleed. "
