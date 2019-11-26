@@ -67,10 +67,10 @@ public class AsiaScoring extends Card {
 		}
 		vp += battlegrounds[0]-battlegrounds[1];
 		if (battlegrounds[0]==6) vp += control;
-		else if (battlegrounds[0]>battlegrounds[1]&&totalCountries[0]>totalCountries[1]) vp += domination;
+		else if (battlegrounds[0]>battlegrounds[1]&&totalCountries[0]>totalCountries[1]&&(totalCountries[0]-battlegrounds[0]>0)) vp += domination;
 		else if (totalCountries[0]>0) vp += presence;
 		if (battlegrounds[1]==6) vp -= control;
-		else if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]) vp -= domination;
+		else if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]&&(totalCountries[1]-battlegrounds[1]>0)) vp -= domination;
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
