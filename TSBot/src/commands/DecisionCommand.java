@@ -468,8 +468,8 @@ public class DecisionCommand extends Command {
 				return;
 			}
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("Missile Envy")
-				.setDescription("The Arms Race and Nuclear War")
+			builder.setTitle("The Arms Race and Nuclear War")
+				.setDescription("Helen Caldicott")
 				.setColor(GameData.dec.sp==0?Color.red:Color.blue)
 				.setFooter("The superpowers often behave like two heavily armed blind men "
 						+ "feeling their way around a room, each believing himself in mortal peril from the other, "
@@ -477,7 +477,7 @@ public class DecisionCommand extends Command {
 						+ "even two armed blind men can do enormous damage to each other, "
 						+ "not to speak of the room.\n" + 
 						"- Henry Kissinger, 1979", Launcher.url("people/kissinger.png"));
-			builder.addField("Helen Caldicott", GameData.dec.sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
+			builder.addField("Missile Envy", GameData.dec.sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
 			MissileEnvy.card = i;
 			HandManager.transfer((GameData.dec.sp+1)%2, 49);
 			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {

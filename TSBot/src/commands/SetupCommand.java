@@ -117,8 +117,7 @@ public class SetupCommand extends Command {
 			USA = false;
 			if (handicap==0) {
 				GameData.endSetupPhase();
-				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please select your headline. (`TS.play **[card]** h`)").complete();
-				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please select your headline. (`TS.play **[card]** h`)").complete();
+				TimeCommand.prompt();
 				TimeCommand.cardPlayed = false;
 			}
 			else {
@@ -146,7 +145,7 @@ public class SetupCommand extends Command {
 			USSR = false;
 			USA = false;
 			GameData.endSetupPhase();
-			//GameData.txtchnl.sendMessage("Both players may now select their headlines. (`TS.play **[card]** h`)").complete();
+			TimeCommand.prompt();
 			TimeCommand.cardPlayed = false;
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();

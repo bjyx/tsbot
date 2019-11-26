@@ -39,19 +39,19 @@ Cards:
 036 - By Unknown - Cuban Armed Forces and the Soviet Military Presence, Public Domain, https://commons.wikimedia.org/w/index.php?curid=67763802
 037 - Own work
 038 - Own work
-039 - 
-040
-041
-042
-043
-044
-045
-046
-047
-048
-049
-050
-051
+039 - Public Domain, https://commons.wikimedia.org/w/index.php?curid=704288
+040 - By Central Intelligence Agency - http://www.gwu.edu/~nsarchiv/nsa/cuba_mis_cri/photos.htm, Public Domain, https://commons.wikimedia.org/w/index.php?curid=10213987
+041 - By U.S. Navy photo/Released - http://www.inl.gov, Public Domain, https://commons.wikimedia.org/w/index.php?curid=11223823
+042 - By Jack Grasmeder - This photograph was taken from this webpage: http://www.118ahc.org/Dong%20Xoai.htm, Public Domain, https://commons.wikimedia.org/w/index.php?curid=15461427
+043 - By Photo Credit: Bill Fitz-Patrick - Original Uploaded by Thames to EN, Public Domain, https://commons.wikimedia.org/w/index.php?curid=240066
+044 - By Erwin Lux - Private collection; apparently a crop of this image at Flickr, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=5311228
+045 - By Knudsen, Robert L. - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 194517., Public Domain, https://commons.wikimedia.org/w/index.php?curid=867436
+046 - By Directed by Stanley Kubrick, distributed by Columbia Pictures - 'Dr. Strangelove trailer from 40th Anniversary Special Edition DVD, 2004, Public Domain, https://commons.wikimedia.org/w/index.php?curid=11862555
+047 - By Soman - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=18776092
+048 - By O'Halloran, Thomas J., photographer - https://www.loc.gov/pictures/item/2009632334/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=15948740
+049 - Public Domain, https://commons.wikimedia.org/w/index.php?curid=409463
+050 - By CDU - This file was provided to Wikimedia Commons by the Konrad-Adenauer-Stiftung, a German political foundation, as part of a cooperation project., CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=16173766
+051 - By RIA Novosti archive, image #36535 / Yuriy Ivanov / CC-BY-SA 3.0, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=16752354
 052
 053
 054
@@ -74,7 +74,7 @@ Cards:
 071
 072
 073
-074
+074 - By Sarah Stierch - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=16518454
 075
 076
 077
