@@ -12,10 +12,10 @@ public class OlympicGames extends Card {
 		host = sp;
 		GameData.txtchnl.sendMessage("Pending response.").complete();
 		if (GameData.dec.sp==0) {
-			GameData.txtusa.sendMessage((GameData.roleusa.getAsMention()) + ", state your decision regarding participation in the Moscow Olympics. (`TS.decide/decision/choose boycott [card]` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)").complete();
+			GameData.txtusa.sendMessage((GameData.roleusa.getAsMention()) + ", state your decision regarding participation in the Moscow Olympics. (`TS.decide/decision/choose boycott` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)").complete();
 		}
 		else {
-			GameData.txtssr.sendMessage((GameData.rolessr.getAsMention()) + ", state your decision regarding participation in the Los Angeles Olympics. (`TS.decide/decision/choose boycott [card]` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)").complete();
+			GameData.txtssr.sendMessage((GameData.rolessr.getAsMention()) + ", state your decision regarding participation in the Los Angeles Olympics. (`TS.decide/decision/choose boycott` to boycott (**drops DEFCON and lets opponent conduct 4 Operations**), or `compete` to participate in a die game.)").complete();
 		}
 		
 	}

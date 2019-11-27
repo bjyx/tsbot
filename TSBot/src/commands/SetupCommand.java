@@ -117,8 +117,8 @@ public class SetupCommand extends Command {
 			USA = false;
 			if (handicap==0) {
 				GameData.endSetupPhase();
-				TimeCommand.prompt();
 				TimeCommand.cardPlayed = false;
+				TimeCommand.prompt();
 			}
 			else {
 				hreq = true;
@@ -145,8 +145,8 @@ public class SetupCommand extends Command {
 			USSR = false;
 			USA = false;
 			GameData.endSetupPhase();
-			TimeCommand.prompt();
 			TimeCommand.cardPlayed = false;
+			TimeCommand.prompt();
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
