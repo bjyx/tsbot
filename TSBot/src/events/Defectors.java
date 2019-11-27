@@ -12,7 +12,7 @@ public class Defectors extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		if (GameData.isHeadlinePhase() && sp==0) {
+		if (GameData.isHeadlinePhase() && GameData.phasing()==0) {
 			TimeCommand.hl1=true;
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder()
 					.setTitle("Top Profile Soviet Officer Defects")
@@ -23,7 +23,7 @@ public class Defectors extends Card {
 					.addField("Leaked Intelligence", "The headline "+CardList.getCard(HandManager.headline[1])+" cannot be carried out this turn.", false)
 					.build()).complete();
 		}
-		else if (!GameData.isHeadlinePhase()&&sp==1) {
+		else if (!GameData.isHeadlinePhase()&&GameData.phasing()==1) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder()
 					.changeVP(1)
 					.setTitle("Well Known Soviet Artist Defects")
@@ -38,7 +38,7 @@ public class Defectors extends Card {
 	@Override
 	public boolean isPlayable(int sp) {
 		// TODO Auto-generated method stub
-		return sp==1||GameData.isHeadlinePhase();
+		return GameData.phasing()==1||GameData.isHeadlinePhase();
 	}
 
 	@Override
