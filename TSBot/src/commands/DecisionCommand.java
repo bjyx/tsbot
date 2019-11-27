@@ -858,6 +858,7 @@ public class DecisionCommand extends Command {
 				.setColor(Color.BLUE);
 				builder.changeInfluence(i, 0, 1);
 				GameData.txtchnl.sendMessage(builder.build()).complete();
+				TimeCommand.NORAD = true;
 			}
 			else {
 				sendMessage(e, ":x: You must drop this influence in a country with American influence.");

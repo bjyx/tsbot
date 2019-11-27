@@ -231,7 +231,6 @@ public class GameData {
 	 */
 	public static void advanceTurn() {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		System.out.print("this is a test");
 		builder.setTitle("End of Turn Summary");
 		builder.changeVP(OpsToVP()); // stage E
 		checkScore(false, false);
@@ -254,14 +253,12 @@ public class GameData {
 			checkScore(true, false);
 			return;
 		}
-		System.out.print("this is a test");
 		turn++; // stage H
 		ar = 0; 
 		HandManager.headline[0]=0;
 		HandManager.headline[1]=0;
 		hasSpaced[0] = 0; 
 		hasSpaced[1] = 0;
-		System.out.print("this is a test");
 		if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
 		if (HandManager.removeEffect(25)) builder.addField("Ineffective Policy", "New administration calls for rollback. US loses +1 Operations bonus.", false);	//Containment
 		if (HandManager.removeEffect(41)) builder.addField("Soviets Develop Nuclear Submarines","US coups in battleground countries will now lower DEFCON.",false);	//Nuclear Subs
@@ -289,15 +286,14 @@ public class GameData {
 			HandManager.addToDeck(2);
 			builder.addField("Late War","Late War cards now available for use.",false);
 		}
-		txtchnl.sendMessage(builder.build());
-		System.out.print("this is a test");
+		txtchnl.sendMessage(builder.build()).complete();
 	}
 	
 	/**
 	 * Performs all functions necessary at the start of the turn.
 	 */
 	public static void startTurn() {
-		txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(defcon!=5?1:0).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build()); //stage A
+		txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(defcon!=5?1:0).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build()).complete(); //stage A
 		HandManager.deal(); // stage B; also reshuffles automatically
 	}
 	
@@ -385,10 +381,11 @@ public class GameData {
 		if (defcon==defcon2) return;
 		defcon = Math.max(1, Math.min(5, defcon2));
 		if (defcon==1) endGame((phasing()+1)%2, 1);
-		if (defcon==2&&!isHeadlinePhase()&&MapManager.get(3).isControlledBy()==0) {
+		if (defcon==2&&!isHeadlinePhase()&&MapManager.get(3).isControlledBy()==0&&HandManager.effectActive(106)) {
 			TimeCommand.NORAD=false;
 			GameData.dec = new Decision(0,106);
 		}
+		TimeCommand.prompt();
 	}
 	/**
 	 * 
