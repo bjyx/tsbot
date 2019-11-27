@@ -96,13 +96,15 @@ public class DeStalinization extends Card {
 		}
 		if (args.length%2!=1) return false; //each country must associate with a number
 		for (int i=1; i<args.length; i+=2) {
-			order.add(MapManager.find(args[i]));
+			int c = MapManager.find(args[i]);
+			order.add(c);
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}
 			catch (NumberFormatException e){
 				return false; //this isn't an integer. xP
 			}
+			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 		}
 		int sum = 0;
 		int abssum = 0;
@@ -110,7 +112,7 @@ public class DeStalinization extends Card {
 			if (order.get(i)==-1) return false;
 			if (MapManager.get(order.get(i)).isControlledBy()==0 && values.get(i)>0) return false; //can't put influence in US controlled countries
 			if (values.get(i)>2) return false; // cannot add >2 influence to a given country
-			if (MapManager.get(order.get(i)).influence[0]+values.get(i)<0) return false; //don't give me negative influence values
+			if (MapManager.get(order.get(i)).influence[1]+values.get(i)<0) return false; //don't give me negative influence values
 			sum += values.get(i);
 			abssum += Math.abs(values.get(i));
 		}
