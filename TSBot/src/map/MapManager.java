@@ -773,7 +773,7 @@ public class MapManager {
 				6, 
 				"za", 
 				3, 
-				false, 
+				true, 
 				new String[] {"southafrica", "zaf", "za", "suidafrika"}, 
 				new Integer[] {47, 48}, //ao, bw
 				"South Africa, dominated by the Afrikaner National Party in 1948, instituted a policy of apartheid, essentially state-sponsored segregation, "
@@ -1760,7 +1760,7 @@ public class MapManager {
 				6, 
 				"za", 
 				3, 
-				false, 
+				true, 
 				new String[] {"southafrica", "zaf", "za", "suidafrika"}, 
 				new Integer[] {47, 48}, //ao, bw
 				"", 
