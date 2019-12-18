@@ -26,7 +26,7 @@ public class OASFounded extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return false;
+		return true;
 	}
 
 	@Override
