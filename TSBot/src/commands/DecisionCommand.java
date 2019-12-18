@@ -861,7 +861,7 @@ public class DecisionCommand extends Command {
 				TimeCommand.NORAD = true;
 			}
 			else {
-				sendMessage(e, ":x: You must drop this influence in a country with American influence.");
+				sendMessage(e, ":x: You must drop this influence in a country with US influence.");
 				return;
 			}
 		}

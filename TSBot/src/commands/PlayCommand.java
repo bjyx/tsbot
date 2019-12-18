@@ -115,7 +115,7 @@ public class PlayCommand extends Command {
 			return;
 		}
 		if (mode == 'o'&&CardList.getCard(card).getOps()==0) { //All cards have either an op value or is a scoring card that is obligatorily played for the event
-			sendMessage(e, ":x: This card must be played for the event only.");
+			sendMessage(e, ":x: A scoring card? For ops!? Preposterous!");
 			return;
 		}
 		if (mode == 's' && (GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))==8||CardList.getCard(card).getOpsMod(GameData.phasing())<Operations.spaceOps[GameData.getSpace(GameData.phasing())])) {
