@@ -167,7 +167,7 @@ public class GameData {
 					.setTitle("GAME OVER - DRAW!")
 					.setImage(Launcher.url("draw.png"))
 					.setColor(Color.gray)
-					.build());
+					.build()).complete();
 			return;
 		}
 		EmbedBuilder builder = new EmbedBuilder()
@@ -175,7 +175,7 @@ public class GameData {
 				.setDescription("Cause: " + getCause(cause))
 				.setColor(victor==0?Color.blue:Color.red)
 				.setImage(Launcher.url("victory_" + (victor==0?"us":"su") + cause + ".png"));
-		txtchnl.sendMessage(builder.build());
+		txtchnl.sendMessage(builder.build()).complete();
 	}
 	
 	/**
@@ -383,9 +383,7 @@ public class GameData {
 		if (defcon==1) endGame((phasing()+1)%2, 1);
 		if (defcon==2&&!isHeadlinePhase()&&MapManager.get(3).isControlledBy()==0&&HandManager.effectActive(106)) {
 			TimeCommand.NORAD=false;
-			GameData.dec = new Decision(0,106);
 		}
-		TimeCommand.prompt();
 	}
 	/**
 	 * 

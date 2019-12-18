@@ -254,6 +254,7 @@ public class TimeCommand extends Command {
 			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
 		}
 		if (!NORAD) {
+			GameData.dec = new Decision(0, 106);
 			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", DEFCON has dropped to 2. You may place an Influence Point pursuant to the restrictions of NORAD.");
 		}
 		if (!isCardDiscarded) {
