@@ -505,7 +505,7 @@ public class DecisionCommand extends Command {
 					.setColor(Color.red);
 				fp.changeVP(-2);
 				GameData.txtchnl.sendMessage(fp.build()).complete();
-			}
+			} //flowerpower still activates here
 			GameData.dec = new Decision((GameData.dec.sp+1)%2, 491);
 			return;
 		}
@@ -706,6 +706,17 @@ public class DecisionCommand extends Command {
 			if (!CardList.getCard(StarWars.target).isFormatted(0, args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
+			}
+			if (HandManager.effectActive(59)&&((StarWars.target==13&&!HandManager.effectActive(65))||StarWars.target==11||StarWars.target==24||StarWars.target==36||StarWars.target==102)) {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Flower Power")
+					.setDescription("Anti-war protests erupt against the " + CardList.getCard(StarWars.target).getName() + "!")
+					.setFooter("\"I think that we're up against the strongest, well-trained, "
+							+ "militant, revolutionary group that has ever assembled in America.\" \n"
+							+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))
+					.setColor(Color.red);
+				builder.changeVP(-2);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			else {
 				CardList.getCard(StarWars.target).onEvent(0, args);

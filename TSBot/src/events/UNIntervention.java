@@ -15,6 +15,18 @@ public class UNIntervention extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
+		if (HandManager.effectActive(50)&&sp==0) {
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("We Will Bury You...")
+					.setDescription("UN INTERVENTION!")
+					.setColor(Color.blue)
+					.setFooter("\"We are happy with our way of life. "
+							+ "We recognize its shortcomings and are always trying to improve it. "
+							+ "But if challenged, we shall fight to the death to preserve it.\"\n"
+							+ "- Norris Poulson, 1959", Launcher.url("people/poulson.png"));
+			HandManager.removeEffect(50);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
 		if (HandManager.effectActive(60)) {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("U2 Incident—Khrushchev's Trap!")
@@ -107,7 +119,8 @@ public class UNIntervention extends Card {
 
 	@Override
 	public String getArguments() {
-		return "The card to nullify. It must be in your hand and contain your opponent's event. ";
+		return "Event: The card to nullify. It must be in your hand and contain your opponent's event."
+				+ "\nDecision: Operations. Must be actual operations.";
 	}
 
 }

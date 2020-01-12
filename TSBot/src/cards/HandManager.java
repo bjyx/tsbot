@@ -237,32 +237,10 @@ public class HandManager {
 					.setColor(Color.red);
 				builder.changeVP(-3);
 			}
-			else {
-				builder.setDescription("UN INTERVENTION!")
-					.setColor(Color.blue)
-					.setFooter("\"We are happy with our way of life. "
-							+ "We recognize its shortcomings and are always trying to improve it. "
-							+ "But if challenged, we shall fight to the death to preserve it.\"\n"
-							+ "- Norris Poulson, 1959", Launcher.url("people/poulson.png"));
-			}
 			removeEffect(50);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		} //We will bury you always goes first lul
 		GameData.checkScore(false, false);
-		if (effectActive(60)&&card==32&&mode=='e') {
-			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("U2 Incident—Khrushchev's Trap!")
-				.setDescription("Downed pilot revealed to be alive")
-				.setFooter("\"I must tell you a secret. When I made my first report "
-						+ "I deliberately did not say that the pilot was alive and well ... "
-						+ "and now just look how many silly things the Americans have said.\"\n" + 
-						"- Nikita Khrushchev, 1960",Launcher.url("people/khrushchev.png"))
-				.setColor(Color.red);
-			builder.changeVP(-1);
-			removeEffect(60);
-			GameData.txtchnl.sendMessage(builder.build()).complete();
-		}
-		
 		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Flower Power")
