@@ -160,16 +160,23 @@ public class StartCommand extends Command {
 		} catch (IOException e1) {
 			System.out.print("Error creating emoji.");
 		}
-		if (settings>=128) {
+		if (settings>=256) {
 			Launcher.change();
-			settings-=128;
+			settings-=256;
 		}
-		if (settings>=64) {
+		if (settings>=128) {
 			GameData.latewar = true;
-			settings-=64;
+			settings-=128;
 		}
 		else {
 			GameData.latewar = false;
+		}
+		if (settings>=64) {
+			GameData.yiyo = true;
+			settings-=64;
+		}
+		else {
+			GameData.yiyo = false;
 		}
 		if (settings>=32) {
 			settings-=32;
@@ -262,18 +269,20 @@ public class StartCommand extends Command {
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
 		return Arrays.asList("TS.start **[settings]** **[handicap]** - How it all begins.\n"
-				+ "Settings will be a number between 0 and 71 inclusive.\n"
+				+ "Settings will be a number between 0 and 135 inclusive.\n"
 				+ "If the number in binary has a digit in the following position:\n"
-				+ "`1000000` Late War Scenario\n"
-				+ "`0100000` Chinese Civil War enabled\n"
-				+ "`0010000` Turn Zero enabled\n"
-				+ "`0001000` Optional Space Race enabled\n"
-				+ "`0000100` Promo card pack 1 enabled\n"
-				+ "`0000010` Promo card pack 2 enabled\n"
-				+ "`0000001` Optional cards enabled\n"
-				+ "If no number is given, it will be by default 1.\n\n"
+				+ "`10000000` Late War Scenario\n"
+				+ "`01000000` Year-In Year-Out Expansion and recommended rules enabled"
+				+ "`00100000` Chinese Civil War enabled\n"
+				+ "`00010000` Turn Zero enabled\n"
+				+ "`00001000` Optional Space Race enabled\n"
+				+ "`00000100` Promo card pack 1 enabled\n"
+				+ "`00000010` Promo card pack 2 enabled\n"
+				+ "`00000001` Optional cards enabled\n"
+				+ "If no number is given, it will be by default 1 (+optional cards).\n"
+				+ "Be aware that some rules are incompatible with each other—in particular, the Late War cannot be used with Turn Zero, Chinese Civil War, or the YIYO pack.\n\n"
 				+ "Handicap can be any integer (don't make it too big), and indicates the side (negative for USSR, positive for USA) to which a handicap of `|handicap|` influence will be given. This handicap may be placed anywhere where the player already has influence.\n"
-				+ "If no number is given, it will be by default 2.");
+				+ "If no number is given, it will be by default 2 (US+2).");
 	}
 
 }

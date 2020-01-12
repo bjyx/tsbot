@@ -62,6 +62,10 @@ public class GameData {
 	 */
 	public static boolean ccw = false;
 	/**
+	 * Whether the cards and rules in the unofficial expansion pack <a href="https://www.paidiaic.com/">YIYO</a> are being used.
+	 */
+	public static boolean yiyo = false;
+	/**
 	 * Whether the late war scenario is being used.
 	 */
 	public static boolean latewar = false;
@@ -439,6 +443,19 @@ public class GameData {
 	 * @param amt is the amount to change {@link #score} by.
 	 */
 	public static void changeScore(int amt) {
+		if (HandManager.effectActive(50)&&!GameData.isHeadlinePhase()&&GameData.phasing()==0) {
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("We Will Bury You...").setDescription("...and the UN sits idle.")
+					.setFooter("\"If you don't like us, don't accept our invitations, "
+							+ "and don't invite us to come to see you. "
+							+ "Whether you like it or not, history is on our side.\" \n"
+							+ "- Nikita Khrushchev, 1956", Launcher.url("people/khrushchev.png"))
+					.setColor(Color.red);
+			builder.changeVP(-3);
+			HandManager.removeEffect(50);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		GameData.checkScore(false, false);
 		score += amt;
 	}
 	/**
