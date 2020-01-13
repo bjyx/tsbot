@@ -228,8 +228,8 @@ public class StartCommand extends Command {
 			HandManager.lateWarDeck();
 			MapManager.lateWarMap();
 			HandManager.deal();
-			GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please select your headline.").complete();
-			GameData.txtusa.sendMessage(PlayerList.getUSA().getAsMention() + ", please select your headline.").complete();
+			TimeCommand.cardPlayed = false;
+			TimeCommand.prompt();
 			return;
 		}
 		else {

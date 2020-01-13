@@ -156,7 +156,7 @@ public class HandManager {
 	 */
 	public static void lateWarDeck() {
 		for (Card c : CardList.cardList) {
-			if ((c.getEra()%3!=2)&&!c.isRemoved()&&(c.getEra()<3||GameData.optional)&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c));
+			if ((c.getEra()<2&&c.getEra()>=0)&&!c.isRemoved()&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c));
 		}
 		addToDeck(2); //late war cards
 		Deck.add(44); //bear trap
