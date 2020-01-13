@@ -25,7 +25,7 @@ public class Terrorism extends Card {
 			}
 			int card = HandManager.SUNHand.get((int) (Math.random()*HandManager.SUNHand.size()));
 			HandManager.discard(1, card);
-			builder.addField("Anti-Communist Terrorism","The Soviets lose " + CardList.getCard(card) + " attempting to improve their economy.",false);
+			builder.addField("Anti-Communist Terrorism","The Soviets lose " + CardList.getCard(card) + " to a terrorist attack.",false);
 		}
 		else {
 			if (HandManager.USAHand.isEmpty()) {
@@ -39,7 +39,7 @@ public class Terrorism extends Card {
 			if (HandManager.effectActive(82)) {
 				card = HandManager.USAHand.get((int) (Math.random()*HandManager.USAHand.size()));
 				HandManager.discard(0, card);
-				builder.addField("State-sponsored terrorism","The American lose " + CardList.getCard(card) + " to Iran.",false);
+				builder.addField("State-sponsored terrorism","The American lose " + CardList.getCard(card) + " to Iranian-sponsored terrorists.",false);
 			}
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();

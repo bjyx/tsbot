@@ -85,7 +85,14 @@ public class OPEC extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The USSR gains 1 VP for controlling each of the following countries; ";
+		return "The USSR gains 1 VP for controlling each of the following countries: \n"
+				+ "- Egypt\n"
+				+ "- Gulf States\n"
+				+ "- Iran\n"
+				+ "- Iraq\n"
+				+ "- Libya\n"
+				+ "- Saudi Arabia\n"
+				+ "- Venezuela";
 	}
 
 	@Override

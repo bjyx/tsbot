@@ -36,13 +36,7 @@ public class SetupCommand extends Command {
 			sendMessage(e, "That's not the part of the game you're looking for.");
 			return;
 		}
-		if (USSR&&e.getAuthor().equals(PlayerList.getSSR())) {
-			//nope
-		}
-		else if (USA&&e.getAuthor().equals(PlayerList.getUSA())) {
-			//nope
-		}
-		else {
+		if (!((USSR&&e.getAuthor().equals(PlayerList.getSSR()))||(USA&&e.getAuthor().equals(PlayerList.getUSA())))) {
 			sendMessage(e, ":x: Excuse me, but who are *you* playing as? China's abstracted as a card and the rest of the world has a board space each.");
 			return;
 		}
