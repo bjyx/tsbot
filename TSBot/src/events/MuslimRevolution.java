@@ -88,7 +88,7 @@ public class MuslimRevolution extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove all US Influence from two countries among the following: Egypt, Libya, Sudan, ";
+		return "Remove all US Influence from two countries among the following: Egypt, Iran, Iraq, Jordan, Libya, Saudi Arabia, Sudan, Syria.";
 	}
 
 	@Override
