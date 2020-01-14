@@ -175,7 +175,7 @@ public class GameData {
 			return;
 		}
 		EmbedBuilder builder = new EmbedBuilder()
-				.setTitle("GAME OVER - The winner is :flag_" + (victor==0?"us":"su") + ": " + PlayerList.getArray().get(victor).getAsMention() + "!")
+				.setTitle("GAME OVER - The winner is " + MapManager.get(victor==0?84:85) + PlayerList.getArray().get(victor).getName() + "!")
 				.setDescription("Cause: " + getCause(cause))
 				.setColor(victor==0?Color.blue:Color.red)
 				.setImage(Launcher.url("victory_" + (victor==0?"us":"su") + cause + ".png"));
