@@ -467,6 +467,10 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: Don't be a trickster. There are cards with a higher OP value.");
 				return;
 			}
+			if (i==6) {
+				sendMessage(e, ":x: 别摸我.");
+				return;
+			}
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("The Arms Race and Nuclear War")
 				.setDescription("Helen Caldicott")
@@ -478,8 +482,9 @@ public class DecisionCommand extends Command {
 						+ "not to speak of the room.\n" + 
 						"- Henry Kissinger, 1979", Launcher.url("people/kissinger.png"));
 			builder.addField("Missile Envy", GameData.dec.sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 			MissileEnvy.card = i;
-			HandManager.transfer((GameData.dec.sp+1)%2, 49);
+			HandManager.getFromDiscard(GameData.dec.sp, 49);
 			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {
 				HandManager.discard(GameData.dec.sp, i);
 				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, false, false);
