@@ -150,7 +150,23 @@ public class InfoCommand extends Command {
 			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
 		else if (args[1].equals("cards")) {
-			//TODO things
+			EmbedBuilder builder = new CardEmbedBuilder()
+					.setTitle("Cards Played")
+					.setColor(Color.WHITE);
+			String cards = "";
+			for (int i : HandManager.Discard) {
+				cards += CardList.getCard(i) + "\n";
+			}
+			builder.addField("Discard Pile", cards, false);
+			cards = "";
+			for (int i : HandManager.Removed) {
+				cards += CardList.getCard(i) + "\n";
+			}
+			builder.addField("Removed From Game", cards, false);
+			builder.addField("Deck", "Size: " + HandManager.Deck.size(), false);
+			builder.addField("US Hand", "Size: " + HandManager.USAHand.size() + (HandManager.China==0?" + :flag_cn:":""), false);
+			builder.addField("USSR Hand", "Size: " + HandManager.SUNHand.size()+(HandManager.China==1?" + :flag_cn:":""), false);
+			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
 		else if (args.length<3) {
 			sendMessage(e, ":x: Not enough arguments.");
