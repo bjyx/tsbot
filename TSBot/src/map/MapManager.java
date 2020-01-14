@@ -41,7 +41,7 @@ public class MapManager {
 				"Bulgaria", 
 				2, 
 				"bg", 
-				4, 
+				3, 
 				false, 
 				new String[] {"bulgaria", "bg", "bgr", "balgariya", "българия"}, 
 				new Integer[] {9, 17}, //gr, tr
@@ -1140,7 +1140,7 @@ public class MapManager {
 				"Bulgaria", 
 				2, 
 				"bg", 
-				4, 
+				3, 
 				false, 
 				new String[] {"bulgaria", "bg", "bgr", "balgariya", "българия"}, 
 				new Integer[] {9, 17}, //gr, tr
@@ -1156,7 +1156,7 @@ public class MapManager {
 				new String[] {"canada", "ca", "can"}, 
 				new Integer[] {18, 84}, //uk, us
 				"", 
-				new int[] {2,0}
+				new int[] {0,0}
 				));
 		map.add(new Country(
 				"Czechoslovakia", 
