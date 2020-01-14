@@ -927,7 +927,10 @@ public class DecisionCommand extends Command {
 			HandManager.Deck.addAll(OurManInTehran.cards);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
+		
 		// TODO more events as enumerated above as they come
+		GameData.checkScore(false, false);
+
 		GameData.dec=null;
 		if (GameData.isHeadlinePhase()) {
 			if (TimeCommand.hl1) TimeCommand.hl2 = true;

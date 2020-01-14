@@ -59,6 +59,7 @@ public class EventCommand extends Command {
 			}
 			CardList.getCard(HandManager.activecard).onEvent(PlayerList.getArray().indexOf(e.getAuthor()), args);
 		}
+		GameData.checkScore(false, false);
 		if (GameData.dec==null) {
 			if (GameData.isHeadlinePhase()) {
 				if (TimeCommand.hl1) TimeCommand.hl2 = true;

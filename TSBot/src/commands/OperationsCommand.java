@@ -49,6 +49,7 @@ public class OperationsCommand extends Command {
 		if (!result) {
 			return;
 		}
+		GameData.checkScore(false, false);
 		GameData.ops = null;
 		TimeCommand.operationsDone = true;
 		if (HandManager.playmode == 'l') TimeCommand.eventRequired = true;
