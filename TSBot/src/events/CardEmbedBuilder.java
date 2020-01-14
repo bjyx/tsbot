@@ -24,7 +24,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	}
 	
 	public static String intToEmoji(int i) {
-		if (Math.abs(i)>10) return intToEmoji(i/10) + ":" + numbers[Math.abs(i)%10] + ":";
+		if (Math.abs(i)>=10) return intToEmoji(i/10) + ":" + numbers[Math.abs(i)%10] + ":";
 		String str="";
 		if (i<0) str += ":heavy_minus_sign:";
 		else str += ":heavy_plus_sign:";
