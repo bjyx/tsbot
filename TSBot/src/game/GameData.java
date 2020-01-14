@@ -454,8 +454,8 @@ public class GameData {
 			builder.changeVP(-3);
 			HandManager.removeEffect(50);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
+			GameData.checkScore(false, false);
 		}
-		GameData.checkScore(false, false);
 		score += amt;
 	}
 	/**
