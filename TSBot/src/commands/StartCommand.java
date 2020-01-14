@@ -12,6 +12,8 @@ import game.GameData;
 import game.PlayerList;
 import main.Launcher;
 import map.MapManager;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.ChannelType;
 import net.dv8tion.jda.core.entities.Icon;
 import net.dv8tion.jda.core.entities.PermissionOverride;
@@ -69,8 +71,6 @@ public class StartCommand extends Command {
 			sendMessage(e, ":x: Leave this field blank if you want to. A handicap is the amount of influence one player gets in addition to starting; its absolute value must be at most 10.");
 			return;
 		}
-		sendMessage(e, ":hourglass: Seven minutes to midnight... and counting.");
-		
 		GameData.txtchnl = e.getTextChannel();
 		// if the roles TSUSA and TSSSR don't exist, create them.
 		if (e.getGuild().getRolesByName("TSUSA", true).isEmpty()) {
@@ -160,13 +160,16 @@ public class StartCommand extends Command {
 		} catch (IOException e1) {
 			System.out.print("Error creating emoji.");
 		}
+		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Twilight Struggle Game Has Started.").setDescription(":hourglass: It is now seven minutes to midnight and counting. Good luck.").setColor(Color.WHITE);
 		if (settings>=256) {
 			Launcher.change();
 			settings-=256;
+			builder.addField("Secret mode activated", "Oh no, you found the secret mode! \'˚>̊̇\nHope you like furry art. It's safe for work, I promise.", false);
 		}
 		if (settings>=128) {
 			GameData.latewar = true;
 			settings-=128;
+			builder.addField("Late War Scenario", "Scratch that, let's take you to 1975! What awaits you in the post-Vietnam era?", false);
 		}
 		else {
 			GameData.latewar = false;
@@ -174,6 +177,7 @@ public class StartCommand extends Command {
 		if (settings>=64) {
 			GameData.yiyo = true;
 			settings-=64;
+			builder.addField("Year-In and Year-Out", "Fan-made expansion pack, adding 20 cards and an extra action round to the Early War. To be implemented soonish.", false);
 		}
 		else {
 			GameData.yiyo = false;
@@ -182,6 +186,7 @@ public class StartCommand extends Command {
 			settings-=32;
 			GameData.ccw = true;
 			HandManager.China=-1;
+			builder.addField("Chinese Civil War Variant", "In vanilla, China has already fallen to communism. Now the Soviets have to put something in to throw the dragon's weight around.", false);
 		}
 		else {
 			GameData.ccw = false;
@@ -190,6 +195,7 @@ public class StartCommand extends Command {
 		if (settings>=16) {
 			settings-=16;
 			GameData.turnzero = true;
+			builder.addField("Turn Zero Variant", "What if? What if the Allies had reached Berlin first? What if the Middle Eastern conflict had been handled more diplomatically? And what if the Soviets had swept through Korea before the bombs dropped?", false);
 		}
 		else {
 			GameData.turnzero = false;
@@ -197,6 +203,7 @@ public class StartCommand extends Command {
 		if (settings>=8) {
 			settings-=8;
 			GameData.altspace = true;
+			builder.addField("Alternate Space Race", "Play with an alternate space race track.", false);
 		}
 		else {
 			GameData.altspace = false;
@@ -204,6 +211,7 @@ public class StartCommand extends Command {
 		if (settings>=4) {
 			settings-=4;
 			GameData.promo1 = true;
+			builder.addField("Promotional Cards 1", "Play with the first set of promotional cards, including the Non-Aligned Movement, Mobutu Sese Seko, Stanislav Petrov, and the Berlin Wall.", false);
 		}
 		else {
 			GameData.promo1 = false;
@@ -211,6 +219,7 @@ public class StartCommand extends Command {
 		if (settings>=4) {
 			settings-=4;
 			GameData.promo2 = true;
+			builder.addField("Promotional Cards 2", "Play with the second set of promotional cards, including First Lightning, Who Lost China, Don't Wait for the Translation, and the notorious Kremlin Flu.", false);
 		}
 		else {
 			GameData.promo2 = false;
@@ -218,10 +227,12 @@ public class StartCommand extends Command {
 		if (settings>=1) {
 			settings-=1;
 			GameData.optional = true;
+			builder.addField("Optional Cards Enabled", "Play with the seven optional cards that come with the Deluxe Edition, including the Cambridge Five, Special Relationship, NORAD, Che, Our Man in Tehran, Yuri and Samantha, and AWACS.", false);
 		}
 		else {
 			GameData.optional = false;
 		}
+		sendMessage(e, new MessageBuilder(builder.build()).build());
 		if (GameData.latewar) {
 			GameData.startLateWar();
 			CardList.initialize();
