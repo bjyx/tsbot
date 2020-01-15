@@ -22,6 +22,7 @@ public class Defectors extends Card {
 							+ "- William L. M. King, re. Igor Gouzenko, 1945", Launcher.url("people/king.png"))
 					.addField("Leaked Intelligence", "The headline "+CardList.getCard(HandManager.headline[1])+" cannot be carried out this turn.", false)
 					.build()).complete();
+			HandManager.Discard.add(HandManager.headline[1]);
 		}
 		else if (!GameData.isHeadlinePhase()&&GameData.phasing()==1) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder()

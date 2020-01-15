@@ -90,6 +90,15 @@ public class HandManager {
 	 * <li>{@code 1004 Coalition Government} - Socialist Governments has no effect during Turns 1 and 2.
 	 * <li>{@code 1005 Tory Victory} - Disables {@code 028 Suez Crisis}.
 	 * </ul>
+	 * Turn zero statuses:
+	 * <ul>
+	 * <li>{@code 100109 Vietnam Revolts} - Adds Vietnam Revolts to USSR Hand during dealing.</li>
+	 * <li>{@code 100113 Arab-Israeli War} - Adds Arab-Israeli War to USSR Hand during dealing. </li>
+	 * <li>{@code 100123 Marshall Plan} - Adds Marshall Plan to US Hand during dealing.</li>
+	 * <li>{@code 100101 Yalta 1} - Allows the USSR to add 1 influence to all of Europe at game start. </li>
+	 * <li>{@code 100201 VE 1} - Allows the USSR to add 2 additional influence to Eastern Europe. </li>
+	 * <li>{@code 100401 Israel 1} - Allows the USSR to add 2 additional influence to the Middle East during setup (no more than 1 per country).</li>
+	 * 
 	 */
 	public static ArrayList<Integer> Effects = new ArrayList<Integer>();
 	/**
@@ -286,24 +295,11 @@ public class HandManager {
 			GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR"))), InfoCommand.url()).build()).complete();
 		}
 		if (mode=='e') {
+			removeFromHand(sp,card);
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
-				if (CardList.getCard(card).isRemoved()) {
-					removeFromGame(sp, card);
-				}
-				else if (card!=73) {
-					discard(sp, card);
-				}
-				else removeFromHand(sp, card);
 				playmode = 'f';
 			}
 			else {
-				if (CardList.getCard(card).isRemoved()) {
-					removeFromGame(sp, card);
-				}
-				else if (card!=73) {
-					discard(sp, card);
-				}
-				else removeFromHand(sp, card);
 				playmode = 'e';
 			}
 			activecard = card;
@@ -325,13 +321,7 @@ public class HandManager {
 			}
 			
 			else if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
-				if (CardList.getCard(card).isRemoved()) {
-					removeFromGame(sp, card);
-				}
-				else if (card!=73) {
-					discard(sp, card);
-				}
-				else removeFromHand(sp, card);
+				removeFromHand(sp,card);
 				playmode = 'l'; //event last
 			}
 			else {
