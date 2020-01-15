@@ -854,7 +854,8 @@ public class MapManager {
 				false, 
 				new String[] {"costarica", "cri", "cr"}, 
 				new Integer[] {70, 72, 73}, //hn, ni, pa
-				"", 
+				"While the other countries in Latin and especially Central America swung left and right throughout the Cold War, Costa Rica managed to avoid the political turmoil of the region. "
+				+ "In fact, the most bloody section of its history was a 44-day civil war over a democratic election, with 2,000 deaths, after which the resulting junta abolished its military and itself.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -865,7 +866,9 @@ public class MapManager {
 				true, 
 				new String[] {"cuba", "cub", "cu"}, 
 				new Integer[] {69, 72, 84}, //ht, ni, us
-				"", 
+				"Under formerly-elected president Fulgencio Batista, Cuba became a military dictatorship of increasingly repressive proportions. He would be ousted by Fidel Castro and his July 26th Movement, "
+				+ "who turned the country into a communist dictatorship. As that was unfavorable to the US, they started training exiles to overthrow the government in the Bay of Pigs invasion, a spectacular failure "
+				+ "that only drove the country further into the Soviet camp. The Soviets immediately took advantage of that opportunity to send missiles to Cuba, igniting the infamous Cuban Missile Crisis that brought the world within one minute of midnight.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -876,7 +879,9 @@ public class MapManager {
 				false, 
 				new String[] {"dominicanrepublic", "dom", "do"}, 
 				new Integer[] {69}, //ht
-				"", 
+				"The Dominican Republic had been ruled since 1930 by Rafael Trujillo, a brutal dictator. During his rule, not only was the Dominican Republic in constant conflict with its similarly repressive neighbor Haiti, "
+				+ "it also had to deal with internal strife from those who wished to overthrow Trujillo, including the communist Mirabal Sisters who were assassinated in 1960. Trujillo would himself be murdered with CIA direction, "
+				+ "plunging the country into a civil war that ended with an American occupation (Operation Powerpack) and the installation of another dictator.",
 				new int[] {0,0}
 				));
 		map.add(new Country(
