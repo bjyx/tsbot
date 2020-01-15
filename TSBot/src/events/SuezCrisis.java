@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -37,7 +38,7 @@ public class SuezCrisis extends Card {
 	@Override
 	public boolean isPlayable(int sp) {
 		// TODO Auto-generated method stub
-		return true;
+		return !HandManager.effectActive(1005);
 	}
 
 	@Override
@@ -118,7 +119,7 @@ public class SuezCrisis extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
+		if (HandManager.effectActive(1005)) return "The Tories are on a new wave of popularity. This event is not playable.";
 		return "Remove at most four influence from the UK, France, and Israel.";
 	}
 

@@ -279,7 +279,7 @@ public class GameData {
 		if (HandManager.removeEffect(690)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the US.",false);	//LADS
 		if (HandManager.removeEffect(691)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the USSR.",false);
 		if (HandManager.removeEffect(860)); // just stop the eighth action round effect
-		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "**Thermonuclear war is now very much a possibility.**\nUS battleground coups will now lower DEFCON.", false);
+		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "**Thermonuclear war is now very much a possibility.**\nUS coups are now restricted by DEFCON.", false);
 		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);
 		if (turn==4) {
 			HandManager.addToDeck(1);
@@ -368,6 +368,7 @@ public class GameData {
 	 */
 	public static int phasing() {
 		if (isHeadlinePhase()) return (HandManager.precedence+(TimeCommand.hl1?1:0))%2;
+		if (HandManager.effectActive(1001)) return (ar+1)%2; //Turn Zero Yalta 6
 		return ar%2;
 	}
 	/**

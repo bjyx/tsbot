@@ -117,10 +117,10 @@ public class CardList {
 		CardList.addCard(new ShuttleDiplomacy());
 		CardList.addCard(new VoiceOfAmerica());
 		CardList.addCard(new LiberationTheology());
-		//if (chinese civil war crisis == 1) CardList.addCard(new Placeholder());
-		//else {
+		if (HandManager.removeEffect(100501)) CardList.addCard(new Placeholder());
+		else {
 			CardList.addCard(new UssuriRiverSkirmish());
-		//}
+		}
 		CardList.addCard(new Inaugural());
 		CardList.addCard(new AllianceForProgress());
 		CardList.addCard(new AfricaScoring());

@@ -195,7 +195,7 @@ public class StartCommand extends Command {
 		if (settings>=16) {
 			settings-=16;
 			GameData.turnzero = true;
-			builder.addField("Turn Zero Variant", "What if? What if the Allies had reached Berlin first? What if the Middle Eastern conflict had been handled more diplomatically? And what if the Soviets had swept through Korea before the bombs dropped?", false);
+			builder.addField("Turn Zero Variant", "What if? What if the Allies had reached Berlin first? What if the Middle Eastern conflict had been handled more diplomatically? And what if the Soviets had swept through Korea before the bombs dropped? \nWarning: game may be heavily tilted towards US.", false);
 		}
 		else {
 			GameData.turnzero = false;
@@ -219,7 +219,7 @@ public class StartCommand extends Command {
 		if (settings>=4) {
 			settings-=4;
 			GameData.promo2 = true;
-			builder.addField("Promotional Cards 2", "Play with the second set of promotional cards, including First Lightning, Who Lost China, Don't Wait for the Translation, and the notorious Kremlin Flu.", false);
+			builder.addField("Promotional Cards 2", "Play with the second set of promotional cards, including First Lightning, Who Lost China, Don't Wait for the Translation, and the notorious Kremlin Flu.\nWarning: game may be heavily tilted towards US.", false);
 		}
 		else {
 			GameData.promo2 = false;

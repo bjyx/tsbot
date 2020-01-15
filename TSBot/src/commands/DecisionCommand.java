@@ -246,6 +246,60 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
 			return;
 		}
+		if (GameData.dec.card==1001) {
+			if (GameData.dec.sp==0) { 
+				int card;
+				try {
+					card = Integer.parseInt(args[1]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: Give the number of the card you wish to have, or 0 if you do not wish to do so.");
+					return;
+				}
+				if (card==0) {
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Yalta Conference").setDescription("Obtained nothing.").setColor(Color.gray);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+				}
+				else if (card==23) {
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Yalta Conference").setDescription("Obtained Marshall Plan.").setColor(Color.blue);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					HandManager.addEffect(100123); //lol
+				}
+				else {
+					sendMessage(e, ":x: Marshall Plan or bust.");
+				}
+			}
+			else if (GameData.dec.sp==1) { 
+				int card;
+				try {
+					card = Integer.parseInt(args[1]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: Give the number of the card you wish to have, or 0 if you do not wish to do so.");
+					return;
+				}
+				if (card==0) {
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Yalta Conference").setDescription("Obtained nothing.").setColor(Color.gray);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+				}
+				else if (card==9) {
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Yalta Conference").setDescription("Obtained Vietnam Revolts.").setColor(Color.red);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					HandManager.addEffect(100109); //lol
+				}
+				else if (card==13) {
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Yalta Conference").setDescription("Obtained Arab-Israeli War.").setColor(Color.red);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					HandManager.addEffect(100113); //lol
+				}
+				else {
+					sendMessage(e, ":x: One of those two or bust.");
+				}
+			}
+			else {
+				//how did you get here?
+			}
+		}
 		if (GameData.dec.card==0) {
 			int card;
 			try {
@@ -850,7 +904,7 @@ public class DecisionCommand extends Command {
 			if (i!=-1 && CambridgeFive.regions[MapManager.get(i).region]) {
 				CardEmbedBuilder builder = new CardEmbedBuilder();
 				builder.setTitle("Intelligence Secrets Leaked")
-				.setDescription("Attempted operations in " + MapManager.get(i).name + " fail")
+				.setDescription("Planned operations in " + MapManager.get(i).name + " busted early")
 				.setFooter("\"The agents we sent into Albania were armed men intent on murder, sabotage and assassination ..."
 						+ "They knew the risks they were running. I was serving the interests of the Soviet Union "
 						+ "and those interests required that these men were defeated. "

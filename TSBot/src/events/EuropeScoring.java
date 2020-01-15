@@ -2,6 +2,7 @@ package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.Country;
@@ -10,6 +11,7 @@ import map.MapManager;
 public class EuropeScoring extends Card {
 	private static final int presence = 3;
 	private static final int domination = 7;
+	private static final int control = 6;
 	@Override
 	public void onEvent(int sp, String[] args) {
 		int[] totalCountries = {0,0};
@@ -45,19 +47,31 @@ public class EuropeScoring extends Card {
 		builder.addField(MapManager.get(85).toString(), strings[1]+" | "+strings[3], false);
 		vp += battlegrounds[0]-battlegrounds[1];
 		if (battlegrounds[0]==5) {
-			GameData.txtchnl.sendMessage(builder.build());
-			GameData.endGame(0, 2);
-			return;
+			if (HandManager.effectActive(1002)) vp+=control;
+			else {
+				GameData.txtchnl.sendMessage(builder.build());
+				GameData.endGame(0, 2);
+				return;
+			}
 		}
 		else if (battlegrounds[1]==5) {
-			GameData.txtchnl.sendMessage(builder.build());
-			GameData.endGame(1, 2);
-			return;
+			if (HandManager.effectActive(1002)) vp-=control;
+			else {
+				GameData.txtchnl.sendMessage(builder.build());
+				GameData.endGame(1, 2);
+				return;
+			}
 		}
-		if (battlegrounds[0]>battlegrounds[1]&&totalCountries[0]>totalCountries[1]&&(totalCountries[0]-battlegrounds[0]>0)) vp += domination;
+		if (battlegrounds[0]>battlegrounds[1]&&totalCountries[0]>totalCountries[1]&&(totalCountries[0]-battlegrounds[0]>0)) {
+			if (HandManager.effectActive(1002)) vp += control;
+			else vp += domination;
+		}
 		else if (totalCountries[0]>0) vp += presence;
 		
-		if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]&&(totalCountries[1]-battlegrounds[1]>0)) vp -= domination;
+		if (battlegrounds[1]>battlegrounds[0]&&totalCountries[1]>totalCountries[0]&&(totalCountries[1]-battlegrounds[1]>0)) {
+			if (HandManager.effectActive(1002)) vp -= control;
+			else vp -= domination;
+		}
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -76,7 +90,7 @@ public class EuropeScoring extends Card {
 
 	@Override
 	public String getName() {
-		return "Europe Scoring";
+		return "Europe Scoring" + (HandManager.effectActive(1002)?" (Allied Berlin)":"");
 	}
 
 	@Override
@@ -106,6 +120,7 @@ public class EuropeScoring extends Card {
 
 	@Override
 	public String getDescription() {
+		if (HandManager.effectActive(1002)) return "The Allies control Berlin. Scores Europe on a scale of 3/6/6. +1 for battlegrounds, +1 for each country you control that borders the other superpower (Canada, Finland, Poland, Romania).";
 		return "Scores Europe on a scale of 3/7/autovictory. +1 for battlegrounds, +1 for each country you control that borders the other superpower (Canada, Finland, Poland, Romania).";
 	}
 

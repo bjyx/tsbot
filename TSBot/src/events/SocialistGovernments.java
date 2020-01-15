@@ -35,7 +35,7 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return !HandManager.Effects.contains(83); //disabled by the Iron Lady.
+		return ((!GameData.turnzero)||!(HandManager.effectActive(1004)))&&!HandManager.effectActive(83); //disabled by the Iron Lady.
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
+		if (HandManager.effectActive(1005)) return 1;
 		return 0;
 	}
 
