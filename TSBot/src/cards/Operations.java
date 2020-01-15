@@ -516,8 +516,9 @@ public class Operations {
 		
 		if (amt>0) {
 			if (amt>MapManager.get(country).influence[(sp+1)%2]) {
-				builder.changeInfluence(country, (sp+1)%2, -MapManager.get(country).influence[(sp+1)%2]);
-				builder.changeInfluence(country, sp, amt-MapManager.get(country).influence[(sp+1)%2]);
+				int x = MapManager.get(country).influence[(sp+1)%2];
+				builder.changeInfluence(country, (sp+1)%2, -x);
+				builder.changeInfluence(country, sp, amt-x);
 			}
 			else {
 				builder.changeInfluence(country, (sp+1)%2, -amt);
