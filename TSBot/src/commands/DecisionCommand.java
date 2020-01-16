@@ -23,6 +23,7 @@ import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import turnzero.TurnZero;
 /**
  * The command that handles any decisions to be made with regards to any card that cannot be handled by the event command list. The following cards have such an effect:
  * <ul>
@@ -298,7 +299,30 @@ public class DecisionCommand extends Command {
 			}
 			else {
 				//how did you get here?
+				return;
 			}
+			GameData.dec = null;
+			if (TurnZero.startCrisis()) {
+				return;
+			}
+			CardList.initialize();
+			HandManager.addToDeck(0);
+			if (HandManager.removeEffect(100109)) {
+				HandManager.Deck.remove((Integer)9);
+				HandManager.SUNHand.add(9);
+			}
+			if (HandManager.removeEffect(100113)) {
+				HandManager.Deck.remove((Integer)13);
+				HandManager.SUNHand.add(13);
+			}
+			if (HandManager.removeEffect(100123)) {
+				HandManager.Deck.remove((Integer)23);
+				HandManager.USAHand.add(23);
+			}
+			HandManager.deal();
+			SetupCommand.USSR = true;
+			GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please place six influence markers in Eastern Europe. (Use TS.setup)").complete();
+			return;
 		}
 		if (GameData.dec.card==0) {
 			int card;

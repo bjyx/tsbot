@@ -41,10 +41,18 @@ public class ZeroCommand extends Command {
 		}
 		boolean result=false;
 		if (e.getAuthor().equals(PlayerList.getUSA())) {
+			if (TurnZero.played[0]!=null) {
+				sendMessage(e, ":x: You've already played something for this one.");
+				return;
+			}
 			result = TurnZero.playLeaderCard(0, args[1]);
 			
 		}
 		if (e.getAuthor().equals(PlayerList.getSSR())) {
+			if (TurnZero.played[1]!=null) {
+				sendMessage(e, ":x: You've already played something for this one.");
+				return;
+			}
 			result = TurnZero.playLeaderCard(1, args[1]);
 			
 		}

@@ -1,8 +1,8 @@
 package turnzero;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
@@ -13,6 +13,7 @@ import game.PlayerList;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.Message;
 
 public class TurnZero {
 	protected static class LeaderCard {
@@ -26,23 +27,26 @@ public class TurnZero {
 		}
 	}
 	
+	private static Message lastUSAHand;
+	private static Message lastSSRHand;
+	
 	public static int crisis=-1;
-	private static List<Integer> europe = Arrays.asList(0,1,2);
-	private static List<Integer> asia = Arrays.asList(3,4,5);
-	public static List<LeaderCard> USA = Arrays.asList(
+	private static ArrayList<Integer> europe = new ArrayList<Integer>(Arrays.asList(0,1,2));
+	private static ArrayList<Integer> asia = new ArrayList<Integer>(Arrays.asList(3,4,5));
+	public static ArrayList<LeaderCard> USA = new ArrayList<LeaderCard>(Arrays.asList(
 			new TurnZero.LeaderCard("Kennan", 1),
 			new TurnZero.LeaderCard("Acheson", 1),
 			new TurnZero.LeaderCard("Marshall", 2),
 			new TurnZero.LeaderCard("Dulles", -1),
 			new TurnZero.LeaderCard("OSS", 0)
-			);
-	public static List<LeaderCard> USSR = Arrays.asList(
+			));
+	public static ArrayList<LeaderCard> USSR = new ArrayList<LeaderCard>(Arrays.asList(
 			new TurnZero.LeaderCard("Andropov", 1),
 			new TurnZero.LeaderCard("Khrushchev", 1),
 			new TurnZero.LeaderCard("Molotov", 2),
 			new TurnZero.LeaderCard("Beria", -1),
 			new TurnZero.LeaderCard("KGB", 0)
-			);
+			));
 	public static LeaderCard[] played = new LeaderCard[] {null, null};
 	public static int[] results = new int[] {3, 4, 3, 4, 3, 4};
 	/**
@@ -176,12 +180,12 @@ public class TurnZero {
 			}
 			else if (die <= 5) {
 				builder.setTitle("Inconclusive UK Elections").setDescription("Tory and Labour expected to form coalition government").setColor(Color.blue)
-					.addField("Coalition",CardList.getCard(7) + " may not be played on Turn 1 or 2 for the event.",false);
+					.addField("Coalition","`007 Socialist Governments (3R)` may not be played on Turn 1 or 2 for the event.",false);
 				HandManager.addEffect(1004);
 			}
 			else {
 				builder.setTitle("Churchill Re-elected").setDescription("Tories win landslide victory").setColor(Color.blue)
-				.addField("Conservative Popularity",CardList.getCard(7)+" will appear as a Mid-War card."+CardList.getCard(28)+" can no longer be played for the event.", false)
+				.addField("Conservative Popularity","`007 Socialist Governments (3R)` will appear as a Mid-War card. `028 Suez Canal Crisis (3R)` can no longer be played for the event.", false)
 				.setFooter("\"The inherent vice of capitalism is the unequal sharing of blessings. The inherent virtue of Socialism is the equal sharing of miseries.\"\n"
 						+ "- Winston Churchill, 1945", Launcher.url("people/churchill.png"));
 				HandManager.addEffect(1005);
@@ -285,7 +289,8 @@ public class TurnZero {
 			//bruh what
 			break;
 		}
-		
+		played[0]=null;
+		played[1]=null;
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 	
@@ -314,16 +319,19 @@ public class TurnZero {
 	}
 	
 	public static void sendHands() {
+		if (lastUSAHand!=null) lastUSAHand.delete().complete();
+
+    	if (lastSSRHand!=null) lastSSRHand.delete().complete();
 		EmbedBuilder usahand = new EmbedBuilder().setTitle("Statecraft Cards");
 		for (LeaderCard c : USA) {
 			usahand.addField(c.name, getEffect(c.type), false);
 		}
-		GameData.txtusa.sendMessage(usahand.build()).complete();
+		lastUSAHand=GameData.txtusa.sendMessage(usahand.build()).complete();
 		EmbedBuilder ssrhand = new EmbedBuilder().setTitle("Statecraft Cards");
 		for (LeaderCard c : USSR) {
 			ssrhand.addField(c.name, getEffect(c.type), false);
 		}
-		GameData.txtusa.sendMessage(ssrhand.build()).complete();
+		lastSSRHand=GameData.txtssr.sendMessage(ssrhand.build()).complete();
 	}
 	public static String getEffect(int i) {
 		if (i==1) return "Adds 1 point in favor of your side to the die (subtract for the USSR, add for the US).";
