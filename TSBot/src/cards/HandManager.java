@@ -88,17 +88,20 @@ public class HandManager {
 	 * <li>{@code 1002 Allied Berlin} - Disables {@code 010 Blockade}. Europe Scoring is now modified with Allied Berlin (3/6/6 instead of 3/7/V).
 	 * <li>{@code 1003 VJ 6} - The US ignores DEFCON restrictions during Turn 1. DEFCON cannot drop below 2. Coups galore!
 	 * <li>{@code 1004 Coalition Government} - Socialist Governments has no effect during Turns 1 and 2.
-	 * <li>{@code 1005 Tory Victory} - Disables {@code 028 Suez Crisis}.
+	 * <li>{@code 1005 Tory Victory} - Disables {@code 028 Suez Crisis}. Turns Socialist Governments into a Mid-War Card. 
+	 * <li>{@code 1006 VJ 1} - Turns {@code 027 Anpō Treaty} into a Mid-War Card. 
 	 * </ul>
 	 * Turn zero statuses:
 	 * <ul>
 	 * <li>{@code 100109 Vietnam Revolts} - Adds Vietnam Revolts to USSR Hand during dealing.</li>
 	 * <li>{@code 100113 Arab-Israeli War} - Adds Arab-Israeli War to USSR Hand during dealing. </li>
 	 * <li>{@code 100123 Marshall Plan} - Adds Marshall Plan to US Hand during dealing.</li>
-	 * <li>{@code 100101 Yalta 1} - Allows the USSR to add 1 influence to all of Europe at game start. </li>
+	 * <li>{@code 100101 Yalta 1} - Allows the USSR to add 1 influence to any country in Europe at game start. </li>
 	 * <li>{@code 100201 VE 1} - Allows the USSR to add 2 additional influence to Eastern Europe. </li>
 	 * <li>{@code 100401 Israel 1} - Allows the USSR to add 2 additional influence to the Middle East during setup (no more than 1 per country).</li>
-	 * 
+	 * <li>{@code 100506 Nationalist China} - Converts {@code 035 Formosa Resolution} to {@code 035 Nationalist China}.</li>
+	 * <li>{@code 100501 Soviet China} - Removes {@code 076 Ussuri River Skirmish} from the game.</li>
+	 * <li>{@code 100606 VJ 6} - Removes {@code 011 Korean War} from the game. </li>
 	 */
 	public static ArrayList<Integer> Effects = new ArrayList<Integer>();
 	/**
@@ -318,6 +321,7 @@ public class HandManager {
 							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
 							.build()).complete();
 				}
+				playmode = 'o'; //ops only — bug fix
 			}
 			
 			else if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
