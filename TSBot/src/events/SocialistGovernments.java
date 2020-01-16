@@ -35,7 +35,7 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return ((!GameData.turnzero)||!(HandManager.effectActive(1004)))&&!HandManager.effectActive(83); //disabled by the Iron Lady.
+		return !HandManager.effectActive(1004)&&!HandManager.effectActive(83); //disabled by the Iron Lady.
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove up to 3 US Influence in Western Europe (no more than 2 per country). *Cannot be played as an event if " + CardList.getCard(83) + " is in effect.*";
+		return "Remove up to 3 US Influence in Western Europe (no more than 2 per country). *Cannot be played as an event if " + CardList.getCard(83) + " is in effect. Cannot be played for the event on Turns 1 and 2 if the US rolled a 4 or 5 on the `1945 UK Elections` Crisis.*";
 	}
 
 	@Override

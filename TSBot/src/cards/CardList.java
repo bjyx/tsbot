@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import events.*;
 import game.GameData;
+import turnzero.NationalistChina;
 /**
  * Implements a list of the cards used in the game.
  * @author [REDACTED]
@@ -36,12 +37,12 @@ public class CardList {
 		CardList.addCard(new VietnamRevolts());
 		CardList.addCard(new Blockade());
 		
-		//if (v-j day==6) {
-		//	CardList.addCard(new Placeholder());
-		//}
-		//else {
-		CardList.addCard(new KoreanWar());
-		//}
+		if (HandManager.removeEffect(100606)) {
+			CardList.addCard(new Placeholder());
+		}
+		else {
+			CardList.addCard(new KoreanWar());
+		}
 		CardList.addCard(new RomanianAbdication());
 		CardList.addCard(new ArabIsraeliWar());
 		CardList.addCard(new Comecon());
@@ -67,12 +68,12 @@ public class CardList {
 		CardList.addCard(new UNIntervention());
 		CardList.addCard(new DeStalinization());
 		CardList.addCard(new NuclearTestBan());
-		//if (chinese civil war crisis == 6) {
+		if (HandManager.removeEffect(100506)) {
+			CardList.addCard(new NationalistChina());
+		}
+		else {
 			CardList.addCard(new FormosanResolution());
-		//}
-		//else {
-		//	CardList.addCard(new NationalistChina());
-		//}
+		}
 		CardList.addCard(new BrushWar());
 		CardList.addCard(new CentrAmScoring());
 		CardList.addCard(new SEAsiaScoring());

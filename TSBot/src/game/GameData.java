@@ -384,7 +384,7 @@ public class GameData {
 	 */
 	public static void setDEFCON(int defcon2) {
 		if (defcon==defcon2) return;
-		defcon = Math.max(1, Math.min(5, defcon2));
+		defcon = Math.max(HandManager.effectActive(1003)?2:1, Math.min(5, defcon2)); //DEFCON is physically restrained from going under 2
 		if (defcon==1) endGame((phasing()+1)%2, 1);
 		if (defcon==2&&!isHeadlinePhase()&&MapManager.get(3).isControlledBy()==0&&HandManager.effectActive(106)) {
 			TimeCommand.NORAD=false;

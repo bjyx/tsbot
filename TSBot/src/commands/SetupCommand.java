@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import cards.HandManager;
 import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;
@@ -14,7 +15,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class SetupCommand extends Command {
 
 	public static boolean USSR = false;
+	public static boolean Yalta = false;
+	public static boolean VE = false;
+	public static boolean Israel = false;
+	
 	public static boolean USA = false;
+	
 	public static boolean hreq = false;
 	public static int handicap = 2;
 	
@@ -54,13 +60,37 @@ public class SetupCommand extends Command {
 				return;
 			}
 			if (!hreq) {
-				if (countries[(i-1)/2] > 20) {
-					sendMessage(e, ":x: You sure you aren't going to reinforce your positions in Europe?");
-					return;
+				if (Yalta) {
+					if (countries[(i-1)/2] > 20) {
+						sendMessage(e, ":x: You sure you aren't going to reinforce your positions in Europe?");
+						return;
+					}
 				}
-				if ((USSR && MapManager.get(countries[(i-1)/2]).region==1)||(USA && MapManager.get(countries[(i-1)/2]).region==2)) {
-					sendMessage(e, ":x: Stay on your side of the curtain.");
-					return;
+				else if (VE) {
+					if (countries[(i-1)/2] > 20) {
+						sendMessage(e, ":x: You sure you aren't going to reinforce your positions in Europe?");
+						return;
+					}
+					if (MapManager.get(countries[(i-1)/2]).region==1) {
+						sendMessage(e, ":x: Stay on your side of the curtain.");
+						return;
+					}
+				}
+				else if (Israel) {
+					if (MapManager.get(countries[(i-1)/2]).region!=3) {
+						sendMessage(e, ":x: Those are for the Arabs.");
+						return;
+					}
+				}
+				else {
+					if (countries[(i-1)/2] > 20) {
+						sendMessage(e, ":x: You sure you aren't going to reinforce your positions in Europe?");
+						return;
+					}
+					if ((USSR && MapManager.get(countries[(i-1)/2]).region==1)||(USA && MapManager.get(countries[(i-1)/2]).region==2)) {
+						sendMessage(e, ":x: Stay on your side of the curtain.");
+						return;
+					}
 				}
 			}
 			else {
@@ -88,17 +118,55 @@ public class SetupCommand extends Command {
 		.setFooter("\"A shadow has fallen upon the scenes so lately lighted by the Allied victory…. From Stettin in the Baltic to Trieste in the Adriatic an iron curtain has descended across the Continent.\"\n"
 				+ "- Winston Churchill, 1946",Launcher.url("people/churchill.png"))
 		.setColor(USSR?Color.red:(USA?Color.blue:(handicap>0?Color.blue:Color.red)));
+		Yalta = false;
+		VE = false;
+		Israel = false;
 		if (USSR&&!hreq) {
-			if (sum!=6) {
-				sendMessage(e, ":x: You get six influence in the Eastern Bloc. You'll get more later, don't worry.");
-				return;
+			if (Yalta) {
+				if (sum!=1) {
+					sendMessage(e, ":x: You get one influence here from Yalta. You'll get more later, don't worry.");
+					return;
+				}
+			}
+			else if (VE) {
+				if (sum!=2) {
+					sendMessage(e, ":x: You get two influence here from sweeping Eastern Europe before Christmas. You'll get more later, don't worry.");
+					return;
+				}
+			}
+			else if (Israel) {
+				if (sum!=2) {
+					sendMessage(e, ":x: You get two influence here from anti-Israel militia. You'll get more later, don't worry.");
+					return;
+				}
+			}
+			else {
+				if (sum!=6) {
+					sendMessage(e, ":x: You get six influence in the Eastern Bloc. You'll get more later, don't worry.");
+					return;
+				}
 			}
 			for (int i=0; i<countries.length; i++) {
 				builder.changeInfluence(countries[i], 1, amt[i]);
 			}
-			USSR = false;
-			USA = true;
-			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please place seven influence markers in Western Europe. (Use TS.setup)").complete();
+			
+			if (HandManager.removeEffect(100101)) {
+				Yalta = true;
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please place one influence marker anywhere in Europe. (Use TS.setup)").complete();
+			}
+			else if (HandManager.removeEffect(100201)) {
+				VE = true;
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please place two more influence markers in Eastern Europe. (Use TS.setup)").complete();
+			}
+			else if (HandManager.removeEffect(100401)) {
+				Israel = true;
+				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please place two influence markers in the Middle East. (Use TS.setup)").complete();
+			}
+			else {
+				USSR = false;
+				USA = true;
+				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", please place seven influence markers in Western Europe. (Use TS.setup)").complete();
+			}
 		}
 		else if (USA&&!hreq) {
 			if (sum!=7) {

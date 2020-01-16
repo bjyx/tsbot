@@ -43,25 +43,22 @@ public class AnpoTreaty extends Card {
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 4;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
+		if (HandManager.effectActive(1006)) return 1;
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -77,7 +74,6 @@ public class AnpoTreaty extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

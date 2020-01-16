@@ -155,8 +155,8 @@ public class TurnZero {
 				builder.setTitle("Just Far Enough").setDescription("American troops enter Berlin in triumph").setColor(Color.BLUE);
 				builder.changeInfluence(6, 0, 2).changeInfluence(6, 1, -1) //dd 2/2
 				.addField("Allied Berlin","The rules for Europe Scoring have changed. " + CardList.getCard(10) + " may no longer be played for the event.",false)
-				.setFooter("\"\"\n"
-						+ "- ", Launcher.url("tz/unk.png"));
+				.setFooter("\"The mission of this Allied Force was fulfilled at 3 a.m., local time, May 7, 1945.\"\n"
+						+ "- Dwight David Eisenhower", Launcher.url("people/eisenhower.png"));
 				HandManager.addEffect(1002);
 			}
 			break;
@@ -191,27 +191,26 @@ public class TurnZero {
 		case 3:
 			if (die<=1) {
 				builder
-					.setTitle("???")
-					.setDescription("Unstable Coalition threatens to collapse")
+					.setTitle("")
+					.setDescription("Ben-Gurion Coalition threatens to collapse")
 					.setColor(Color.RED)
-					.addField("????","USSR receives two additional Middle Eastern influence during setup (no more than 1 per country).",false)
+					.addField("Opportunism","USSR receives two additional Middle Eastern influence during setup (no more than 1 per country).",false)
 					.setFooter("\"???\"\n"
-							+ "- Joseph Stalin, 1945", Launcher.url("people/stalin.png"));
+							+ "- ???, ??", Launcher.url("people/stalin.png"));
 				HandManager.addEffect(100401);
 			}
 			else if (die <= 3) {
-				builder.setTitle("Soviets fund anti-Israel militants").setDescription("").setColor(Color.RED);
+				builder.setTitle("Civil War in former Mandatory Palestine").setDescription("Soviets fund anti-Israeli militants").setColor(Color.RED);
 				builder.changeInfluence(30, 1, 1);
 			}
 			else if (die <= 5) {
-				builder.setTitle("Tensions between Arabs and Israelis").setDescription("Notably distracted superpowers")
+				builder.setTitle("").setDescription("")
 				.addField("Historical Result", "Nothing happens.", false).setColor(Color.GRAY);
 					
 			}
 			else {
-				builder.setTitle("Palestine Question Experiences Sudden De-Escalation").setDescription("Irgun and Palestinian Forces Demobilize").setColor(Color.BLUE);
-				builder.changeInfluence(25, 0, 1).changeInfluence(26, 0, 1).changeInfluence(27, 0, 1) //dd 2/2
-				.addField("Allied Berlin","The rules for Europe Scoring have changed. " + CardList.getCard(10) + " may no longer be played for the event.",false)
+				builder.setTitle("Palestine Question Experiences Sudden De-Escalation").setDescription("Irgun and Palestinian forces demobilize to surprise of many").setColor(Color.BLUE);
+				builder.changeInfluence(25, 0, 1).changeInfluence(26, 0, 1).changeInfluence(27, 0, 1)
 				.setFooter("\"In Israel, in order to be a realist you must believe in miracles.\"\n"
 						+ "- David Ben-Gurion, 1956", Launcher.url("tz/bengurion.png"));
 				HandManager.addEffect(1002);
@@ -226,28 +225,60 @@ public class TurnZero {
 					.setColor(Color.RED)
 					.setFooter("\"There are a lot of things we can learn from the Soviet Union.\"\n"
 							+ "- Mao Zedong, 1956", Launcher.url("people/mao.png"))
-					.addField("Border Treaty",CardList.getCard(76) + " has been removed from the game.",false);
+					.addField("Border Treaty","`076 Ussuri River Skirmish (3A)` has been removed from the game.",false);
 				HandManager.addEffect(100501);
 			}
 			else if (die <= 3) {
 				builder.setTitle("Huaihai Campaign").setDescription("Communists kick Nationalists off mainland").addField("Historical Result", "Nothing happens.", false).setColor(Color.GRAY);
 			}
 			else if (die <= 5) {
-				builder.setTitle("").setDescription("Nationalists holding back Chinese").setColor(Color.blue)
-					.addField("Winter Offensive",CardList.getCard(7) + " may not be played on Turn 1 or 2 for the event.",false);
+				builder.setTitle("Communist Advance Slowed").setDescription("Nationalists holding out with US aid").setColor(Color.blue)
+					.addField("Winter Offensive","The China Card starts face-down.",false);
 				HandManager.China+=2;
 			}
 			else {
 				builder.setTitle("Communists Held Back in China").setDescription("Nationalists retain mainland stronghold with US aid").setColor(Color.blue)
-				.addField("Conservative Popularity",CardList.getCard(7)+" will appear as a Mid-War card."+CardList.getCard(28)+" can no longer be played for the event.", false)
+				.addField("Stalemate","The China Card starts face-down.",false)
+				.addField("Power Projection","`035 Formosan Resolution (2A)` has been replaced by `035 Nationalist China (2A)`. Taiwan is now a permanent battleground country.", false)
 				.setFooter("\"We must use every inch of our blood to take back every inch of our land, you ten thousand youths and soldiers.\"\n"
-						+ "- Chiang Kai-Shek, ???", Launcher.url("people/chiang.png"));
-				HandManager.addEffect(1005);
+						+ "- Chiang Kai-Shek", Launcher.url("people/chiang.png"));
+				HandManager.China+=2;
+				HandManager.addEffect(100506);
+				MapManager.get(43).isBattleground = true;
+				builder.changeInfluence(43, 0, 3);
 			}
 			break;
 			
 		case 5:
-			
+			if (die<=1) {
+				builder
+					.setTitle("Soviets sweep through Korea")
+					.setDescription("Japan projected to surrender to communism")
+					.setColor(Color.RED)
+					.addField("People's Committee","`027 US/Japan Mutual Defense Pact (Anpō Treaty) (4A)` is now a Mid-War card.",false)
+					.setFooter("\"The people are the masters of the revolution in each country. It is like putting a cart before the horse that foreigners carry out the revolution for them. The revolution can neither be exported nor imported.\"\n"
+							+ "- Kim Il-Sung, 1976", Launcher.url("people/kim.png"));
+				builder.changeInfluence(36, 1, 1).changeInfluence(42, 1, 2);
+				HandManager.addEffect(1006);
+			}
+			else if (die <= 3) {
+				builder.setTitle("Communist Infiltration").setDescription("Committees seep into South Korea").setColor(Color.RED);
+				builder.changeInfluence(42, 1, 1);
+			}
+			else if (die <= 5) {
+				builder.setTitle("Soviets Declare War on Japan").setDescription("Red Army marching into Manchuria")
+				.addField("Historical Result", "Nothing happens.", false).setColor(Color.GRAY);
+					
+			}
+			else {
+				builder.setTitle("Japan surrenders in wake of Hiroshima bomb").setDescription("").setColor(Color.BLUE)
+				.addField("Instrument of Surrender","`011 Korean War (2R)` has been removed from the game.",false)
+				.addField("Atomic Monopoly","The US is allowed to ignore DEFCON restrictions when conducting coups for the duration of turn 1. DEFCON cannot drop below 2 for the duration of turn 1.",false)
+				.setFooter("\"Should We continue to fight, it would not only result in an ultimate collapse and obliteration of the Japanese nation, but also it would lead to the total extinction of human civilization.\"\n"
+						+ "- Emperor Hirohito, 1945", Launcher.url("people/showa.png"));
+				HandManager.addEffect(100606);
+				HandManager.addEffect(1003);
+			}
 			break;
 		
 		default:

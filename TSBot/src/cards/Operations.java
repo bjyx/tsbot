@@ -356,7 +356,7 @@ public class Operations {
 				return true;
 			}
 		}
-		if (!MapManager.get(country).checkIsCoupable() && !(MapManager.get(country).region<=2 && restrictions==96)) {
+		if (!HandManager.effectActive(1003)&&(!MapManager.get(country).checkIsCoupable() && !(MapManager.get(country).region<=2 && restrictions==96))) {
 			txtsp.sendMessage(":x: DEFCON restricts you from realigning this country.").complete();
 			return false;
 		}
@@ -447,7 +447,7 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
-		if (!MapManager.get(country).checkIsCoupable()&&!(MapManager.get(country).region<=2 && restrictions==96)) {
+		if (!HandManager.effectActive(1003)&&(!MapManager.get(country).checkIsCoupable()&&!(MapManager.get(country).region<=2 && restrictions==96))) {
 			txtsp.sendMessage(":x: DEFCON restrictions disallow you from couping this nation.").complete();
 			return false;
 		}
