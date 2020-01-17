@@ -553,15 +553,4 @@ public class GameData {
 	public static boolean hasAbility(int sp, int rank) {
 		return hasAbility(sp, rank, false);
 	}
-	/**
-	 * Rolls a D6, affects it with PPR if need be, then returns the result.
-	 */
-	/*public static int die() {
-		int die = (int) (Math.random()*6 + 1);
-		wait();
-		if (peoplePower) {
-			return 7-die;
-		}
-		return die;
-	}*/
 }
