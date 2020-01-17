@@ -50,14 +50,14 @@ public class StartCommand extends Command {
 		}
 		int settings = 1;
 		try {
-			if (args.length>=2 && Integer.parseInt(args[1])%128<72 && Integer.parseInt(args[1])<256) settings=Integer.parseInt(args[1]);
+			if (args.length>=2 && Integer.parseInt(args[1])%256<144 && Integer.parseInt(args[1])<512) settings=Integer.parseInt(args[1]);
 			else if (args.length>=2){
-				sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 72.");
+				sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 144.");
 				return;
 			}
 		}
 		catch (NumberFormatException err) {
-			sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 72.");
+			sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 144.");
 			return;
 		}
 		try {
@@ -203,7 +203,7 @@ public class StartCommand extends Command {
 		if (settings>=8) {
 			settings-=8;
 			GameData.altspace = true;
-			builder.addField("Alternate Space Race", "Play with an alternate space race track.", false);
+			builder.addField("Alternate Space Race", "Play with a more aggressive space race track, where you're racing to develop space-based weapons rather than simply trying to get an edge in the race.", false);
 		}
 		else {
 			GameData.altspace = false;
@@ -280,10 +280,10 @@ public class StartCommand extends Command {
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
 		return Arrays.asList("TS.start **[settings]** **[handicap]** - How it all begins.\n"
-				+ "Settings will be a number between 0 and 135 inclusive.\n"
+				+ "Settings will be a number between 0 and 143 inclusive.\n"
 				+ "If the number in binary has a digit in the following position:\n"
 				+ "`10000000` Late War Scenario\n"
-				+ "`01000000` Year-In Year-Out Expansion and recommended rules enabled"
+				+ "`01000000` Year-In Year-Out Expansion and recommended rules enabled\n"
 				+ "`00100000` Chinese Civil War enabled\n"
 				+ "`00010000` Turn Zero enabled\n"
 				+ "`00001000` Optional Space Race enabled\n"

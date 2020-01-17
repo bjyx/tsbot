@@ -236,6 +236,8 @@ public class GameData {
 	public static void advanceTurn() {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("End of Turn Summary");
+		if (hasAbility(0,2,true))builder.addMilOps(0, 2);
+		if (hasAbility(1,2,true))builder.addMilOps(1, 2);
 		builder.changeVP(OpsToVP()); // stage E
 		checkScore(false, false);
 		int scoring = HandManager.checkScoring();
@@ -290,6 +292,8 @@ public class GameData {
 			HandManager.addToDeck(2);
 			builder.addField("Late War","Late War cards now available for use.",false);
 		}
+		if (hasAbility(0, 4, true)||hasAbility(1,4,true)) Operations.discount %= 2;
+		if (hasAbility(0, 6, true)||hasAbility(1,6,true)) Operations.coupReroll %= 2;
 		txtchnl.sendMessage(builder.build()).complete();
 	}
 	
@@ -330,10 +334,6 @@ public class GameData {
 			advanceTurn();
 			return;
 		}
-		if (HandManager.Effects.contains(860)&&(ar==14||ar==15)) {
-			ar = 16; 
-			return; //North Sea Oil's effect, end of AR7
-		}
 		if (hasAbility(1, 8)&&ar==14) { //Space Station
 			ar=15;
 			return;
@@ -341,6 +341,10 @@ public class GameData {
 		if (hasAbility(0, 8)&&ar==14) {
 			ar=16;
 			return;
+		}
+		if (HandManager.Effects.contains(860)&&(ar==14||ar==15)) {
+			ar = 16; 
+			return; //North Sea Oil's effect, end of AR7
 		}
 		if (ar>=14) { //AR7 or later in late war
 			advanceTurn();
@@ -522,15 +526,36 @@ public class GameData {
 	 * @return true iff the superpower in question has used all opportunities for spacing. 
 	 */
 	public static boolean hasSpace(int sp) {
-		return (hasAbility(sp, 2))?hasSpaced[sp]==2:hasSpaced[sp]==1;
+		return hasAbility(sp, 2)?hasSpaced[sp]==2:hasSpaced[sp]==1;
 	}
 	/**
 	 * Determines whether a superpower has an ability granted to it by the space race.
 	 * @param sp is 0 if US, 1 if USSR.
 	 * @param rank is the rank in question.
+	 * @param alt asks whether the alternate space track is active.
+	 * @return true if {@link #space}[sp] >= rank and {@link #space}[(sp+1)%2] < rank.
+	 */
+	public static boolean hasAbility(int sp, int rank, boolean alt) {
+		return (space[sp]>=rank) && (space[(sp+1)%2]<rank) && alt == altspace;
+	}
+	
+	/**
+	 * Determines whether a superpower has an ability granted to it by the space race. This one lacks {@code alt}, and defaults it to false (normal space track).
+	 * @param sp is 0 if US, 1 if USSR.
+	 * @param rank is the rank in question.
 	 * @return true if {@link #space}[sp] >= rank and {@link #space}[(sp+1)%2] < rank.
 	 */
 	public static boolean hasAbility(int sp, int rank) {
-		return (space[sp]>=rank) && (space[(sp+1)%2]<rank);
+		return hasAbility(sp, rank, false);
 	}
+	/**
+	 * Rolls a D6, affects it with PPR if need be, then returns the result.
+	 */
+	/*public static int die() {
+		int die = (int) (Math.random()*6 + 1);
+		if (HandManager.effectActive(0/*People Power)) {
+			return 7-die;
+		}
+		return die;
+	}*/
 }

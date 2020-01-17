@@ -57,7 +57,7 @@ public class PlayCommand extends Command {
 					return;
 				}
 			} catch (NumberFormatException e2) {
-				sendMessage(e, ":x: That's no card. Cards are denoted by integers.");
+				sendMessage(e, ":x: That's no card. Cards are denoted by their ID, which is an integer.");
 				return;
 			}
 		}

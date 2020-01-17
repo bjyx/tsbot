@@ -324,6 +324,20 @@ public class DecisionCommand extends Command {
 			GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please place six influence markers in Eastern Europe. (Use TS.setup)").complete();
 			return;
 		}
+		if (GameData.dec.card==4176) {
+			if (args[1].equalsIgnoreCase("reroll")) {
+				Operations.coupReroll += 2;
+				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Space Race Advantage").setDescription("The "+(GameData.dec.sp==0?"US":"USSR")+" has used its technological edge for a second shot at a coup!").setColor(GameData.dec.sp==0?Color.blue:Color.red).build());
+				GameData.ops.coupPreDet(Operations.target6, (int) (Math.random()*6+1));
+			}
+			else if (args[1].equalsIgnoreCase("accept")) {
+				GameData.ops.coupPreDet(Operations.target6, Operations.die6);
+			}
+			else {
+				sendMessage(e, ":x: Please respond with the options given.");
+				return;
+			}
+		}
 		if (GameData.dec.card==0) {
 			int card;
 			try {

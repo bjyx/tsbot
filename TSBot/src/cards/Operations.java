@@ -6,6 +6,7 @@ import java.util.Random;
 
 import events.CardEmbedBuilder;
 import events.Chernobyl;
+import events.Decision;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -45,9 +46,9 @@ public class Operations {
 	 */
 	public int opnumber = -1;
 	/**
-	 * The number of ops required to send things into space.
+	 * The number of ops required to send things into space. This is the same for both tracks.
 	 */
-	public static final int[] spaceOps = {2, 2, 2, 2, 3, 3, 4, 4};
+	public static final int[] spaceOps = {2, 2, 2, 2, 3, 3, 3, 4};
 	/**
 	 * The number of VP obtained by being the <b> first </b> to advance to that stage.
 	 */
@@ -57,7 +58,15 @@ public class Operations {
 	 */
 	public static final int[] spaceVP2 = {1, 0, 0, 0, 1, 0, 2, 0};
 	/**
-	 * The number you must roll under or at to advance to the next stage of the space race.
+	 * The number of VP obtained by being the <b> first </b> to advance to that stage. This is used under the alternate track.
+	 */
+	public static final int[] altspaceVP = {2, 0, 2, 0, 3, 0, 0, 4};
+	/**
+	 * The number of VP obtained by being the <b> second </b> to advance to that stage. This is used under the alternate track.
+	 */
+	public static final int[] altspaceVP2 = {1, 0, 0, 0, 1, 0, 0, 2};
+	/**
+	 * The number you must roll under or at to advance to the next stage of the space race. This is the same for both tracks.
 	 */
 	public static final int[] spaceRoll = {3, 4, 3, 4, 3, 4, 3, 2};
 	/**
@@ -83,6 +92,30 @@ public class Operations {
 	 * The set of countries in which the USSR is allowed to place influence.
 	 */
 	public static ArrayList<Integer> allowedSUN;
+	/**
+	 * The superpower that has the alternate space ability 4, and whether he has used it or not. <br>
+	 * -1 - no one has access <br>
+	 * 0 - US has access <br>
+	 * 1 - USSR has access <br>
+	 * 2 - US has access, spent <br>
+	 * 3 - USSR has access, spent <br>
+	 */
+	public static int discount = -1;
+	/**
+	 * The superpower that has the alternate space ability 6, and whether he has used it or not. <br>
+	 * -1 - no one has access <br>
+	 * 0 - US has access <br>
+	 * 1 - USSR has access <br>
+	 * 2 - US has access, spent <br>
+	 * 3 - USSR has access, spent <br>
+	 */
+	public static int coupReroll = -1;
+	/**
+	 * Data from the coup roll, saved in case of altspace six.
+	 */
+	public static int die6 = 0;
+	public static int amt6 = 0;
+	public static int target6 = -1;
 	
 	private TextChannel txtsp = (sp==0)?GameData.txtusa:GameData.txtssr;
 	/**
@@ -90,7 +123,7 @@ public class Operations {
 	 * @param superpower is the superpower in charge of these Operations points.
 	 * @param ops is the number of Operation Points usable in this instance of Operations.
 	 * @param infl indicates whether one can place Influence using this instance of Operations.
-	 * @param realign indicates whether one can Realigh using this instance of Operations.
+	 * @param realign indicates whether one can Realign using this instance of Operations.
 	 * @param coup indicates whether one can conduct a Coup using this instance of Operations.
 	 * @param space indicates whether one can send this instance of Operations to space.
 	 */
@@ -289,14 +322,30 @@ public class Operations {
 			txtsp.sendMessage(":x: Endeavor to use all available ops.").complete();
 			return false;
 		}
+		CardEmbedBuilder builder = new CardEmbedBuilder();
 		if (ops>opnumber) {
-			txtsp.sendMessage(":x: Overstreching yourself is never good.").complete();
-			return false;
+			if (ops==opnumber+1 && GameData.hasAbility(sp, 4, true)&&discount==sp) {
+				for (int i=0; i<countries.length; i++) {
+					if (MapManager.get(countries[i]).isControlledBy()==(sp+1)%2) {
+						discount += 2;
+						builder.addField("Space Race Bonus", "You had an easier time infiltrating the government of "+MapManager.get(countries[i]).name+".", false);
+						break;
+					}
+				}
+				if (discount <= 2) {
+					txtsp.sendMessage(":x: Overstreching yourself is never good.").complete();
+					return false;
+				}
+			}
+			else {
+				txtsp.sendMessage(":x: Overstreching yourself is never good.").complete();
+				return false;
+			}
 		}
 		realignment = false;
 		coupdetat = false;
 		spaceable = false;
-		CardEmbedBuilder builder = new CardEmbedBuilder();
+		
 		builder.setTitle("Influence Placement").setColor(sp==0?Color.blue:Color.red);
 		for (int i=0; i<countries.length; i++) {
 			builder.changeInfluence(countries[i], sp, amt[i]);
@@ -490,6 +539,28 @@ public class Operations {
 		realignment = false;
 		influence = false;
 		spaceable = false;
+		if (coupReroll==sp) {
+			die6 = (new Random().nextInt(6))+1;
+			amt6 = opnumber + die6 - MapManager.get(country).stab*2 - (HandManager.effectActive(43)?1:0);
+			if (HandManager.effectActive(690+sp) && MapManager.get(country).region>6) {
+				amt6++;
+			}
+			if (HandManager.effectActive(690+((sp+1)%2)) && MapManager.get(country).region>6) {
+				amt6--;
+			}
+			if (GameData.hasAbility((sp+1)%2, 7, true)) {
+				amt6--;
+			}
+			target6=country;
+			if (sp==0) GameData.txtusa.sendMessage("Your coup roll in "+MapManager.get(target6).name+" is :"+CardEmbedBuilder.numbers[die6]+", resulting in "+(amt6>0?amt6+" Influence Points of damage.":"no change to the regime.") + " Write `TS.decide reroll` to request a reroll with your ABMs, or `TS.decide accept` to leave it as is.");
+			GameData.dec = new Decision(sp, 4176);
+			return false;
+		}
+		int die = (new Random().nextInt(6))+1;
+		return this.coupPreDet(country, die);
+	}
+	
+	public boolean coupPreDet(int country, int die) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Coup d'État!")
 			.setDescription("Target: "+ MapManager.get(country))
@@ -497,7 +568,6 @@ public class Operations {
 		if (HandManager.effectActive(41) && sp==0) builder.addField("Nuclear Submarines!", "This coup does not affect DEFCON.", false);
 		else if (MapManager.get(country).isBattleground) builder.changeDEFCON(-1);
 		if (!free) builder.addMilOps(sp, opnumber);
-		int die = (new Random().nextInt(6))+1;
 		int amt = opnumber + die - MapManager.get(country).stab*2 - (HandManager.effectActive(43)?1:0);
 		if (HandManager.effectActive(43)) builder.addField("SALT Negotiations","-1",false);
 		if (HandManager.effectActive(690+sp) && MapManager.get(country).region>6) {
@@ -511,6 +581,10 @@ public class Operations {
 		if (HandManager.effectActive(109)) {
 			builder.addField("Yuri and Samantha", "", false);
 			builder.changeVP(-1);
+		}
+		if (GameData.hasAbility((sp+1)%2, 7, true)) {
+			builder.addField("Enemy Neutron Bombs", "-1", false);
+			amt--;
 		}
 		builder.addField("Roll: :" + CardEmbedBuilder.numbers[die] + ":", CardEmbedBuilder.intToEmoji(amt), false);
 		
@@ -561,15 +635,53 @@ public class Operations {
 			builder.setColor(Color.ORANGE);
 			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],"Failure.",false);
 		}
+		if (spaceLevel<4&&GameData.getSpace(sp)>=4) {
+			if (GameData.getSpace((sp+1)%2)<4) {
+				discount = sp;
+			}
+			else {
+				discount = -1;
+			}
+		}
+		if (spaceLevel<6&&GameData.getSpace(sp)>=6) {
+			if (GameData.getSpace((sp+1)%2)<6) {
+				coupReroll = sp;
+			}
+			else {
+				coupReroll = -1;
+			}
+		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		return true;
 	}
 	/**
 	 * Flavor text regarding the space race goes here.
-	 * @param spaceLevel is the superpower's advancement on the race.
+	 * @param spaceLevel is {@code s}'s advancement on the race.
 	 * @return a string, with relevant flavor text.
 	 */
 	public static String getSpaceNames(int spaceLevel, int s) {
+		if (GameData.altspace) {
+			if (s==0) {
+				if (spaceLevel==0) return "Mk-21 tested.";
+				if (spaceLevel==1) return "Explorer 1 launched.";
+				if (spaceLevel==2) return "Atlas developed.";
+				if (spaceLevel==3) return "\"Houston, Tranquility Base here. The Eagle has landed.\" \n- Neil Armstrong, 1969";
+				if (spaceLevel==4) return "Minuteman III developed.";
+				if (spaceLevel==5) return "Nike X active.";
+				if (spaceLevel==6) return "W66 developed.";
+				if (spaceLevel==7) return "SDI initiated.";
+			}
+			if (s==1) {
+				if (spaceLevel==0) return "RDS-37 tested.";
+				if (spaceLevel==1) return "Sputnik launched.";
+				if (spaceLevel==2) return "R-7 developed.";
+				if (spaceLevel==3) return "N1 launched.";
+				if (spaceLevel==4) return "R-36 developed.";
+				if (spaceLevel==5) return "A35 active.";
+				if (spaceLevel==6) return "53T6 developed.";
+				if (spaceLevel==7) return "SDI initiated.";
+			}
+		}
 		if (s==0) {
 			if (spaceLevel==0) return "Explorer 1 launched.";
 			if (spaceLevel==1) return "AM-18 launched.";
