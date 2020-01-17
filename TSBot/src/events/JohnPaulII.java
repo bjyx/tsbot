@@ -72,7 +72,7 @@ public class JohnPaulII extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove 2 USSR Influence from Poland. Add 1 USA Influence to Poland. *Allows the play of " + CardList.getCard(110) + ".*";
+		return "Remove 2 USSR Influence from Poland. Add 1 USA Influence to Poland. *Allows the play of " + CardList.getCard(101) + ".*";
 	}
 
 	@Override

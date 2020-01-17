@@ -83,7 +83,7 @@ public class ArmsRace extends Card {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "If the player of this card has more VPs than his/her opponent, he/she gains 1 VP. An additional 2 VPs is granted if he/she has met the required number of Military Operations, as defined by the DEFCON.";
+		return "If the player of this card has more Military Operations than his/her opponent, he/she gains 1 VP. An additional 2 VPs is granted if he/she has met the required number of Military Operations, as defined by the DEFCON.";
 	}
 
 	@Override

@@ -65,13 +65,12 @@ public class AWACSSale extends Card {
 
 	@Override
 	public String getDescription() {
-		return null;
+		return "Add 2 US Influence to Saudi Arabia. *Prevents the play of " + CardList.getCard(56) + " for the event.*";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
-		return null;
+		return "None.";
 	}
 
 }
