@@ -172,8 +172,8 @@ public class CardList {
 		}
 		/*
 		if (GameData.promo1) {
-		 CardList.addCard(new NonAligned());
-		 CardList.addCard(new MobutuSeseSeko());
+		 CardList.addCard(new NonAligned());	//111
+		 CardList.addCard(new MobutuSeseSeko());	
 		 CardList.addCard(new BerlinWall());
 		 CardList.addCard(new StanislavPetrov());
 		}
@@ -184,12 +184,56 @@ public class CardList {
 			CardList.addCard(new Placeholder());
 		}
 		if (GameData.promo2) {
-		 CardList.addCard(new KremlinFlu());
+		 CardList.addCard(new KremlinFlu()); //115
 		 CardList.addCard(new FirstLightning());
 		 CardList.addCard(new WhoLostChina());
 		 CardList.addCard(new DontWait());
 		}
 		else {
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+		}
+		if (GameData.yiyo) {
+		 CardList.addCard(new Finlandization()); //119
+		 CardList.addCard(new SchumanDeclaration());
+		 CardList.addCard(new Proliferation());
+		 CardList.addCard(new OperationAjax());
+		 CardList.addCard(new SEATOMETO());
+		 CardList.addCard(new Laika());
+		 CardList.addCard(new BerlinWall2());
+		 CardList.addCard(new TsarBomba());
+		 CardList.addCard(new VasiliArkhipov());
+		 CardList.addCard(new CheckpointC());
+		 CardList.addCard(new IndoSovietTreaty());
+		 CardList.addCard(new MatchOfTheCentury());
+		 CardList.addCard(new ApolloSoyuz());
+		 CardList.addCard(new BrotherSam());
+		 CardList.addCard(new HelsinkiAccords());
+		 CardList.addCard(new KosyginReform());
+		 CardList.addCard(new PeoplePower());
+		 CardList.addCard(new AmericasBackyard());
+		 CardList.addCard(new RedAfrica());
+		 CardList.addCard(new LatamArmsSales());
+		}
+		else {
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
+			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
