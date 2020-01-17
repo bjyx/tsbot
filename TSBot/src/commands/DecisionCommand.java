@@ -337,6 +337,10 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: Please respond with the options given.");
 				return;
 			}
+			synchronized(GameData.sync) {
+				notify();
+			}
+			return;
 		}
 		if (GameData.dec.card==0) {
 			int card;
@@ -929,7 +933,7 @@ public class DecisionCommand extends Command {
 					sendMessage(e, ":x: Ames hasn't told you of this card. Better to make use of what intelligence you have.");
 					return;
 				}
-				EmbedBuilder builder = new CardEmbedBuilder().setTitle("Compromised Operations").setDescription("Discarded " + CardList.getCard(card) + " to Aldrich Ames.");
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("Compromised Operations").setDescription("Discarded " + CardList.getCard(card) + " to Aldrich Ames.").setColor(Color.RED);
 				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			else {

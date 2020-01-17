@@ -8,6 +8,7 @@ import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import game.GameData;
 import game.PlayerList;
 import main.Launcher;
@@ -240,7 +241,10 @@ public class StartCommand extends Command {
 			MapManager.lateWarMap();
 			HandManager.deal();
 			TimeCommand.cardPlayed = false;
+			Operations.allowedUSA = Operations.influencePossible(0);
+			Operations.allowedSUN = Operations.influencePossible(1);
 			TimeCommand.prompt();
+			if (GameData.altspace) Operations.coupReroll = 0;//US starts at space 6
 			return;
 		}
 		else {

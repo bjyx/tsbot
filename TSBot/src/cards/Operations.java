@@ -552,9 +552,15 @@ public class Operations {
 				amt6--;
 			}
 			target6=country;
-			if (sp==0) GameData.txtusa.sendMessage("Your coup roll in "+MapManager.get(target6).name+" is :"+CardEmbedBuilder.numbers[die6]+", resulting in "+(amt6>0?amt6+" Influence Points of damage.":"no change to the regime.") + " Write `TS.decide reroll` to request a reroll with your ABMs, or `TS.decide accept` to leave it as is.");
+			if (sp==0) GameData.txtusa.sendMessage("Your coup roll in "+MapManager.get(target6).name+" is :"+CardEmbedBuilder.numbers[die6]+":, resulting in "+(amt6>0?amt6+" Influence Points of damage.":"no change to the regime.") + " Write `TS.decide reroll` to request a reroll with your ABMs, or `TS.decide accept` to leave it as is.").complete();
 			GameData.dec = new Decision(sp, 4176);
-			return false;
+			try {
+				synchronized(GameData.sync) {
+					wait();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 		int die = (new Random().nextInt(6))+1;
 		return this.coupPreDet(country, die);

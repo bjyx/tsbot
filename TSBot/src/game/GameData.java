@@ -128,7 +128,10 @@ public class GameData {
 	 * A Decision object, denoting any decision required to be made.
 	 */
 	public static Decision dec = null;
-	
+	/**
+	 * Synchronizer object roflmao
+	 */
+	public static Object sync;
 	/**
 	 * Sets {@link #started} to true.
 	 */
@@ -227,6 +230,8 @@ public class GameData {
 	 * Sets {@link #turn} to 1.
 	 */
 	public static void endSetupPhase() {
+		Operations.allowedUSA = Operations.influencePossible(0);
+		Operations.allowedSUN = Operations.influencePossible(1);
 		turn = 1;
 	}
 	
@@ -553,7 +558,8 @@ public class GameData {
 	 */
 	/*public static int die() {
 		int die = (int) (Math.random()*6 + 1);
-		if (HandManager.effectActive(0/*People Power)) {
+		wait();
+		if (peoplePower) {
 			return 7-die;
 		}
 		return die;
