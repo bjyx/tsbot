@@ -10,6 +10,7 @@ import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import game.PlayerList;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -192,6 +193,10 @@ public class HandManager {
 			if (handsize > SUNHand.size()&&!Deck.isEmpty()) {
 				SUNHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
+			if(Deck.isEmpty()) {
+				Deck.addAll(Discard);
+				Discard.clear();
+			}
 			if (handsize > USAHand.size()&&!Deck.isEmpty()) {
 				USAHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
@@ -237,22 +242,14 @@ public class HandManager {
 	 */
 	public static void play(int sp, int card, char mode) {
 		
-		if (effectActive(50)&&sp==0&&mode!='h') {
+		if (card==116&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("We Will Bury You...");
-			if(card != 32 || mode != 'e') {
-				builder.setDescription("...and the UN sits idle.")
-					.setFooter("\"If you don't like us, don't accept our invitations, "
-							+ "and don't invite us to come to see you. "
-							+ "Whether you like it or not, history is on our side.\" \n"
-							+ "- Nikita Khrushchev, 1956", Launcher.url("people/khrushchev.png"))
-					.setColor(Color.red);
-				builder.changeVP(-3);
-			}
-			removeEffect(50);
+			builder.setTitle("American Nuclear Monopoly Broken!")
+				.setDescription("")
+				.setColor(Color.red);
+			builder.changeDEFCON(-1);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
-		} //We will bury you always goes first lul
-		GameData.checkScore(false, false);
+		}
 		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Flower Power")
@@ -263,6 +260,15 @@ public class HandManager {
 				.setColor(Color.red);
 			builder.changeVP(-2);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (HandManager.effectActive(115)&&sp==1&&!GameData.isHeadlinePhase()) {
+			GameData.txtchnl.sendMessage(new CardEmbedBuilder()
+					.setTitle("Kremlin Flu")
+					.setDescription("The USSR has played " + CardList.getCard(card) + ".")
+					.build())
+			.complete();
+			HandManager.removeEffect(115);
+			return;
 		}
 		//super complicated area, will nitgrit later
 		if (mode=='h') {

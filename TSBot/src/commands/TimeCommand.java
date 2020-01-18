@@ -172,6 +172,9 @@ public class TimeCommand extends Command {
 				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
 			}
 		}
+		else if (HandManager.effectActive(115) && HandManager.checkScoring()<2) {
+			cardPlayedSkippable = false; //obligatory skip
+		}
 		else if (GameData.getAR()>14) { //skippable eighth action round
 			cardPlayedSkippable = false;
 			//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();

@@ -44,6 +44,15 @@ public class PlayCommand extends Command {
 				}
 				if (!TimeCommand.cardPlayedSkippable) {
 					sendMessage(e, "Skip intent noted.");
+					if (HandManager.effectActive(115)&&e.getAuthor().equals(PlayerList.getSSR())) {
+						GameData.txtchnl.sendMessage(new CardEmbedBuilder()
+								.setTitle("Kremlin Flu")
+								.setDescription("The USSR has no scoring cards to play. They forfeit this action round.")
+								.build())
+						.complete();
+						HandManager.removeEffect(115);
+						return;
+					}
 					TimeCommand.cardPlayedSkippable = true;
 					GameData.txtchnl.sendMessage(new CardEmbedBuilder()
 							.setTitle("Inactivity")
@@ -92,6 +101,10 @@ public class PlayCommand extends Command {
 		}
 		if (((mode != 'o' && mode != 's')|| card != 49) && !GameData.isHeadlinePhase() && HandManager.effectActive(490+GameData.phasing())) {
 			sendMessage(e, ":x: You have Missile Envy.");
+			return;
+		}
+		if (CardList.getCard(card).getOps()!=0 && HandManager.effectActive(115) && e.getAuthor().equals(PlayerList.getSSR()) && !GameData.isHeadlinePhase()) {
+			sendMessage(e, ":x: You have Kremlin Flu.");
 			return;
 		}
 		if (TimeCommand.cardPlayed) {
