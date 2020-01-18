@@ -25,6 +25,10 @@ public class OurManInTehran extends Card {
 		cards = new ArrayList<Integer>();
 		for (int i=0; i<5; i++) {
 			cards.add(HandManager.Deck.remove(new Random().nextInt(HandManager.Deck.size())));
+			if (HandManager.Deck.isEmpty()) {
+				HandManager.Deck.addAll(HandManager.Discard);
+				HandManager.Discard.clear();
+			}
 		}
 		for (Integer c : cards) {
 			builder.addField(""+CardList.getCard(c), CardList.getCard(c).getDescription(), false);
