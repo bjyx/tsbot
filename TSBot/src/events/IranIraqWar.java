@@ -2,6 +2,7 @@ package events;
 
 import java.awt.Color;
 
+import game.Die;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -12,8 +13,8 @@ public class IranIraqWar extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		int die = (int) (Math.random()*6+1);
-		int mod = die;
+		Die die = new Die();
+		int mod = die.roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(sp,  2);
 		String adjacents = "";
@@ -23,7 +24,7 @@ public class IranIraqWar extends Card {
 				adjacents += MapManager.get(i);
 			}
 		}
-		builder.addField(target==23?"Iraq Invades Iran":"Iran Invades Iraq", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
+		builder.addField(target==23?"Iraq Invades Iran":"Iran Invades Iraq", die + (mod==die.result?":":(": - " + adjacents)), false);
 		if (mod>=4) {
 			builder.setTitle(target==23?"Iraq demonstrates superiority":"Hussein Overthrown")
 				.setDescription(target==23?"Khuzestan annexed to Iraq":"Shi'ite rebellion causes fall of Ba'ath Party")

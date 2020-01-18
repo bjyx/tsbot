@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.CardList;
 import cards.HandManager;
+import game.Die;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -12,8 +13,8 @@ public class ArabIsraeliWar extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		int die = (int) (Math.random()*6+1);
-		int mod = die;
+		Die die = new Die();
+		int mod = die.roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(1,  2);
 		String adjacents = "";
@@ -27,7 +28,7 @@ public class ArabIsraeliWar extends Card {
 			mod--;
 			adjacents += MapManager.get(25);
 		}
-		builder.addField("Arab League invades Israel", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
+		builder.addField("Arab League invades Israel", die + (mod==die.result?"":(" - " + adjacents)), false);
 		if (mod>=4) {
 			builder.setTitle("Arab-Israeli War: Arab Victory")
 				.setDescription("Palestinian State established in Jerusalem; Congress in uproar")

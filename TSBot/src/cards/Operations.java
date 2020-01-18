@@ -2,11 +2,11 @@ package cards;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Random;
 
 import events.CardEmbedBuilder;
 import events.Chernobyl;
 import events.Decision;
+import game.Die;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -445,12 +445,11 @@ public class Operations {
 		influence = false;
 		coupdetat = false;
 		spaceable = false;
-		Random rand = new Random();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Realignment")
 			.setDescription("Target: "+ MapManager.get(country))
 			.setColor(sp==0?Color.blue:Color.red);
-		int[] rolls = new int[] {rand.nextInt(6)+1, rand.nextInt(6)+1};
+		int[] rolls = new int[] {new Die().roll(), new Die().roll()};
 		String[] modifiers = {"",""};
 		if (MapManager.get(country).influence[0]>MapManager.get(country).influence[1]) {
 			rolls[0]++;
@@ -540,7 +539,7 @@ public class Operations {
 		influence = false;
 		spaceable = false;
 		if (coupReroll==sp) {
-			die6 = (new Random().nextInt(6))+1;
+			die6 = new Die().roll();
 			amt6 = opnumber + die6 - MapManager.get(country).stab*2 - (HandManager.effectActive(43)?1:0);
 			if (HandManager.effectActive(690+sp) && MapManager.get(country).region>6) {
 				amt6++;
@@ -561,9 +560,10 @@ public class Operations {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			return true;
 		}
-		int die = (new Random().nextInt(6))+1;
-		return this.coupPreDet(country, die);
+		Die die = new Die();
+		return this.coupPreDet(country, die.roll());
 	}
 	
 	public boolean coupPreDet(int country, int die) {
@@ -624,7 +624,7 @@ public class Operations {
 		influence = false;
 		GameData.toSpace(sp);
 		int spaceLevel = GameData.getSpace(sp);
-		int die = (new Random().nextInt(6))+1;
+		int die = new Die().roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Space Race")
 		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));

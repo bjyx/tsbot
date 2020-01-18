@@ -2,6 +2,7 @@ package events;
 
 import java.awt.Color;
 
+import game.Die;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -14,8 +15,8 @@ public class Summit extends Card {
 		builder.setTitle("Summit Between the Superpowers")
 			.setDescription("Nuclear Arms Control and other topics to be discussed in Moscow meeting")
 			.setColor(Color.gray).setFooter("", Launcher.url("countries/"));
-		int die_usa = (int) (6*Math.random())+1;
-		int die_ssr = (int) (6*Math.random())+1;
+		int die_usa = new Die().roll();
+		int die_ssr = new Die().roll();
 		String str_usa = "";
 		String str_ssr = "";
 		//Europe

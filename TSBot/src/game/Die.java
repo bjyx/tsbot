@@ -1,6 +1,7 @@
 package game;
 
 import cards.HandManager;
+import events.Decision;
 /**
  * A random number generator between one and six. 
  * @author [REDACTED]
@@ -9,9 +10,9 @@ import cards.HandManager;
 public class Die {
 	private static final String[] numbers = {":zero:",":one:",":two:",":three:",":four:",":five:",":six:"};
 	
-	int result;
+	public int result;
 	public Die() {
-		result = (int)(Math.random()*6 + 1);
+		result = 0;
 	}
 	
 	/**
@@ -19,7 +20,9 @@ public class Die {
 	 */
 	public int roll() {
 		result = (int) (Math.random()*6 + 1);
-		if (HandManager.effectActive(135)) {
+		if (HandManager.effectActive(1350)||HandManager.effectActive(1351)) {
+			GameData.dec = new Decision(HandManager.effectActive(1350)?0:1,135);
+			GameData.diestore = result;
 			synchronized(GameData.sync) {
 				try {
 					wait();
@@ -27,6 +30,7 @@ public class Die {
 					e.printStackTrace();
 				}
 			}
+			result = GameData.diestore;
 		}
 		return result;
 	}

@@ -62,8 +62,24 @@ public class InfoCommand extends Command {
 					.addField("DEFCON " + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), "", false)
 					.addField("Military Operations: ", (GameData.getMilOps(0)>=GameData.getDEFCON()?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getMilOps(0)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()) + "\n"
 							+ (GameData.getMilOps(1)>=GameData.getDEFCON()?StartCommand.emojiID[10]:StartCommand.emojiID[7])+CardEmbedBuilder.intToEmoji(GameData.getMilOps(1)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), false)
-					.addField("Space Race: " + (GameData.hasSpace(0)?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(0))+(GameData.hasAbility(0, 2)?":dog2:":"")+(GameData.hasAbility(0, 4)?":rocket:":"")+(GameData.hasAbility(0, 6)?":full_moon:":"")+(GameData.hasAbility(0, 8)?":satellite_orbital:":"")+(GameData.hasAbility(0, 2, true)?":alembic:":"")+(GameData.hasAbility(0, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")+(GameData.hasAbility(0, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")+(GameData.hasAbility(0, 7, true)?":satellite_orbital:":"")+"\n"
-							+ (GameData.hasSpace(0)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+(GameData.hasAbility(1, 2)?":dog2:":"")+(GameData.hasAbility(1, 4)?":rocket:":"")+(GameData.hasAbility(1, 6)?":full_moon:":"")+(GameData.hasAbility(1, 8)?":satellite_orbital:":"")+(GameData.hasAbility(1, 2, true)?":alembic:":"")+(GameData.hasAbility(1, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")+(GameData.hasAbility(1, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")+(GameData.hasAbility(1, 7, true)?":satellite_orbital:":""), "", false);
+					.addField("Space Race: " + (GameData.hasSpace(0)?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(0))
+					+(GameData.hasAbility(0, 2)?":dog2:":"")
+					+(GameData.hasAbility(0, 4)?":rocket:":"")
+					+(GameData.hasAbility(0, 6)?":full_moon:":"")
+					+(GameData.hasAbility(0, 8)?":satellite_orbital:":"")
+					+(GameData.hasAbility(0, 2, true)?":alembic:":"")
+					+(GameData.hasAbility(0, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")
+					+(GameData.hasAbility(0, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")
+					+(GameData.hasAbility(0, 7, true)?":satellite_orbital:":"")+"\n"
+							+ (GameData.hasSpace(0)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+
+							(GameData.hasAbility(1, 2)?":dog2:":"")+
+							(GameData.hasAbility(1, 4)?":rocket:":"")+
+							(GameData.hasAbility(1, 6)?":full_moon:":"")+
+							(GameData.hasAbility(1, 8)?":satellite_orbital:":"")+
+							(GameData.hasAbility(1, 2, true)?":alembic:":"")+
+							(GameData.hasAbility(1, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")+
+							(GameData.hasAbility(1, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")+
+							(GameData.hasAbility(1, 7, true)?":satellite_orbital:":""), "", false);
 			String map = "";
 			for (int i=0; i<21; i++) {
 				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[9]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[10]:StartCommand.emojiID[8]))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).influence[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).influence[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");

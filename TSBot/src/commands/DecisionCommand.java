@@ -17,6 +17,7 @@ import events.MissileEnvy;
 import events.OlympicGames;
 import events.OurManInTehran;
 import events.StarWars;
+import game.Die;
 import game.GameData;
 import game.PlayerList;
 import main.Launcher;
@@ -168,9 +169,10 @@ public class DecisionCommand extends Command {
 					}
 					HandManager.discard(0, x);
 					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Quagmire!").setDescription("Discarded " + CardList.getCard(x));
-					int die = (int)(6*Math.random()+1);
-					builder.addField("Roll: " + CardEmbedBuilder.intToEmoji(die), die<=4?"Success - Quagmire cancelled!":"Failure", false).setColor(die<=4?Color.blue:Color.red);
-					if (die<=4) HandManager.removeEffect(42);
+					Die die = new Die();
+					die.roll();
+					builder.addField(die.toString(), die.result<=4?"Success - Quagmire cancelled!":"Failure", false).setColor(die.result<=4?Color.blue:Color.red);
+					if (die.result<=4) HandManager.removeEffect(42);
 					GameData.txtchnl.sendMessage(builder.build()).complete();
 					TimeCommand.trapDone=true;
 				}
@@ -218,9 +220,10 @@ public class DecisionCommand extends Command {
 					}
 					HandManager.discard(1, x);
 					EmbedBuilder builder = new CardEmbedBuilder().setTitle("Bear Trap!").setDescription("Discarded " + CardList.getCard(x));
-					int die = (int)(6*Math.random()+1);
-					builder.addField("Roll: " + CardEmbedBuilder.intToEmoji(die), die<=4?"Success - Bear Trap cancelled!":"Failure", false).setColor(die<=4?Color.red:Color.blue);
-					if (die<=4) HandManager.removeEffect(44);
+					Die die = new Die();
+					die.roll();
+					builder.addField(die.toString(), die.result<=4?"Success - Bear Trap cancelled!":"Failure", false).setColor(die.result<=4?Color.red:Color.blue);
+					if (die.result<=4) HandManager.removeEffect(44);
 					GameData.txtchnl.sendMessage(builder.build()).complete();
 					TimeCommand.trapDone=true;
 				}
@@ -328,7 +331,7 @@ public class DecisionCommand extends Command {
 			if (args[1].equalsIgnoreCase("reroll")) {
 				Operations.coupReroll += 2;
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Space Race Advantage").setDescription("The "+(GameData.dec.sp==0?"US":"USSR")+" has used its technological edge for a second shot at a coup!").setColor(GameData.dec.sp==0?Color.blue:Color.red).build());
-				GameData.ops.coupPreDet(Operations.target6, (int) (Math.random()*6+1));
+				GameData.ops.coupPreDet(Operations.target6, new Die().roll());
 			}
 			else if (args[1].equalsIgnoreCase("accept")) {
 				GameData.ops.coupPreDet(Operations.target6, Operations.die6);
@@ -472,8 +475,8 @@ public class DecisionCommand extends Command {
 				int[] die = {0,0};
 				
 				while (die[0] == die[1]) {
-					die[0] = (int) (Math.random()*6 + 1);
-					die[1] = (int) (Math.random()*6 + 1);
+					die[0] = new Die().roll();
+					die[1] = new Die().roll();
 					die[OlympicGames.host] += 2;
 					builder.addField(":flag_us::"+CardEmbedBuilder.numbers[die[0]]+":-:" + CardEmbedBuilder.numbers[die[1]]+":" + MapManager.get(85),die[0]==die[1]?"A tie - roll again.":("And "+(die[0]>die[1]?"the Americans":"the Soviets")+ " take home the gold!"),false);
 				}
@@ -1023,7 +1026,31 @@ public class DecisionCommand extends Command {
 			HandManager.Deck.addAll(OurManInTehran.cards);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		
+		if (GameData.dec.card==115) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==135) {
+			if (args[1].equalsIgnoreCase("flip")) {
+				HandManager.removeEffect(1350);
+				HandManager.removeEffect(1351);
+				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Marcos leaves the Philippines").setDescription("People's Power Revolution succeeds in ousting dictator").setFooter("\"My spirit will rise from the grave and the world shall know that I was right.\"\n- Ferdinand Marcos, 1989", Launcher.url("yiyo/marcos.png")).setColor(GameData.dec.sp==0?Color.blue:Color.red).addField("\"The revolution that surprised the world\"", "A die result of " + GameData.diestore + " has been flipped!", false).build());
+				GameData.diestore = 7-GameData.diestore;
+			}
+			else if (args[1].equalsIgnoreCase("accept")) {
+				//nothing happens
+			}
+			else {
+				sendMessage(e, ":x: Please respond with the options given.");
+				return;
+			}
+			synchronized(GameData.sync) {
+				notify();
+			}
+			return;
+		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);
 

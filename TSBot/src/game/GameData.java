@@ -133,6 +133,10 @@ public class GameData {
 	 */
 	public static Object sync;
 	/**
+	 * A temporary storage space for the result of a die; blame EDSA.
+	 */
+	public static int diestore;
+	/**
 	 * Sets {@link #started} to true.
 	 */
 	public static void startGame() {

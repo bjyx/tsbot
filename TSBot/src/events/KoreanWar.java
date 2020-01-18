@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 
 import cards.HandManager;
+import game.Die;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -11,8 +12,8 @@ public class KoreanWar extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		int die = (int) (Math.random()*6+1);
-		int mod = die;
+		Die die = new Die();
+		int mod = die.roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(1,  2);
 		String adjacents = "";
@@ -26,7 +27,7 @@ public class KoreanWar extends Card {
 			mod--;
 			adjacents += MapManager.get(86);
 		}
-		builder.addField("North Korea Invades South Korea", "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
+		builder.addField("North Korea Invades South Korea", die + (mod==die.result?":":(": - " + adjacents)), false);
 		if (mod>=4) {
 			builder.setTitle("Communist Victory in Korean War")
 				.setDescription("Kim Il-Sung gives victory speech in Seoul; Congress in uproar")

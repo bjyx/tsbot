@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 
 import cards.HandManager;
+import game.Die;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
@@ -13,8 +14,8 @@ public class BrushWar extends Card {
 	
 	@Override
 	public void onEvent(int sp, String[] args) {
-		int die = (int) (Math.random()*6+1);
-		int mod = die;
+		Die die = new Die();
+		int mod = die.roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(sp,  3);
 		String adjacents = "";
@@ -24,7 +25,7 @@ public class BrushWar extends Card {
 				adjacents += MapManager.get(i);
 			}
 		}
-		builder.addField("Insurgency in " + MapManager.get(target).name, "Roll: :" + numbers[die] + (mod==die?":":(": - " + adjacents)), false);
+		builder.addField("Insurgency in " + MapManager.get(target).name, die + (mod==die.result?":":(": - " + adjacents)), false);
 		if (mod>=3) {
 			builder.setTitle("Insurgents overthrow government in " + MapManager.get(target).name)
 				.setDescription("New government aligns closely with " + (sp==0?"American":"Soviet") + " interests")

@@ -8,6 +8,7 @@ import cards.CardList;
 import cards.HandManager;
 import events.CardEmbedBuilder;
 import events.Decision;
+import game.Die;
 import game.GameData;
 import game.PlayerList;
 import main.Launcher;
@@ -91,7 +92,7 @@ public class TurnZero {
 	 * Ends a started crisis by rolling a die.
 	 */
 	public static void endCrisis() {
-		int die = (int) (Math.random()*6) + 1;
+		int die = new Die().roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setAuthor("Turn 0 Crisis Resolution").addField(":flag_us:", getEffectEmoji(played[0].type), true).addField(":game_die:",CardEmbedBuilder.intToEmoji(die),true).addField(MapManager.get(85).toString(), getEffectEmoji(played[1].type), true);
 		if (!(played[0].type==-1||played[1].type==-1)) { //if neither player uses the nullify card

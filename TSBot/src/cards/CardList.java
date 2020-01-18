@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import events.*;
 import game.GameData;
+import promo.*;
 import turnzero.NationalistChina;
 /**
  * Implements a list of the cards used in the game.
@@ -170,7 +171,6 @@ public class CardList {
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
 		}
-		/*
 		if (GameData.promo1) {
 		 CardList.addCard(new NonAligned());	//111
 		 CardList.addCard(new MobutuSeseSeko());	
@@ -194,28 +194,28 @@ public class CardList {
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
-		}
+		}/*
 		if (GameData.yiyo) {
 		 CardList.addCard(new Finlandization()); //119
-		 CardList.addCard(new SchumanDeclaration());
+		 CardList.addCard(new SchumanDeclaration()); //120
 		 CardList.addCard(new Proliferation());
 		 CardList.addCard(new OperationAjax());
 		 CardList.addCard(new SEATOMETO());
 		 CardList.addCard(new Laika());
-		 CardList.addCard(new BerlinWall2());
+		 CardList.addCard(new BerlinWall2()); //125
 		 CardList.addCard(new TsarBomba());
 		 CardList.addCard(new VasiliArkhipov());
 		 CardList.addCard(new CheckpointC());
 		 CardList.addCard(new IndoSovietTreaty());
-		 CardList.addCard(new MatchOfTheCentury());
+		 CardList.addCard(new MatchOfTheCentury()); //130
 		 CardList.addCard(new ApolloSoyuz());
 		 CardList.addCard(new BrotherSam());
 		 CardList.addCard(new HelsinkiAccords());
 		 CardList.addCard(new KosyginReform());
-		 CardList.addCard(new PeoplePower());
+		 CardList.addCard(new PeoplePower()); //135
 		 CardList.addCard(new AmericasBackyard());
 		 CardList.addCard(new RedAfrica());
-		 CardList.addCard(new LatamArmsSales());
+		 CardList.addCard(new LatamArmsSales()); //138
 		}
 		else {
 			CardList.addCard(new Placeholder());
