@@ -80,12 +80,8 @@ public class NonAligned extends Card {
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		try {
-			target = Integer.parseInt(args[1]);
-		}
-		catch (NumberFormatException err) {
-			return false;
-		}
+		target = MapManager.find(args[1]);
+		if (target==-1) return false;
 		if (MapManager.get(target).region==3||MapManager.get(target).region==5||MapManager.get(target).region==6||MapManager.get(target).region==8||target==34) {
 			if (MapManager.get(target).influence[0]>=2&&MapManager.get(target).influence[1]>=2) return true;
 		}
