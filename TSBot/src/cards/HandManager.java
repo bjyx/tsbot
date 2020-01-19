@@ -10,7 +10,6 @@ import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
-import game.PlayerList;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -77,6 +76,12 @@ public class HandManager {
 	 * <li>{@code 106 NORAD} - Whenever DEFCON drops to 2 on an Action Round, place one influence in any country with US Influence as long as Canada is controlled. Cancelled by {@code 042 Quagmire}. √</li>
 	 * <li>{@code 109 Yuri and Samantha} - All US coup rolls give the USSR 1 VP each for the rest of the turn. √</li>
 	 * <li>{@code 110 AWACS Sale to Saudis} - Disables {@code 056 Muslim Revolution}. √</li>
+	 * <li>{@code 115 Kremlin Flu} - USSR must play a scoring card or skip its turn. √</li>
+	 * <li>{@code 124 Laika} - USSR spacing attempts are easier until "Man in Space". √</li>
+	 * <li>{@code 126 Tsar Bomba} - Degrade DEFCON on any turn the US coups. √</li>
+	 * <li>{@code 128 Vasili Arkhipov} - The US player chooses at the start of their action round to discard a USSR event (and draw a replacement); if one doesn't exist, lower DEFCON by 1. Cancelled by setting Military Operations to 0 before the action round.</li>
+	 * <li>{@code 129 Indo-Soviet Treaty} - The USSR *must* take eight action rounds this turn. </li>
+	 * <li>{@code 137 Red Africa} - The USSR gains 1VP during final scoring for each of the Ivory Coast, West African States, Kenya, Somalia, and Botswana that they control then. </li>
 	 * <li>{@code 310 Red Scare} - The US gets -1 Operation point on every card for the rest of the turn to a minimum of 1. √</li>
 	 * <li>{@code 311 Purge} - The USSR gets -1 Operation point on every card for the rest of the turn to a minimum of 1. √</li>
 	 * <li>{@code 400 Turkish Missile Crisis} - For the rest of the turn, the US cannot coup-doing so loses the game by thermonuclear war. Cancelled by removing two influence from Turkey or West Germany. √</li>
@@ -91,6 +96,9 @@ public class HandManager {
 	 * <li>{@code 1004 Coalition Government} - Socialist Governments has no effect during Turns 1 and 2.
 	 * <li>{@code 1005 Tory Victory} - Disables {@code 028 Suez Crisis}. Turns Socialist Governments into a Mid-War Card. 
 	 * <li>{@code 1006 VJ 1} - Turns {@code 027 Anpō Treaty} into a Mid-War Card. 
+	 * <li>{@code 1210/1211 Nuclear Proliferation} - At the start of the next action round, increase DEFCON by 2; the player has the option of lowering DEFCON by 1 at the end of the action round. </li>
+	 * <li>{@code 1270/1271 Vasili Arkhipov} - The player holding this may, at the start of their action round, raise DEFCON by 1. </li>
+	 * <li>{@code 1350/1351 People's Power} - The player holding this may, after any die roll, flip the die to its opposite face before resolving its effects. </li>
 	 * </ul>
 	 * Turn zero statuses:
 	 * <ul>
