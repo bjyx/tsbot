@@ -63,15 +63,15 @@ public class InfoCommand extends Command {
 					.addField("Military Operations: ", (GameData.getMilOps(0)>=GameData.getDEFCON()?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getMilOps(0)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()) + "\n"
 							+ (GameData.getMilOps(1)>=GameData.getDEFCON()?StartCommand.emojiID[10]:StartCommand.emojiID[7])+CardEmbedBuilder.intToEmoji(GameData.getMilOps(1)) + "/" + CardEmbedBuilder.intToEmoji(GameData.getDEFCON()), false)
 					.addField("Space Race: " + (GameData.hasSpace(0)?StartCommand.emojiID[9]:StartCommand.emojiID[6]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(0))
-					+(GameData.hasAbility(0, 2)?":dog2:":"")
-					+(GameData.hasAbility(0, 4)?":rocket:":"")
-					+(GameData.hasAbility(0, 6)?":full_moon:":"")
-					+(GameData.hasAbility(0, 8)?":satellite_orbital:":"")
-					+(GameData.hasAbility(0, 2, true)?":alembic:":"")
-					+(GameData.hasAbility(0, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")
-					+(GameData.hasAbility(0, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")
-					+(GameData.hasAbility(0, 7, true)?":satellite_orbital:":"")+"\n"
-							+ (GameData.hasSpace(0)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+
+						+(GameData.hasAbility(0, 2)?":dog2:":"")
+						+(GameData.hasAbility(0, 4)?":rocket:":"")
+						+(GameData.hasAbility(0, 6)?":full_moon:":"")
+						+(GameData.hasAbility(0, 8)?":satellite_orbital:":"")
+						+(GameData.hasAbility(0, 2, true)?":alembic:":"")
+						+(GameData.hasAbility(0, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")
+						+(GameData.hasAbility(0, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")
+						+(GameData.hasAbility(0, 7, true)?":satellite_orbital:":"")+"\n"
+						+(GameData.hasSpace(0)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+
 							(GameData.hasAbility(1, 2)?":dog2:":"")+
 							(GameData.hasAbility(1, 4)?":rocket:":"")+
 							(GameData.hasAbility(1, 6)?":full_moon:":"")+
@@ -112,57 +112,67 @@ public class InfoCommand extends Command {
 			builder.addField("South America: ", map, false);
 			if (GameData.ccw) builder.addField("China:",":flag_cn:" + (MapManager.get(86).isControlledBy()==1?"**":"") + MapManager.get(86).influence[1] + (MapManager.get(86).isControlledBy()==1?"**\n":"\n"),false);
 			String effects = "";
-			for (Integer i : HandManager.Effects) {
 				//top priority!
+				//DEFCON affectors
+				if (HandManager.effectActive(126)) effects+=":: **Tsar Bomba**";
+				if (HandManager.effectActive(1270)||HandManager.effectActive(1271)) effects+=":: Vasili Arkhipov";
+				if (HandManager.effectActive(1210)||HandManager.effectActive(1211)) effects+=":: **Nuclear Weapons Proliferation**";
+				if (HandManager.effectActive(128)) effects+=StartCommand.emojiID[12]+" **Checkpoint C**";
 				//coup modifiers
-				if (i==400||i==401) effects+=":rocket: Missile Crisis\n";
-				if (i==41) effects+=":anchor: Nuclear Submarines\n";
-				if (i==43) effects+=":atom: Salt Negotiations\n";
-				if (i==690||i==691) effects += ":earth_americas: Latin American Death Squads\n";
+				if (HandManager.effectActive(400)||HandManager.effectActive(401)) effects+=":rocket: **Missile Crisis**\n"; //loses the game if coups happen
+				if (HandManager.effectActive(41)) effects+=":anchor: Nuclear Submarines\n";
+				if (HandManager.effectActive(43)) effects+=":atom: Salt Negotiations\n";
+				if (HandManager.effectActive(690)||HandManager.effectActive(691)) effects += ":earth_americas: Latin American Death Squads\n";
 				//other ops modifiers
-				if (i==93) effects+=":flag_ni: Iran-Contra Affair\n";
-				if (i==94) effects+=":radioactive: Chernobyl\n";
+				if (HandManager.effectActive(93)) effects+=":flag_ni: Iran-Contra Affair\n";
+				if (HandManager.effectActive(94)) effects+=":radioactive: Chernobyl\n";
+				if (HandManager.effectActive(124)) effects+=":dog2: Laika";
 				//UN
-				if (i==50) effects+=":coffin: \"We Will Bury You\"\n";
-				if (i==60) effects+=":airplane: U-2 Incident\n";
+				if (HandManager.effectActive(50)) effects+=":coffin: \"We Will Bury You\"\n";
+				if (HandManager.effectActive(60)) effects+=":airplane: U-2 Incident\n";
 				//Effect improvement
-				if (i==82) effects+=":flag_ir: Iran Hostage Crisis\n";
-				if (i==87) effects+=StartCommand.emojiID[4] + "The Reformer\n";
+				if (HandManager.effectActive(82)) effects+=":flag_ir: Iran Hostage Crisis\n";
+				if (HandManager.effectActive(87)) effects+=StartCommand.emojiID[4] + "The Reformer\n";
 				//VP for US actions
-				if (i==59) effects+=":blossom: Flower Power\n";
-				if (i==109) effects+=":dove: Yuri and Samantha\n";
+				if (HandManager.effectActive(59)) effects+=":blossom: Flower Power\n";
+				if (HandManager.effectActive(109)) effects+=":dove: Yuri and Samantha\n";
 				//Coup protection
-				if (i==27) effects+=":flag_jp: Anpo\n";
+				if (HandManager.effectActive(27)) effects+=":flag_jp: Anpo\n";
 				//	Interacts with NATO
-				if (i==21) effects+=":earth_africa: NATO\n";
-				if (i==17) effects+=":flag_fr: Charles de Gaulle\n";
-				if (i==55) effects+=":flag_de: Willy Brandt\n";
+				if (HandManager.effectActive(21)) effects+=":compass: NATO\n"; //also coup protection
+				if (HandManager.effectActive(17)) effects+=":flag_fr: Charles de Gaulle\n";
+				if (HandManager.effectActive(55)) effects+=":flag_de: Willy Brandt\n";
 				//Activators
-				if (i==16&&!HandManager.effectActive(21)) effects+=":flag_pl: NATO formable\n";
-				if (i==23&&!HandManager.effectActive(21)) effects+=":money_with_wings: NATO formable\n";
-				if (i==68) effects+=":flag_va: John Paul II\n";
+				if (HandManager.effectActive(16)&&!HandManager.effectActive(21)) effects+=":flag_pl: NATO formable\n";
+				if (HandManager.effectActive(23)&&!HandManager.effectActive(21)) effects+=":money_with_wings: NATO formable\n";
+				if (HandManager.effectActive(68)) effects+=":flag_va: John Paul II\n";
+				//provides an action round
+				if (HandManager.effectActive(129)) effects+=":flag_in: Indo-Soviet Treaty";
+				if (HandManager.effectActive(861)) effects+=":eight: North Sea Oil's eighth action round";
 				//Deactivators
-				if (i==65) effects+=":flag_il: Camp David Accords\n";
-				if (i==83) effects+=":flag_gb: Iron Lady\n";
-				if (i==96) effects+=StartCommand.emojiID[1] + " \"Tear Down This Wall\"\n";
-				if (i==97) effects+=":flag_us: \"An Evil Empire\"\n";
-				if (i==110) effects+=":flag_sa: AWACS Sold\n";
+				if (HandManager.effectActive(86)) effects+=":flag_no: North Sea Oil\n";
+				if (HandManager.effectActive(65)) effects+=":flag_il: Camp David Accords\n";
+				if (HandManager.effectActive(83)) effects+=":flag_gb: Iron Lady\n";
+				if (HandManager.effectActive(96)) effects+=StartCommand.emojiID[1] + " \"Tear Down This Wall\"\n";
+				if (HandManager.effectActive(97)) effects+=":flag_us: \"An Evil Empire\"\n";
+				if (HandManager.effectActive(110)) effects+=":flag_sa: AWACS Sold\n";
 				//fluxing quagmire
-				if (i==42) effects+=":helicopter: Quagmire\n"; //also deactivator
-				if (i==44) effects+=":flag_af: Bear Trap\n";
+				if (HandManager.effectActive(42)) effects+=":helicopter: Quagmire\n"; //also deactivator
+				if (HandManager.effectActive(44)) effects+=":flag_af: Bear Trap\n";
 				//Op Modifiers
-				if (i==25) effects+=StartCommand.emojiID[9] + " Containment\n";
-				if (i==51) effects+=StartCommand.emojiID[10] + " Brezhnev Doctrine\n";
-				if (i==310) effects+=StartCommand.emojiID[6] + " Red Scare\n";
-				if (i==311) effects+=StartCommand.emojiID[7] + " Purge\n";
-				if (i==9) effects+=":flag_vn: Vietnam Revolts\n";
+				if (HandManager.effectActive(25)) effects+=StartCommand.emojiID[9] + " Containment\n";
+				if (HandManager.effectActive(51)) effects+=StartCommand.emojiID[10] + " Brezhnev Doctrine\n";
+				if (HandManager.effectActive(310)) effects+=StartCommand.emojiID[6] + " Red Scare\n";
+				if (HandManager.effectActive(311)) effects+=StartCommand.emojiID[7] + " Purge\n";
+				if (HandManager.effectActive(9)) effects+=":flag_vn: Vietnam Revolts\n";
 				//score affecting
-				if (i==35) effects+=":flag_tw: Formosan Resolution\n";
-				if (i==73) effects+=":earth_asia: Shuttle Diplomacy\n";
+				if (HandManager.effectActive(35)) effects+=":flag_tw: Formosan Resolution\n";
+				if (HandManager.effectActive(73)) effects+=":earth_asia: Shuttle Diplomacy\n";
+				if (HandManager.effectActive(137)) effects+=":earth_africa: Red Africa\n";
+				//luck changing
+				if (HandManager.effectActive(1350)||HandManager.effectActive(1351)) effects+=":game_die: People's Power Revolution\n";
 				//NORAD
-				if (i==106) effects+=":flag_ca: NORAD\n";
-
-			}
+				if (HandManager.effectActive(106)) effects+=":flag_ca: NORAD\n";
 			builder.addField("Effects:", effects, false);
 			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
