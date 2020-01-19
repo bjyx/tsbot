@@ -28,7 +28,7 @@ public class DeStalinization extends Card {
 				builder.addField("No countries to target!", "For some reason, there is either no Soviet influence to move at all, or the whole world is under the sway of the USA. Some Soviet Premier. :s", false);
 			}
 			else if (order.isEmpty()) {
-				builder.addField("No influence moved", "¯\\_(ツ)_/¯", false);
+				builder.addField("No influence moved", "¯\\\\_(ツ)\\_/¯", false);
 			}
 			else {
 				builder.bulkChangeInfluence(order, 1, values);
