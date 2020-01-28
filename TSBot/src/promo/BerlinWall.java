@@ -16,8 +16,8 @@ public class BerlinWall extends Card {
 		int spaceLevel = GameData.getSpace(sp);
 		builder.setTitle("Wall Erected Around Berlin")
 			.setDescription("")
-			.setFooter("\"Freedom has many difficulties and democracy is not perfect, but we have never had to put a wall up to keep our people in, to prevent them from leaving us.\"\n"
-					+ "- John F. Kennedy, 1963", Launcher.url("people/jfk.png"))
+			.setFooter("\"Walls in the mind often stand longer than those built of concrete.\"\n"
+					+ "- Willy Brandt, 1990", Launcher.url("people/brandt.png"))
 			.setColor(sp==0?Color.blue:Color.red);
 		builder.changeInfluence(6, 1, 2); //dd+2
 		if (GameData.aheadInSpace()!=1) {

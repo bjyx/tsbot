@@ -283,6 +283,8 @@ public class GameData {
 		if (HandManager.removeEffect(93)) builder.addField("Mistakes were made","US rolls on realignments are no longer penalized.",false);	//Iran Contra
 		if (HandManager.removeEffect(94)) builder.addField("","USSR influence placements are no longer restricted by region.",false);	//Chernobyl
 		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
+		if (HandManager.removeEffect(126)) builder.addField("Test Ban","Coups conducted on US Action Rounds no longer drop DEFCON.",false);	//Tsar Bomba
+		HandManager.removeEffect(129); //Indo-Soviet
 		if (HandManager.removeEffect(310)) builder.addField("Army Hearings","US malus to Operations removed.",false);	//Red Scare/Purge
 		if (HandManager.removeEffect(311)) builder.addField("Purges End","USSR malus to Operations removed.",false);
 		if (HandManager.removeEffect(400)) builder.addField("Missiles removed","Coups now allowed by the US.",false);	//Missile Crisis
@@ -471,6 +473,7 @@ public class GameData {
 			GameData.checkScore(false, false);
 		}
 		score += amt;
+		GameData.checkScore(false, false);
 	}
 	/**
 	 * 

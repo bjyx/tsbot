@@ -464,8 +464,8 @@ public class MapManager {
 				new String[] {"india", "ind", "in", "bharat"}, 
 				new Integer[] {33, 40}, //bu, pk
 				"India's independence and subsequent partition in 1948 created two nations increasingly hostile to each other. They fought a total of four wars, with many minor skirmishes in between, "
-				+ "over border disputes and a Pakistani exclave that would later become Bangladesh. On the internal front, India had had to consistently deal with the Maoist Naxalites, "
-				+ "as well as interreligious conflict.", 
+				+ "over border disputes and a Pakistani exclave that would later become Bangladesh. On the internal front, India officially declared state socialism in 1967 "
+				+ "and signed a Treaty of Friendship with the Soviets in 1972. India had had to consistently deal with the Maoist Naxalites, as well as interreligious conflict.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -1077,7 +1077,7 @@ public class MapManager {
 				"United States of America", 
 				9, 
 				"us", 
-				7, //cannot coup. ever. 14 > 6 [die] + 6 [Vietnam-busted China card is the maximum ops number on any country] + 1 [Brezhnev or Containment, even though it doesn't apply to the China Card]
+				7, //cannot coup. ever. 14 > 6 [die] + 6 [Vietnam-boosted China card is the maximum ops number on any card] + 1 [Brezhnev or Containment, even though it doesn't apply to the China Card]
 				false, 
 				new String[] {"unitedstates", "usa", "us","america","democrat", "capitalist"}, 
 				new Integer[] {3, 36, 65, 71}, //ca, jp, cu, mx

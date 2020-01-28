@@ -28,9 +28,8 @@ public class IndoPakiWar extends Card {
 		if (mod>=4) {
 			builder.setTitle("Kashmir conflict resolved in favor of " + (target==34?"Pakistan":"India"))
 				.setDescription("")
-				.setFooter("\"The number of women who have been kidnapped and raped makes my heart bleed. "
-						+ "The wild forces thus let loose on the State are marching on with the aim of capturing Srinagar, the summer Capital of my Government, as first step to over-running the whole State [of Kashmir].\"\n"
-						+ "- Maharaja Hari Singh, 1947",Launcher.url("people/harisingh.png"))
+				.setFooter("\"Millions of lives were sacrificed to create this country. Pakistan is said to be the dream of Mohammad Iqbal and the creation of Muhammad Ali Jinnah, the Quaid-e-Azam. Was anything wrong with the dream or with the one who made the dream come true?\"\n"
+						+ "- Zulfikar Ali Bhutto, 1978",Launcher.url("people/bhutto.png"))
 				.setColor(sp==0?Color.blue:Color.red);
 			builder.changeInfluence(target, sp, MapManager.get(target).influence[(sp+1)%2]);
 			builder.changeInfluence(target, (sp+1)%2, -MapManager.get(target).influence[(sp+1)%2]);
@@ -39,8 +38,8 @@ public class IndoPakiWar extends Card {
 		else {
 			builder.setTitle("Offensive Repulsed")
 				.setDescription("Simla Accord marks return to status quo antebellum")
-				.setFooter("\"`CONTINUING PROPAGANDA RE ACHIEVEMENTS OF PAK FORCES SEEMS TO HAVE CONVINCED MOST THAT ONLY PAK FORBEARANCE SAVED THE INDIANS FROM DISASTER.`\"\n"
-						+ "- Telegram from the US Embassy in Karachi, 1965",Launcher.url("people/wargames2.png"))
+				.setFooter("\"India wants to avoid a war at all costs but it is not a one-sided affair, you cannot shake hands with a clenched fist.\"\n"
+						+ "- Indira Gandhi, 1971",Launcher.url("people/indira.png"))
 				.setColor(sp==0?Color.red:Color.blue);
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();

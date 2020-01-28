@@ -20,7 +20,7 @@ public class IndependentReds extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle(MapManager.get(target).name + " splits from Soviet Bloc")
 			.setDescription("")
-			.setFooter("\"Stop sending people to kill me. We've already captured five of them, one of them with a bomb and another with a rifle. [...] If you don't stop sending killers, I'll send one to Moscow, and I won't have to send a second.\"\n"
+			.setFooter("\"Stop sending people to kill me. We've already captured five of them... If you don't stop sending killers, I'll send one to Moscow, and I won't have to send a second.\"\n"
 					+ "- Josip Broz Tito, 19XX",Launcher.url("people/tito.png"))
 			.setColor(Color.BLUE);
 		if (doable.isEmpty()) {
