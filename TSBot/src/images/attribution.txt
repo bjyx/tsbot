@@ -14,9 +14,9 @@ Cards:
 011 - By Naval Historical Center, Department of the Navy, Washington, D.C. - Naval History and Heritage Command: photo 96378 (U.S. Marines fighting in Seoul, Korea, Sept. 1950)., Public Domain, https://commons.wikimedia.org/w/index.php?curid=363429
 012 - By Mihai I - Magazin Istoric, Public Domain, https://commons.wikimedia.org/w/index.php?curid=9047156
 013 - By Unknown - https://www.flickr.com/photos/ciagov/8413628531/in/set-72157632588891070, Public Domain, https://commons.wikimedia.org/w/index.php?curid=10289085
-014 - Flag of Comecon
+014 - By Own work - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=69238469
 015 - By Not provided - [1] at Nasser Bibalex, Public Domain, https://commons.wikimedia.org/w/index.php?curid=25859255
-016 - By The original uploader was Wassily at Russian Wikipedia. - New: Scanned 600 dpi by User Matsievsky from personal collection. Old: Originally from ru.wikipedia; description page is/was here., Public Domain, https://commons.wikimedia.org/w/index.php?curid=2596297
+016 - By Bundesarchiv, Bild 183-1987-0529-029 / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=5346104
 017 - By Gnotype - Own work, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=15019303
 018 - By This image or video was catalogued by one of the centers of the United States National Aeronautics and Space Administration (NASA) under Photo ID: NIX MSFC-8915531 and Alternate ID: MIX 840., Public Domain, https://commons.wikimedia.org/w/index.php?curid=374182
 019 - By Anonymous - The State Archives of the Republic of Macedonia (DARM), Public Domain, https://commons.wikimedia.org/w/index.php?curid=53474550
@@ -70,7 +70,7 @@ Cards:
 067
 068
 069
-070
+070 - By Martin Baran - Own work http://spojenestaty.blogspot.com/2013/11/noc-vo-washingtone-dc.html, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=29793484
 071
 072
 073
@@ -133,6 +133,8 @@ barre: By Government of Somalia - http://www.gettyimages.co.uk/detail/news-photo
 
 baryshnikov: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - MIKHAIL Baryshnikov, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74877673
 
+bhutto: By Unknown - [1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANEFO), 1945-1989 bekijk toegang 2.24.01.04 Bestanddeelnummer 925-2557, CC BY-SA 3.0 nl, https://commons.wikimedia.org/w/index.php?curid=37204387
+
 brezhnev: By Bundesarchiv, Bild 183-F0417-0001-011 / Kohls, Ulrich / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=60791751
 
 carter: By Department of Defense. Department of the Navy. Naval Photographic Center - This file was derived from: JimmyCarterPortrait.jpg:, Public Domain, https://commons.wikimedia.org/w/index.php?curid=8791775
@@ -149,11 +151,17 @@ cia: By United States Federal government - http://www.law.cornell.edu/uscode/50/
 
 degaulle: By Bundesarchiv, B 145 Bild-F010324-0002 / Steiner, Egon / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=9848371
 
+eisenhower: By White House - Eisenhower Presidential Library, Public Domain, https://commons.wikimedia.org/w/index.php?curid=3025709
+
 gorbachev: By The Official CTBTO Photostream - Reagan and Gorbachev Arrive, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=64270071
 
 havel: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - VACLAC HAVEL, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74769308
 
+hochiminh: By Unknown - This file has been extracted from another file: Ho Chi Minh 1946 and signature.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=25126454
+
 hoffman: By Richard O. Barry from San Diego, California, United States - Abbie Hoffman, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=7227885
+
+indira: By Anil496 - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=73985567
 
 jayawardene: By Copyright Holder & Original Uploader of the Full Version of this Photograph is Anuradha Dullewe Wijeyeratne at en.Wikipedia - Anuradha with President Jayewardene.jpg, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=23741943
 
@@ -167,13 +175,19 @@ king: By Farm Security Administration - Office of War Information Photograph Col
 
 kundera: By Elisa Cabot - https://commons.wikimedia.org/wiki/File:Milan_Kundera.jpg, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=29640609
 
+lemay: By USAF - National Museum of the U.S. Air Force photo 090624-F-1234K-005, Public Domain, https://commons.wikimedia.org/w/index.php?curid=447857
+
 lemonde: By Le Monde - Le Monde, Public Domain, https://commons.wikimedia.org/w/index.php?curid=32315331
+
+macarthur: By Nutter (Army) - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 531373., Public Domain, https://commons.wikimedia.org/w/index.php?curid=6237191
 
 mao: By неизвестный (unknown) - http://sarbaharapath.com/wp-content/uploads/2015/11/Mao2.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=53879271
 
 meir: By Marion S. Trikosko - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID ppmsc.03265.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=1820659
 
 mengistu: By אדעולם at Hebrew Wikipedia, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=17936703
+
+molotov: By Unknown - [1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANEFO), 1945-1989 bekijk toegang 2.24.01.04 Bestanddeelnummer 900-8982, CC0, https://commons.wikimedia.org/w/index.php?curid=37191257
 
 nixon: By Department of Defense. Department of the Army. Office of the Deputy Chief of Staff for Operations. U.S. Army Audiovisual Center.	 (ca. 1974 - 05/15/1984) - This file was derived from: Richard M. Nixon, ca. 1935 - 1982 - NARA - 530679.jpg:, Public Domain, https://commons.wikimedia.org/w/index.php?curid=77365528
 
@@ -188,6 +202,12 @@ sadat: By Unknown - This file has been extracted from another file: Anwar Sadat 
 sagan: By NASA/JPL - Image:Planetary society.jpghttp://technology.jpl.nasa.gov/gallery/index.cfm?page=imageDetail&ItemID=43&catId=9http://www2.jpl.nasa.gov/technology/images_videos/iv_pages/P22626ac.html also here, Public Domain, https://commons.wikimedia.org/w/index.php?curid=1180936
 
 strangelove: By Directed by Stanley Kubrick, distributed by Columbia Pictures - Dr. Strangelove trailer from 40th Anniversary Special Edition DVD, 2004, Public Domain, https://commons.wikimedia.org/w/index.php?curid=11862660
+
+times: By Unknown - Transferred from the English Wikipedia. http://en.wikipedia.org/wiki/File:NewYorkTimes.svg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=9748244
+
+truman: By National Archives and Records Administration. Office of Presidential Libraries. Harry S. Truman Library. - NATIONAL ARCHIVES AND RECORDS ADMINISTRATION (NARA) - CATALOG: AUDIOVISUAL MATERIAL (ID. 7865583)., Public Domain, https://commons.wikimedia.org/w/index.php?curid=79198241
+
+voa: By Voice of America - https://www.voanews.com/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=60739870
 
 Turn Zero:
 035A
