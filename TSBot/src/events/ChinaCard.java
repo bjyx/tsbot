@@ -7,7 +7,7 @@ public class ChinaCard extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		// this should never trigger but is nonetheless required
-		GameData.txtchnl.sendMessage(":warning: Aaaaaaaaaagh how did you even do that is this game bugged I put effort into this to make sure this wasn't bugged just drop a comment on GitHub and I'll rectify it for you just AAAAAAAAAA :fire: :fire: :fire:").complete();
+		GameData.txtchnl.sendMessage(":warning: You have encountered an error—the China card should not be played for the event. Please leave a comment on Github and I will rectify this. This is fine. :fire: :fire: :fire:").complete();
 	}
 
 	@Override
