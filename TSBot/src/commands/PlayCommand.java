@@ -83,7 +83,7 @@ public class PlayCommand extends Command {
 			return;
 		}
 		char mode = args[2].charAt(0);
-		if (card<=0 || card > 110) {
+		if (card<=0 || card > CardList.numberOfCards()) {
 			sendMessage(e, ":x: Cards are indexed from 1 to 110.");
 			return;
 		}

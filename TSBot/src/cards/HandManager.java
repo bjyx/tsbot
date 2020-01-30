@@ -196,7 +196,7 @@ public class HandManager {
 	 */
 	public static void deal() {
 		Random random = new Random();
-		int handsize = (GameData.getEra()<=0)?8:9;
+		int handsize = (GameData.getEra()<=0&&!GameData.yiyo)?8:9;
 		while (handsize > SUNHand.size()||handsize > USAHand.size()) {
 			if (handsize > SUNHand.size()&&!Deck.isEmpty()) {
 				SUNHand.add(Deck.remove(random.nextInt(Deck.size())));

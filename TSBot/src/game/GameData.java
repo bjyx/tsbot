@@ -263,6 +263,13 @@ public class GameData {
 			CardList.getCard(37).onEvent(-1, new String[] {}); //Central America Scoring
 			CardList.getCard(79).onEvent(-1, new String[] {}); //Africa Scoring
 			CardList.getCard(81).onEvent(-1, new String[] {}); //South America Scoring
+			if (HandManager.effectActive(137)) {
+				if (MapManager.get(48).isControlledBy()==1) score--;
+				if (MapManager.get(51).isControlledBy()==1) score--;
+				if (MapManager.get(52).isControlledBy()==1) score--;
+				if (MapManager.get(57).isControlledBy()==1) score--;
+				if (MapManager.get(61).isControlledBy()==1) score--;
+			}
 			if (HandManager.China==0) score++;
 			else score--;
 			checkScore(true, false);
@@ -341,7 +348,7 @@ public class GameData {
 	 * Advances the action round.
 	 */
 	public static void advanceTime() {
-		if (getEra()==0 && ar==12) { //end of AR6 in early war
+		if (getEra()==0 && ar==12 && !yiyo) { //end of AR6 in early war (if yiyo is not active)
 			advanceTurn();
 			return;
 		}
@@ -357,7 +364,7 @@ public class GameData {
 			ar = 16; 
 			return; //North Sea Oil's effect, end of AR7
 		}
-		if (ar>=14) { //AR7 or later in late war
+		if (ar>=14) { //AR7 or later
 			advanceTurn();
 			return;
 		}
@@ -473,7 +480,6 @@ public class GameData {
 			GameData.checkScore(false, false);
 		}
 		score += amt;
-		GameData.checkScore(false, false);
 	}
 	/**
 	 * 

@@ -6,6 +6,7 @@ import events.*;
 import game.GameData;
 import promo.*;
 import turnzero.NationalistChina;
+import yiyo.*;
 /**
  * Implements a list of the cards used in the game.
  * @author [REDACTED]
@@ -194,7 +195,7 @@ public class CardList {
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
-		}/*
+		}
 		if (GameData.yiyo) {
 		 CardList.addCard(new Finlandization()); //119
 		 CardList.addCard(new SchumanDeclaration()); //120
@@ -237,8 +238,8 @@ public class CardList {
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
 			CardList.addCard(new Placeholder());
-			CardList.addCard(new Placeholder());
-		}*/
+			CardList.addCard(new Placeholder());//*/
+		}
 	}
 	/**
 	 * Adds the Card to the list.
@@ -254,13 +255,14 @@ public class CardList {
 	 * @return the Card at index i in the cardList.
 	 */
 	public static Card getCard(int i) {
-		return cardList.get(i);
+		if (i<=numberOfCards()) return cardList.get(i);
+		return null;
 	}
 	/**
 	 * A check to see if the number of cards is sufficient to start a game with.
 	 * @return counter-1, representing all the cards in the list sans the first null card.
 	 */
 	public static int numberOfCards() {
-		return counter-1; // counter should be around 111
+		return counter-1;
 	}
 }

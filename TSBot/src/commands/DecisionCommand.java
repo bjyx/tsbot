@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import cards.CardList;
 import cards.HandManager;
@@ -25,6 +26,8 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import turnzero.TurnZero;
+import yiyo.AmericasBackyard;
+import yiyo.ApolloSoyuz;
 /**
  * The command that handles any decisions to be made with regards to any card that cannot be handled by the event command list. The following cards have such an effect:
  * <ul>
@@ -85,7 +88,118 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: Indecision is not an option.");
 			return;
 		}
-		if ((HandManager.Effects.contains(400)||HandManager.Effects.contains(401))&&args[1].equals("resolve")) {
+		if (HandManager.effectActive(128) && ((!TimeCommand.cardPlayed&&GameData.phasing()==1)||!TimeCommand.checkpointC) && !GameData.isHeadlinePhase() && GameData.phasing()==PlayerList.getArray().indexOf(e.getAuthor()) && args[1].equalsIgnoreCase("charlie")) {
+			HandManager.removeEffect(128);
+			if (!TimeCommand.checkpointC) {
+				TimeCommand.checkpointC = true;
+				GameData.dec=null;
+			}
+			GameData.txtchnl.sendMessage(new CardEmbedBuilder().addMilOps(GameData.phasing(), -GameData.getMilOps(GameData.phasing())).setTitle("De-Escalation at Checkpoint Charlie").setDescription("Tanks slowly inch away from standoff in Berlin").setFooter("\"It's not a very nice solution, but a wall is a hell of a lot better than a war.\"\n- John F. Kennedy, 1961", Launcher.url("people/jfk.png")).setColor(Color.green).build()).complete();
+			if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
+				boolean canDiscard = false;
+				boolean scoring = false;
+				for (Integer c : HandManager.USAHand) {
+					if (CardList.getCard(c).getOpsMod(0)>=2) {
+						canDiscard = true;
+					}
+					else if (CardList.getCard(c).getOps()==0) {
+						scoring = true;
+					}
+				}
+				if (canDiscard) {
+					TimeCommand.trapDone = false;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you must discard a card worth two Operations points or more to Quagmire. (TS.decide [card])").complete();
+				}
+				else if (scoring) {
+					TimeCommand.trapDone = false;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
+				}
+				else {
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
+				}
+			}
+			else if (HandManager.Effects.contains(44) && (GameData.phasing()==1)) {
+				boolean canDiscard = false;
+				boolean scoring = false;
+				for (Integer c : HandManager.SUNHand) {
+					if (CardList.getCard(c).getOpsMod(0)>=2) {
+						canDiscard = true;
+					}
+					else if (CardList.getCard(c).getOps()==0) {
+						scoring = true;
+					}
+				}
+				if (canDiscard) {
+					TimeCommand.trapDone = false;
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you must discard a card worth two Operations points or more to Bear Trap. (TS.decide [card])").complete();
+				}
+				else if (scoring) {
+					TimeCommand.trapDone = false;
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
+				}
+				else {
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
+				}
+			}
+			else if (HandManager.effectActive(115) && HandManager.checkScoring()<2) {
+				TimeCommand.cardPlayedSkippable = false; //obligatory skip
+			}
+			else if (GameData.getAR()>14) { //skippable eighth action round
+				TimeCommand.cardPlayedSkippable = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+			}
+			else if ((GameData.phasing()==1 && !HandManager.SUNHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.USAHand.isEmpty())) { //phasing player must play a card if he isn't in a skippable eighth action round
+				TimeCommand.cardPlayed = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
+			}
+			else { //if hand is empty
+				TimeCommand.cardPlayedSkippable = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+			}
+			TimeCommand.eventDone = false;
+			TimeCommand.operationsDone = false;
+			TimeCommand.eventRequired = false;
+			TimeCommand.operationsRequired = false;
+			TimeCommand.spaceRequired = false;
+			TimeCommand.spaceDone = false;
+			if (HandManager.effectActive(1210+GameData.phasing())) {
+				GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(2).setTitle("Nuclear Proliferation").setColor(GameData.phasing()==0?Color.blue:Color.red).build()).complete();
+				HandManager.removeEffect(1210+GameData.phasing());
+				HandManager.addEffect(1212);
+			}
+			TimeCommand.prompt();
+			return;
+		}
+		if ((HandManager.effectActive(1270)||HandManager.effectActive(1271))&&args[1].equals("arkhipov")) {
+			if (HandManager.effectActive(1270)) {
+				if (e.getAuthor().equals(PlayerList.getSSR())) {
+					sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+					return;
+				}
+				HandManager.removeEffect(1270);
+			}
+			else if (HandManager.effectActive(1271)) {
+				if (e.getAuthor().equals(PlayerList.getUSA())) {
+					sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+					return;
+				}
+				HandManager.removeEffect(1271);
+			}
+			else {
+				//...how?
+				return;
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.changeDEFCON(1);
+			builder.setTitle("Nuclear War Narrowly Averted")
+			.setDescription("Soviet submarine officer Arkhipov refuses authorization to launch nuclear torpedo")
+			.setColor(Color.green);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if ((HandManager.effectActive(400)||HandManager.effectActive(401))&&args[1].equals("resolve")) {
 			if (args.length==2) {
 				sendMessage(e, ":x: Write a country. Yes, you still write in the country even if you only have one option.");
 				return;
@@ -115,6 +229,7 @@ public class DecisionCommand extends Command {
 					return;
 				}
 				builder.changeInfluence(i, 0, -2);
+				HandManager.removeEffect(400);
 			}
 			else {
 				if (e.getAuthor().equals(PlayerList.getUSA())) {
@@ -130,6 +245,7 @@ public class DecisionCommand extends Command {
 					return;
 				}
 				builder.changeInfluence(i, 1, -2);
+				HandManager.removeEffect(401);
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			return;
@@ -1032,7 +1148,297 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==135) {
+		if (GameData.dec.card==119) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
+		if (GameData.dec.card==121) {
+			if (args[1].equalsIgnoreCase("yes")) {
+				GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(-1).setTitle("Nuclear Proliferation").setColor(GameData.phasing()==0?Color.blue:Color.red).build()).complete();
+			}
+			else if (args[1].equalsIgnoreCase("no")) {
+				GameData.txtchnl.sendMessage(new CardEmbedBuilder().setTitle("Nuclear Proliferation").setDescription("No change in DEFCON.").setColor(GameData.phasing()==0?Color.blue:Color.red).build()).complete();
+			}
+			else {
+				sendMessage(e, ":x: Please respond with the options given.");
+				return;
+			}
+			GameData.dec = null;
+			TimeCommand.nukePro = true;
+			TimeCommand.prompt();
+			return;
+		}
+		if (GameData.dec.card==128) {
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Standoff in Berlin continues")
+			.setDescription("")
+			.setColor(Color.gray);
+			boolean flag = true;
+			for (int i : HandManager.USAHand) {
+				if (CardList.getCard(i).getAssociation()==1) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				builder.addField("No Card to Discard!", "Tensions inflame further.", false);
+				builder.changeDEFCON(-1);
+				builder.setColor(Color.black);
+			}
+			else if (args.length<2) {
+				sendMessage(e, ":x: You have a card to discard. :|");
+				return;
+			} //otherwise must say the card 
+			else {
+				int discard;
+				try {
+					discard = Integer.parseInt(args[1]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: NaN");
+					return;
+				}
+				if (discard==0) {
+					sendMessage(e, ":x: Choose a card—there is one you can discard.");
+				}
+				if (!HandManager.USAHand.contains(discard)) {
+					sendMessage(e, ":x: You do not have that card at your disposal. :|");
+					return;
+				}; //must be in USA hand
+				if (CardList.getCard(discard).getAssociation()!=1) {
+					sendMessage(e, ":x: USSR events only. ");
+					return;//must be a USSR event
+				}
+				builder.addField("", "Discarded " + CardList.getCard(discard) + ". A replacement has been drawn.", false);
+				HandManager.discard(0, discard);
+				Random random = new Random();
+				HandManager.USAHand.add(HandManager.Deck.remove(random.nextInt(HandManager.Deck.size())));
+				if(HandManager.Deck.isEmpty()) {
+					HandManager.Deck.addAll(HandManager.Discard);
+					HandManager.Discard.clear();
+				}
+			}
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			
+			if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
+				boolean canDiscard = false;
+				boolean scoring = false;
+				for (Integer c : HandManager.USAHand) {
+					if (CardList.getCard(c).getOpsMod(0)>=2) {
+						canDiscard = true;
+					}
+					else if (CardList.getCard(c).getOps()==0) {
+						scoring = true;
+					}
+				}
+				if (canDiscard) {
+					TimeCommand.trapDone = false;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you must discard a card worth two Operations points or more to Quagmire. (TS.decide [card])").complete();
+				}
+				else if (scoring) {
+					TimeCommand.trapDone = false;
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
+				}
+				else {
+					GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
+				}
+			}
+			else if (HandManager.Effects.contains(44) && (GameData.phasing()==1)) {
+				boolean canDiscard = false;
+				boolean scoring = false;
+				for (Integer c : HandManager.SUNHand) {
+					if (CardList.getCard(c).getOpsMod(0)>=2) {
+						canDiscard = true;
+					}
+					else if (CardList.getCard(c).getOps()==0) {
+						scoring = true;
+					}
+				}
+				if (canDiscard) {
+					TimeCommand.trapDone = false;
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you must discard a card worth two Operations points or more to Bear Trap. (TS.decide [card])").complete();
+				}
+				else if (scoring) {
+					TimeCommand.trapDone = false;
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
+				}
+				else {
+					GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
+				}
+			}
+			else if (HandManager.effectActive(115) && HandManager.checkScoring()<2) {
+				TimeCommand.cardPlayedSkippable = false; //obligatory skip
+			}
+			else if (GameData.getAR()>14) { //skippable eighth action round
+				TimeCommand.cardPlayedSkippable = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+			}
+			else if ((GameData.phasing()==1 && !HandManager.SUNHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.USAHand.isEmpty())) { //phasing player must play a card if he isn't in a skippable eighth action round
+				TimeCommand.cardPlayed = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
+			}
+			else { //if hand is empty
+				TimeCommand.cardPlayedSkippable = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+			}
+			TimeCommand.eventDone = false;
+			TimeCommand.operationsDone = false;
+			TimeCommand.eventRequired = false;
+			TimeCommand.operationsRequired = false;
+			TimeCommand.spaceRequired = false;
+			TimeCommand.spaceDone = false;
+			if (HandManager.effectActive(1210+GameData.phasing())) {
+				GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(2).setTitle("Nuclear Proliferation").setColor(GameData.phasing()==0?Color.blue:Color.red).build()).complete();
+				HandManager.removeEffect(1210+GameData.phasing());
+				HandManager.addEffect(1212);
+			}
+			TimeCommand.prompt();
+			return;
+		}
+		if (GameData.dec.card==130) {
+			int discard;
+			try {
+				discard = Integer.parseInt(args[1]);			
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: NaN");
+				return;
+			}
+			if (discard==0) {
+				//continue
+			}
+			else if (CardList.getCard(discard).getAssociation()==(GameData.dec.sp+1)%2) {
+				sendMessage(e, ":x: The event cannot be your opponent's.");
+				return;
+			}
+			else if (CardList.getCard(discard).getOps()==0) {
+				sendMessage(e, ":x: Trying to get out of scoring this region? I don't think so.");
+				return;
+			}
+
+			else if (!HandManager.discard(GameData.dec.sp, discard)) {
+				sendMessage(e, ":x: This event is not in your hand.");
+				return;
+			}
+			//flavor only
+			int victor;
+			if (discard==0) {
+				victor=(GameData.dec.sp+1)%2;
+			}
+			else if (CardList.getCard(discard).getOpsMod(GameData.dec.sp)==2) {
+				victor=-1;
+			}
+			else if (CardList.getCard(discard).getOpsMod(GameData.dec.sp)>2) {
+				victor=GameData.dec.sp;
+			}
+			else {
+				victor =(GameData.dec.sp+1)%2;
+			}
+			//actual things
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle(victor==-1?"Fischer-Spassky Match Ends in Draw":(victor==0?"Fischer Defeats Spassky":"Spassky Defeats Fischer"))
+				.setDescription(victor==-1?"":("\"Match of the Century\" a victory for the "+(victor==0?"US":"USSR")))
+				.setFooter("\"Let's not bother with such nonsense – I'll play the [Tartakower] Defence. What can he achieve?\" \n"
+						+ "- Boris Spassky, 1972",Launcher.url("yiyo/spassky.png"))
+				.setColor(victor==-1?Color.gray:(victor==0?Color.blue:Color.red));
+			builder.addField(discard==0?"No discard.":"Discarded card: "+CardList.getCard(discard),"", false);
+			if (discard==0) builder.changeVP((GameData.dec.sp*2-1)*2);
+			else builder.changeVP((GameData.dec.sp*2-1)*(2-CardList.getCard(discard).getOpsMod(GameData.dec.sp)));
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (GameData.dec.card==131) {
+			if (GameData.dec.sp==0) {
+				ApolloSoyuz.usa = new ArrayList<Integer>();
+				if (args.length>ApolloSoyuz.sun.size()+1) {
+					sendMessage(e, ":x: You can't contribute more.");
+					return; //at most this many
+				}
+			}
+			else {
+				ApolloSoyuz.sun = new ArrayList<Integer>();
+				if (args.length>ApolloSoyuz.usa.size()+1) {
+					sendMessage(e, ":x: You can't contribute more.");
+					return; //at most this many
+				}
+			}
+			for (int i=1; i<4; i++) {
+				if (args.length<i+1) break; //if less than given, end
+				int card;
+				try {
+					card = Integer.parseInt(args[i]);
+				}
+				catch (NumberFormatException err) {
+					sendMessage(e, ":x: NaN");
+					return;
+				}
+				if (CardList.getCard(card).getOps()==0) {
+					sendMessage(e, ":x: Trying to get out of scoring this region? I don't think so.");
+					return;
+				}
+				if (GameData.dec.sp==0) {
+					if (HandManager.USAHand.contains(card)) ApolloSoyuz.usa.add(card);
+					else {
+						sendMessage(e, ":x: Use cards that you actually have.");
+						return;
+					}
+				}
+				else {
+					if (HandManager.SUNHand.contains(card)) ApolloSoyuz.sun.add(card);
+					else {
+						sendMessage(e, ":x: Use cards that you actually have.");
+						return;
+					}
+				}
+			}
+			int usops=0, suops=0;
+			for (Integer i : ApolloSoyuz.usa) {
+				HandManager.discard(0, i);
+				usops += CardList.getCard(i).getOpsMod(0);
+			}
+			for (Integer i : ApolloSoyuz.sun) {
+				HandManager.discard(1, i);
+				suops += CardList.getCard(i).getOpsMod(1);
+			}
+			int victor = usops==suops?-1:(usops>suops?0:1);
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Joint Space Project")
+				.setDescription(victor==-1?"":("Unprecedented collaboration between the superpowers advances "+(victor==0?"US":"USSR")+" technologically"))
+				.setFooter("\"They know that from outer space our planet looks even more beautiful. It is big enough for us to live peacefully on it, but it is too small to be threatened by nuclear war\" \n"
+						+ "- Leonid Brezhnev, 197X",Launcher.url("people/brezhnev.png"))
+				.setColor(victor==-1?Color.gray:(victor==0?Color.blue:Color.red));
+			builder.addField(victor==0?"**Apollo**":"Apollo","Discarded cards: " + ApolloSoyuz.usa, false);
+			builder.addField(victor==1?"**Soyuz**":"Soyuz","Discarded cards: " + ApolloSoyuz.sun, false);
+			if (victor!=-1) {
+				builder.addField("Test Project", Operations.getSpaceNames(GameData.getSpace(victor), victor),false);
+				if (GameData.aheadInSpace()==(victor+1)%2) {
+					builder.changeVP(-(victor*2-1)*Operations.spaceVP2[GameData.getSpace(victor)]);
+				}
+				else builder.changeVP(-(victor*2-1)*Operations.spaceVP[GameData.getSpace(victor)]);
+				GameData.addSpace(victor);
+			}
+			//fuck the regular dealing method
+			for (int i=0; i<ApolloSoyuz.usa.size(); i++) {
+				HandManager.USAHand.add(HandManager.Deck.remove(new Random().nextInt(HandManager.Deck.size())));
+				if(HandManager.Deck.isEmpty()) {
+					HandManager.Deck.addAll(HandManager.Discard);
+					HandManager.Discard.clear();
+				}
+			}
+			for (int i=0; i<ApolloSoyuz.sun.size(); i++) {
+				HandManager.SUNHand.add(HandManager.Deck.remove(new Random().nextInt(HandManager.Deck.size())));
+				if(HandManager.Deck.isEmpty()) {
+					HandManager.Deck.addAll(HandManager.Discard);
+					HandManager.Discard.clear();
+				}
+			}
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (GameData.dec.card==135) { //what a pain to code
 			if (args[1].equalsIgnoreCase("flip")) {
 				HandManager.removeEffect(1350);
 				HandManager.removeEffect(1351);
@@ -1046,10 +1452,30 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: Please respond with the options given.");
 				return;
 			}
-			synchronized(GameData.sync) {
+			synchronized(GameData.sync) {//reeeee
 				notify();
 			}
 			return;
+		}
+		if (GameData.dec.card==136) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+			int newUSSR = 0;
+			for (int i=64; i<74; i++) {
+				if (MapManager.get(i).isControlledBy()==1) {
+					newUSSR++;
+				}
+			}
+			if (AmericasBackyard.USSRControl - newUSSR > 0) {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("America's Backyard")
+				.setDescription("The USSR is no longer in control of " + (AmericasBackyard.USSRControl - newUSSR) + (AmericasBackyard.USSRControl - newUSSR==1?" country.":" countries."))
+				.setColor(Color.blue);
+				builder.changeDEFCON(AmericasBackyard.USSRControl - newUSSR);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
 		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);

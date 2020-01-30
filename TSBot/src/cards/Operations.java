@@ -82,6 +82,7 @@ public class Operations {
 	 * 0 - no restrictions <br>
 	 * 47 - Junta - restrictions to Latin America <br>
 	 * 96 - Tear Down This Wall - restrictions to Europe
+	 * 136 - America's Backyard - restrictions to Central America
 	 */
 	private int restrictions = 0;
 	/**
@@ -114,9 +115,18 @@ public class Operations {
 	 * Data from the coup roll, saved in case of altspace six.
 	 */
 	public static int die6 = 0;
+	/**
+	 * Data from the coup roll, saved in case of altspace six.
+	 */
 	public static int amt6 = 0;
+	/**
+	 * Data from the coup roll, saved in case of altspace six.
+	 */
 	public static int target6 = -1;
-	
+	/**
+	 * Whether a coup has occurred this action round.
+	 */
+	public static boolean tsarbomba = false;
 	private TextChannel txtsp = (sp==0)?GameData.txtusa:GameData.txtssr;
 	/**
 	 * Constructor, specifying the number of ops on the card used and the conditions under which they can be used.
@@ -231,6 +241,10 @@ public class Operations {
 			}
 			if (MapManager.get(country).region>=3&&restrictions==96) {
 				txtsp.sendMessage(":x: Aren't you trying to tear down the Iron Curtain?").complete();
+				return false;
+			}
+			if (MapManager.get(country).region!=7&&restrictions==136) {
+				txtsp.sendMessage(":x: That's a bit far to be part of your backyard.").complete();
 				return false;
 			}
 			return this.realignment(country);
@@ -382,7 +396,20 @@ public class Operations {
 		else if (restrictions==96) {
 			boolean flag = true;
 			for (int i=0; i<21; i++) {
-				if (MapManager.get(i).influence[(sp+1)%2]>0) {
+				if (MapManager.get(i).influence[1]>0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+				return true;
+			}
+		}
+		else if (restrictions==96) {
+			boolean flag = true;
+			for (int i=64; i<74; i++) {
+				if (MapManager.get(i).influence[1]>0) {
 					flag = false;
 					break;
 				}
@@ -567,6 +594,7 @@ public class Operations {
 	}
 	
 	public boolean coupPreDet(int country, int die) {
+		if (GameData.phasing()==0) tsarbomba = true;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Coup d'État!")
 			.setDescription("Target: "+ MapManager.get(country))
@@ -628,6 +656,10 @@ public class Operations {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Space Race")
 		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));
+		if (HandManager.effectActive(124) && sp==1) {
+			builder.addField("Laika","-1",false);
+			die--;
+		}
 		if (die <= spaceRoll[spaceLevel]) {
 			builder.setColor(sp==0?Color.blue:Color.red)
 				.addField("Roll: :"+CardEmbedBuilder.numbers[die]+":",getSpaceNames(spaceLevel, sp),false);
@@ -639,7 +671,10 @@ public class Operations {
 		}
 		else {
 			builder.setColor(Color.ORANGE);
-			builder.addField("Roll: "+CardEmbedBuilder.numbers[die],"Failure.",false);
+			builder.addField("Roll: :"+CardEmbedBuilder.numbers[die]+":","Failure.",false);
+		}
+		if (spaceLevel<3&&GameData.getSpace(sp)>=3&&sp==1&&HandManager.removeEffect(124)) {
+			builder.addField("Vostok 1", "The Soviets have acquired the capability to send a man into space. They will no longer receive a -1 bonus to their space race die rolls.", false);
 		}
 		if (spaceLevel<4&&GameData.getSpace(sp)>=4) {
 			if (GameData.getSpace((sp+1)%2)<4) {
