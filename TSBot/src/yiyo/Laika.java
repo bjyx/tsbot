@@ -26,7 +26,7 @@ public class Laika extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return GameData.getSpace(1)>=3; //Man in Space
+		return GameData.getSpace(1)<3; //Man in Space
 	}
 
 	@Override

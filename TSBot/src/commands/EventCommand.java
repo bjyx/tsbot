@@ -42,9 +42,13 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: Oh, you're not the one playing this event. Your opponent is.");
 			return;
 		}
+		if (GameData.dec != null) {
+			sendMessage(e, ":x: Active Decision Warning.");
+			return;
+		}
 		if (!CardList.getCard(HandManager.activecard).isPlayable(CardList.getCard(HandManager.activecard).getAssociation()==2?GameData.phasing():CardList.getCard(HandManager.activecard).getAssociation())) {
 			HandManager.Discard.add(HandManager.activecard);
-			sendMessage(e, "This event is not playable.");
+			sendMessage(e, "This event is not playable."); //only comes up during headlines, where you cannot prevent this from being played
 		}
 		else {
 			if (!CardList.getCard(HandManager.activecard).isFormatted(PlayerList.getArray().indexOf(e.getAuthor()), args)) {
@@ -85,7 +89,7 @@ public class EventCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.event");
+		return Arrays.asList("TS.event", "TS.e");
 	}
 
 	@Override
@@ -97,7 +101,7 @@ public class EventCommand extends Command {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Event Play (event)";
+		return "Event Play (event, e)";
 	}
 
 	@Override
