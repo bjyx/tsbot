@@ -165,7 +165,7 @@ public class PlayCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.play","TS.use");
+		return Arrays.asList("TS.play","TS.use","TS.p");
 	}
 	@Override
 	public String getDescription() {
@@ -175,7 +175,7 @@ public class PlayCommand extends Command {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Play a card (play, use)";
+		return "Play a card (play, use, p)";
 	}
 	@Override
 	public List<String> getUsageInstructions() {

@@ -46,7 +46,7 @@ public class SpaceCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.space");
+		return Arrays.asList("TS.space", "TS.s");
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class SpaceCommand extends Command {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "SPAAAAAAAAAAAACE";
+		return "Space Race (space, s)";
 	}
 
 	@Override

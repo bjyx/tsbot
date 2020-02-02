@@ -59,7 +59,7 @@ public class OperationsCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.ops","TS.operations");
+		return Arrays.asList("TS.ops","TS.operations","TS.o");
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class OperationsCommand extends Command {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "Operations Play (operations, ops)";
+		return "Operations Play (operations, ops, o)";
 	}
 
 	@Override

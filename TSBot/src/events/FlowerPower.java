@@ -64,7 +64,7 @@ public class FlowerPower extends Card {
 
 	@Override
 	public String getDescription() {
-		return "*The USSR will receive 2 VP for every US-played \"War\" card. Cancelled by " + CardList.getCard(97) + ".*";
+		return "*The USSR will receive 2 VP for every US-played \"War\" card. Cancelled/prevented by " + CardList.getCard(97) + ".*";
 	}
 
 	@Override

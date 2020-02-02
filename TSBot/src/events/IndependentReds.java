@@ -77,7 +77,7 @@ public class IndependentReds extends Card {
 			}
 		}
 		if (doable.size()<=1) {
-			if (doable.isEmpty()) target=0;
+			if (doable.isEmpty()) target=20; //default flavor Yugoslavia
 			else target = doable.get(0);
 			return true;
 		}

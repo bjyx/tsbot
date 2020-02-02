@@ -260,8 +260,8 @@ public class HandManager {
 		}
 		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("Flower Power")
-				.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
+			builder.setTitle("Student Strikes Rock American Universities")
+				.setDescription("Protests against the " + CardList.getCard(card).getName() + " intensify after Kent State Massacre")
 				.setFooter("\"I think that we're up against the strongest, well-trained, "
 						+ "militant, revolutionary group that has ever assembled in America.\" \n"
 						+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))

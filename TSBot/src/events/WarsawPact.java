@@ -18,8 +18,8 @@ public class WarsawPact extends Card {
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Warsaw Pact Formed")
-		.setFooter("\"\"\n"
-				+ "- XXXX, XXXX", Launcher.url("countries/XX.png"))
+		.setFooter("\"The trouble with free elections is that you never know how they are going to turn out.\"\n"
+				+ "- Vyacheslav Molotov, 1954", Launcher.url("people/molotov.png"))
 		.setColor(Color.RED);
 		if (args[1].equals("remove") ) {
 			builder.setDescription("Stalin takes hard line on " + MapManager.get(order.get(0)).name + "'s autonomy");
