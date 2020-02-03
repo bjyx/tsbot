@@ -217,8 +217,8 @@ public class StartCommand extends Command {
 		else {
 			GameData.promo1 = false;
 		}
-		if (settings>=4) {
-			settings-=4;
+		if (settings>=2) {
+			settings-=2;
 			GameData.promo2 = true;
 			builder.addField("Promotional Cards 2", "Play with the second set of promotional cards, including First Lightning, Who Lost China, Don't Wait for the Translation, and the notorious Kremlin Flu.\nWarning: game may be heavily tilted towards US.", false);
 		}
