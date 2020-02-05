@@ -1148,6 +1148,12 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
+		if (GameData.dec.card==116) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
 		if (GameData.dec.card==119) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
