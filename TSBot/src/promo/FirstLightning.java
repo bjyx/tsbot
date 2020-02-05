@@ -22,7 +22,7 @@ public class FirstLightning extends Card {
 				.setFooter("\"...the results will be so overriding [that] it won't be necessary to determine who is to blame for the fact that this work has been neglected in our country.\"\n"
 						+ "- Georgiy Nikolayevich Flyorov, 1942", Launcher.url("promo/flyorov.png"))
 				.setColor(Color.red)
-				.addField("Broken Nuclear Monopoly", "The event of "+ CardList.getCard(target)+" has been condemned by the UN, and will not occur.", false);
+				.addField("Broken Nuclear Monopoly", "The event of "+ CardList.getCard(target)+" will not occur.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		HandManager.discard(1, target);
 		GameData.dec = new Decision(1, 116);
