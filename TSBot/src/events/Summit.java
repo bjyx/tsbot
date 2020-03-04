@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import game.Die;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -19,6 +20,8 @@ public class Summit extends Card {
 		int die_ssr = new Die().roll();
 		String str_usa = "";
 		String str_ssr = "";
+		Log.writeToLog("US Roll: " + die_usa);
+		Log.writeToLog("SU Roll: " + die_ssr);
 		//Europe
 		int[] bg = new int[]{0,0};
 		int[] c = new int[]{0,0};
@@ -33,10 +36,12 @@ public class Summit extends Card {
 		if (bg[0]>bg[1]&&c[0]>c[1]&&(bg[0]==5||c[0]>bg[0])) {
 			die_usa++;
 			str_usa += "Europe\n";
+			Log.writeToLog("US + 1 (Europe).");
 		}
 		if (bg[1]>bg[0]&&c[1]>c[0]&&(bg[1]==5||c[1]>bg[1])) {
 			die_ssr++;
 			str_ssr += "Europe\n";
+			Log.writeToLog("SU + 1 (Europe).");
 		}
 		//Middle East
 		bg = new int[]{0,0};
@@ -52,10 +57,12 @@ public class Summit extends Card {
 		if (bg[0]>bg[1]&&c[0]>c[1]&&(bg[0]==5||c[0]>bg[0])) {
 			die_usa++;
 			str_usa += "Middle East\n";
+			Log.writeToLog("US + 1 (Middle East).");
 		}
 		if (bg[1]>bg[0]&&c[1]>c[0]&&(bg[1]==5||c[1]>bg[1])) {
 			die_ssr++;
 			str_ssr += "Middle East\n";
+			Log.writeToLog("SU + 1 (Middle East).");
 		}
 		//Asia
 		bg = new int[]{0,0};
@@ -71,10 +78,12 @@ public class Summit extends Card {
 		if (bg[0]>bg[1]&&c[0]>c[1]&&(bg[0]==5||c[0]>bg[0])) {
 			die_usa++;
 			str_usa += "Asia\n";
+			Log.writeToLog("US + 1 (Asia).");
 		}
 		if (bg[1]>bg[0]&&c[1]>c[0]&&(bg[1]==5||c[1]>bg[1])) {
 			die_ssr++;
 			str_ssr += "Asia\n";
+			Log.writeToLog("SU + 1 (Asia).");
 		}
 		//Africa
 		bg = new int[]{0,0};
@@ -90,10 +99,12 @@ public class Summit extends Card {
 		if (bg[0]>bg[1]&&c[0]>c[1]&&(bg[0]==5||c[0]>bg[0])) {
 			die_usa++;
 			str_usa += "Africa\n";
+			Log.writeToLog("US + 1 (Africa).");
 		}
 		if (bg[1]>bg[0]&&c[1]>c[0]&&(bg[1]==5||c[1]>bg[1])) {
 			die_ssr++;
 			str_ssr += "Africa\n";
+			Log.writeToLog("SU + 1 (Africa).");
 		}
 		//Central America
 		bg = new int[]{0,0};
@@ -109,10 +120,12 @@ public class Summit extends Card {
 		if (bg[0]>bg[1]&&c[0]>c[1]&&(bg[0]==5||c[0]>bg[0])) {
 			die_usa++;
 			str_usa += "Central America\n";
+			Log.writeToLog("US + 1 (Central America).");
 		}
 		if (bg[1]>bg[0]&&c[1]>c[0]&&(bg[1]==5||c[1]>bg[1])) {
 			die_ssr++;
 			str_ssr += "Central America\n";
+			Log.writeToLog("SU + 1 (Central America).");
 		}
 		//South America
 		bg = new int[]{0,0};
@@ -128,10 +141,12 @@ public class Summit extends Card {
 		if (bg[0]>bg[1]&&c[0]>c[1]&&(bg[0]==5||c[0]>bg[0])) {
 			die_usa++;
 			str_usa += "South America\n";
+			Log.writeToLog("US + 1 (South America).");
 		}
 		if (bg[1]>bg[0]&&c[1]>c[0]&&(bg[1]==5||c[1]>bg[1])) {
 			die_ssr++;
 			str_ssr += "South America\n";
+			Log.writeToLog("SU + 1 (South America).");
 		}
 		builder.addField(":flag_us:", str_usa, true)
 			.addField(CardEmbedBuilder.intToEmoji(die_usa)+"-"+CardEmbedBuilder.intToEmoji(die_ssr), "", true)

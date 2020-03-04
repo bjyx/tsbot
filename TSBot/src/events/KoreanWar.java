@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.HandManager;
 import game.Die;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -14,6 +15,7 @@ public class KoreanWar extends Card {
 	public void onEvent(int sp, String[] args) {
 		Die die = new Die();
 		int mod = die.roll();
+		Log.writeToLog("Roll: " +mod);
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(1,  2);
 		String adjacents = "";
@@ -21,6 +23,7 @@ public class KoreanWar extends Card {
 			if (MapManager.get(i).isControlledBy()==0) {
 				mod--;
 				adjacents += MapManager.get(i);
+				Log.writeToLog(MapManager.get(i).iso.toUpperCase()+": -1");
 			}
 		}
 		if (GameData.ccw && HandManager.China==-1) { //woo chinese civil war

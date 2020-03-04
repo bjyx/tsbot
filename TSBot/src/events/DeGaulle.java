@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class DeGaulle extends Card {
@@ -20,6 +21,7 @@ public class DeGaulle extends Card {
 		builder.changeInfluence(8, 1, 1); //add 1 USSR influence in France
 		builder.addField("France leaves NATO","France can now be couped/realigned by the Soviet Union if under US control.",false);
 		HandManager.addEffect(17);
+		Log.writeToLog("De Gaulle Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 
 	}

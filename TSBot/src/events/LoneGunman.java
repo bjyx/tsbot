@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class LoneGunman extends Card {
@@ -22,6 +23,7 @@ public class LoneGunman extends Card {
 		GameData.dec = new Decision(1, 62);
 		GameData.ops = new Operations(1, CardList.getCard(62).getOpsMod(1), true, true, true, false, false);
 		builder.addField("Lee Harvey Oswald", "The USSR may now look at the USA's hand.", false);
+		Log.writeToLog("US Hand: " + HandManager.USAHand);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now conduct operations.").complete();
 	}

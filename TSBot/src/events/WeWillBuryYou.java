@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class WeWillBuryYou extends Card {
@@ -19,6 +20,7 @@ public class WeWillBuryYou extends Card {
 		builder.changeDEFCON(-1);
 		builder.addField("Walk-out","If "+CardList.getCard(32)+" is not played for the event on the US's next action round, the USSR gains 3 VP before any US point award.",false);
 		HandManager.addEffect(50);
+		Log.writeToLog("We Will Bury You Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

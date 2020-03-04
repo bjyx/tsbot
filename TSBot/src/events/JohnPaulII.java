@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class JohnPaulII extends Card {
@@ -25,6 +26,7 @@ public class JohnPaulII extends Card {
 		builder.changeInfluence(13, 0, 1); //add 1 USA influence in Poland
 		builder.addField("Catholic clout","Anti-communist sentiment in Poland is building. " + CardList.getCard(101) + " may now be played for the event.",false);
 		HandManager.addEffect(68);
+		Log.writeToLog("John Paul II Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

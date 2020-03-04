@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class AWACSSale extends Card {
@@ -19,6 +20,7 @@ public class AWACSSale extends Card {
 					+ "- Jimmy Carter, 1978", Launcher.url("people/carter.png"));
 		builder.changeInfluence(29, 0, 2); //add 2 USA influence in Saudi
 		builder.addField("",CardList.getCard(56) + " may no longer be played for the event.",false);
+		Log.writeToLog("AWACS Active.");
 		HandManager.addEffect(110);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

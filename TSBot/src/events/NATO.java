@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class NATO extends Card {
@@ -17,6 +18,7 @@ public class NATO extends Card {
 			.setColor(Color.blue)
 			.setFooter("\"Never have we been part of such a broad, solid and binding security alliance, which at the same time respects in its essence the sovereignty and will of our nation.\"\n"
 					+ "- Václav Havel [anachronism]", Launcher.url("people/havel.png"));
+		Log.writeToLog("NATO Active.");
 		builder.addField("NATO Founded","European countries under US Control can no longer be couped, realigned, or targeted by " + CardList.getCard(36) + ", if the originator of those events is the USSR.",false);
 		builder.addField("A Very Special Relationship","The effect of " + CardList.getCard(105) + " has been improved.",false);
 		HandManager.addEffect(21);

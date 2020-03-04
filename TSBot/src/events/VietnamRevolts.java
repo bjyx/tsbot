@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class VietnamRevolts extends Card {
@@ -20,6 +21,7 @@ public class VietnamRevolts extends Card {
 		builder.changeInfluence(45, 1, 2); //Vietnam 0/+2
 		builder.addField("Viet Minh", "All Soviet Operations exclusively used in Southeast Asia will now have one extra point to use.", false);
 		HandManager.addEffect(9);
+		Log.writeToLog("Vietnam Revolts active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

@@ -6,6 +6,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Laika extends Card {
@@ -21,6 +22,7 @@ public class Laika extends Card {
 		builder.changeVP(-1);
 		builder.addField("\"Muttnik\"","The USSR receives -1 to all Space Race rolls until it can send a man into space.",false);
 		HandManager.addEffect(124);
+		Log.writeToLog("Laika Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

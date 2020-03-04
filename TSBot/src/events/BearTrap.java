@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class BearTrap extends Card {
@@ -19,6 +20,7 @@ public class BearTrap extends Card {
 					+ "- Ahmad Shah Massoud", Launcher.url("people/massoud.png"));
 		builder.addField("Mujahideen","The USSR must discard a card worth at least 2 Ops every action round and roll 1-4 to cancel this effect.",false);
 		HandManager.addEffect(44);
+		Log.writeToLog("Bear Trap Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

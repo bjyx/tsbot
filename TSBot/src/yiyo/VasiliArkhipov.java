@@ -6,6 +6,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 
 public class VasiliArkhipov extends Card {
 
@@ -18,6 +19,7 @@ public class VasiliArkhipov extends Card {
 		builder.addField("Three-Man Authorization", "*At the start of any one action round after this, increase DEFCON by 1.* \n"
 				+ "__To activate this card, type `TS.decide arkhipov` at the start of any of your action rounds after this one.__", false);
 		HandManager.addEffect(1270+sp);
+		Log.writeToLog("Vasili Arkhipov Active (benefits " + (sp==0?"US":"SU") + ").");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

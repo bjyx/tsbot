@@ -9,6 +9,7 @@ import events.CardEmbedBuilder;
 import events.GrainSales;
 import events.StarWars;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class BerlinWall2 extends Card {
@@ -28,10 +29,13 @@ public class BerlinWall2 extends Card {
 			HandManager.Discard.remove((Integer) 103);
 			HandManager.Removed.add(103);
 			builder.addField("Closed Border", CardList.getCard(103) + " has been removed from the game.", false);
+			Log.writeToLog("Removed Defectors from game.");
 		}
 		if (playedByUS()&&discard!=0) {
 			HandManager.discard(1, discard);
 			builder.addField("Maintenance", "The USSR discards " + CardList.getCard(discard) + " to play " + CardList.getCard(scored), false);
+			Log.writeToLog("Discarded " + CardList.getCard(discard).getName() + ".");
+			Log.writeToLog(CardList.getCard(scored).getName() + ":");
 			CardList.getCard(scored).onEvent(1, new String[] {"dummy"});
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();

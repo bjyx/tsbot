@@ -10,6 +10,7 @@ import events.CardEmbedBuilder;
 import events.Decision;
 import game.GameData;
 //import main.Launcher;
+import logging.Log;
 
 public class KremlinFlu extends Card {
 
@@ -26,6 +27,7 @@ public class KremlinFlu extends Card {
 		GameData.ops = new Operations(0, CardList.getCard(115).getOpsMod(0), true, true, true, false, false);
 		builder.addField("Kremlin Flu", "The USSR must play a scoring card on the next action round or skip said action round.", false);
 		HandManager.addEffect(115);
+		Log.writeToLog("Kremlin Flu Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now conduct operations.").complete();
 	}

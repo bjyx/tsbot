@@ -8,6 +8,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class CheckpointC extends Card {
@@ -30,6 +31,7 @@ public class CheckpointC extends Card {
 		else {
 			builder.addField("", "Discarded " + CardList.getCard(discard) + ". A replacement has been drawn.", false);
 			HandManager.discard(0, discard);
+			Log.writeToLog("Discarded " + CardList.getCard(discard).getName() + ".");
 			Random random = new Random();
 			HandManager.USAHand.add(HandManager.Deck.remove(random.nextInt(HandManager.Deck.size())));
 			if(HandManager.Deck.isEmpty()) {
@@ -38,6 +40,7 @@ public class CheckpointC extends Card {
 			}
 		}
 		builder.addField("", "This will occur before every US Action round until one side sets their military operations to zero before their action round. __To do so, write `TS.decide charlie`.__", false);
+		Log.writeToLog("Checkpoint C Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

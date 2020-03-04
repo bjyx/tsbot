@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class FiveYearPlan extends Card {
@@ -30,6 +31,7 @@ public class FiveYearPlan extends Card {
 		else {
 			HandManager.discard(1, card);
 		}
+		Log.writeToLog("The Soviets discard " + CardList.getCard(card).getName() + ".");
 		builder.addField("Centralization","The Soviets lose " + CardList.getCard(card) + " attempting to improve their economy.",false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		if (CardList.getCard(card).getAssociation()==0) {

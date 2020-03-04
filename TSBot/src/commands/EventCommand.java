@@ -8,6 +8,7 @@ import cards.HandManager;
 import cards.Operations;
 import game.GameData;
 import game.PlayerList;
+import logging.Log;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class EventCommand extends Command {
@@ -61,6 +62,7 @@ public class EventCommand extends Command {
 			else if (HandManager.activecard!=73) {
 				HandManager.Discard.add(HandManager.activecard);
 			}
+			Log.writeToLog(CardList.getCard(HandManager.activecard).getName()+":");
 			CardList.getCard(HandManager.activecard).onEvent(PlayerList.getArray().indexOf(e.getAuthor()), args);
 		}
 		GameData.checkScore(false, false);

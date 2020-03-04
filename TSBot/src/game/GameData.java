@@ -8,6 +8,7 @@ import cards.Operations;
 import commands.TimeCommand;
 import events.CardEmbedBuilder;
 import events.Decision;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -179,14 +180,17 @@ public class GameData {
 					.setImage(Launcher.url("draw.png"))
 					.setColor(Color.gray)
 					.build()).complete();
+			Log.writeToLog("Draw Game");
 			return;
 		}
+		
 		EmbedBuilder builder = new EmbedBuilder()
 				.setTitle("GAME OVER - The winner is " + MapManager.get(victor==0?84:85) + PlayerList.getArray().get(victor).getName() + "!")
 				.setDescription("Cause: " + getCause(cause))
 				.setColor(victor==0?Color.blue:Color.red)
 				.setImage(Launcher.url("victory_" + (victor==0?"us":"su") + cause + ".png"));
 		txtchnl.sendMessage(builder.build()).complete();
+		Log.writeToLog("Game Won By " + (victor==0?"US":"SU"));
 	}
 	
 	/**
@@ -255,23 +259,41 @@ public class GameData {
 		} // stage F
 		if (HandManager.China != -1) HandManager.China %= 2; // stage G
 		if (turn==10) {
+			Log.writeToLog("-+-+-Final Scoring-+-+-");
 			HandManager.removeEffect(73); //if still active; ShuttleDip doesn't count for final scoring
+			Log.writeToLog("Europe: ");
 			CardList.getCard(2).onEvent(-1, new String[] {}); //Europe Scoring
 			if (ended) return; //if someone controls Europe, it's over.
+			Log.writeToLog("Asia: ");
 			CardList.getCard(1).onEvent(-1, new String[] {}); //Asia Scoring
+			Log.writeToLog("Middle East: ");
 			CardList.getCard(3).onEvent(-1, new String[] {}); //Middle East Scoring
+			Log.writeToLog("Central America: ");
 			CardList.getCard(37).onEvent(-1, new String[] {}); //Central America Scoring
+			Log.writeToLog("Africa: ");
 			CardList.getCard(79).onEvent(-1, new String[] {}); //Africa Scoring
+			Log.writeToLog("South America: ");
 			CardList.getCard(81).onEvent(-1, new String[] {}); //South America Scoring
-			if (HandManager.effectActive(137)) {
-				if (MapManager.get(48).isControlledBy()==1) score--;
-				if (MapManager.get(51).isControlledBy()==1) score--;
-				if (MapManager.get(52).isControlledBy()==1) score--;
-				if (MapManager.get(57).isControlledBy()==1) score--;
-				if (MapManager.get(61).isControlledBy()==1) score--;
+			if (HandManager.effectActive(137)) {	
+				builder.addField("Red Africa", "", false);//Red Africa
+				int redAfrica = 0;
+				if (MapManager.get(48).isControlledBy()==1) redAfrica++;
+				if (MapManager.get(51).isControlledBy()==1) redAfrica++;
+				if (MapManager.get(52).isControlledBy()==1) redAfrica++;
+				if (MapManager.get(57).isControlledBy()==1) redAfrica++;
+				if (MapManager.get(61).isControlledBy()==1) redAfrica++;
+				Log.writeToLog("Red Africa:");
+				builder.changeVP(-redAfrica);
 			}
-			if (HandManager.China==0) score++;
-			else score--;
+			builder.addField("China Card", "", false);
+			Log.writeToLog("China Card:");
+			if (HandManager.China==0) {
+				builder.changeVP(1);
+			}
+			else {
+				builder.changeVP(-1);
+			}
+			txtchnl.sendMessage(builder.build()).complete();
 			checkScore(true, false);
 			return;
 		}
@@ -281,14 +303,15 @@ public class GameData {
 		HandManager.headline[1]=0;
 		hasSpaced[0] = 0; 
 		hasSpaced[1] = 0;
+		//effect reminders
 		if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
 		if (HandManager.removeEffect(25)) builder.addField("Ineffective Policy", "New administration calls for rollback. US loses +1 Operations bonus.", false);	//Containment
 		if (HandManager.removeEffect(41)) builder.addField("Soviets Develop Nuclear Submarines","US coups in battleground countries will now lower DEFCON.",false);	//Nuclear Subs
 		if (HandManager.removeEffect(43)) builder.addField("SALT Treaty Expires","Coup rolls are no longer penalized.",false);	//SALT
-		if (HandManager.removeEffect(51)) builder.addField("Brezhnev Dies","USSR loses +1 Operations bonus.",false);;	//Brezhnev
+		if (HandManager.removeEffect(51)) builder.addField("Polish Crisis","USSR loses +1 Operations bonus.",false);;	//Brezhnev
 		if (HandManager.removeEffect(60)) builder.addField("Prisoner Exchange","Powers traded for Abel. UN Intervention will no longer incur a VP penalty.",false);	//U2
 		if (HandManager.removeEffect(93)) builder.addField("Mistakes were made","US rolls on realignments are no longer penalized.",false);	//Iran Contra
-		if (HandManager.removeEffect(94)) builder.addField("","USSR influence placements are no longer restricted by region.",false);	//Chernobyl
+		if (HandManager.removeEffect(94)) builder.addField("Sarcophagus","USSR influence placements are no longer restricted by region.",false);	//Chernobyl
 		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
 		if (HandManager.removeEffect(126)) builder.addField("Test Ban","Coups conducted on US Action Rounds no longer drop DEFCON.",false);	//Tsar Bomba
 		HandManager.removeEffect(129); //Indo-Soviet
@@ -302,11 +325,13 @@ public class GameData {
 		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "**Thermonuclear war is now very much a possibility.**\nUS coups are now restricted by DEFCON.", false);
 		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);
 		if (turn==4) {
+			Log.writeToLog("MW Cards Added.");
 			HandManager.addToDeck(1);
 			builder.addField("Mid War","Mid War cards now available for use.",false);
 			if (HandManager.removeEffect(1001)) builder.addField("Deténte","USSR will now go first on all subsequent turns.",false);
 		}
 		if (turn==8) {
+			Log.writeToLog("LW Cards Added.");
 			HandManager.addToDeck(2);
 			builder.addField("Late War","Late War cards now available for use.",false);
 		}
@@ -321,6 +346,7 @@ public class GameData {
 	public static void startTurn() {
 		txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(defcon!=5?1:0).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build()).complete(); //stage A
 		HandManager.deal(); // stage B; also reshuffles automatically
+		Log.writeToLog("-+-+- Turn "+getTurn()+" -+-+-");
 	}
 	
 	/**
@@ -370,7 +396,26 @@ public class GameData {
 		}
 		ar++; //if you don't advance the turn or have anything to do with extra action rounds
 		HandManager.activecard = 0;
+		Log.writeToLog("--- New AR ---");
 	}
+	
+	public static int arsLeft() {
+		if (getEra()==0 && !yiyo) {
+			return 6-(getAR()-1)/2;
+		}
+		if (hasAbility(1, 8)&&ar==14) {
+			return 8-(getAR()-1)/2;
+		}
+		if (hasAbility(0, 8)&&ar==14) {
+			return 8-(getAR()-1)/2;
+		}
+		if (HandManager.Effects.contains(860)&&(ar==14||ar==15)) {
+			return 8-(getAR()-1)/2;
+		}
+		return 7-(getAR()-1)/2;
+	}
+	
+	
 	/**
 	 * @return {@link #ar}
 	 */
@@ -411,6 +456,7 @@ public class GameData {
 		if (defcon==2&&!isHeadlinePhase()&&MapManager.get(3).isControlledBy()==0&&HandManager.effectActive(106)) {
 			TimeCommand.NORAD=false;
 		}
+		Log.writeToLog("DEFCON " + defcon2);
 	}
 	/**
 	 * 
@@ -427,6 +473,7 @@ public class GameData {
 	public static void addMilOps(int sp,int mil) {
 		milops[sp] += mil;
 		if (milops[sp] > 5) milops[sp]=5;
+		Log.writeToLog("MilOps " + (sp==0?"US":"SU") + " + " + mil);
 	}
 	/**
 	 * 
@@ -452,6 +499,7 @@ public class GameData {
 	 */
 	public static void addSpace(int sp) {
 		space[sp]++;
+		Log.writeToLog("Space" + (sp==0?"US":"SU") + " + 1");
 	}
 	/**
 	 * 
@@ -467,6 +515,7 @@ public class GameData {
 	 */
 	public static void changeScore(int amt) {
 		if (HandManager.effectActive(50)&&!GameData.isHeadlinePhase()&&GameData.phasing()==0) {
+			Log.writeToLog("We Will Bury You: ");
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("We Will Bury You...").setDescription("...and the UN sits idle.")
 					.setFooter("\"If you don't like us, don't accept our invitations, "
@@ -474,12 +523,13 @@ public class GameData {
 							+ "Whether you like it or not, history is on our side.\" \n"
 							+ "- Nikita Khrushchev, 1956", Launcher.url("people/khrushchev.png"))
 					.setColor(Color.red);
+			HandManager.removeEffect(50); //this has to come before because otherwise it's an infinite loop
 			builder.changeVP(-3);
-			HandManager.removeEffect(50);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			GameData.checkScore(false, false);
 		}
 		score += amt;
+		Log.writeToLog("VP" + (amt>0?"+":"") + amt);
 	}
 	/**
 	 * 

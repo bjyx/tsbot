@@ -5,6 +5,7 @@ import java.awt.Color;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -20,6 +21,7 @@ public class MobutuSeseSeko extends Card {
 					+ "- Jimmy Carter, 1978", Launcher.url("promo/mobutu.png"));
 		builder.changeInfluence(62, 0, 2); //add 2 USA influence in Zaire
 		builder.addField("Manifesto of N'Sele","Zaire's stability is now 3.",false);
+		Log.writeToLog("Mobutu Active.");
 		MapManager.get(62).stab = 3; //the one time a country's stab can change in the game
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
@@ -66,7 +68,7 @@ public class MobutuSeseSeko extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Add 2 US Influence to Zaire. Zaire now has a stability value of 3 instead of 1.";
+		return "Add 2 US Influence to Zaire. Zaire will have a stability value of 3 instead of 1 for the rest of the game.";
 	}
 
 	@Override

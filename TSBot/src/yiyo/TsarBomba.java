@@ -6,6 +6,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class TsarBomba extends Card {
@@ -19,6 +20,7 @@ public class TsarBomba extends Card {
 			.setColor(Color.red);
 		builder.changeDEFCON(-1);
 		builder.addField("Kuzma's Mother","**DEFCON will decrease by 1 after every US action round with a coup attempt.**",false);
+		Log.writeToLog("Tsar Bomba Active.");
 		HandManager.addEffect(126);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.HandManager;
 import game.Die;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -16,6 +17,7 @@ public class BrushWar extends Card {
 	public void onEvent(int sp, String[] args) {
 		Die die = new Die();
 		int mod = die.roll();
+		Log.writeToLog("Roll: " + mod);
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(sp,  3);
 		String adjacents = "";
@@ -23,6 +25,7 @@ public class BrushWar extends Card {
 			if (MapManager.get(i).isControlledBy()==(sp+1)%2) {
 				mod--;
 				adjacents += MapManager.get(i);
+				Log.writeToLog(MapManager.get(i).iso.toUpperCase() + ": -1");
 			}
 		}
 		builder.addField("Insurgency in " + MapManager.get(target).name, die + (mod==die.result?":":(": - " + adjacents)), false);

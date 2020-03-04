@@ -10,6 +10,7 @@ import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -251,6 +252,7 @@ public class HandManager {
 	public static void play(int sp, int card, char mode) {
 		
 		if (card==116&&mode!='s') {
+			Log.writeToLog("First Lightning:");
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("American Nuclear Monopoly Broken!")
 				.setDescription("")
@@ -260,6 +262,7 @@ public class HandManager {
 		}
 		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
+			Log.writeToLog("Flower Power:");
 			builder.setTitle("Student Strikes Rock American Universities")
 				.setDescription("Protests against the " + CardList.getCard(card).getName() + " intensify after Kent State Massacre")
 				.setFooter("\"I think that we're up against the strongest, well-trained, "
@@ -280,11 +283,14 @@ public class HandManager {
 		}
 		//super complicated area, will nitgrit later
 		if (mode=='h') {
+			Log.writeToLog((sp==0?"US":"SU")+" h");
 			removeFromHand(sp, card);
 			playmode = 'h';
 			headline[sp]=card;
 			
 			if (headline[(sp+1)%2]!=0) {
+				Log.writeToLog("US plays " + CardList.getCard(headline[0]).getName() + " as headline");
+				Log.writeToLog("SU plays " + CardList.getCard(headline[1]).getName() + " as headline");
 				if (headline[0]==103) {
 					precedence = 0;
 					activecard = headline[0];
@@ -314,9 +320,11 @@ public class HandManager {
 		if (mode=='e') {
 			removeFromHand(sp,card);
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
+				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " for the event first.");
 				playmode = 'f';
 			}
 			else {
+				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as event.");
 				playmode = 'e';
 			}
 			activecard = card;
@@ -327,6 +335,7 @@ public class HandManager {
 			if (card==6) {
 				China = (China+1)%2+2;
 				if (GameData.phasing()==0&&removeEffect(35)) {
+					Log.writeToLog("Formosan Resolution Cancelled.");
 					GameData.txtchnl.sendMessage(new CardEmbedBuilder()
 							.setTitle("Defense Treaty Abrogated")
 							.setDescription("Taiwan will no longer be a battleground country in any situation.")
@@ -335,15 +344,18 @@ public class HandManager {
 							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
 							.build()).complete();
 				}
+				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as ops.");
 				playmode = 'o'; //ops only — bug fix
 			}
 			
 			else if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
 				removeFromHand(sp,card);
+				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " for ops first.");
 				playmode = 'l'; //event last
 			}
 			else {
 				discard(sp, card);
+				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as ops.");
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
@@ -355,6 +367,7 @@ public class HandManager {
 			if (card==6) {
 				China = (China+1)%2+2;
 			}
+			Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " to space.");
 			discard(sp, card);
 			playmode = 's';
 			activecard = card;
@@ -475,10 +488,27 @@ public class HandManager {
 	public static int checkScoring() {
 		int i=0;
 		for (int c : SUNHand) {
-			if (CardList.getCard(c).getOps()==0) i+= 2;
+			if (CardList.getCard(c).getOps()==0) {
+				i+= 2;
+				break;
+			}
 		}
 		for (int c : USAHand) {
-			if (CardList.getCard(c).getOps()==0) i+= 1;
+			if (CardList.getCard(c).getOps()==0) {
+				i+= 1;
+				break;
+			}
+		}
+		return i;
+	}
+	
+	public static int countScoring(int sp) {
+		int i=0;
+		if (sp==1) for (int c : SUNHand) {
+			if (CardList.getCard(c).getOps()==0) i++;
+		}
+		else for (int c : USAHand) {
+			if (CardList.getCard(c).getOps()==0) i++;
 		}
 		return i;
 	}

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class FormosanResolution extends Card {
@@ -19,6 +20,7 @@ public class FormosanResolution extends Card {
 			.setColor(Color.BLUE);
 		builder.addField("Mutual Defense Treaty", "Taiwan will count as a battleground for scoring purposes only so long as the US controls it.", false);
 		HandManager.addEffect(35);
+		Log.writeToLog("Formosa Resolution Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

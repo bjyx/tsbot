@@ -8,6 +8,7 @@ import events.Chernobyl;
 import events.Decision;
 import game.Die;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -340,13 +341,14 @@ public class Operations {
 		if (ops>opnumber) {
 			if (ops==opnumber+1 && GameData.hasAbility(sp, 4, true)&&discount==sp) {
 				for (int i=0; i<countries.length; i++) {
-					if (MapManager.get(countries[i]).isControlledBy()==(sp+1)%2) {
+					if (MapManager.get(countries[i]).isControlledBy()==(sp+1)%2) { //applies without loss of generality
 						discount += 2;
+						Log.writeToLog("Space Race Ability 4 used.");
 						builder.addField("Space Race Bonus", "You had an easier time infiltrating the government of "+MapManager.get(countries[i]).name+".", false);
 						break;
 					}
 				}
-				if (discount <= 2) {
+				if (discount < 2) {
 					txtsp.sendMessage(":x: Overstreching yourself is never good.").complete();
 					return false;
 				}
@@ -359,12 +361,13 @@ public class Operations {
 		realignment = false;
 		coupdetat = false;
 		spaceable = false;
-		
+		Log.writeToLog("Operations: Influence");
 		builder.setTitle("Influence Placement").setColor(sp==0?Color.blue:Color.red);
 		for (int i=0; i<countries.length; i++) {
 			builder.changeInfluence(countries[i], sp, amt[i]);
 			if (GameData.ccw && MapManager.get(86).isControlledBy()==1 && HandManager.China==-1) {
 				HandManager.China=1; //China activating condition
+				Log.writeToLog("China Card active.");
 				builder.addField("Huainan Campaign", "The communists have won the Chinese Civil War. " + CardList.getCard(31) + ", " + CardList.getCard(58) + ", and " + CardList.getCard(35) + " are now playable for the event. The China Card is now playable by the Soviets.", false);
 			}
 		}
@@ -406,7 +409,7 @@ public class Operations {
 				return true;
 			}
 		}
-		else if (restrictions==96) {
+		else if (restrictions==136) {
 			boolean flag = true;
 			for (int i=64; i<74; i++) {
 				if (MapManager.get(i).influence[1]>0) {
@@ -472,6 +475,7 @@ public class Operations {
 		influence = false;
 		coupdetat = false;
 		spaceable = false;
+		Log.writeToLog("Realignment in " + MapManager.get(country).iso.toUpperCase());
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Realignment")
 			.setDescription("Target: "+ MapManager.get(country))
@@ -481,31 +485,38 @@ public class Operations {
 		if (MapManager.get(country).influence[0]>MapManager.get(country).influence[1]) {
 			rolls[0]++;
 			modifiers[0] += MapManager.get(country);
+			Log.writeToLog("+1 to US (more influence in target).");
 		}
 		if (MapManager.get(country).influence[0]<MapManager.get(country).influence[1]) {
 			rolls[1]++;
 			modifiers[1] += MapManager.get(country);
+			Log.writeToLog("+1 to SU (more influence in target).");
 		}
 		if (HandManager.effectActive(93)) {
 			rolls[0]--;
 			builder.addField("Iran-Contra Affair!", "-1", false);
+			Log.writeToLog("-1 to US (Iran-Contra).");
 		}
 		for (int adj : MapManager.get(country).adj) {
 			if (adj==84) {
 				rolls[0]++;
 				modifiers[0] += MapManager.get(adj);
+				Log.writeToLog("+1 to US (control of US).");
 			}
 			else if (adj==85) {
 				rolls[1]++;
 				modifiers[1] += MapManager.get(adj);
+				Log.writeToLog("+1 to SU (control of SU).");
 			}
 			else {
 				if (MapManager.get(adj).isControlledBy()!=-1) {
 					rolls[MapManager.get(adj).isControlledBy()]++;
 					modifiers[MapManager.get(adj).isControlledBy()] += MapManager.get(adj);
+					Log.writeToLog("+1 to "+(MapManager.get(adj).isControlledBy()==0?"US":"SU")+" (control of "+MapManager.get(adj).iso.toUpperCase()+").");
 				}
 			}
 		}
+		Log.writeToLog("Final Rolls: "+rolls[0]+"/"+rolls[1]);
 		builder.addField("Rolls", ":flag_us::" + CardEmbedBuilder.numbers[rolls[0]] + "::heavy_plus_sign:" + modifiers[0] + "\n"+MapManager.get(85)+":" + CardEmbedBuilder.numbers[rolls[1]] + "::heavy_plus:" + modifiers[1], false);
 		if (rolls[1]>rolls[0]) builder.changeInfluence(country, 0, -(rolls[1]-rolls[0]));
 		if (rolls[0]>rolls[1]) builder.changeInfluence(country, 1, -(rolls[0]-rolls[1]));
@@ -544,12 +555,12 @@ public class Operations {
 		}
 		if (HandManager.Effects.contains(400+sp)) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder().setTitle((sp==0?"American ":"Soviet ") + "Missiles Launched Against " + MapManager.get(country).name)
-					.setDescription((sp==0?"Soviet":"American")+" reprisal imminent")
+					.setDescription((sp==0?"Soviet":"American")+" retaliation imminent")
 					.setColor(Color.BLACK)
 					.setFooter("\"You have ignited a nuclear war. And no, there is no animated display "
 							+ "or a mushroom cloud with parts of bodies flying through the air. "
 							+ "We do not reward failure.\"\n"
-							+ "- *Balance of Power* (video game)", Launcher.url("victory_us1.png"))
+							+ "- *Balance of Power* (video game)", Launcher.url("people/victory_us1.png"))
 					.build()).complete();
 			GameData.endGame(sp==0?1:0, 1); //NUCLEAR WAR
 			return false;
@@ -595,33 +606,45 @@ public class Operations {
 	
 	public boolean coupPreDet(int country, int die) {
 		if (GameData.phasing()==0) tsarbomba = true;
+		Log.writeToLog("Operations: Coup in " + MapManager.get(country).iso.toUpperCase());
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Coup d'État!")
 			.setDescription("Target: "+ MapManager.get(country))
 			.setColor(sp==0?Color.blue:Color.red);
-		if (HandManager.effectActive(41) && sp==0) builder.addField("Nuclear Submarines!", "This coup does not affect DEFCON.", false);
-		else if (MapManager.get(country).isBattleground) builder.changeDEFCON(-1);
+		if (MapManager.get(country).isBattleground) {
+			if (HandManager.effectActive(41) && sp==0) builder.addField("Nuclear Submarines!", "This coup does not affect DEFCON.", false);
+			else builder.changeDEFCON(-1);
+		}
 		if (!free) builder.addMilOps(sp, opnumber);
-		int amt = opnumber + die - MapManager.get(country).stab*2 - (HandManager.effectActive(43)?1:0);
-		if (HandManager.effectActive(43)) builder.addField("SALT Negotiations","-1",false);
+		int amt = opnumber + die - MapManager.get(country).stab*2;
+		if (HandManager.effectActive(43)) {
+			builder.addField("SALT Negotiations","-1",false);
+			amt--;
+			Log.writeToLog("SALT: -1");
+		}
 		if (HandManager.effectActive(690+sp) && MapManager.get(country).region>6) {
 			builder.addField("Latin American Death Squads", "+1", false);
 			amt++;
+			Log.writeToLog("LADS: +1");
 		}
 		if (HandManager.effectActive(690+((sp+1)%2)) && MapManager.get(country).region>6) {
 			builder.addField("Latin American Death Squads", "-1", false);
 			amt--;
+			Log.writeToLog("LADS: -1");
 		}
 		if (HandManager.effectActive(109)) {
+			Log.writeToLog("Yuri and Samantha:");
 			builder.addField("Yuri and Samantha", "", false);
 			builder.changeVP(-1);
 		}
 		if (GameData.hasAbility((sp+1)%2, 7, true)) {
+			Log.writeToLog("Neutron Bombs: -1");
 			builder.addField("Enemy Neutron Bombs", "-1", false);
 			amt--;
 		}
 		builder.addField("Roll: :" + CardEmbedBuilder.numbers[die] + ":", CardEmbedBuilder.intToEmoji(amt), false);
-		
+		Log.writeToLog("Roll: "+die);
+		Log.writeToLog("Final Total: " + amt);
 		if (amt>0) {
 			if (amt>MapManager.get(country).influence[(sp+1)%2]) {
 				int x = MapManager.get(country).influence[(sp+1)%2];
@@ -632,7 +655,7 @@ public class Operations {
 				builder.changeInfluence(country, (sp+1)%2, -amt);
 			}
 		}
-		else {
+		else { //oof
 			builder.addField(":( Failure!", "", false);
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -650,15 +673,18 @@ public class Operations {
 		realignment = false;
 		coupdetat = false;
 		influence = false;
+		Log.writeToLog("Space Race: ");
 		GameData.toSpace(sp);
 		int spaceLevel = GameData.getSpace(sp);
 		int die = new Die().roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
+		Log.writeToLog("Roll: " + die);
 		builder.setTitle("Space Race")
 		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));
 		if (HandManager.effectActive(124) && sp==1) {
 			builder.addField("Laika","-1",false);
 			die--;
+			Log.writeToLog("Laika: -1");
 		}
 		if (die <= spaceRoll[spaceLevel]) {
 			builder.setColor(sp==0?Color.blue:Color.red)
@@ -675,6 +701,7 @@ public class Operations {
 		}
 		if (spaceLevel<3&&GameData.getSpace(sp)>=3&&sp==1&&HandManager.removeEffect(124)) {
 			builder.addField("Vostok 1", "The Soviets have acquired the capability to send a man into space. They will no longer receive a -1 bonus to their space race die rolls.", false);
+			Log.writeToLog("Laika no longer active.");
 		}
 		if (spaceLevel<4&&GameData.getSpace(sp)>=4) {
 			if (GameData.getSpace((sp+1)%2)<4) {

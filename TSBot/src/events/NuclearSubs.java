@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class NuclearSubs extends Card {
@@ -19,6 +20,7 @@ public class NuclearSubs extends Card {
 		builder.addField("Nuclear Triad","Coups performed by the US will not drop DEFCON for the rest of this turn."
 				+ (HandManager.Effects.contains(400)?"\n\n**:warning: The USA is currently dealing with the Cuban Missile Crisis. Any coup conducted by the USA will still lose them the game.**":""),false);
 		HandManager.addEffect(41);
+		Log.writeToLog("Nuclear Submarines Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

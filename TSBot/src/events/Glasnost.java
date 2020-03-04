@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Glasnost extends Card {
@@ -23,6 +24,7 @@ public class Glasnost extends Card {
 		builder.changeDEFCON(1);
 		builder.changeVP(-2);
 		if (HandManager.effectActive(87)) {
+			Log.writeToLog("This card is boosted by The Reformer.");
 			builder.addField("The Reformer", "The USSR may now place influence or conduct realignments using this card.", false);
 			GameData.dec = new Decision (1, 90);
 			GameData.ops = new Operations (1, CardList.getCard(90).getOpsMod(1), true, true, false, false, false);

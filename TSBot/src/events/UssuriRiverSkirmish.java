@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -26,6 +27,7 @@ public class UssuriRiverSkirmish extends Card {
 		}
 		else {
 			builder.addField("Assault on Zhenbao Island", "The China Card has been given to the US, face-up.", false);
+			Log.writeToLog("China Card is passed to US, face-up.");
 			HandManager.China = 0;
 		}
 		

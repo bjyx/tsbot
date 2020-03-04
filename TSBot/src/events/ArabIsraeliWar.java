@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import game.Die;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -18,15 +19,18 @@ public class ArabIsraeliWar extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.addMilOps(1,  2);
 		String adjacents = "";
+		Log.writeToLog("Roll: " + mod);
 		for (int i : MapManager.get(25).adj) {
 			if (MapManager.get(i).isControlledBy()==0) {
 				mod--;
 				adjacents += MapManager.get(i);
+				Log.writeToLog(MapManager.get(i).iso.toUpperCase() + ": -1");
 			}
 		}
 		if (MapManager.get(25).isControlledBy()==0) {
 			mod--;
 			adjacents += MapManager.get(25);
+			Log.writeToLog("IL: -1");
 		}
 		builder.addField("Arab League invades Israel", die + (mod==die.result?"":(" - " + adjacents)), false);
 		if (mod>=4) {

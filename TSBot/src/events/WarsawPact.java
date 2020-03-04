@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -31,6 +32,7 @@ public class WarsawPact extends Card {
 			builder.setDescription("Stalin further reins in puppet governments");
 			builder.bulkChangeInfluence(order, 1, values);
 		}
+		Log.writeToLog("Warsaw Pact Active.");
 		builder.addField("Western Reaction", "**NATO is now formable.**", false);
 		HandManager.addEffect(16);
 		GameData.txtchnl.sendMessage(builder.build()).complete();

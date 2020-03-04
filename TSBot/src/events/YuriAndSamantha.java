@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class YuriAndSamantha extends Card {
@@ -18,6 +19,7 @@ public class YuriAndSamantha extends Card {
 					+ "- Yuri Andropov, 1983", Launcher.url("people/hoffman.png"));
 		builder.addField("Goodwill Ambassador","For the rest of the turn, all US coups give the USSR 1 Victory Point.",false);
 		HandManager.addEffect(109);
+		Log.writeToLog("Yuri and Samantha Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

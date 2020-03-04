@@ -11,6 +11,7 @@ import cards.HandManager;
 import cards.Operations;
 import game.GameData;
 import game.PlayerList;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -161,6 +162,7 @@ public class StartCommand extends Command {
 		} catch (IOException e1) {
 			System.out.print("Error creating emoji.");
 		}
+		Log.writeToLog("New Game: "+settings+" "+SetupCommand.handicap);
 		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Twilight Struggle Game Has Started.").setDescription(":hourglass: It is now seven minutes to midnight and counting. Good luck.").setColor(Color.WHITE);
 		if (settings>=256) {
 			Launcher.change();
@@ -245,12 +247,14 @@ public class StartCommand extends Command {
 			Operations.allowedSUN = Operations.influencePossible(1);
 			TimeCommand.prompt();
 			if (GameData.altspace) Operations.coupReroll = 0;//US starts at space 6
+			Log.writeToLog("-+-+- Turn 8 -+-+-");
 			return;
 		}
 		else {
 			MapManager.initialize();
 		}
 		if (!GameData.turnzero && !GameData.latewar) {
+			Log.writeToLog("-+-+- Setup -+-+-");
 			CardList.initialize();
 			HandManager.addToDeck(0);
 			HandManager.deal();
@@ -258,6 +262,7 @@ public class StartCommand extends Command {
 			GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please place six influence markers in Eastern Europe. (Use TS.setup)").complete();
 		}
 		if (GameData.turnzero) {
+			Log.writeToLog("-+-+- Turn 0 -+-+-");
 			TurnZero.startCrisis();
 		}
 	}

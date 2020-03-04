@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Quagmire extends Card {
@@ -22,6 +23,7 @@ public class Quagmire extends Card {
 		builder.addField("Ho Chi Minh Trail","The US must discard a card worth at least 2 Ops every action round and roll 1-4 to cancel this effect."
 				+(HandManager.removeEffect(106)?"\nThe effects of " + CardList.getCard(106) + " are cancelled.":""),false);
 		HandManager.addEffect(42);
+		Log.writeToLog("Quagmire Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

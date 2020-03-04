@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import commands.TimeCommand;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Defectors extends Card {
@@ -22,6 +23,7 @@ public class Defectors extends Card {
 							+ "- William L. M. King, re. Igor Gouzenko, 1945", Launcher.url("people/king.png"))
 					.addField("Leaked Intelligence", "The headline "+CardList.getCard(HandManager.headline[1])+" cannot be carried out this turn.", false)
 					.build()).complete();
+			Log.writeToLog("Defectors cancel USSR headline.");
 			HandManager.Discard.add(HandManager.headline[1]);
 		}
 		else if (!GameData.isHeadlinePhase()&&GameData.phasing()==1) {

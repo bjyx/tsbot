@@ -2,6 +2,7 @@ package game;
 
 import cards.HandManager;
 import events.Decision;
+import logging.Log;
 /**
  * A random number generator between one and six. 
  * @author [REDACTED]
@@ -32,6 +33,7 @@ public class Die {
 			}
 			result = GameData.diestore;
 		}
+		Log.writeToLog("Roll: " + result);
 		return result;
 	}
 	

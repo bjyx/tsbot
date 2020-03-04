@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -25,6 +26,7 @@ public class TearDownThisWall extends Card {
 		builder.changeInfluence(6, 0, 3);
 		builder.addField("The fall of Ostpolitik", HandManager.removeEffect(55)?"The event of " + CardList.getCard(55) + " has been cancelled.":"The event of " + CardList.getCard(55) + " can no longer be played.", false);
 		HandManager.addEffect(96);
+		Log.writeToLog("Tear Down This Wall Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
 		for (int i=0; i<21; i++) {

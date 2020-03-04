@@ -8,6 +8,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class IndoSovietTreaty extends Card {
@@ -25,6 +26,7 @@ public class IndoSovietTreaty extends Card {
 		builder.changeDEFCON(1).changeInfluence(34, 1, 1);
 		if (discard!=0) {
 			builder.addField("Article II", "The USSR discards " + CardList.getCard(discard) + " to play eight action rounds.", false);
+			Log.writeToLog("Discarded " + CardList.getCard(discard).getName() + ".");
 			HandManager.discard(1, discard);
 			for (int i=0; i<2; i++) {
 				Random random = new Random();
@@ -35,6 +37,7 @@ public class IndoSovietTreaty extends Card {
 				}
 			}
 			HandManager.effectActive(129);
+			Log.writeToLog("Indo-Soviet Treaty Active.");
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 

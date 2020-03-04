@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -23,6 +24,7 @@ public class IranHostage extends Card {
 		builder.changeInfluence(23, 1, 2); //add 2 USSR Influence to Iran
 		builder.addField("State-sponsored terrorism","If "+ CardList.getCard(92) +" is played against the US, it must now discard two cards.",false);
 		HandManager.addEffect(82);
+		Log.writeToLog("Iran Hostage Crisis Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 
 	}

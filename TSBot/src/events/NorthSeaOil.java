@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class NorthSeaOil extends Card {
@@ -20,6 +21,7 @@ public class NorthSeaOil extends Card {
 			.addField("Oil glut", CardList.getCard(61) + " may no longer be played for the event.", false)
 			.addField("Domestic surplus", "The US may take eight action rounds this turn.", false);
 		HandManager.addEffect(86);
+		Log.writeToLog("North Sea Oil Active.");
 		HandManager.addEffect(860);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 

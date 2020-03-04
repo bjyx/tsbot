@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class NixonInChina extends Card {
@@ -26,6 +27,7 @@ public class NixonInChina extends Card {
 		else {
 			builder.addField("Meeting with Mao", "The China Card has been given to the US, face-down.", false);
 			HandManager.China = 2;
+			Log.writeToLog("China Card is passed to US, face down.");
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

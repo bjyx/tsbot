@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class NORAD extends Card {
@@ -19,6 +20,7 @@ public class NORAD extends Card {
 						+ "It should read 'DEFCON 5', which means peace. It's still on 4 because of that little stunt you pulled. "
 						+ "Actually, if we hadn't caught it in time, it might have gone to DEFCON 1. You know what that means, David? World War III.\"\n"
 						+ "- Dr. John McKittrick, *WarGames*",Launcher.url("people/wargames1.png")).setColor(Color.BLUE).build()).complete();
+		Log.writeToLog("NORAD Active.");
 		HandManager.addEffect(106);
 	}
 

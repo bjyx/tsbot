@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class CIACreated extends Card {
@@ -24,6 +25,7 @@ public class CIACreated extends Card {
 		GameData.dec = new Decision(0, 26);
 		GameData.ops = new Operations(0, CardList.getCard(26).getOpsMod(0), true, true, true, false, false);
 		builder.addField("National Security Act", "The USA may now look at the USSR's hand.", false);
+		Log.writeToLog("USSR Hand: " + HandManager.SUNHand);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now conduct operations.").complete();
 	}

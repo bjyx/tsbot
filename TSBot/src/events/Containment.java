@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Containment extends Card {
@@ -17,6 +18,7 @@ public class Containment extends Card {
 					+ "- George F. Kennan, 1946", Launcher.url("people/kennan.png"));
 		builder.addField("Long Telegram","The US adds 1 Operations point to any card played for operations. ",false);
 		HandManager.addEffect(25);
+		Log.writeToLog("Containment Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

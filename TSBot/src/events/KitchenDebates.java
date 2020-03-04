@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -17,6 +18,7 @@ public class KitchenDebates extends Card {
 		.setColor(Color.blue);
 		builder.changeVP(2);
 		builder.addField("Nixon's Chest Jab","Poke! Poke! Poke!",false);
+		Log.writeToLog("Poked chest.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

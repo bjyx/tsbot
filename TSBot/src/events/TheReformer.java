@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -26,6 +27,7 @@ public class TheReformer extends Card {
 		builder.addField("Perestroika", "With the new thinker in power, the policy of " + CardList.getCard(90) + " will gain more traction.", false);
 		builder.addField("Glasnost", "The USSR may no longer conduct coups in Europe.", false);
 		HandManager.addEffect(87);
+		Log.writeToLog("The Reformer Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

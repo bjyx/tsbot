@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.CardList;
 import game.GameData;
+import logging.Log;
 
 public class U2Incident extends Card {
 
@@ -15,6 +16,7 @@ public class U2Incident extends Card {
 		.setDescription("NASA press release states plane was a research aircraft")
 		.setColor(Color.red);
 		builder.changeVP(-1);
+		Log.writeToLog("U2 Incident Active.");
 		builder.addField("Cover-up Story", "If either side plays " + CardList.getCard(32) + " for the event later this turn, the USSR gains 1 VP.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

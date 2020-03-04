@@ -6,6 +6,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class RedAfrica extends Card {
@@ -20,6 +21,7 @@ public class RedAfrica extends Card {
 					+ "- Jomo Kenyatta, 1964", Launcher.url("yiyo/kenyatta.png"));
 		builder.addField("Nationalism and Counter-Imperialism","Certain nations will grant VP to the USSR during final scoring if they are controlled by the USSR.",false);
 		HandManager.addEffect(137);
+		Log.writeToLog("Red Africa Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

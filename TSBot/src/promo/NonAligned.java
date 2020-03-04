@@ -8,6 +8,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -34,6 +35,7 @@ public class NonAligned extends Card {
 			}
 			HandManager.Discard.add(x);
 			builder.addField(panchsheel(i), "Discarded "+CardList.getCard(x), false);
+			Log.writeToLog("Discarded " + CardList.getCard(x).getName() + " from deck.");
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

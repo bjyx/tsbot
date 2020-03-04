@@ -7,6 +7,7 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import game.PlayerList;
+import logging.Log;
 import turnzero.TurnZero;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -71,6 +72,7 @@ public class ZeroCommand extends Command {
 		if (TurnZero.startCrisis()) {
 			return;
 		}
+		Log.writeToLog("-+-+- Setup -+-+-");
 		CardList.initialize();
 		HandManager.addToDeck(0);
 		if (HandManager.removeEffect(100109)) {

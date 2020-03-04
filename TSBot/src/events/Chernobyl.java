@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.Country;
 
@@ -22,6 +23,7 @@ public class Chernobyl extends Card {
 					+ "- Mikhail Gorbachev [retrospective], 1996", Launcher.url("people/gorbachev.png"));
 		builder.addField("Fallout","The USSR is not allowed to use operations to place influence in " + Country.regions[reg] + " for the rest of the turn.",false);
 		HandManager.addEffect(94);
+		Log.writeToLog("Chernobyl Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import events.Card;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class CampDavidAccords extends Card {
@@ -23,6 +24,7 @@ public class CampDavidAccords extends Card {
 		builder.changeInfluence(25, 0, 1); // Israel
 		builder.changeInfluence(26, 0, 1); // Jordan
 		HandManager.addEffect(65);
+		Log.writeToLog("Camp David Accords Active.");
 		builder.addField("Egypt–Israel Peace Treaty", CardList.getCard(13) + " may no longer be played for the event.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class WillyBrandt extends Card {
@@ -20,6 +21,7 @@ public class WillyBrandt extends Card {
 		builder.changeInfluence(19, 1, 1); //add 1 USSR influence in West Germany
 		builder.addField("Ostpolitik","West Germany can now be couped/realigned by the Soviet Union if under US control.",false);
 		HandManager.addEffect(55);
+		Log.writeToLog("Willy Brandt Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -22,6 +23,7 @@ public class IronLady extends Card {
 		builder.changeInfluence(74, 1, 1); //add 1 USSR Influence to Argentina
 		builder.addField("Britain Awake",CardList.getCard(7) +" no longer playable for the event.",false);
 		HandManager.addEffect(83);
+		Log.writeToLog("Iron Lady Active.");
 		builder.changeVP(1);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

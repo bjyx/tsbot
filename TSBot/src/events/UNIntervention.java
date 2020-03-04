@@ -6,6 +6,7 @@ import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -24,6 +25,7 @@ public class UNIntervention extends Card {
 							+ "We recognize its shortcomings and are always trying to improve it. "
 							+ "But if challenged, we shall fight to the death to preserve it.\"\n"
 							+ "- Norris Poulson, 1959", Launcher.url("people/poulson.png"));
+			Log.writeToLog("We Will Bury You Cancelled.");
 			HandManager.removeEffect(50);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
@@ -36,6 +38,7 @@ public class UNIntervention extends Card {
 						+ "and now just look how many silly things the Americans have said.\"\n" + 
 						"- Nikita Khrushchev, 1960",Launcher.url("people/khrushchev.png"))
 				.setColor(Color.red);
+			Log.writeToLog("U-2 Incident: ");
 			builder.changeVP(-1);
 			HandManager.removeEffect(60);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -51,6 +54,7 @@ public class UNIntervention extends Card {
 				.addField("UN Security Council Resolution", "The event of "+ CardList.getCard(target)+" has been condemned by the UN, and will not occur.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		HandManager.discard(sp, target);
+		Log.writeToLog("Event of " + CardList.getCard(target).getName() + " is cancelled.");
 		GameData.dec = new Decision(sp, 32);
 		GameData.ops = new Operations (sp, CardList.getCard(target).getOpsMod(sp), true, true, true, false, false);
 	}

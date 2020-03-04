@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class FlowerPower extends Card {
@@ -19,6 +20,7 @@ public class FlowerPower extends Card {
 					+ "- Abbie Hoffman, 1967", Launcher.url("people/hoffman.png"));
 		builder.addField("Flower Brigade","All cards involving 'war' will give the USSR 2 victory points.",false);
 		HandManager.addEffect(59);
+		Log.writeToLog("Flower Power active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

@@ -11,6 +11,7 @@ import events.Decision;
 import game.Die;
 import game.GameData;
 import game.PlayerList;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -64,21 +65,27 @@ public class TurnZero {
 		switch(crisis){
 			case 0:
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Yalta and Potsdam").setAuthor("Turn Zero Crisis").setColor(Color.blue).setImage(Launcher.url("tz/yalta.png")).build()).complete();
+				Log.writeToLog("YP: ");
 				break;
 			case 1:
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("VE Day").setAuthor("Turn Zero Crisis").setColor(Color.red).setImage(Launcher.url("tz/ve.png")).build()).complete();
+				Log.writeToLog("VE: ");
 				break;
 			case 2:
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("1945 UK Election").setAuthor("Turn Zero Crisis").setColor(Color.blue).setImage(Launcher.url("tz/election.png")).build()).complete();
+				Log.writeToLog("UK: ");
 				break;
 			case 3:
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Israel").setAuthor("Turn Zero Crisis").setColor(Color.red).setImage(Launcher.url("tz/israel.png")).build()).complete();
+				Log.writeToLog("IL: ");
 				break;
 			case 4:
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Chinese Civil War").setAuthor("Turn Zero Crisis").setColor(Color.blue).setImage(Launcher.url("tz/ccw.png")).build()).complete();
+				Log.writeToLog("CCW: ");
 				break;
 			case 5:
 				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("VJ Day").setAuthor("Turn Zero Crisis").setColor(Color.red).setImage(Launcher.url("tz/vj.png")).build()).complete();
+				Log.writeToLog("VJ: ");
 				break;
 			default:
 				break;
@@ -92,7 +99,11 @@ public class TurnZero {
 	 * Ends a started crisis by rolling a die.
 	 */
 	public static void endCrisis() {
+		Log.writeToLog("    US: " + played[0].name.substring(0, 3));
+		Log.writeToLog("    SU: " + played[1].name.substring(0, 3));
+		
 		int die = new Die().roll();
+		Log.writeToLog("	Roll: " + die + " + " + played[0].type + " - " + played[1].type);
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setAuthor("Turn 0 Crisis Resolution").addField(":flag_us:", getEffectEmoji(played[0].type), true).addField(":game_die:",CardEmbedBuilder.intToEmoji(die),true).addField(MapManager.get(85).toString(), getEffectEmoji(played[1].type), true);
 		if (!(played[0].type==-1||played[1].type==-1)) { //if neither player uses the nullify card
@@ -130,6 +141,7 @@ public class TurnZero {
 				.addField("Containment","USA will go first in all turns during the Early War",false)
 				.setFooter("\"[D]espite the contrast between his relatively modest background and the international glamour of his aristocratic predecessor, [Truman] had the courage and resolution to reverse the policy that appeared to him naive and dangerous...\"\n"
 						+ "- George Lenczowski, 1945", Launcher.url("tz/pl.png"));
+				Log.writeToLog("	US First EW");
 				HandManager.addEffect(1001);
 				GameData.dec = new Decision(0,1001);
 			}
@@ -162,6 +174,7 @@ public class TurnZero {
 				.addField("Allied Berlin","The rules for Europe Scoring have changed. " + CardList.getCard(10) + " may no longer be played for the event.",false)
 				.setFooter("\"The mission of this Allied Force was fulfilled at 3 a.m., local time, May 7, 1945.\"\n"
 						+ "- Dwight David Eisenhower", Launcher.url("people/eisenhower.png"));
+				Log.writeToLog("	Europe Scoring 3/6/6\n    Blockade unplayable");
 				HandManager.addEffect(1002);
 			}
 			break;
@@ -183,6 +196,7 @@ public class TurnZero {
 				builder.setTitle("Inconclusive UK Elections").setDescription("Tory and Labour expected to form coalition government").setColor(Color.blue)
 					.addField("Coalition","`007 Socialist Governments (3R)` may not be played on Turn 1 or 2 for the event.",false);
 				HandManager.addEffect(1004);
+				Log.writeToLog("    SocGov unplayable T1/2");
 			}
 			else {
 				builder.setTitle("Churchill Re-elected").setDescription("Tories win landslide victory").setColor(Color.blue)
@@ -190,6 +204,7 @@ public class TurnZero {
 				.setFooter("\"The inherent vice of capitalism is the unequal sharing of blessings. The inherent virtue of Socialism is the equal sharing of miseries.\"\n"
 						+ "- Winston Churchill, 1945", Launcher.url("people/churchill.png"));
 				HandManager.addEffect(1005);
+				Log.writeToLog("    SocGov in MW\n    Suez unplayable");
 			}
 			break;
 			
@@ -211,7 +226,6 @@ public class TurnZero {
 			else if (die <= 5) {
 				builder.setTitle("").setDescription("")
 				.addField("Historical Result", "Nothing happens.", false).setColor(Color.GRAY);
-					
 			}
 			else {
 				builder.setTitle("Palestine Question Experiences Sudden De-Escalation").setDescription("Irgun and Palestinian forces demobilize to surprise of many").setColor(Color.BLUE);
@@ -232,6 +246,7 @@ public class TurnZero {
 							+ "- Mao Zedong, 1956", Launcher.url("people/mao.png"))
 					.addField("Border Treaty","`076 Ussuri River Skirmish (3A)` has been removed from the game.",false);
 				HandManager.addEffect(100501);
+				Log.writeToLog("	No Ussuri");
 			}
 			else if (die <= 3) {
 				builder.setTitle("Huaihai Campaign").setDescription("Communists kick Nationalists off mainland").addField("Historical Result", "Nothing happens.", false).setColor(Color.GRAY);
@@ -240,6 +255,7 @@ public class TurnZero {
 				builder.setTitle("Communist Advance Slowed").setDescription("Nationalists holding out with US aid").setColor(Color.blue)
 					.addField("Winter Offensive","The China Card starts face-down.",false);
 				HandManager.China+=2;
+				Log.writeToLog("	China USSR down");
 			}
 			else {
 				builder.setTitle("Communists Held Back in China").setDescription("Nationalists retain mainland stronghold with US aid").setColor(Color.blue)
@@ -248,6 +264,8 @@ public class TurnZero {
 				.setFooter("\"We must use every inch of our blood to take back every inch of our land, you ten thousand youths and soldiers.\"\n"
 						+ "- Chiang Kai-Shek", Launcher.url("people/chiang.png"));
 				HandManager.China+=2;
+				Log.writeToLog("	China USSR down");
+				Log.writeToLog("	Nationalist China");
 				HandManager.addEffect(100506);
 				MapManager.get(43).isBattleground = true;
 				builder.changeInfluence(43, 0, 3);
@@ -264,6 +282,7 @@ public class TurnZero {
 					.setFooter("\"The people are the masters of the revolution in each country. It is like putting a cart before the horse that foreigners carry out the revolution for them. The revolution can neither be exported nor imported.\"\n"
 							+ "- Kim Il-Sung, 1976", Launcher.url("people/kim.png"));
 				builder.changeInfluence(36, 1, 1).changeInfluence(42, 1, 2);
+				Log.writeToLog("	USJMDP in MW");
 				HandManager.addEffect(1006);
 			}
 			else if (die <= 3) {
@@ -283,6 +302,7 @@ public class TurnZero {
 						+ "- Emperor Hirohito, 1945", Launcher.url("people/showa.png"));
 				HandManager.addEffect(100606);
 				HandManager.addEffect(1003);
+				Log.writeToLog("	US ignores DEFCON\n    DEFCON minimum 2");
 			}
 			break;
 		

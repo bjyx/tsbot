@@ -6,6 +6,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 
 public class CambridgeFive extends Card {
 	
@@ -25,31 +26,38 @@ public class CambridgeFive extends Card {
 					regions[1]=true;
 					regions[2]=true;
 					a += "Europe\n";
+					Log.writeToLog("Scoring card found: Europe.");
 				}
 				if (i == 3) {
 					regions[3]=true;
 					a += "Middle East\n";
+					Log.writeToLog("Scoring card found: Middle East.");
 				}
 				if (i == 1) {
 					regions[4]=true;
 					regions[5]=true;
 					a += "Asia\n";
+					Log.writeToLog("Scoring card found: Asia.");
 				}
 				if (i == 38) {
 					regions[5]=true;
 					a += "Southeast Asia\n";
+					Log.writeToLog("Scoring card found: Southeast Asia.");
 				}
 				if (i == 79) {
 					regions[6]=true;
 					a += "Africa\n";
+					Log.writeToLog("Scoring card found: Africa.");
 				}
 				if (i == 37) {
 					regions[7]=true;
 					a += "Central America\n";
+					Log.writeToLog("Scoring card found: Central America.");
 				}
 				if (i == 81) {
 					regions[8]=true;
 					a += "South America\n";
+					Log.writeToLog("Scoring card found: South America.");
 				}
 			}
 		}

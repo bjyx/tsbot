@@ -6,6 +6,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 
 public class PeoplePower extends Card {
 
@@ -17,6 +18,7 @@ public class PeoplePower extends Card {
 		.setColor(sp==0?Color.blue:Color.red);
 		builder.addField("EDSA", "*After any die roll, you may choose to flip that die to its opposite face (1<->6, 2<->5, 3<->4) by discarding this card.* \n"
 				+ "__You will be prompted to activate this card.__", false);
+		Log.writeToLog("People Power Active (benefits " + (sp==0?"US":"SU") + ").");
 		HandManager.addEffect(1350+sp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

@@ -6,6 +6,7 @@ import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Proliferation extends Card {
@@ -20,6 +21,7 @@ public class Proliferation extends Card {
 		builder.changeDEFCON(-1);
 		builder.addField("Nuclear Proliferation","On the next " + (sp==0?"US":"USSR") + " Action Round, DEFCON will increase by 2. The "+(sp==0?"US":"USSR") + " will, after that action round, be given the option to lower DEFCON by another level.",false);
 		HandManager.addEffect(1210+sp);
+		Log.writeToLog("Proliferation Active (benefits " + (sp==0?"US":"SU") + ").");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

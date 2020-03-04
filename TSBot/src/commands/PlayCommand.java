@@ -99,12 +99,12 @@ public class PlayCommand extends Command {
 			sendMessage(e, ":x: There is already a card being played.");
 			return;
 		}
-		if (((mode != 'o' && mode != 's')|| card != 49) && !GameData.isHeadlinePhase() && HandManager.effectActive(490+GameData.phasing())) {
+		if (((mode != 'o' && mode != 's')|| card != 49) && !GameData.isHeadlinePhase() && HandManager.effectActive(490+GameData.phasing()) && (HandManager.countScoring(PlayerList.getArray().indexOf(e.getAuthor()))>=GameData.arsLeft())) { //dodge scoring card forcing, hopefully
 			sendMessage(e, ":x: You have Missile Envy.");
 			return;
 		}
 		if (CardList.getCard(card).getOps()!=0 && HandManager.effectActive(115) && e.getAuthor().equals(PlayerList.getSSR()) && !GameData.isHeadlinePhase()) {
-			sendMessage(e, ":x: You have Kremlin Flu.");
+			sendMessage(e, ":x: You have the Kremlin Flu.");
 			return;
 		}
 		if (TimeCommand.cardPlayed) {

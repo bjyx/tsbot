@@ -9,6 +9,7 @@ import events.Card;
 import events.CardEmbedBuilder;
 import events.Decision;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -25,6 +26,7 @@ public class FirstLightning extends Card {
 				.addField("Broken Nuclear Monopoly", "The event of "+ CardList.getCard(target)+" will not occur.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		HandManager.discard(1, target);
+		Log.writeToLog("Event of " + CardList.getCard(target).getName() + " is cancelled.");
 		GameData.dec = new Decision(1, 116);
 		GameData.ops = new Operations (1, CardList.getCard(target).getOpsMod(1), true, true, true, false, false);
 	}

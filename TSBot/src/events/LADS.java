@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class LADS extends Card {
@@ -17,6 +18,7 @@ public class LADS extends Card {
 					+ "- Carlos Manuel Arana Osorio", Launcher.url("people/arana.png"))
 			.setColor(sp==0?Color.blue:Color.red);
 		builder.addField("Extrajudicial Actions", "For the rest of the turn, "+(sp==0?"American":"Soviet") + " coups in Latin America get a +1 bonus, while "+(sp==0?"Soviet":"American") + " coups in Latin America get a -1 malus. ", false);
+		Log.writeToLog("LADS Active (benefits " + (sp==0?"US":"SU") + ").");
 		HandManager.addEffect(690+sp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

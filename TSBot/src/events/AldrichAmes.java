@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class AldrichAmes extends Card {
@@ -17,7 +18,8 @@ public class AldrichAmes extends Card {
 					+ "- A CIA Operative, regarding Dmitri Polyakov",Launcher.url("people/cia.png"))
 			.setColor(Color.red);
 		GameData.txtssr.sendMessage(HandManager.getUSAHand()).complete();
-		builder.addField("Aldrich Ames", "The USSR may now look at the USA's hand. __The USSR may query this hand for the rest of the turn by using `TS.info ames`.__", false);
+		builder.addField("Aldrich Ames", "The USSR may look at the USA's hand for the rest of the turn. __The USSR may query this hand for the rest of the turn by using `TS.info ames`.__", false);
+		Log.writeToLog("US hand: " + HandManager.USAHand);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		if (!HandManager.USAHand.isEmpty()) {
 			HandManager.addEffect(98);

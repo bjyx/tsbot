@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class MissileCrisis extends Card {
@@ -20,6 +21,7 @@ public class MissileCrisis extends Card {
 		builder.changeDEFCON(2-GameData.getDEFCON());
 		builder.addField("One Minute to Midnight", "**All attempts by " + (sp==0?"the USSR":"the USA") + "to conduct a coup will lose them the game by Thermonuclear War.**", false);
 		HandManager.addEffect(400+((sp+1)%2));
+		Log.writeToLog("Missile Crisis Active (benefits "+(sp==0?"US":"SU") + ").");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

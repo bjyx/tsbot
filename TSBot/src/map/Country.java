@@ -7,6 +7,7 @@ import java.util.List;
 import commands.StartCommand;
 import events.CardEmbedBuilder;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -59,6 +60,7 @@ public class Country {
 	public void changeInfluence(int sp, int amt) {
 		influence[sp] += amt;
 		if (influence[sp]<0) influence[sp]=0;
+		Log.writeToLog(iso.toUpperCase() + (amt>=0?" +":" ") + amt + (sp==0?"US":"SU") + ", now " + influence[0] + "/" + influence[1]);
 	}
 	public int isControlledBy() {
 		if (influence[0]>=influence[1]+stab) return 0;

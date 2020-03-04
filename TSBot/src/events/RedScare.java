@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class RedScare extends Card {
@@ -19,6 +20,7 @@ public class RedScare extends Card {
 					+ "- Joseph Stalin, 1943", Launcher.url("people/stalin.png"));
 			builder.addField("Gulag Archipelago","The USSR subtracts 1 Operations point from any card played for operations.",false);
 			HandManager.addEffect(311);
+			Log.writeToLog("Purge Active.");
 		}
 		else {
 			builder.setTitle("Red Scare!")
@@ -28,6 +30,7 @@ public class RedScare extends Card {
 					+ "- Dwight David Eisenhower, quoted 1988", Launcher.url("people/eisenhower.png"));
 			builder.addField("Blacklisted","The US subtracts 1 Operations point from any card played for operations.",false);
 			HandManager.addEffect(310);
+			Log.writeToLog("Red Scare Active.");
 		}
 		
 		GameData.txtchnl.sendMessage(builder.build()).complete();

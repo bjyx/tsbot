@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -25,6 +26,7 @@ public class IndependentReds extends Card {
 			.setColor(Color.BLUE);
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!", "None of the targetable countries are valid targets for US Influence placement.", false);
+			Log.writeToLog("No effect.");
 		}
 		else {
 			builder.changeInfluence(target, 0, MapManager.get(target).influence[1]-MapManager.get(target).influence[0]);

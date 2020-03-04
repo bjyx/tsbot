@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -29,6 +30,7 @@ public class MarshallPlan extends Card {
 			builder.changeInfluence(c, 0, 1);
 		}
 		builder.addField("Aid to Western Europe", "**NATO can now be formed.**", false);
+		Log.writeToLog("Marshall Plan Active.");
 		HandManager.Effects.add(23);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

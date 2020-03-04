@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class EvilEmpire extends Card {
@@ -21,6 +22,7 @@ public class EvilEmpire extends Card {
 					+ "- Ronald Reagan, 1983", Launcher.url("people/reagan.png"));
 		builder.changeVP(1);
 		builder.addField("Speech to the Evangelical Society",HandManager.removeEffect(59)?"The effects of " + CardList.getCard(59) + " are cancelled.":"The event for " + CardList.getCard(59) + " can no longer be played.",false);
+		Log.writeToLog("Evil Empire Active.");
 		HandManager.addEffect(97);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

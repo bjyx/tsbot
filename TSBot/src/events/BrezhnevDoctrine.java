@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class BrezhnevDoctrine extends Card {
@@ -20,6 +21,7 @@ public class BrezhnevDoctrine extends Card {
 					+ "- Yuri Andropov, 1968", Launcher.url("people/andropov.png"));
 		builder.addField("Hard Line","The USSR adds 1 Operations point to any card played for operations. ",false);
 		HandManager.addEffect(51);
+		Log.writeToLog("Brezhnev Doctrine Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

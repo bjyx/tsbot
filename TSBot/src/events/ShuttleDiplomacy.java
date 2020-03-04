@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class ShuttleDiplomacy extends Card {
@@ -21,6 +22,7 @@ public class ShuttleDiplomacy extends Card {
 					+ "- Henry Kissinger, 1994", Launcher.url("leaders/kissinger.png"));
 		builder.addField("Intermediary","Upon the next scoring of Asia or the Middle East, subtract one from the USSR battleground count.",false);
 		HandManager.addEffect(73);
+		Log.writeToLog("Shuttle Diplomacy Active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

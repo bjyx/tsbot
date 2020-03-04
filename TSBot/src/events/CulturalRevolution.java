@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class CulturalRevolution extends Card {
@@ -19,6 +20,7 @@ public class CulturalRevolution extends Card {
 		if (HandManager.China%2==0) {
 			builder.addField("May 16 Notification", "The China Card has been given to the USSR face-up.", false);
 			HandManager.China = 1;
+			Log.writeToLog("China Card is passed to the USSR, face up.");
 		}
 		else {
 			builder.changeVP(-1);
