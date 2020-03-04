@@ -20,9 +20,12 @@ public class BrotherSam extends Card {
 					+ "- Lyndon B. Johnson, 1964", Launcher.url("yiyo/lbj.png"));
 		builder.changeInfluence(76, 1, -1);
 		int x=0;
+		String str = "";
 		for (int i=74; i<84; i++) {
 			if (!MapManager.get(i).isBattleground && MapManager.get(i).isControlledBy()==0) x++;
+			str += MapManager.get(i);
 		}
+		builder.addField("Cooperating countries: ", str, false);
 		builder.changeInfluence(76, 0, x);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

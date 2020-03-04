@@ -30,6 +30,7 @@ import turnzero.TurnZero;
 public class StartCommand extends Command {
 	
 	public static String[] emojiID = new String[13];
+	public static int ruleset;
 	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
@@ -163,6 +164,7 @@ public class StartCommand extends Command {
 			System.out.print("Error creating emoji.");
 		}
 		Log.writeToLog("New Game: "+settings+" "+SetupCommand.handicap);
+		ruleset = settings;
 		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Twilight Struggle Game Has Started.").setDescription(":hourglass: It is now seven minutes to midnight and counting. Good luck.").setColor(Color.WHITE);
 		if (settings>=256) {
 			Launcher.change();

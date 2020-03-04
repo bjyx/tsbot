@@ -73,7 +73,7 @@ public class LatamArmsSales extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The USSR gains VP equal to the disparity between the number of non-battlegrounds in Centraal and South America controlled by the USSR and the number controlled by the US (to a maximum of 5 VP). Then, if the US is ahead of the USSR in VPs, **degrade DEFCON by 1.**";
+		return "The USSR gains VP equal to the disparity between the number of non-battlegrounds in Central and South America controlled by the USSR and the number controlled by the US (to a maximum of 5 VP). Then, if the US is ahead of the USSR in VPs, **degrade DEFCON by 1.**";
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class SALTNegotiations extends Card {
@@ -19,8 +20,9 @@ public class SALTNegotiations extends Card {
 					+ "- Richard M. Nixon, 1973", Launcher.url("people/nixon.png"))
 			.setColor(Color.GRAY);
 		builder.changeDEFCON(2);
-		builder.addField("Anti-Ballistic Missile Treaty", "All coups ", false);
+		builder.addField("Anti-Ballistic Missile Treaty", "For the rest of this turn, coups conducted by either superpower receive a -1 malus.", false);
 		HandManager.addEffect(43);
+		Log.writeToLog("SALT Active.");
 		builder.addField("", (sp==0?"The USA ":"The USSR ") + "retrieves " + CardList.getCard(Integer.parseInt(args[1])) + " from the discard pile.", false);
 		HandManager.getFromDiscard(sp, Integer.parseInt(args[1]));
 		GameData.txtchnl.sendMessage(builder.build()).complete();

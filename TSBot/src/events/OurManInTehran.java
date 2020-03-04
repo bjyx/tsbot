@@ -40,7 +40,7 @@ public class OurManInTehran extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		if (MapManager.get(23).isControlledBy()==0) {
+		if (MapManager.get(23).isControlledBy()==0) { //flavor emphasizes Iran
 			country = 23;
 			return true;
 		}

@@ -27,7 +27,7 @@ public class SchumanDeclaration extends Card {
 				builder.addField("No countries to target!", "For some reason, there is no USA influence in the important countries of Western Europe. Some President, and shame on you for not defending the Isles properly. :s", false);
 			}
 			else if (order.isEmpty()) {
-				builder.addField("No influence moved", "¯\\\\_(ツ)\\_/¯", false);
+				builder.addField("No influence moved", "¯\\\\\\_(ツ)\\_/¯", false);
 			}
 			else {
 				builder.bulkChangeInfluence(order, 0, values);

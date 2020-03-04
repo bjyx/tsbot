@@ -8,6 +8,7 @@ import cards.HandManager;
 import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -115,12 +116,7 @@ public class SetupCommand extends Command {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setAuthor("Setup Phase")
 		.setTitle(hreq?("Handicap for " + (handicap>0?"USA":"USSR")):(USSR?"Eastern Bloc":("Western Bloc")))
-		.setFooter("\"A shadow has fallen upon the scenes so lately lighted by the Allied victory…. From Stettin in the Baltic to Trieste in the Adriatic an iron curtain has descended across the Continent.\"\n"
-				+ "- Winston Churchill, 1946",Launcher.url("people/churchill.png"))
 		.setColor(USSR?Color.red:(USA?Color.blue:(handicap>0?Color.blue:Color.red)));
-		Yalta = false;
-		VE = false;
-		Israel = false;
 		if (USSR&&!hreq) {
 			if (Yalta) {
 				if (sum!=1) {
@@ -146,6 +142,12 @@ public class SetupCommand extends Command {
 					return;
 				}
 			}
+			Yalta = false;
+			VE = false;
+			Israel = false;
+			builder.setFooter("\"This war is not as in the past; whoever occupies a territory also imposes on it his own social system. Everyone imposes his own system as far as his army can reach.\"\n"
+					+ "- Joseph Stalin, 1945", Launcher.url("people/stalin.png"));
+			Log.writeToLog("USSR Setup: ");
 			for (int i=0; i<countries.length; i++) {
 				builder.changeInfluence(countries[i], 1, amt[i]);
 			}
@@ -173,6 +175,9 @@ public class SetupCommand extends Command {
 				sendMessage(e, ":x: You get seven influence in the Western Bloc. You'll get more later, don't worry.");
 				return;
 			}
+			builder.setFooter("\"A shadow has fallen upon the scenes so lately lighted by the Allied victory…. From Stettin in the Baltic to Trieste in the Adriatic an iron curtain has descended across the Continent.\"\n"
+					+ "- Winston Churchill, 1946",Launcher.url("people/churchill.png"));
+			Log.writeToLog("USA Setup: ");
 			for (int i=0; i<countries.length; i++) {
 				builder.changeInfluence(countries[i], 0, amt[i]);
 			}
@@ -199,6 +204,7 @@ public class SetupCommand extends Command {
 				sendMessage(e, ":x: You only have " + Math.abs(handicap) + " influence to use here.");
 				return;
 			}
+			Log.writeToLog("Handicap: ");
 			for (int i=0; i<countries.length; i++) {
 				builder.changeInfluence(countries[i], USSR?1:0, amt[i]);
 			}
@@ -209,6 +215,7 @@ public class SetupCommand extends Command {
 			GameData.endSetupPhase();
 			TimeCommand.cardPlayed = false;
 			TimeCommand.prompt();
+			Log.writeToLog("-+-+- Turn 1 -+-+-");
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}

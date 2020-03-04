@@ -7,6 +7,7 @@ import java.util.Random;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class Inaugural extends Card {
@@ -16,24 +17,31 @@ public class Inaugural extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Kennedy's Inaugural Address")
-			.setDescription("And so, my fellow Americans: ask not what your country can do for you — ask what you can do for your country.")
+		builder.setTitle("Kennedy Delivers Inaugural Address")
+			.setDescription("Newly elected president implores people to ask what they can do for their country")
 			.setFooter("\"...we observe today not a victory of party, but a celebration of freedom — symbolizing an end, as well as a beginning — signifying renewal, as well as change.\"\n"
 					+ "- John F. Kennedy, 1961", Launcher.url("people/jfk.png"))
 			.setColor(Color.BLUE);
-		int x = order.size();
-		String cards = "";
-		for (int i=0; i<x; i++) {
-			HandManager.discard(0, order.get(i));
-			cards += CardList.getCard(order.get(i)) + "\n";
+		if (Integer.parseInt(args[1]) == 0) {
+			builder.addField("Discarded Cards:", "None.", false);
+			Log.writeToLog("Discarded nothing.");
 		}
-		builder.addField("Discarded Cards:", cards, false);
-		for (int i=0; i<x; i++) {
-			Random random = new Random();
-			HandManager.USAHand.add(HandManager.Deck.remove(random.nextInt(HandManager.Deck.size())));
-			if(HandManager.Deck.isEmpty()) {
-				HandManager.Deck.addAll(HandManager.Discard);
-				HandManager.Discard.clear();
+		else {
+			int x = order.size();
+			String cards = "";
+			for (int i=0; i<x; i++) {
+				HandManager.discard(0, order.get(i));
+				cards += CardList.getCard(order.get(i)) + "\n";
+				Log.writeToLog("Discarded " + CardList.getCard(order.get(i)).getName() + ".");
+			}
+			builder.addField("Discarded Cards:", cards, false);
+			for (int i=0; i<x; i++) {
+				Random random = new Random();
+				HandManager.USAHand.add(HandManager.Deck.remove(random.nextInt(HandManager.Deck.size())));
+				if(HandManager.Deck.isEmpty()) {
+					HandManager.Deck.addAll(HandManager.Discard);
+					HandManager.Discard.clear();
+				}
 			}
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();

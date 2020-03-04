@@ -210,10 +210,10 @@ public class MapManager {
 		map.add(new Country(
 				"Spain/Portugal", 
 				1, 
-				"es::flag_pt", 
+				"es", //flavor and logging use Spain
 				2, 
 				false, 
-				new String[] {"spainportugal", "es", "esp", "españa", "espana", "spain", "portugal", "pr", "prt"}, 
+				new String[] {"spainportugal", "es", "esp", "españa", "espana", "spain", "portugal", "pt", "prt"}, 
 				new Integer[] {8, 11, 53}, //fr, it, ma
 				"The Francoist regime in Spain was politically isolated after World War II, to the point that it could not join the United Nations (until 1955). "
 				+ "On the other hand, despite the undertones of dictatorship in the Estado Novo regime, Portugal became a founding member of NATO. "
@@ -497,7 +497,7 @@ public class MapManager {
 		map.add(new Country(
 				"Laos/Cambodia", 
 				5, 
-				"la::flag_kh", 
+				"la", //laos is used here for geographical reasons
 				1, 
 				false, 
 				new String[] {"laoscambodia", "lao", "la", "laos", "cambodia", "kampucie", "kh", "khm"}, 
@@ -1287,7 +1287,7 @@ public class MapManager {
 		map.add(new Country(
 				"Spain/Portugal", 
 				1, 
-				"es::flag_pt", 
+				"es", 
 				2, 
 				false, 
 				new String[] {"spainportugal", "es", "esp", "españa", "espana", "spain", "portugal", "pr", "prt"}, 
@@ -1531,7 +1531,7 @@ public class MapManager {
 		map.add(new Country(
 				"Laos/Cambodia", 
 				5, 
-				"la::flag_kh", 
+				"la", 
 				1, 
 				false, 
 				new String[] {"laoscambodia", "lao", "la", "laos", "cambodia", "kampucie", "kh", "khm"}, 

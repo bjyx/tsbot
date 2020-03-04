@@ -16,8 +16,9 @@ public class OASFounded extends Card {
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("OAS Founded")
-		.setFooter("\"Democracy for peace, security, and development.\"\n"
-				+ "- Motto of the OAS", Launcher.url("people/oas.png"))
+		.setFooter("\"Let all our neighbors know that we shall join with them to oppose aggression or subversion anywhere in the Americas. "
+				+ "And let every other power know that this Hemisphere intends to remain the master of its own house.\"\n"
+				+ "- John F. Kennedy, 1961", Launcher.url("people/jfk.png"))
 		.setColor(Color.BLUE)
 		.setDescription("21 countries sign charter at Ninth Pan-American Conference");
 		builder.bulkChangeInfluence(order, 0, values);

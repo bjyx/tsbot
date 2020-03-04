@@ -79,7 +79,7 @@ public class Wargames extends Card {
 
 	@Override
 	public String getArguments() {
-		return "1, signifying that you want to end the game, or 0, signifying that you do not.";
+		return "1, signifying that you want to end the game, or 0, signifying that you do not. *While it is an option in physical copies, giving away 6 VPs without ending the game is strictly suboptimal on the phasing player's part, and is thus not implemented here.*";
 	}
 
 }

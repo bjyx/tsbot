@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import cards.CardList;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 import map.MapManager;
 
@@ -37,6 +38,7 @@ public class Che extends Card {
 				if (orig==MapManager.get(order.get(i)).influence[0]) {
 					flag = false;
 					builder.addField("Coup in " + MapManager.get(order.get(i)).name + "!", "Failed.", false);
+					Log.writeToLog("Coup failed — second coup will not be conducted.");
 				}
 				else {
 					builder.addField("Coup in " + MapManager.get(order.get(i)).name + "!", "Success - " + (orig-MapManager.get(order.get(i)).influence[0]) + " influence removed.", false);
@@ -113,7 +115,7 @@ public class Che extends Card {
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "Both coup targets. If one target exists, or if no targets exist, this is not required.\n";
+		return "Both coup targets, in order. If one target exists, or if no targets exist, this is not required.\n";
 	}
 
 }
