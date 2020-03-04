@@ -2,8 +2,10 @@ package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Launcher;
 
 public class OneSmallStep extends Card {
@@ -29,6 +31,26 @@ public class OneSmallStep extends Card {
 		}
 		else builder.changeVP(-(sp*2-1)*Operations.spaceVP[spaceLevel]);
 		GameData.addSpace(sp);
+		if (spaceLevel<3&&GameData.getSpace(sp)>=3&&sp==1&&HandManager.removeEffect(124)) {
+			builder.addField("Vostok 1", "The Soviets have acquired the capability to send a man into space. They will no longer receive a -1 bonus to their space race die rolls.", false);
+			Log.writeToLog("Laika no longer active.");
+		}
+		if (spaceLevel<4&&GameData.getSpace(sp)>=4) {
+			if (GameData.getSpace((sp+1)%2)<4) {
+				Operations.discount = sp;
+			}
+			else {
+				Operations.discount = -1;
+			}
+		}
+		if (spaceLevel<6&&GameData.getSpace(sp)>=6) {
+			if (GameData.getSpace((sp+1)%2)<6) {
+				Operations.coupReroll = sp;
+			}
+			else {
+				Operations.coupReroll = -1;
+			}
+		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
