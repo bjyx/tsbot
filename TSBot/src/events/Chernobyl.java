@@ -102,7 +102,7 @@ public class Chernobyl extends Card {
 		}
 		else if (x.charAt(0)=='m') {
 			regionBan[3]=true;
-			reg = 9;
+			reg = 3;
 		}
 		return regionBan[0]||regionBan[3]||regionBan[4]||regionBan[6]||regionBan[7]||regionBan[8];
 	}
