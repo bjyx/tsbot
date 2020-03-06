@@ -14,9 +14,12 @@ public class ResetCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		consent[PlayerList.getArray().indexOf(e.getAuthor())]=true;
+		if (!GameData.hasGameStarted()) {
+			sendMessage(e, ":x: The game hasn't even started yet.");
+			return;
+		}
 		if (!GameData.hasGameEnded()&&!(consent[0]&&consent[1])) {
 			sendMessage(e, ":warning: You sure about this? Get the other person to agree.");
-			
 			return;
 		}
 		consent[0]=false;
