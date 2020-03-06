@@ -14,7 +14,7 @@ public class Fidel extends Card {
 		builder.setTitle("Cuban Revolution")
 			.setDescription("Fulgencio Batista overthrown; Castro takes power")
 			.setColor(Color.red)
-			.setFooter("\"Our revolution is endangering all American possessions in Latin America. We are telling these countries to make their own revolution.\"\n"
+			.setFooter("\"We are telling these countries to make their own revolution.\"\n"
 					+ "- Che Guevara, 1962", Launcher.url("people/che.png"));
 		builder.changeInfluence(65, 0, -MapManager.get(65).influence[0]); //remove all American influence in Cuba
 		builder.changeInfluence(65, 1, Math.max(0, 3-MapManager.get(65).influence[1])); //control Cuba with USSR influence
