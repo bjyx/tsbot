@@ -61,7 +61,7 @@ public class AsiaScoring extends Card {
 			battlegrounds[1]--; //shuttle diplomacy removes a battleground from Asia
 			totalCountries[1]--; //a battleground is still a country...
 			HandManager.removeEffect(73); //shuttle diplomacy is one use only
-			HandManager.Discard.add(73);
+			HandManager.Discard.add(73); //shuttle diplomacy is removed from the deck during use
 			if (MapManager.get(36).isControlledBy()==1) vp++; // shame on you if you managed to lose *JAPAN* to the USSR
 			builder.addField("Shuttle Diplomacy", "One less battleground to worry about!", false);
 		}

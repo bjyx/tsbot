@@ -36,7 +36,7 @@ public class TimeCommand extends Command {
 	public static boolean isCardDiscarded = true;
 	
 	public static boolean canAdvance() {
-		return cardPlayed&&cardPlayedSkippable&&(hl1&&hl2)&&trapDone&&NORAD&&!(eventRequired^eventDone)&&!(operationsDone^operationsRequired)&&!(spaceDone^spaceRequired)&&isCardDiscarded;
+		return cardPlayed&&cardPlayedSkippable&&(hl1&&hl2)&&trapDone&&NORAD&&!(eventRequired^eventDone)&&!(operationsDone^operationsRequired)&&!(spaceDone^spaceRequired)&&isCardDiscarded&&nukePro&&checkpointC;
 	}
 	
 	@Override
@@ -102,9 +102,9 @@ public class TimeCommand extends Command {
 			return;
 		}
 		if (HandManager.effectActive(126) && Operations.tsarbomba && !GameData.isHeadlinePhase()) {
-			Operations.tsarbomba = false;
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(-1).setTitle("Tsar Bomba!").setColor(Color.red).build()).complete();
 		}
+		Operations.tsarbomba = false;
 		GameData.changeScore(0); //removes We Will Bury You if it's still active for some reason
 		GameData.checkScore(false, false);
 		
@@ -112,13 +112,6 @@ public class TimeCommand extends Command {
 			HandManager.removeEffect(490);
 			HandManager.removeEffect(491);
 		}
-		if (HandManager.removeEffect(1212)) {
-			nukePro = false;
-			GameData.dec = new Decision(GameData.phasing(), 121);
-			prompt();
-			return;
-		}
-		
 		GameData.advanceTime();
 		HandManager.activecard = 0;
 		if (GameData.ccw && HandManager.China==-1 && MapManager.get(86).isControlledBy()==1) {
@@ -150,6 +143,8 @@ public class TimeCommand extends Command {
 		}
 		else if (HandManager.effectActive(128) && GameData.phasing()==0) {
 			checkpointC = false;
+			TimeCommand.prompt();
+			return;
 		}
 		else if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
 			boolean canDiscard = false;
@@ -224,7 +219,7 @@ public class TimeCommand extends Command {
 		if (HandManager.effectActive(1210+GameData.phasing())) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(2).setTitle("Nuclear Proliferation").setColor(GameData.phasing()==0?Color.blue:Color.red).build()).complete();
 			HandManager.removeEffect(1210+GameData.phasing());
-			HandManager.addEffect(1212);
+			nukePro = false;
 		}
 		TimeCommand.prompt();
 	}
@@ -300,6 +295,7 @@ public class TimeCommand extends Command {
 			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
 		}
 		else if (!nukePro) {
+			GameData.dec = new Decision(GameData.phasing(), 121);
 			if (GameData.phasing()==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", would you like to lower the DEFCON level?  (TS.decide yes/no)").complete();
 			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", would you like to lower the DEFCON level? (TS.decide yes/no)").complete();
 		}

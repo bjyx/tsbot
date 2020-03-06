@@ -14,6 +14,7 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
+import readwrite.ReadWrite;
 
 public class GameData {
 	/**
@@ -147,12 +148,57 @@ public class GameData {
 	/**
 	 * Creates the conditions dictated in the Late War scenario.
 	 */
-	public static void startLateWar() {
-		turn = 8;
-		defcon = 4;
-		space[0] = 6;
-		space[1] = 4;
-		score = -4;
+	public static boolean startLateWar() {
+		return startCustom("g4800064");
+	}
+	
+	/**
+	 * Creates the conditions dictated by an eight-character string.
+	 */
+	public static boolean startCustom(String s) {
+		for (int i=0; i<8; i++) {
+			int x = ReadWrite.undoParser(s.charAt(i));
+			if (i==0) {
+				if (x<=0||x>=40) return false;
+				score = x - 20;
+			}
+			if (i==1) {
+				if (x>5) return false;
+				if (x<=1) return false;
+				defcon = x;
+			}
+			if (i==2) {
+				if (x>10) return false;
+				if (x<1) return false;
+				turn = x;
+			}
+			if (i==3) {
+				if (x>16) return false;
+				if (x<0) return false;
+				ar = x;
+			}
+			if (i==4) {
+				if (x>5) return false;
+				if (x<0) return false;
+				milops[0] = x;
+			}
+			if (i==5) {
+				if (x>5) return false;
+				if (x<0) return false;
+				milops[1] = x;
+			}
+			if (i==6) {
+				if (x>8) return false;
+				if (x<0) return false;
+				space[0] = x;
+			}
+			if (i==7) {
+				if (x>8) return false;
+				if (x<0) return false;
+				space[1] = x;
+			}
+		}
+		return true;
 	}
 	/**
 	 * @return {@link #started}
@@ -218,7 +264,7 @@ public class GameData {
 	 * Resets everything in {@link #GameData()} to its initial state.
 	 */
 	public static void reset() {
-		txtchnl.sendMessage(":hourglass: Charting course for 1949.");
+		txtchnl.sendMessage(":hourglass: Charting course for 1949.").complete();
 		started = false;
 		ended = false;
 		turn = 0;

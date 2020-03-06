@@ -2,6 +2,7 @@ package cards;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import cards.CardList;
@@ -9,11 +10,14 @@ import commands.InfoCommand;
 import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
+import events.Chernobyl;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
+import readwrite.ReadWrite;
+import turnzero.NationalistChina;
 /**
  * Manages everything related to the cards used in the game - which cards are in the Deck, which are Discarded, which are in the players' hands, and which have ongoing effects.
  * @author [REDACTED]
@@ -147,6 +151,90 @@ public class HandManager {
 	 * </ul>
 	 */
 	public static char playmode = 0;
+	/**
+	 * Creates a custom array of cards.
+	 */
+	public static void customCards (String s) {
+		final ArrayList<Integer> effectsPermanent = new ArrayList<Integer>(Arrays.asList(16,17,21,23,27,55,59,65,68,82,83,86,87,96,97,110,124,137));
+		final ArrayList<Integer> effectsTemporary = new ArrayList<Integer>(Arrays.asList(9,25,35,41, 42,43,44,50, 51,60,73,861, 93,0,0,94, 106,109,115,126, 128,129,310,311, 400,401,490,491, 690,691,1001,1002, 1003,1004,1005,1006, 1210,1211,1270,1271, 1350,1351,0,0));
+		USAHand = new ArrayList<Integer>();
+		SUNHand = new ArrayList<Integer>();
+		Deck = new ArrayList<Integer>(); 
+		Discard = new ArrayList<Integer>();
+		Removed = new ArrayList<Integer>();
+		Effects = new ArrayList<Integer>();
+		for (int i=0; i<=138; i++) {
+			if (i==6) {
+				China = ReadWrite.undoParser(s.charAt(6))-3;
+				continue;
+			}
+			if (ReadWrite.undoParser(s.charAt(i))==0) CardList.cardList.set(i, new Placeholder());
+			if (ReadWrite.undoParser(s.charAt(i))==1) continue;
+			if (ReadWrite.undoParser(s.charAt(i))==2) Deck.add(i);
+			if (ReadWrite.undoParser(s.charAt(i))==3) USAHand.add(i);
+			if (ReadWrite.undoParser(s.charAt(i))==4) SUNHand.add(i);
+			if (ReadWrite.undoParser(s.charAt(i))==5) Discard.add(i);
+			if (ReadWrite.undoParser(s.charAt(i))==6) {
+				Removed.add(i);
+				if (effectsPermanent.contains(i)) {
+					if (effectActive(55) && i==96) removeEffect(55);
+					if (effectActive(59) && i==97) removeEffect(59);
+					if (GameData.getSpace(1)>=3 && i==124);
+					else addEffect(i);
+				}
+			}
+		}
+		for (int i=0; i<11; i++) {
+			int x = ReadWrite.undoParser(s.charAt(139+i));
+			if (x>=8 && effectsTemporary.get(4*i)!=0) {
+				x-=8;
+				Effects.add(effectsTemporary.get(4*i));
+			}
+			if (x>=4 && effectsTemporary.get(4*i+1)!=0) {
+				x-=4;
+				Effects.add(effectsTemporary.get(4*i+1));
+			}
+			if (x>=2 && effectsTemporary.get(4*i+2)!=0) {
+				x-=2;
+				Effects.add(effectsTemporary.get(4*i+2));
+			}
+			if (x>=1 && effectsTemporary.get(4*i+3)!=0) {
+				x-=1;
+				Effects.add(effectsTemporary.get(4*i+3));
+				if (effectsTemporary.get(4*i+3)==94) {
+					Chernobyl.regionBan = new boolean[10];
+					if (x==0) {
+						Chernobyl.regionBan[0]=true;
+						Chernobyl.regionBan[1]=true;
+						Chernobyl.regionBan[2]=true;
+						Chernobyl.reg = 0;
+					}
+					else if (x==1) {
+						Chernobyl.regionBan[3]=true;
+						Chernobyl.reg = 3;
+					}
+					else if (x==2) {
+						Chernobyl.regionBan[4]=true;
+						Chernobyl.regionBan[5]=true;
+						Chernobyl.reg = 4;
+					}
+					else {
+						Chernobyl.regionBan[x+3]=true;
+						Chernobyl.reg = x+3;
+					}
+					
+				}
+			}
+			if (i==10 && x>=2) {
+				x -= 2;
+				CardList.cardList.set(35, new NationalistChina());
+			}
+			if (i==10 && x==1) {
+				x -= 1;
+				Operations.tsarbomba = true;
+			}
+		}
+	} 
 	
 	/**
 	 * Resets everything to its initial state.
