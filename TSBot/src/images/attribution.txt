@@ -129,6 +129,8 @@ annan: By US Mission in Geneva - https://www.flickr.com/photos/us-mission/747420
 
 arableague: By Jeff Dahl - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=5644210
 
+asgharzadeh: 404
+
 barre: By Government of Somalia - http://www.gettyimages.co.uk/detail/news-photo/portrait-of-president-jaale-siad-barre-the-architect-of-news-photo/451084637, Public Domain, https://commons.wikimedia.org/w/index.php?curid=46681348
 
 baryshnikov: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - MIKHAIL Baryshnikov, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74877673
@@ -181,7 +183,11 @@ lemonde: By Le Monde - Le Monde, Public Domain, https://commons.wikimedia.org/w/
 
 macarthur: By Nutter (Army) - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 531373., Public Domain, https://commons.wikimedia.org/w/index.php?curid=6237191
 
+macmillan: 404 not found
+
 mao: By неизвестный (unknown) - http://sarbaharapath.com/wp-content/uploads/2015/11/Mao2.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=53879271
+
+massoud: 404 not found
 
 meir: By Marion S. Trikosko - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID ppmsc.03265.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=1820659
 
@@ -201,9 +207,13 @@ sadat: By Unknown - This file has been extracted from another file: Anwar Sadat 
 
 sagan: By NASA/JPL - Image:Planetary society.jpghttp://technology.jpl.nasa.gov/gallery/index.cfm?page=imageDetail&ItemID=43&catId=9http://www2.jpl.nasa.gov/technology/images_videos/iv_pages/P22626ac.html also here, Public Domain, https://commons.wikimedia.org/w/index.php?curid=1180936
 
+stalin: By Unknown author - Library of Congress [1] Reproduction Number: LC-USW33-019081-CUnited States. Office of War Information. Overseas Picture Division. Washington Division. Farm Security Administration - Office of War Information Photograph Collection., Public Domain, https://commons.wikimedia.org/w/index.php?curid=4186276
+
 strangelove: By Directed by Stanley Kubrick, distributed by Columbia Pictures - Dr. Strangelove trailer from 40th Anniversary Special Edition DVD, 2004, Public Domain, https://commons.wikimedia.org/w/index.php?curid=11862660
 
 times: By Unknown - Transferred from the English Wikipedia. http://en.wikipedia.org/wiki/File:NewYorkTimes.svg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=9748244
+
+tito: By Unknown author - This image is available from the Digital Library of Slovenia under the reference number MJVNDGTFThis tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=28363974
 
 truman: By National Archives and Records Administration. Office of Presidential Libraries. Harry S. Truman Library. - NATIONAL ARCHIVES AND RECORDS ADMINISTRATION (NARA) - CATALOG: AUDIOVISUAL MATERIAL (ID. 7865583)., Public Domain, https://commons.wikimedia.org/w/index.php?curid=79198241
 
