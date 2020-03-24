@@ -43,7 +43,10 @@ public class InfoCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		// TODO Auto-generated method stub
-		
+		if (!GameData.hasGameStarted()) {
+			sendMessage(e, ":x: What game?");
+			return;
+		}
 		if (args.length<2) {
 			sendMessage(e, ":x: Not enough arguments.");
 			return;
