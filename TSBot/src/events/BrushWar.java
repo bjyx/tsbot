@@ -98,6 +98,7 @@ public class BrushWar extends Card {
 	public boolean isFormatted(int sp, String[] args) {
 		if (args.length<2) return false;
 		target = MapManager.find(args[1]);
+		if (target==-1) return false;
 		if (MapManager.get(target).stab>2) return false;
 		if (MapManager.get(target).region<=2 && MapManager.get(target).isControlledBy()==0 && sp==1 && HandManager.effectActive(21)) return false; //NATO lol
 		return true;
