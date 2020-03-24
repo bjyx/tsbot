@@ -14,6 +14,7 @@ import events.Chernobyl;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
+import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import readwrite.ReadWrite;
@@ -182,6 +183,7 @@ public class HandManager {
 					if (GameData.getSpace(1)>=3 && i==124);
 					else addEffect(i);
 				}
+				if (i==112) MapManager.get(62).stab = 3;
 			}
 		}
 		for (int i=0; i<11; i++) {
@@ -228,6 +230,7 @@ public class HandManager {
 			if (i==10 && x>=2) {
 				x -= 2;
 				CardList.cardList.set(35, new NationalistChina());
+				MapManager.get(43).isBattleground = true;
 			}
 			if (i==10 && x==1) {
 				x -= 1;
