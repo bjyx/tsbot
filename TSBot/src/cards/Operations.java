@@ -298,27 +298,23 @@ public class Operations {
 			ops += (Math.min(amt[i], 
 					Math.max(0,MapManager.get(countries[i]).influence[(sp+1)%2]
 							- MapManager.get(countries[i]).influence[sp] //get difference between you and opponent op values
-							- MapManager.get(countries[i]).stab+1)))*2 //subtract stab, add 1; this represents the amount of influence needed to break control of a country.
-							+ amt[i] //add the amount to add to the country
-							- Math.min(amt[i], 
-									Math.max(0,MapManager.get(countries[i]).influence[(sp+1)%2]
-											- MapManager.get(countries[i]).influence[sp] //get difference between you and opponent op values
-											- MapManager.get(countries[i]).stab+1)); //subtract earlier difference
+							- MapManager.get(countries[i]).stab+1))) //subtract stab, add 1; this represents the amount of influence needed to break control of a country.
+							+ amt[i]; //add the amount to add to the country
 			/*
 			 * Say that you're the USSR playing into Thailand 3/0 with the China Card under Vietnam Revolts. (control break and additional).
 			 * That's six ops total for four influence:
-			 * ops = Math.min(4, Math.max(0, 3-0-2+1=2))*2 + 4 - Math.min(4, Math.max(0, 3-0-2+1=2))
-			 * 	   = 2*2 + 4 - 2 = 6.
+			 * ops = Math.min(4, Math.max(0, 3-0-2+1=2)) + 4
+			 * 	   = 2 + 4 = 6.
 			 * 
 			 * Say that you're the USA playing into a 1/5 Angola with Nuclear Test Ban (no reduced cost).
 			 * That's four ops for two influence:
-			 * ops = Math.min(2, Math.max(0, (5-1-1+1=4)))*2 + 2 - Math.min(2, Math.max(0, 5-1-1+1=4))
-			 *     = 2*2 + 2 - 2 = 4.
+			 * ops = Math.min(2, Math.max(0, (5-1-1+1=4))) + 2
+			 *     = 2 + 2 = 4.
 			 *     
 			 * Say that you're the USSR playing into an empty Pakistan with COMECON (reduced cost only).
 			 * That's three ops for three influence:
-			 * ops = Math.min(3, Math.max(0, (0-0-2+1)))*2 + 3 - Math.min(3, Math.max(0, (0-0-2+1))
-			 *     = 0 + 3 - 0 = 3.
+			 * ops = Math.min(3, Math.max(0, (0-0-2+1))) + 3
+			 *     = 0 + 3 = 3.
 			 */
 			if (MapManager.get(countries[i]).region!=5) {
 				allsea=false;
@@ -326,8 +322,19 @@ public class Operations {
 					allasia=false;
 				}
 			}
-			if ((sp==0&&!allowedUSA.contains(countries[i]))||(sp==1&&!allowedSUN.contains(countries[i]))) {
-				txtsp.sendMessage(":x: Can you even reach that country with your influence?...").complete();
+			if (MapManager.get(countries[i]).influence[sp]!=0);
+			else {
+				boolean flag = false;
+				for (int c : MapManager.get(countries[i]).adj) {
+					if (MapManager.get(c).influence[sp]!=0) flag = true;
+				}
+				if (!flag) {
+					txtsp.sendMessage(":x: Can you even reach that country with your influence?...").complete(); 
+					return false;
+				}
+			}
+			if ((sp==0&&(!allowedUSA.contains(countries[i])))||(sp==1&&(!allowedSUN.contains(countries[i])))) {
+				txtsp.sendMessage(":x: You'll have to stop right there—the influence must have been there from the start. Whatever influence you got from the recent ouster of Galtieri does not count.").complete(); //Rule 6.1.1 - the influence marker has to be there at the start of the turn
 				return false;
 			}
 		}
