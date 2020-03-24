@@ -10,6 +10,7 @@ import events.CardEmbedBuilder;
 import events.Decision;
 import logging.Log;
 import main.Launcher;
+import map.Country;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
@@ -278,6 +279,7 @@ public class GameData {
 		hasSpaced[1] = 0;
 		HandManager.reset();
 		txtchnl = null;
+		Country.count = 0;
 	}
 	
 	/**
