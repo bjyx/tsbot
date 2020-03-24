@@ -74,7 +74,9 @@ public class AsiaScoring extends Card {
 		else if (totalCountries[1]>0) vp -= presence;
 		builder.changeVP(vp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		MapManager.get(43).isBattleground = false; //reset Taiwan to non-battleground
+		if (HandManager.effectActive(35)) { //to avoid Nationalist China doing this too
+			MapManager.get(43).isBattleground = false; // reset Taiwan to non-battleground
+		}
 	}
 	@Override
 	public String getId() {
