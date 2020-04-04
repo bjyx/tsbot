@@ -2,6 +2,7 @@ package events;
 
 import java.util.List;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import events.Card;
@@ -24,9 +25,14 @@ public class SouthAfricanUnrest extends Card {
 			.setColor(Color.red)
 			.setFooter("\"Mandela has overstepped the mark. He has broken the law. The judiciary of this country has put him where he belongs according to the rules of democracy.\"\n"
 					+ "- P. W. Botha, 1980", Launcher.url("people/botha.png"));
-		builder.changeInfluence(option, 1, 2);
-		if (option!=58) {
-			builder.changeInfluence(58, 1, 1);
+		if (option==-1) {
+			builder.bulkChangeInfluence(new ArrayList<Integer>(VALID_OPTIONS), sp, new ArrayList<Integer>(Arrays.asList(1,1,1)));
+		}
+		else {
+			builder.changeInfluence(option, 1, 2);
+			if (option!=58) {
+				builder.changeInfluence(58, 1, 1);
+			}
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
@@ -80,19 +86,20 @@ public class SouthAfricanUnrest extends Card {
 		if (VALID_OPTIONS.contains(option)) {
 			return true;
 		}
+		if (args[1].equalsIgnoreCase("split")) return true;
 		return false;
 	}
 
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "Either place 2 USSR influence in South Africa or 1 USSR Influence in South Africa and 2 in one of its adjacencies.";
+		return "Either place 2 USSR influence in South Africa or 1 USSR Influence in South Africa and 2 total in the countries adjacent to South Africa.";
 	}
 
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "A valid alias for one of three countries: South Africa, Angola, or Botswana, representing the one to put two influence into.";
+		return "A valid alias for one of three countries: South Africa, Angola, or Botswana, representing the one to put two influence into. Alternatively, the word \"split\" (exact spelling), for one in each of the three.";
 	}
 
 }
