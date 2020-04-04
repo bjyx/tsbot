@@ -169,7 +169,7 @@ public class StartCommand extends Command {
 		if (settings>=256) {
 			Launcher.change();
 			settings-=256;
-			builder.addField("Secret mode activated", "Oh no, you found the secret mode! \'˚>̊̇\nHope you like furry art. It's safe for work, I promise.", false);
+			builder.addField("Secret mode activated", "Well, you got a bit too inquisitive. This world behaves a bit... differently. Nahh, it's just an aesthetic change, don't mind.", false);
 		}
 		if (settings>=128) {
 			GameData.latewar = true;
