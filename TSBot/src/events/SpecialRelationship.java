@@ -81,8 +81,9 @@ public class SpecialRelationship extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "If NATO is active, the US gains 2 VP and adds 2 Influence to any country in Western Europe; if NATO is not active, then the US adds 1 Influence to a country adjacent to the UK. *Can only be played if the US controls the UK.*";
+		if (MapManager.get(18).isControlledBy()!=0) return "The US does not control the UK. Play this for Operations.";
+		if (HandManager.effectActive(21)) return "NATO is not active. The US adds 1 Influence to a country adjacent to the UK. *This effect will be improved after NATO is founded. Can only be played if the US controls the UK.*";
+		return "NATO is active. The US gains 2 VP and adds 2 Influence to any country in Western Europe. *Can only be played if the US controls the UK.*";
 	}
 
 	@Override

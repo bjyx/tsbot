@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
+import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import main.Launcher;
@@ -85,6 +86,7 @@ public class OPEC extends Card {
 
 	@Override
 	public String getDescription() {
+		if (HandManager.effectActive(86)) return "Europe has an alternative source of oil. Play this for operations only.";
 		return "The USSR gains 1 VP for controlling each of the following countries: \n"
 				+ "- Egypt\n"
 				+ "- Gulf States\n"
@@ -92,7 +94,8 @@ public class OPEC extends Card {
 				+ "- Iraq\n"
 				+ "- Libya\n"
 				+ "- Saudi Arabia\n"
-				+ "- Venezuela";
+				+ "- Venezuela\n"
+				+ "*This card cannot be played if "+CardList.getCard(86)+" is in effect.*";
 	}
 
 	@Override

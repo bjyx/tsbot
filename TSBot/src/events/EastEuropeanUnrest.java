@@ -98,14 +98,14 @@ public class EastEuropeanUnrest extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "Remove one USSR influence from each of at most three countries in Eastern Europe. If played in the Late War, remove two influence from at most three countries in Eastern Europe instead.";
+		if (GameData.getEra()==2) return "This is the high point of anti-communist agitation. Remove two USSR influence from each of at most three countries in Eastern Europe.";
+		return "Remove one USSR influence from each of at most three countries in Eastern Europe. In the late war, this number increases to two.";
 	}
 
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "The three countries. If the number of countries able to receive this influence is somehow less than or equal to four, no additional input is required.";
+		return "The three countries. If the number of countries with Soviet influence in Eastern Europe is somehow less than or equal to four, no additional input is required.";
 	}
 
 }

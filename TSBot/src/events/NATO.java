@@ -69,9 +69,8 @@ public class NATO extends Card {
 
 	@Override
 	public String getDescription() {
-		return "*This card requires a prior use of " + CardList.getCard(16) + " or " + CardList.getCard(23) + " for the event.*\n"
-				+ "*US Controlled countries in Europe can no longer be the target of coups, realignments, or " + CardList.getCard(36) + " by the USSR.*\n"
-				+ "*Improves the effect of " + CardList.getCard(105) + ".*";
+		return (this.isPlayable(0)?("*US Controlled countries in Europe can no longer be the target of coups, realignments, or " + CardList.getCard(36) + " by the USSR.*\n"
+				+ "*Improves the effect of " + CardList.getCard(105) + ".*"):("*This card requires a prior use of " + CardList.getCard(16) + " or " + CardList.getCard(23) + " to be used for the event.* Play this for Operations only."));
 	}
 
 	@Override

@@ -118,7 +118,7 @@ public class UNIntervention extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Play with an event associated with your opponent; use the operations of your opponent's card without triggering the event. *May not be played as a headline*.";
+		return (HandManager.effectActive(50)?"The USSR is being a bit... threatening. The USSR gets 3 VPs if this isn't played on this Action Round.":"") + (HandManager.effectActive(60)?"Something has happened to that U2. Playing this gives the USSR 1 VP.\n":"") + "Play with an event associated with your opponent; use the operations of your opponent's card without triggering the event. *May not be played as a headline*.";
 	}
 
 	@Override

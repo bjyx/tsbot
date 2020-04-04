@@ -63,7 +63,7 @@ public class Solidarity extends Card {
 
 	@Override
 	public String getDescription() {
-		return "*May only be played after the event of "+CardList.getCard(68)+" has been activated.* Add 3 US Influence to Poland.";
+		return HandManager.effectActive(68)?"Add 3 US Influence to Poland.":("*May only be played after the event of "+CardList.getCard(68)+" has been activated.*");
 	}
 
 	@Override

@@ -117,6 +117,8 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public String getDescription() {
+		if (HandManager.effectActive(1004)) return "Coalition Government in the UK. Play this card for Operations; you can play this for the event starting Turn 3.";
+		if (HandManager.effectActive(83)) return "Thatcher's the Prime Minister. Play this for Operations.";
 		return "Remove up to 3 US Influence in Western Europe (no more than 2 per country). *Cannot be played as an event if " + CardList.getCard(83) + " is in effect. Cannot be played for the event on Turns 1 and 2 if the US rolled a 4 or 5 on the `1945 UK Elections` Crisis.*";
 	}
 

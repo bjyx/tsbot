@@ -84,6 +84,7 @@ public class StarWars extends Card {
 
 	@Override
 	public String getDescription() {
+		if (GameData.aheadInSpace()!=0) return "The US does not lead the space race. Play this for Operations.";
 		return "Retrieve any card from the discard pile to play for the event. *Only playable if the US is ahead on the Space Track.*";
 	}
 

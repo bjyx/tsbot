@@ -2,7 +2,7 @@ package events;
 
 /**
  * A class defining decisions required from a multitude of cards. 
- * @author [REDACTED]
+ * @author adalbert
  *
  */
 public class Decision {

@@ -9,8 +9,8 @@ import net.dv8tion.jda.core.EmbedBuilder;
 
 
 /**
- * The abstract class defining a card in the game. Most other classes in this package are derivatives of this class.
- * @author [REDACTED]
+ * The abstract class defining a card in the game according to Section 2.2. Most other classes in this package are derivatives of this class.
+ * @author adalbert
  *
  */
 public abstract class Card {
@@ -20,12 +20,12 @@ public abstract class Card {
 	public static final String[] numbers = {"zero","one","two","three","four","five","six"};
 	/**
 	 * The event associated with the card.
-	 * @param sp is the superpower *playing* the card (to be distinguished from the phasing player, in the case of self-inflicted Five-Year Plan or Grain Sales).
+	 * @param sp is the superpower *playing* the card (to be distinguished from the phasing player, in the case of self-inflicted Grain Sales playing a neutral card).
 	 * @param args includes the parameters for the event.
 	 */
 	public abstract void onEvent(int sp, String[] args);
 	/**
-	 * Determines whether the card is playable at the current moment
+	 * Determines whether the card is playable at the current moment.
 	 * @param sp is the superpower playing the card (only relevant for Red Scare under CCW rules).
 	 * @return true if the card is playable in the current set of circumstances, false otherwise.
 	 */
@@ -37,7 +37,7 @@ public abstract class Card {
 	public abstract String getId();
 	/**
 	 * Gives the name of the card.
-	 * @return A string containing the name.
+	 * @return A string containing the Event Title of this card.
 	 */
 	public abstract String getName();
 	/**
@@ -51,7 +51,7 @@ public abstract class Card {
 	 */
 	public abstract int getEra();
 	/**
-	 * Gives the superpower associated with the card.
+	 * Gives the superpower associated with the card, as detailed in rule 2.2.2.
 	 * @return 0 for a US event, 1 for a USSR event, 2 for a neutral event.
 	 */
 	public abstract int getAssociation();
@@ -69,7 +69,7 @@ public abstract class Card {
 	public abstract boolean isFormatted(int sp, String[] args);
 	/**
 	 * A description of the card and how it works.
-	 * @return A string.
+	 * @return A string with the Event Description of this card.
 	 */
 	public abstract String getDescription();
 	/**
@@ -79,7 +79,7 @@ public abstract class Card {
 	public abstract String getArguments();
 	
 	/**
-	 * 
+	 * Used in the shorthand used to describe a card.
 	 * @return One of "A", "R", or "N", depending on the association of the given card.
 	 */
 	public String getAssociationString() {

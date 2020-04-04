@@ -72,7 +72,7 @@ public class KAL007 extends Card {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "**Degrade DEFCON by 1.** The US gains 2 VP. If the US controls South Korea, it may place influence or conduct realignments with the Operations of this card.";
+		return "**Degrade DEFCON by 1.** The US gains 2 VP.\n" + (MapManager.get(42).isControlledBy()==0?"The US controls South Korea. The US may place influence or conduct realignments with the Operations of this card.":"If the US controls South Korea, the US may place influence or conduct realignments using this card's Operations.");
 	}
 
 	@Override

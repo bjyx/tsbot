@@ -66,6 +66,7 @@ public class FlowerPower extends Card {
 
 	@Override
 	public String getDescription() {
+		if (HandManager.effectActive(97)) return "Reagan has denounced the Soviet Union. This card may only be played for ops.";
 		return "*The USSR will receive 2 VP for every US-played \"War\" card. Cancelled/prevented by " + CardList.getCard(97) + ".*";
 	}
 

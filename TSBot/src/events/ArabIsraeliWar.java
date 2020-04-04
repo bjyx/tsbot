@@ -97,6 +97,7 @@ public class ArabIsraeliWar extends Card {
 
 	@Override
 	public String getDescription() {
+		if (HandManager.effectActive(65)) return "The Camp David Accords are active, and you can't have an Arab-Israeli War without Egypt. This card may only be played for ops. *This card will not trigger Flower Power.*";
 		return "The USSR rolls 1 die and adds 2 Military Ops. Subtract 1 from the roll for every country adjacent to Israel that the US controls, and an additional 1 if the US controls Israel. On a modified roll of 4-6, the USSR gains 2 VP and replace all influence in Israel with your own. \n*Cannot be played if " + CardList.getCard(65) + " is in effect.*";
 	}
 

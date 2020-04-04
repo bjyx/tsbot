@@ -54,7 +54,7 @@ public class Blockade extends Card {
 
 	@Override
 	public String getDescription() {
-		if (HandManager.effectActive(1002)) return "The Allies are in Berlin. This card has no effect.";
+		if (HandManager.effectActive(1002)) return "The Allies control Berlin. This card has no effect.";
 		return "The US must decide between discarding a card worth at least 3 Ops, or removing all US Influence in West Germany.";
 	}
 

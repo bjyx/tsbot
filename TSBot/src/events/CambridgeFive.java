@@ -123,7 +123,7 @@ public class CambridgeFive extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
+		if (GameData.getEra()==2) return "The ring has been busted. You may only play this for operations.";
 		return "The USSR looks at all of the scoring cards in the US's hand, and gets to place one USSR influence in any country within that region. *Cannot be played during the late war*.";
 	}
 
@@ -131,7 +131,7 @@ public class CambridgeFive extends Card {
 	public String getArguments() {
 		// TODO Auto-generated method stub
 		return "Event: None. \n"
-				+ "Decision: the single country where you want to place influence. This must be within a region enumerated by the American scoring cards.";
+				+ "Decision: the single country where you want to place influence. This must be within a region listed by the American scoring cards.";
 	}
 
 }

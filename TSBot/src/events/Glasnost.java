@@ -80,7 +80,7 @@ public class Glasnost extends Card {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "Improve DEFCON by 1. The USSR gains 2 VP. If " + CardList.getCard(87) + " has been played for the event, the USSR may conduct operations using this card.";
+		return "Improve DEFCON by 1. The USSR gains 2 VP. \n"+(HandManager.effectActive(87)?"Gorbachev is in power. The USSR may place influence or conduct realignments using this card.":("If "+CardList.getCard(87)+" is active, the USSR may place influence or conduct realignments using the Operations of this card."));
 	}
 
 	@Override
