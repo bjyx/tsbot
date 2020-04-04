@@ -21,7 +21,7 @@ import readwrite.ReadWrite;
 import turnzero.NationalistChina;
 /**
  * Manages everything related to the cards used in the game - which cards are in the Deck, which are Discarded, which are in the players' hands, and which have ongoing effects.
- * @author [REDACTED]
+ * @author adalbert
  *
  */
 public class HandManager {

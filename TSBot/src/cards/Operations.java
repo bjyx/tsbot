@@ -14,7 +14,7 @@ import map.MapManager;
 import net.dv8tion.jda.core.entities.TextChannel;
 /**
  * Class for handling all related to operations.
- * @author [REDACTED]
+ * @author adalbert
  *
  */
 public class Operations {

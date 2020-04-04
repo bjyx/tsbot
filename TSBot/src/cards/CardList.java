@@ -9,7 +9,7 @@ import turnzero.NationalistChina;
 import yiyo.*;
 /**
  * Implements a list of the cards used in the game.
- * @author [REDACTED]
+ * @author adalbert
  *
  */
 public class CardList {

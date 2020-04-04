@@ -6,7 +6,11 @@ import cards.CardList;
 import cards.Operations;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The ABM Treaty Card.
+ * @author adalbert
+ *
+ */
 public class ABMTreaty extends Card {
 
 	@Override

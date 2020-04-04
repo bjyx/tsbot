@@ -1,7 +1,11 @@
 package cards;
 
 import events.Card;
-
+/**
+ * The Placeholder Card.
+ * @author adalbert
+ *
+ */
 public class Placeholder extends Card {
 
 	@Override
