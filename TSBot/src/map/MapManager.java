@@ -4,11 +4,20 @@ import java.util.ArrayList;
 
 import game.GameData;
 import readwrite.ReadWrite;
-
+/**
+ * Handles the map for the game.
+ * @author adalbert
+ *
+ */
 public class MapManager {
+	/**
+	 * The map used in the game.
+	 */
 	private static ArrayList<Country> map;
-	
-	public static void initialize() {//literally list every damn country here.
+	/**
+	 * Generates the state of the map as it is before setup (Rule 3.2/3.3). And yes, that means creating every damn country individually.
+	 */
+	public static void initialize() {
 		map = new ArrayList<Country>();
 		//Europe - 0
 		map.add(new Country(
@@ -1072,34 +1081,34 @@ public class MapManager {
 				"", 
 				new int[] {0,0}
 				));
-		//Superpowers - 84 - really only relevant in case I need flags for Brush War
+		//Superpowers - 84 - required to be delineated by Rule 2.1.5
 		map.add(new Country(
 				"United States of America", 
 				9, 
 				"us", 
-				7, //cannot coup. ever. 14 > 6 [die] + 6 [Vietnam-boosted China card is the maximum ops number on any card] + 1 [Brezhnev or Containment, even though it doesn't apply to the China Card]
+				7, //coups will always fail on this country. A failsafe in case someone tries. 
 				false, 
 				new String[] {"unitedstates", "usa", "us","america","democrat", "capitalist"}, 
 				new Integer[] {3, 36, 65, 71}, //ca, jp, cu, mx
 				"", 
-				new int[] {2147483647,-2147483648} //don't even bother...
+				new int[] {200000,0} //don't even bother...
 				));
 		map.add(new Country(
 				"Union of Soviet Socialist Republics", 
 				9, 
 				"su", 
-				7, 
+				7, //this one too.
 				false, 
 				new String[] {"unionofsovietsocialistrepublics", "sun", "su","sovietunion","ussr", "sovetskysoyuz","sssr","communist","ссср", "soviet"}, 
-				new Integer[] {7, 13, 14, 31, 39}, //fi, pl, ro, af, kp
+				new Integer[] {7, 13, 14, 31, 39, 86}, //fi, pl, ro, af, kp, cn
 				"", 
-				new int[] {-2147483648,2147483647} //don't even bother...
+				new int[] {0,200000} //don't even bother...
 				));
 		map.add(new Country(
 				"China", 
 				9, 
 				"cn", 
-				3, 
+				3, //you will be barred from couping this one, so just having a three here is fine
 				false, 
 				new String[] {"china", "chn", "cn","prc","zhongguo", "zhonghuarenmingongheguo","peoplesrepublicofchina"}, 
 				new Integer[] {85}, //su
@@ -1107,15 +1116,30 @@ public class MapManager {
 				new int[] {0,GameData.ccw?0:3} //If you're the US you probably can't put things here anyways
 				));
 	}
+	/**
+	 * Provides the country with the given ID.
+	 * @param id is... well...
+	 * @return a Country.
+	 */
 	public static Country get(int id) {
 		return map.get(id);
 	}
+	/**
+	 * Searches for a country with the provided alias. 
+	 * @param alias is... well...
+	 * @return the ID of the country with the given alias. If no country has this alias, it provides -1. 
+	 */
 	public static int find(String alias) {
 		for (Country c : map) {
 			if (c.aliases.contains(alias)) return c.id;
 		}
 		return -1;
 	}
+	/**
+	 * Sets up the board in a custom manner, as dictated by the provided string. 
+	 * @param s describes the board state.
+	 * @return true.
+	 */
 	public static boolean customSetup(String s) {
 		for (int i=0; i<84; i++) {
 			int us = ReadWrite.undoParser(s.charAt(2*i));
@@ -1126,6 +1150,10 @@ public class MapManager {
 		MapManager.get(86).influence[1]=s.charAt(84*2);
 		return true;
 	}
+	/**
+	 * A special case of {@link map.MapManager.customSetup} that sets the game up for the Late War Scenario.
+	 * @return true.
+	 */
 	public static boolean lateWarSetup() {
 		return customSetup("0030030003300312310003204003131000205051121000200340220002200302400103104002310320313030200502130000010020001002002021000000100100031000001020001020200000302100002100203");
 	}
