@@ -27,6 +27,9 @@ public class Che extends Card {
 		if (doable.isEmpty()) {
 			builder.addField("No countries to target!","What do you mean, there's no Third World country being relentlessly exploited by capitalists!?",false);
 		}
+		else if (order.isEmpty()) {
+			builder.addField("No targeted countires.","*Castro can be heard trashing his office.*",false);
+		}
 		else {
 			boolean flag = true;
 			int i = 0;
@@ -38,11 +41,12 @@ public class Che extends Card {
 				if (orig==MapManager.get(order.get(i)).influence[0]) {
 					flag = false;
 					builder.addField("Coup in " + MapManager.get(order.get(i)).name + "!", "Failed.", false);
-					Log.writeToLog("Coup failed — second coup will not be conducted.");
+					Log.writeToLog("Coup failed.");
 				}
 				else {
 					builder.addField("Coup in " + MapManager.get(order.get(i)).name + "!", "Success - " + (orig-MapManager.get(order.get(i)).influence[0]) + " influence removed.", false);
 				}
+				i++;
 			}
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -92,12 +96,11 @@ public class Che extends Card {
 				doable.add(i);
 			}
 		}
-		if (doable.size()<2) {
+		if (doable.size()<1) {
 			order = doable;
 			return true;
 		}
-		if (args.length < 3) return false;
-		for (int i=1; i<3; i++) {
+		for (int i=1; i<args.length; i++) {
 			int c = MapManager.find(args[i]);
 			order.add(c);
 			if (c==-1) return false;
@@ -109,13 +112,13 @@ public class Che extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The USSR may immediately make a coup (using this card's operations value) on a non-battleground in Central America, South America, or Africa. If this removes any US Influence, the USSR may perform another such coup on a different country.";
+		return "The USSR __may__ immediately make a coup (using this card's operations value) on a non-battleground in Central America, South America, or Africa. If this removes any US Influence, the USSR may perform another such coup on a different country.";
 	}
 
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "Both coup targets, in order. If one target exists, or if no targets exist, this is not required.\n";
+		return "Both coup targets, in order. If no targets exist, this is not required (as this will not lose the game).\nTo pass on a legal coup, leave that section blank.";
 	}
 
 }
