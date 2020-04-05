@@ -7,7 +7,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.util.List;
-
+/**
+ * Basic command structure.
+ * @author this is not mine; I just liked this architecture. If anyone knows who built this, tell me.
+ *
+ */
 public abstract class Command extends ListenerAdapter
 {
     public abstract void onCommand(MessageReceivedEvent e, String[] args);

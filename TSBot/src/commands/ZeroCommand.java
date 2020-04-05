@@ -10,7 +10,11 @@ import game.PlayerList;
 import logging.Log;
 import turnzero.TurnZero;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command handling Turn Zero, an optional step in the setup process. 
+ * @author adalbert
+ *
+ */
 public class ZeroCommand extends Command {
 
 	@Override

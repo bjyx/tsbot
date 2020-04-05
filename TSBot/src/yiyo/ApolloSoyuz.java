@@ -7,7 +7,11 @@ import cards.HandManager;
 import events.Card;
 import events.Decision;
 import game.GameData;
-
+/**
+ * The Apollo-Soyuz Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class ApolloSoyuz extends Card {
 	
 	public static ArrayList<Integer> usa;

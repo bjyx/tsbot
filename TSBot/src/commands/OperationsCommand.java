@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command handling cards played for the Operations. 
+ * @author adalbert
+ *
+ */
 public class OperationsCommand extends Command {
 
 	@Override

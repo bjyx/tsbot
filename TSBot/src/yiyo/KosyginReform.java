@@ -8,7 +8,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Kosygin Reform Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class KosyginReform extends Card {
 
 	private static ArrayList<Integer> order;

@@ -10,7 +10,11 @@ import events.Decision;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Finlandization Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class Finlandization extends Card {
 
 	@Override

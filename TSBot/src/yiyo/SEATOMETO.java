@@ -7,7 +7,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import map.MapManager;
-
+/**
+ * The SEATO/METO Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class SEATOMETO extends Card {
 
 	private static final int[] possible = {23, 25, 32, 36, 41, 42}; //ir, il, au, jp, ph, kr;

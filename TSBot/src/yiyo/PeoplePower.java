@@ -7,7 +7,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
-
+/**
+ * The "The Revolution That Surprised the World" Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class PeoplePower extends Card {
 
 	@Override

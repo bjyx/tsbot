@@ -16,8 +16,17 @@ import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
-
+/**
+ * Turn Zero variant.
+ * @author adalbert
+ *
+ */
 public class TurnZero {
+	/**
+	 * Defines a leader card, used only in this specific class.
+	 * @author adalbert
+	 *
+	 */
 	protected static class LeaderCard {
 		protected String name;
 		protected int type; 
@@ -28,10 +37,25 @@ public class TurnZero {
 			return name;
 		}
 	}
-	
+	/**
+	 * The last message sent to the US containing the US's hand of leader cards.
+	 */
 	private static Message lastUSAHand;
+	/**
+	 * The last message sent to the USSR containing the USSR's hand of leader cards.
+	 */
 	private static Message lastSSRHand;
 	
+	/**
+	 * The current crisis, an integer.<br>
+	 * 0: Yalta and Potsdam <br>
+	 * 1: VE Day <br>
+	 * 2: 1945 UK Elections <br>
+	 * 3: Israel <br>
+	 * 4: Chinese Civil War <br>
+	 * 5: VJ Day
+	 * 
+	 */
 	public static int crisis=-1;
 	private static ArrayList<Integer> europe = new ArrayList<Integer>(Arrays.asList(0,1,2));
 	private static ArrayList<Integer> asia = new ArrayList<Integer>(Arrays.asList(3,4,5));
@@ -64,7 +88,7 @@ public class TurnZero {
 		else crisis = europe.remove((int) (Math.random()*europe.size()));
 		switch(crisis){
 			case 0:
-				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Yalta and Potsdam").setAuthor("Turn Zero Crisis").setColor(Color.blue).setImage(Launcher.url("tz/yalta.png")).build()).complete();
+				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Yalta and Potsdam").setAuthor("Turn Zero Crisis").setColor(Color.blue).setImage(Launcher.url("tz/potsdam.png")).build()).complete();
 				Log.writeToLog("YP: ");
 				break;
 			case 1:

@@ -7,7 +7,11 @@ import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.MessageBuilder;
-
+/**
+ * The command that provides a list of the people who are playing this. 
+ * @author adalbert
+ *
+ */
 public class ListCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {

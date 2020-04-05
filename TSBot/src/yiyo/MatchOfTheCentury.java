@@ -3,7 +3,11 @@ package yiyo;
 import events.Card;
 import events.Decision;
 import game.GameData;
-
+/**
+ * The Match of the Century Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class MatchOfTheCentury extends Card {
 
 	@Override

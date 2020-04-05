@@ -8,7 +8,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Red Africa Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class RedAfrica extends Card {
 
 	@Override

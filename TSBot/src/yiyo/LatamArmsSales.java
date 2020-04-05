@@ -6,7 +6,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import map.MapManager;
-
+/**
+ * The Lat-Am Arms Sales Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class LatamArmsSales extends Card {
 
 	@Override

@@ -5,7 +5,11 @@ import java.util.*;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command to help people with other commands.
+ * @author this was not built by me; I just liked the architecture.
+ *
+ */
 public class HelpCommand extends Command {
 	private TreeMap<String, Command> commands;
 	

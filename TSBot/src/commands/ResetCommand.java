@@ -6,7 +6,11 @@ import java.util.List;
 import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command that resets the bot for a new game.
+ * @author adalbert
+ *
+ */
 public class ResetCommand extends Command {
 	
 	private static boolean[] consent = {false, false};

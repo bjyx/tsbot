@@ -5,7 +5,11 @@ import java.util.List;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import readwrite.ReadWrite;
-
+/**
+ * The "save" command. 
+ * @author adalbert
+ *
+ */
 public class WriteCommand extends Command {
 
 	@Override

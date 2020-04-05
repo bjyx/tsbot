@@ -26,7 +26,11 @@ import net.dv8tion.jda.core.requests.Route;
 import net.dv8tion.jda.core.requests.restaction.ChannelAction;
 import net.dv8tion.jda.core.requests.restaction.RoleAction;
 import readwrite.ReadWrite;
-
+/**
+ * The command that loads a board state into the bot. 
+ * @author adalbert
+ *
+ */
 public class ReadCommand extends Command {
 
 	@Override

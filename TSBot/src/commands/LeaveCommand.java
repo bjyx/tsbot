@@ -7,7 +7,11 @@ import game.GameData;
 import game.PlayerList;
 
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command allowing people to leave the game (so long as it hasn't started. 
+ * @author adalbert
+ *
+ */
 public class LeaveCommand extends Command {
 
 	@Override

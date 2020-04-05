@@ -11,7 +11,11 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import net.dv8tion.jda.core.requests.Route;
 import net.dv8tion.jda.core.requests.restaction.RoleAction;
-
+/**
+ * The command allowing people to join the game.
+ * @author adalbert
+ *
+ */
 public class JoinCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {

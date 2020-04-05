@@ -8,7 +8,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Schumann Declaration Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class SchumanDeclaration extends Card {
 
 	private static boolean fringeCase = false;

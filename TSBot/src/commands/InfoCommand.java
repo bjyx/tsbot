@@ -14,7 +14,11 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command to get information about a card. 
+ * @author adalbert
+ *
+ */
 public class InfoCommand extends Command {
 	
 	private static char urlParser(int i) {
@@ -22,7 +26,10 @@ public class InfoCommand extends Command {
 		else if (i<36) return (char) ('a'+i-10);
 		else return (char) ('A'+i-36);
 	}
-	
+	/**
+	 * Generates a URL for the game-state to display on TwiStrug. I don't know image-editing techniques on Java yet :|
+	 * @return the url.
+	 */
 	public static String url() {
 		String url = "http://twistrug.jjt.io/#/board/00000000/" 
 				+ urlParser(GameData.getScore()+20)

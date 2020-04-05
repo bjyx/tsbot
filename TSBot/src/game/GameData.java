@@ -378,13 +378,13 @@ public class GameData {
 		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);
 		if (turn==4) {
 			Log.writeToLog("MW Cards Added.");
-			HandManager.addToDeck(1);
-			builder.addField("Mid War","Mid War cards now available for use.",false);
+			HandManager.addToDeck(1); //Rule 4.4
+			builder.addField("Mid War","Mid War cards now available for use. You will now get nine cards per turn instead of eight, and there will be eight action rounds per turn.",false);
 			if (HandManager.removeEffect(1001)) builder.addField("Deténte","USSR will now go first on all subsequent turns.",false);
 		}
 		if (turn==8) {
 			Log.writeToLog("LW Cards Added.");
-			HandManager.addToDeck(2);
+			HandManager.addToDeck(2); //Rule 4.4
 			builder.addField("Late War","Late War cards now available for use.",false);
 		}
 		if (hasAbility(0, 4, true)||hasAbility(1,4,true)) Operations.discount %= 2;

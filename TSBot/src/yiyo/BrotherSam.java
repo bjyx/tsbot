@@ -7,7 +7,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Brother Sam Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class BrotherSam extends Card {
 
 	@Override

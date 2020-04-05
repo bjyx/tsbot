@@ -9,7 +9,11 @@ import events.Decision;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The America's Backyard Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class AmericasBackyard extends Card {
 	
 	public static int USSRControl=0; //for later

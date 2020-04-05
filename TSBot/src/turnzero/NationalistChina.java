@@ -8,7 +8,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Nationalist China Card from Turn Zero.
+ * @author adalbert
+ *
+ */
 public class NationalistChina extends Card {
 
 	private static ArrayList<Integer> order;

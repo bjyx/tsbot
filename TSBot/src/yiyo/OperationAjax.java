@@ -6,7 +6,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Operation Ajax Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class OperationAjax extends Card {
 
 	@Override

@@ -10,7 +10,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Checkpoint C Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class CheckpointC extends Card {
 	
 	public static boolean flag = true;

@@ -10,7 +10,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command allowing players to play cards.
+ * @author adalbert
+ *
+ */
 public class PlayCommand extends Command {
 	private static final List<Character> modes = Arrays.asList('h','e','o','s');
 	@Override

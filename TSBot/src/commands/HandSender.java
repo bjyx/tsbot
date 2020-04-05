@@ -5,7 +5,11 @@ import game.GameData;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-
+/**
+ * A different listener that updates each player's hand after every command. 
+ * @author adalbert
+ *
+ */
 public class HandSender extends ListenerAdapter {
 	
 	private static Message lastUSAHand;

@@ -284,7 +284,7 @@ public class HandManager {
 		Effects.add(59); //fp
 	}
 	/**
-	 * Deals each player a hand of eight or nine cards, depending on the era. If the deck is empty, it reshuffles the discards.
+	 * Deals each player a hand of eight or nine cards, depending on the era. If the deck is empty, it reshuffles the discards. (Rules 3.1, 4.1, 4.3, and 4.5B)
 	 */
 	public static void deal() {
 		Random random = new Random();
@@ -293,14 +293,14 @@ public class HandManager {
 			if (handsize > SUNHand.size()&&!Deck.isEmpty()) {
 				SUNHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
-			if(Deck.isEmpty()) {
+			if(Deck.isEmpty()) { //Rule 4.3
 				Deck.addAll(Discard);
 				Discard.clear();
 			}
 			if (handsize > USAHand.size()&&!Deck.isEmpty()) {
 				USAHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
-			if(Deck.isEmpty()) {
+			if(Deck.isEmpty()) { //Rule 4.3
 				Deck.addAll(Discard);
 				Discard.clear();
 			}

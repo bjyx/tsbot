@@ -11,7 +11,11 @@ import events.StarWars;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Antifaschistischer Schutzwall Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class BerlinWall2 extends Card {
 	
 	private static int discard;

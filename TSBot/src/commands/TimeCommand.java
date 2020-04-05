@@ -13,7 +13,11 @@ import game.GameData;
 import game.PlayerList;
 import map.MapManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-
+/**
+ * The command handling the flow of time.
+ * @author adalbert
+ *
+ */
 public class TimeCommand extends Command {
 	/**
 	 * An indicator for whether the text of the event on the card in question has occurred

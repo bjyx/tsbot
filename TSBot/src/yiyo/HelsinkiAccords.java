@@ -7,7 +7,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Helsinki Accords Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class HelsinkiAccords extends Card {
 	
 	public static boolean fringe = true;

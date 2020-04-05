@@ -23,9 +23,16 @@ import net.dv8tion.jda.core.requests.Route;
 import net.dv8tion.jda.core.requests.restaction.ChannelAction;
 import net.dv8tion.jda.core.requests.restaction.RoleAction;
 import turnzero.TurnZero;
-
+/**
+ * The command that starts the game.
+ * @author adalbert
+ *
+ */
 public class StartCommand extends Command {
-	
+	/**
+	 * A list of emoji needed for the proper function of the game.
+	 *
+	 */
 	public static final String[] emojiID = new String[] {
 			"<:TScardback:648119343019982859>",
 			"<:flag_dd:648119347469877268>",

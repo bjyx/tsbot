@@ -7,7 +7,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
-
+/**
+ * The Vasili Arkhipov Card from the Year-In and Year-Out Pack.
+ * @author adalbert
+ *
+ */
 public class VasiliArkhipov extends Card {
 
 	@Override
