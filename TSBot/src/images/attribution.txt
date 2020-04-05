@@ -52,10 +52,10 @@ Cards:
 049 - Public Domain, https://commons.wikimedia.org/w/index.php?curid=409463
 050 - By CDU - This file was provided to Wikimedia Commons by the Konrad-Adenauer-Stiftung, a German political foundation, as part of a cooperation project., CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=16173766
 051 - By RIA Novosti archive, image #36535 / Yuriy Ivanov / CC-BY-SA 3.0, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=16752354
-052
-053
-054
-055
+052 - By Mieremet, Rob / Anefo - Fotocollectie Anefo. Nationaal Archief, Den Haag, nummertoegang 2.24.01.07, bestanddeelnummer 254-9412., CC BY-SA 3.0 nl, https://commons.wikimedia.org/w/index.php?curid=33654905
+053 - By Andrew Hall - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=56177562
+054 - By James N. Wallace - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID cph.3c34154.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=186370
+055 - By Bundesarchiv, B 145 Bild-F064862-0019 / Schaack, Lothar / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=5470955
 056
 057
 058
@@ -220,9 +220,8 @@ truman: By National Archives and Records Administration. Office of Presidential 
 voa: By Voice of America - https://www.voanews.com/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=60739870
 
 Turn Zero:
-035A
-C0
-C1
+potsdam: By Unknown author or not provided - U.S. National Archives and Records Administration, Public Domain, https://commons.wikimedia.org/w/index.php?curid=17060795
+ve: Public Domain, https://commons.wikimedia.org/w/index.php?curid=640412
 C2
 C3
 C4
