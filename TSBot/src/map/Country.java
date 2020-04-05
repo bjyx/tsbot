@@ -13,7 +13,6 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 
 public class Country {
-	//practical
 	/**
 	 * An array of strings, used to mark down the Region of this country.
 	 */
@@ -141,7 +140,7 @@ public class Country {
 	}
 	/**
 	 * Assigns a color to each region. 
-	 * @return well...
+	 * @return a Color.
 	 */
 	public Color getColor() {
 		if (region<=2) return new Color(153,110,255);
