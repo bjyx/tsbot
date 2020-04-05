@@ -16,7 +16,11 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import readwrite.ReadWrite;
-
+/**
+ * Deals with the variables in the game, including the score, the space race, and time.
+ * @author adalbert
+ *
+ */
 public class GameData {
 	/**
 	 * The location where the majority of the game will be taking place. All public game updates will be placed here.

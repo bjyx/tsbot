@@ -9,7 +9,11 @@ import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The OPEC Card.
+ * @author adalbert
+ *
+ */
 public class OPEC extends Card {
 	
 	private static final List<Integer> targets = Arrays.asList(21, 22, 23, 24, 28, 29, 83);

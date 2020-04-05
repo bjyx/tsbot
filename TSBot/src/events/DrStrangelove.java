@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The How I Learned To Stop Worrying Card.
+ * @author adalbert
+ *
+ */
 public class DrStrangelove extends Card {
 
 	@Override

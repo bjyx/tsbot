@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Allende Card.
+ * @author adalbert
+ *
+ */
 public class Allende extends Card {
 
 	@Override

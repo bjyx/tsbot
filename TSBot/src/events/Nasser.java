@@ -5,7 +5,11 @@ import java.awt.Color;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Nasser Card.
+ * @author adalbert
+ *
+ */
 public class Nasser extends Card {
 
 	@Override

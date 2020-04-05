@@ -8,7 +8,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Warsaw Pact Formed Card.
+ * @author adalbert
+ *
+ */
 public class WarsawPact extends Card {
 	
 	private static ArrayList<Integer> order;

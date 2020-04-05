@@ -3,7 +3,11 @@ package events;
 import cards.CardList;
 import cards.HandManager;
 import game.GameData;
-
+/**
+ * The Missile Envy Card.
+ * @author adalbert
+ *
+ */
 public class MissileEnvy extends Card {
 	
 	public static int maxops = 0;

@@ -9,7 +9,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Che Card.
+ * @author adalbert
+ *
+ */
 public class Che extends Card {
 
 	public static ArrayList<Integer> doable;

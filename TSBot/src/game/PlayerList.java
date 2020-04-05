@@ -10,10 +10,20 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
-
+/**
+ * Handles a list of players who are playing this game. No AI yet. 
+ * @author adalbert
+ *
+ */
 public class PlayerList {
+	/**
+	 * The array.
+	 */
 	private static User[] players = {null, null};
-	
+	/**
+	 * Adds a player to the list.
+	 * @param u is the player in question.
+	 */
 	public static void addPlayer(User u) {
 		if (players[0]==null) {
 			players[0]=u;
@@ -24,6 +34,10 @@ public class PlayerList {
 			return;
 		}
 	}
+	/**
+	 * Removes a player from the list, if present.
+	 * @param u is the player in question.
+	 */
 	public static void removePlayer(User u) {
 		if (players[0]==u) {
 			players[0]=null;
@@ -34,6 +48,9 @@ public class PlayerList {
 			return;
 		}
 	}
+	/**
+	 * Determines who is on which side of the war. 
+	 */
 	public static void detSides() {
 		Random rng = new Random();
 		int side = rng.nextInt(1);
@@ -42,8 +59,13 @@ public class PlayerList {
 		players[0] = players[1];
 		players[1] = temp;
 	}
+	/**
+	 * Gets a list of players as an embed.
+	 * @param started is whether the game has started or not. 
+	 * @return a MessageEmbed containing a list of players. 
+	 */
 	public static MessageEmbed getPlayers(boolean started) {
-		EmbedBuilder builder = new EmbedBuilder().setTitle("Superpowers").setColor(Color.magenta);
+		EmbedBuilder builder = new EmbedBuilder().setTitle("Superpowers").setColor(Color.darkGray);
 		if (started) {
 			builder.setDescription(":flag_us: " + players[0].getAsTag() + "\n" + MapManager.get(85) + " " + players[1].getAsTag());
 		}
@@ -52,20 +74,40 @@ public class PlayerList {
 		}
 		return builder.build();
 	}
+	/**
+	 * Converts the array containing the players into a list.
+	 * @return a List of Users.
+	 */
 	public static List<User> getArray() {
 		return Arrays.asList(players);
 	}
+	/**
+	 * 
+	 * @return the first player in the array, corresponding to the Americans. 
+	 */
 	public static User getUSA() {
 		return players[0];
 	}
+	/**
+	 * 
+	 * @return the second player in the array, corresponding to the Soviets.
+	 */
 	public static User getSSR() {
 		return players[1];
 	}
+	/**
+	 * Provides the phasing player for a given action round. Why this is here of all places I have no idea.
+	 * @return an integer. 
+	 */
 	public static int getPhasing() {
 		if (GameData.getAR()==1) return HandManager.precedence; //(I can't deal with this yet)
 		if (GameData.getAR()==2) return (HandManager.precedence+1)%2; //(I can't deal with this yet)
 		return GameData.getAR()%2; //ar1 is USSR, ar2 is US, and so forth until ar12/14/16
 	}
+	/**
+	 * Provides the opposing player for a given action round. 
+	 * @return an integer. 
+	 */
 	public static int getOpposing() {
 		return (getPhasing()+1)%2;
 	}

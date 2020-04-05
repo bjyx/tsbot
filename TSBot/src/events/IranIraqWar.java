@@ -7,7 +7,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Iran-Iraq War Card.
+ * @author adalbert
+ *
+ */
 public class IranIraqWar extends Card {
 
 	private static int target;

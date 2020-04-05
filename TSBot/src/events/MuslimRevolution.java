@@ -9,7 +9,11 @@ import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Muslim Revolution Card.
+ * @author adalbert
+ *
+ */
 public class MuslimRevolution extends Card {
 	private static final List<Integer> VALID_TARGETS = Arrays.asList(21, 23, 24, 26, 28, 29, 30, 59);
 	private static ArrayList<Integer> targetable = new ArrayList<Integer>();

@@ -6,7 +6,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Kitchen Debates Card.
+ * @author adalbert
+ *
+ */
 public class KitchenDebates extends Card {
 
 	@Override

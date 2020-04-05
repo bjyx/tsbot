@@ -5,7 +5,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Containment Card.
+ * @author adalbert
+ *
+ */
 public class Containment extends Card {
 
 	@Override

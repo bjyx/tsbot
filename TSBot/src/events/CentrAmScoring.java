@@ -6,7 +6,11 @@ import game.GameData;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-
+/**
+ * The Central American Scoring Card.
+ * @author adalbert
+ *
+ */
 public class CentrAmScoring extends Card {
 	private static final int presence = 1;
 	private static final int domination = 3;

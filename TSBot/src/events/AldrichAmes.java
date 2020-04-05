@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Aldrich Ames Card.
+ * @author adalbert
+ *
+ */
 public class AldrichAmes extends Card {
 
 	@Override

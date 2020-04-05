@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Wargames Card.
+ * @author adalbert
+ *
+ */
 public class Wargames extends Card {
 
 	@Override

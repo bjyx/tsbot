@@ -8,7 +8,11 @@ import cards.Operations;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Glasnost Card.
+ * @author adalbert
+ *
+ */
 public class Glasnost extends Card {
 
 	@Override

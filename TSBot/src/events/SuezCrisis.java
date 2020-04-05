@@ -9,7 +9,11 @@ import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Suez Canal Crisis Card.
+ * @author adalbert
+ *
+ */
 public class SuezCrisis extends Card {
 	
 	private static ArrayList<Integer> order;

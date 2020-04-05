@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Brezhnev Doctrine Card.
+ * @author adalbert
+ *
+ */
 public class BrezhnevDoctrine extends Card {
 
 	@Override

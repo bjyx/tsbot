@@ -7,7 +7,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Independent Reds Card.
+ * @author adalbert
+ *
+ */
 public class IndependentReds extends Card {
 	
 	private static final int[] possible = {2, 4, 10, 14, 20}; //bg, cs, hu, ro, yu;

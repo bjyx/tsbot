@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Shuttle Diplomacy Card.
+ * @author adalbert
+ *
+ */
 public class ShuttleDiplomacy extends Card {
 
 	@Override

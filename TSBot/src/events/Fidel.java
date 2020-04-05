@@ -5,7 +5,11 @@ import java.awt.Color;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Fidel Card.
+ * @author adalbert
+ *
+ */
 public class Fidel extends Card {
 
 	@Override

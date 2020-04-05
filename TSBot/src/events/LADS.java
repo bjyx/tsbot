@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Latin American Death Squads Card.
+ * @author adalbert
+ *
+ */
 public class LADS extends Card {
 
 	@Override

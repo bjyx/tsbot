@@ -7,7 +7,11 @@ import cards.Operations;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Soviets Shoot Down KAL-007 Card.
+ * @author adalbert
+ *
+ */
 public class KAL007 extends Card {
 
 	@Override

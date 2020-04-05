@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The COMECON Card.
+ * @author adalbert
+ *
+ */
 public class Comecon extends Card {
 	
 	private static ArrayList<Integer> order;

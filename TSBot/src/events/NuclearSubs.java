@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Nuclear Subs Card.
+ * @author adalbert
+ *
+ */
 public class NuclearSubs extends Card {
 
 	@Override

@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Truman Doctrine Card.
+ * @author adalbert
+ *
+ */
 public class TrumanDoctrine extends Card {
 	
 	private static ArrayList<Integer> doable;

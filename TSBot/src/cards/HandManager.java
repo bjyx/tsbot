@@ -564,7 +564,9 @@ public class HandManager {
 		return true;
 	}
 	/**
-	 * 
+	 * Detects whether a given persistent event is active.
+	 * @param card is the event in question.
+	 * @return A boolean value.
 	 */
 	public static boolean effectActive(int card) {
 		return Effects.contains(card);
@@ -592,7 +594,11 @@ public class HandManager {
 		}
 		return i;
 	}
-	
+	/**
+	 * Counts the scoring cards in a given player's hand. 
+	 * @param sp is the superpower in question.
+	 * @return An integer.
+	 */
 	public static int countScoring(int sp) {
 		int i=0;
 		if (sp==1) for (int c : SUNHand) {

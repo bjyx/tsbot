@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Five-Year Plan Card.
+ * @author adalbert
+ *
+ */
 public class FiveYearPlan extends Card {
 	public static int card;
 

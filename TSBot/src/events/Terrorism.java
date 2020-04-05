@@ -6,7 +6,11 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Terrorism Card.
+ * @author adalbert
+ *
+ */
 public class Terrorism extends Card {
 
 	@Override

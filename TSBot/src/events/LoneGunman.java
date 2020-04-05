@@ -8,7 +8,11 @@ import cards.Operations;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Lone Gunman Card.
+ * @author adalbert
+ *
+ */
 public class LoneGunman extends Card {
 
 	@Override

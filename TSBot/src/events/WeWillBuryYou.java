@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The "We Will Bury You" Card.
+ * @author adalbert
+ *
+ */
 public class WeWillBuryYou extends Card {
 
 	@Override

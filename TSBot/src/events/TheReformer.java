@@ -9,7 +9,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Reformer Card.
+ * @author adalbert
+ *
+ */
 public class TheReformer extends Card {
 
 	private static ArrayList<Integer> order;

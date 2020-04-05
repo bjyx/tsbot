@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Colonial Rear Guards Card.
+ * @author adalbert
+ *
+ */
 public class ColonialRearGuards extends Card {
 
 	private static ArrayList<Integer> order;

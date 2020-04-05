@@ -5,7 +5,11 @@ import java.awt.Color;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Alliance for Progress (AfP) Card.
+ * @author adalbert
+ *
+ */
 public class AllianceForProgress extends Card {
 
 	@Override

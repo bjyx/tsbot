@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The AWACS Sale to Saudis Card.
+ * @author adalbert
+ *
+ */
 public class AWACSSale extends Card {
 
 	@Override

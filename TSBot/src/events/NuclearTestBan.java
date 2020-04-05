@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Nuclear Test Ban Card.
+ * @author adalbert
+ *
+ */
 public class NuclearTestBan extends Card {
 
 	@Override

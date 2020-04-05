@@ -8,7 +8,11 @@ import events.Card;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Camp David Accords Card.
+ * @author adalbert
+ *
+ */
 public class CampDavidAccords extends Card {
 
 	@Override

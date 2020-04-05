@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The De-Stalinization Card.
+ * @author adalbert
+ *
+ */
 public class DeStalinization extends Card {
 	
 	private static boolean fringeCase = false;

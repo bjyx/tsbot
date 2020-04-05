@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Red Scare/Purge Card.
+ * @author adalbert
+ *
+ */
 public class RedScare extends Card {
 
 	@Override

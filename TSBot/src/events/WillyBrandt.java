@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Willy Brandt Card.
+ * @author adalbert
+ *
+ */
 public class WillyBrandt extends Card {
 
 	@Override

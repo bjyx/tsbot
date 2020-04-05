@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The De Gaulle Leads France Card.
+ * @author adalbert
+ *
+ */
 public class DeGaulle extends Card {
 
 	@Override

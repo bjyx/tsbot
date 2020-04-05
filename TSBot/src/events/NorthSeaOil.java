@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The North Sea Oil Card.
+ * @author adalbert
+ *
+ */
 public class NorthSeaOil extends Card {
 
 	@Override

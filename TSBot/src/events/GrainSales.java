@@ -5,7 +5,11 @@ import cards.HandManager;
 import cards.Operations;
 import game.GameData;
 import logging.Log;
-
+/**
+ * The Grain Sales to Soviets Card.
+ * @author adalbert
+ *
+ */
 public class GrainSales extends Card {
 	
 	public static int card;

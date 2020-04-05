@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Voice of America Card.
+ * @author adalbert
+ *
+ */
 public class VoiceOfAmerica extends Card {
 
 	private static ArrayList<Integer> order;

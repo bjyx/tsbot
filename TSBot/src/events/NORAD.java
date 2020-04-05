@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The NORAD Card.
+ * @author adalbert
+ *
+ */
 public class NORAD extends Card {
 
 	@Override

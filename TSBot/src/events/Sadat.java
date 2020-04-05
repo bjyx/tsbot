@@ -5,7 +5,11 @@ import java.awt.Color;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Sadat Expels Soviets Card.
+ * @author adalbert
+ *
+ */
 public class Sadat extends Card {
 
 	@Override

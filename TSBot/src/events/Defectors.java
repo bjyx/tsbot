@@ -8,7 +8,11 @@ import commands.TimeCommand;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Defectors Card.
+ * @author adalbert
+ *
+ */
 public class Defectors extends Card {
 
 	@Override

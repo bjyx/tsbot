@@ -7,7 +7,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Summit Card.
+ * @author adalbert
+ *
+ */
 public class Summit extends Card {
 
 	@Override

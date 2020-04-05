@@ -1,7 +1,11 @@
 package events;
 
 import game.GameData;
-
+/**
+ * The Olympic Games Card.
+ * @author adalbert
+ *
+ */
 public class OlympicGames extends Card {
 	
 	public static int host;

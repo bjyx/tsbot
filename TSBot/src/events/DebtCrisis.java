@@ -1,7 +1,11 @@
 package events;
 
 import game.GameData;
-
+/**
+ * The Latin American Debt Crisis Card.
+ * @author adalbert
+ *
+ */
 public class DebtCrisis extends Card {
 
 	@Override

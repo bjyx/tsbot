@@ -6,7 +6,11 @@ import game.GameData;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-
+/**
+ * The Southeast Asia Scoring Card.
+ * @author adalbert
+ *
+ */
 public class SEAsiaScoring extends Card {
 
 	@Override

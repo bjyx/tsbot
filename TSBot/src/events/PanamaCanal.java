@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Panama Canal Returned Card.
+ * @author adalbert
+ *
+ */
 public class PanamaCanal extends Card {
 
 	@Override

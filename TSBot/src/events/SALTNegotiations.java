@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The SALT Negotiations Card.
+ * @author adalbert
+ *
+ */
 public class SALTNegotiations extends Card {
 	
 	public static boolean emptyDiscard = false;

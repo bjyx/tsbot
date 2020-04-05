@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The NATO Card.
+ * @author adalbert
+ *
+ */
 public class NATO extends Card {
 
 	@Override

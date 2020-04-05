@@ -8,7 +8,11 @@ import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Socialist Governments Card.
+ * @author adalbert
+ *
+ */
 public class SocialistGovernments extends Card {
 	
 	private static ArrayList<Integer> order;

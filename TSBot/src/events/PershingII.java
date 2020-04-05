@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Pershing II Deployed Card.
+ * @author adalbert
+ *
+ */
 public class PershingII extends Card {
 
 	public static ArrayList<Integer> doable = new ArrayList<Integer>();

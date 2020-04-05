@@ -6,7 +6,11 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Solidarity Card.
+ * @author adalbert
+ *
+ */
 public class Solidarity extends Card {
 
 	@Override

@@ -9,7 +9,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
-
+/**
+ * The UN Intervention Card.
+ * @author adalbert
+ *
+ */
 public class UNIntervention extends Card {
 	
 	public static int target;

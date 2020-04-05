@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The East European Unrest Card.
+ * @author adalbert
+ *
+ */
 public class EastEuropeanUnrest extends Card {
 	
 	private static ArrayList<Integer> order;

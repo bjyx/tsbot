@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Puppet Governments Card.
+ * @author adalbert
+ *
+ */
 public class PuppetGovernments extends Card {
 
 	private static ArrayList<Integer> doable;

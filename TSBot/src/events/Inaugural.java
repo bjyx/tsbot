@@ -9,7 +9,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The "Ask Not What Your Country Can Do For You..." Card.
+ * @author adalbert
+ *
+ */
 public class Inaugural extends Card {
 
 	private static ArrayList<Integer> order;

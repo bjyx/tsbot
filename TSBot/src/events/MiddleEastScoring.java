@@ -7,7 +7,11 @@ import game.GameData;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-
+/**
+ * The Middle East Scoring Card.
+ * @author adalbert
+ *
+ */
 public class MiddleEastScoring extends Card {
 	private static final int presence = 3;
 	private static final int domination = 5;

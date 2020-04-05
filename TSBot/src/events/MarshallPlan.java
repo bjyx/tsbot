@@ -9,7 +9,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Marshall Plan Card.
+ * @author adalbert
+ *
+ */
 public class MarshallPlan extends Card {
 	
 	private static ArrayList<Integer> doable;

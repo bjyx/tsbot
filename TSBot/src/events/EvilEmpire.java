@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The "An Evil Empire" Card.
+ * @author adalbert
+ *
+ */
 public class EvilEmpire extends Card {
 
 	@Override

@@ -9,7 +9,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Arab-Israeli War Card.
+ * @author adalbert
+ *
+ */
 public class ArabIsraeliWar extends Card {
 
 	@Override

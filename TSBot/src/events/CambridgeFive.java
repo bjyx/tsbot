@@ -7,7 +7,11 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import logging.Log;
-
+/**
+ * The Cambridge Five Card.
+ * @author adalbert
+ *
+ */
 public class CambridgeFive extends Card {
 	
 	public static boolean regions[];

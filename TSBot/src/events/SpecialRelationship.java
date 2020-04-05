@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Special Relationship Card.
+ * @author adalbert
+ *
+ */
 public class SpecialRelationship extends Card {
 
 	private static int target;

@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Yuri and Samantha Card.
+ * @author adalbert
+ *
+ */
 public class YuriAndSamantha extends Card {
 
 	@Override

@@ -1,7 +1,11 @@
 package events;
 
 import game.GameData;
-
+/**
+ * The China Card. This is only here for completeness's sake.
+ * @author adalbert
+ *
+ */
 public class ChinaCard extends Card {
 
 	@Override
@@ -18,31 +22,26 @@ public class ChinaCard extends Card {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "006";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "The China Card";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 4;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
@@ -65,7 +64,6 @@ public class ChinaCard extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Again, you are not using this for an event. Any attempt to do so will be invalidated.";
 	}
 

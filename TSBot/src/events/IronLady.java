@@ -10,7 +10,11 @@ import main.Launcher;
 import map.MapManager;
 
 public class IronLady extends Card {
-
+	/**
+	 * The Iron Lady Card.
+	 * @author adalbert
+	 *
+	 */
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();

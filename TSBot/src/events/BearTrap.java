@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Bear Trap Card.
+ * @author adalbert
+ *
+ */
 public class BearTrap extends Card {
 
 	@Override

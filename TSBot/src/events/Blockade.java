@@ -2,7 +2,11 @@ package events;
 
 import cards.HandManager;
 import game.GameData;
-
+/**
+ * The Blockade Card.
+ * @author adalbert
+ *
+ */
 public class Blockade extends Card {
 
 	@Override

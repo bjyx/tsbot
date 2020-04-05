@@ -7,7 +7,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Indo-Pakistani War Card.
+ * @author adalbert
+ *
+ */
 public class IndoPakiWar extends Card {
 	
 	private static int target;

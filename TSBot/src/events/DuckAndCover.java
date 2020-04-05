@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Duck and Cover Card.
+ * @author adalbert
+ *
+ */
 public class DuckAndCover extends Card {
 
 	@Override

@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Flower Power Card.
+ * @author adalbert
+ *
+ */
 public class FlowerPower extends Card {
 
 	@Override

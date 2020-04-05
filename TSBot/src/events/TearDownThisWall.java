@@ -9,7 +9,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Tear Down This Wall Card.
+ * @author adalbert
+ *
+ */
 public class TearDownThisWall extends Card {
 
 	private static boolean opponentInfluence;

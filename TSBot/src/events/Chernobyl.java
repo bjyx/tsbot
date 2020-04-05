@@ -7,7 +7,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.Country;
-
+/**
+ * The Chernobyl Card.
+ * @author adalbert
+ *
+ */
 public class Chernobyl extends Card {
 	
 	public static boolean[] regionBan = new boolean[10];

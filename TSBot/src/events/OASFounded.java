@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The OAS Founded Card.
+ * @author adalbert
+ *
+ */
 public class OASFounded extends Card {
 	
 	private static ArrayList<Integer> order;

@@ -4,7 +4,11 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Arms Race Card.
+ * @author adalbert
+ *
+ */
 public class ArmsRace extends Card {
 
 	//NB: The original card text says "phasing player". What does that mean?

@@ -10,7 +10,11 @@ import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The South African Unrest Card.
+ * @author adalbert
+ *
+ */
 public class SouthAfricanUnrest extends Card {
 	
 	public static int option;

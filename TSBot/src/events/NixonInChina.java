@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Nixon Plays the China Card Card.
+ * @author adalbert
+ *
+ */
 public class NixonInChina extends Card {
 
 	@Override

@@ -5,7 +5,11 @@ import java.awt.Color;
 import cards.CardList;
 import game.GameData;
 import logging.Log;
-
+/**
+ * The U-2 Incident Card.
+ * @author adalbert
+ *
+ */
 public class U2Incident extends Card {
 
 	@Override

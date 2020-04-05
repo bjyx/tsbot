@@ -8,7 +8,11 @@ import cards.HandManager;
 import game.GameData;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
-
+/**
+ * The Our Man In Tehran Card.
+ * @author adalbert
+ *
+ */
 public class OurManInTehran extends Card {
 
 	public static ArrayList<Integer> cards = new ArrayList<Integer>();

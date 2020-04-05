@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Cuban Missile Crisis Card.
+ * @author adalbert
+ *
+ */
 public class MissileCrisis extends Card {
 
 	@Override

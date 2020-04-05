@@ -6,7 +6,11 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Star Wars Card.
+ * @author adalbert
+ *
+ */
 public class StarWars extends Card {
 
 	public static int target;

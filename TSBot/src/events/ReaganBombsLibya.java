@@ -5,7 +5,11 @@ import java.awt.Color;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Reagan Bombs Libya Card.
+ * @author adalbert
+ *
+ */
 public class ReaganBombsLibya extends Card {
 
 	@Override

@@ -7,7 +7,11 @@ import cards.Operations;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Junta Card.
+ * @author adalbert
+ *
+ */
 public class Junta extends Card {
 
 	private static int target;

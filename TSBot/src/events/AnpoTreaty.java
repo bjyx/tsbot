@@ -7,7 +7,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The US/Japan Mutual Defense Pact Card.
+ * @author adalbert
+ *
+ */
 public class AnpoTreaty extends Card {
 
 	@Override

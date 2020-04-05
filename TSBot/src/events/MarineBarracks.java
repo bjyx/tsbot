@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Marine Barracks Bombing Card.
+ * @author adalbert
+ *
+ */
 public class MarineBarracks extends Card {
 
 	private static ArrayList<Integer> doable;

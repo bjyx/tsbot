@@ -8,7 +8,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Brush War Card.
+ * @author adalbert
+ *
+ */
 public class BrushWar extends Card {
 
 	private static int target;

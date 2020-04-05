@@ -6,7 +6,11 @@ import game.GameData;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-
+/**
+ * The South America Scoring Card.
+ * @author adalbert
+ *
+ */
 public class SouthAmScoring extends Card {
 
 	private static final int presence = 2;

@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Vietnam Revolts Card.
+ * @author adalbert
+ *
+ */
 public class VietnamRevolts extends Card {
 
 	@Override

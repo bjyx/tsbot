@@ -8,7 +8,11 @@ import cards.Operations;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The CIA Created Card.
+ * @author adalbert
+ *
+ */
 public class CIACreated extends Card {
 
 	@Override

@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Formosa Resolution Card.
+ * @author adalbert
+ *
+ */
 public class FormosanResolution extends Card {
 
 	@Override

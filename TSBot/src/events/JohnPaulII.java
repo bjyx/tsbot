@@ -7,7 +7,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The John Paul II Elected Pope Card.
+ * @author adalbert
+ *
+ */
 public class JohnPaulII extends Card {
 
 	@Override

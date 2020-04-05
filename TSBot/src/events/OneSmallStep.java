@@ -7,7 +7,11 @@ import cards.Operations;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The "One Small Step..." Card.
+ * @author adalbert
+ *
+ */
 public class OneSmallStep extends Card {
 
 	@Override

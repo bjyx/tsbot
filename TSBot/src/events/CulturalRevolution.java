@@ -6,7 +6,11 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Cultural Revolution Card.
+ * @author adalbert
+ *
+ */
 public class CulturalRevolution extends Card {
 
 	@Override

@@ -5,13 +5,18 @@ import events.Decision;
 import logging.Log;
 /**
  * A random number generator between one and six. 
- * @author [REDACTED]
+ * @author adalbert
  *
  */
 public class Die {
 	private static final String[] numbers = {":zero:",":one:",":two:",":three:",":four:",":five:",":six:"};
-	
+	/**
+	 * The result of the die roll.
+	 */
 	public int result;
+	/**
+	 * Constructor.
+	 */
 	public Die() {
 		result = 0;
 	}
