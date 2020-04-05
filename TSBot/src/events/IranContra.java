@@ -6,14 +6,18 @@ import cards.HandManager;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Iran-Contra Affair Card.
+ * @author adalbert
+ *
+ */
 public class IranContra extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Iran-Contra Scandal Revealed")
-			.setDescription("Funding from Iranian arms shipments found to be diverted towards Nicaraguan guerillas")
+			.setDescription("Funding for Nicaraguan guerillas found to be from Iranian arms deals")
 			.setFooter("\"A few months ago I told the American people I did not trade arms for hostages. My heart and my best intentions still tell me that's true, but the facts and the evidence tell me it is not.\"\n"
 					+ "- Ronald Reagan, 1987", Launcher.url("people/reagan.png"))
 			.setColor(Color.red);

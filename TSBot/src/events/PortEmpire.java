@@ -4,17 +4,21 @@ import java.awt.Color;
 
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Portuguese Empire Crumbles Card.
+ * @author adalbert
+ *
+ */
 public class PortEmpire extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Angola and Mozambique Gain Independence")
-		.setDescription("New Portuguese government agrees to independence-granting accords")
+		.setDescription("New Portuguese government hands power to communist guerillas")
 		.setColor(Color.red)
-		.setFooter("\"Victory is certain.\""
-				+ "\n- Slogan of the MPLA", Launcher.url("people/neto.png"));
+		.setFooter("\"To Angola, quickly and with strength!\""
+				+ "\n- António de Oliveira Salazar (from the old right-wing government), 1961", Launcher.url("people/salazar.png"));
 		builder.changeInfluence(47, 1, 2); //Alvor Agreement
 		builder.changeInfluence(55, 1, 2); //Lusaka Accord
 		GameData.txtchnl.sendMessage(builder.build()).complete();

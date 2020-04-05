@@ -8,7 +8,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Korean War Card.
+ * @author adalbert
+ *
+ */
 public class KoreanWar extends Card {
 
 	@Override
@@ -34,8 +38,8 @@ public class KoreanWar extends Card {
 		if (mod>=4) {
 			builder.setTitle("Communist Victory in Korean War")
 				.setDescription("Kim Il-Sung gives victory speech in Seoul; Congress in uproar")
-				.setFooter("\"If we let Korea down, the Soviet[s] will keep right on going and swallow up one [place] after another... If we were to let Asia go, the Near East would collapse and no telling what would happen in Europe.\"\n"
-						+ "- Harry Truman, 1950", Launcher.url("people/truman.png"))
+				.setFooter("\"As of now South Korea is twice our size in population terms. But once we win over half the South's people in a confederation, we will be two parts to the South's one. We would then win either a general election or a war.\"\n"
+						+ "- Kim Il-Sung, 1973", Launcher.url("people/kim.png"))
 				.setColor(Color.red);
 			builder.changeInfluence(42, 1, MapManager.get(42).influence[0]);
 			builder.changeInfluence(42, 0, -MapManager.get(42).influence[0]);

@@ -6,7 +6,11 @@ import game.GameData;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-
+/**
+ * The Africa Scoring Card.
+ * @author adalbert
+ *
+ */
 public class AfricaScoring extends Card {
 
 	private static final int presence = 1;
@@ -21,8 +25,8 @@ public class AfricaScoring extends Card {
 		builder.setTitle("Africa Scoring")
 			.setDescription("")
 			.setColor(Color.YELLOW)
-			.setFooter("\"None of us has yet begun to grasp the full impact of this horror—on the quality of life in Africa, its economic potential and its social and political stability.\"\n" + 
-					"- Kofi Annan", Launcher.url("people/annan.png"));
+			.setFooter("\"In unity lies strength. African states must unite or sell themselves out to imperialist and colonialist exploiters for a mess of pottage.\"\n" + 
+					"- Kwame Nkrumah, 1968", Launcher.url("people/nkrumah.png"));
 		int vp = 0;
 		for (int i = 46; i<64; i++) { //Algeria and Costa Rica, resp.
 			Country c = MapManager.get(i);

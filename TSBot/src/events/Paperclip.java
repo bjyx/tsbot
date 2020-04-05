@@ -7,7 +7,11 @@ import cards.Operations;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-
+/**
+ * The Captured Scientist Card.
+ * @author adalbert
+ *
+ */
 public class Paperclip extends Card {
 
 	@Override
@@ -15,7 +19,7 @@ public class Paperclip extends Card {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		int spaceLevel = GameData.getSpace(sp);
 		builder.setTitle("Operation Paperclip")
-			.setDescription("")
+			.setDescription("German scientists recruited for " + (sp==0?"American":"Soviet") + " space program")
 			.setFooter("\"We knew that we had created a new means of warfare, and the question as to what nation, "
 					+ "to what victorious nation we were willing to entrust this brainchild of ours was a moral decision more than anything else. "
 					+ "We wanted to see the world spared another conflict such as Germany had just been through, "
@@ -23,7 +27,7 @@ public class Paperclip extends Card {
 					+ "could such an assurance to the world be best secured.\"\n"
 					+ "- Wernher von Braun, 1945", Launcher.url("people/vonbraun.png"))
 			.setColor(sp==0?Color.blue:Color.red);
-		builder.addField("German scientist advances " + (sp==0?"American":"Soviet") + " space program", Operations.getSpaceNames(spaceLevel, sp),false);
+		builder.addField("Rocketry breakthroughs", Operations.getSpaceNames(spaceLevel, sp),false);
 		if (GameData.aheadInSpace()==(sp+1)%2) {
 			builder.changeVP(-(sp*2-1)*Operations.spaceVP2[spaceLevel]);
 		}

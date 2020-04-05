@@ -8,7 +8,11 @@ import cards.Operations;
 import game.GameData;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Ortega Elected in Nicaragua Card.
+ * @author adalbert
+ *
+ */
 public class Ortega extends Card {
 	
 	public static ArrayList<Integer> doable;
@@ -17,10 +21,10 @@ public class Ortega extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Michael I Abdicates Throne of Romania")
-			.setDescription("People's Republic declared in Bucharest")
-			.setFooter("\"\"\n"
-					+ "- Daniel Ortega", Launcher.url("people/michael.png"))
+		builder.setTitle("Sandinistas Overthrow Nicaraguan Dictator")
+			.setDescription("Daniel Ortega elected President")
+			.setFooter("\"The Nicaraguan people have won, with their blood, the right to be here today, in this way breaking with a historic past of servility towards imperialist policy. For the first time in their entire history the Nicaraguan people can officially express their sovereign will, joining this movement of the nonaligned barely forty-one days after their triumph.\"\n"
+					+ "- Daniel Ortega, 1979", Launcher.url("people/ortega.png"))
 			.setColor(Color.red);
 		builder.changeInfluence(72, 0, -MapManager.get(72).influence[0]);
 		if (doable.isEmpty()) {

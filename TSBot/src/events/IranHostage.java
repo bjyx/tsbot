@@ -8,7 +8,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Iran Hostage Crisis Card.
+ * @author adalbert
+ *
+ */
 public class IranHostage extends Card {
 
 	@Override
@@ -17,8 +21,7 @@ public class IranHostage extends Card {
 		builder.setTitle("Hostages taken in wake of Iranian Revolution")
 			.setDescription("American embassy occupied; 52 lives at stake")
 			.setColor(Color.red)
-			.setFooter("\"Our aim was to object against the American government by going to their embassy and occupying it for several hours. "
-					+ "Announcing our objections from within the occupied compound would carry our message to the world in a much more firm and effective way.\"\n"
+			.setFooter("\"Announcing our objections from within the occupied compound would carry our message to the world in a much more firm and effective way.\"\n"
 					+ "- Ebrahim Asgharzadeh, 1962", Launcher.url("people/asgharzadeh.png"));
 		builder.changeInfluence(23, 0, -MapManager.get(23).influence[0]); //remove all American influence in Iran
 		builder.changeInfluence(23, 1, 2); //add 2 USSR Influence to Iran
