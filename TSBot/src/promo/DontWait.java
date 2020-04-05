@@ -6,7 +6,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Don't Wait for the Translation Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class DontWait extends Card {
 
 	@Override

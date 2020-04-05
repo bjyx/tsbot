@@ -7,7 +7,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Who Lost China Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class WhoLostChina extends Card {
 
 	@Override

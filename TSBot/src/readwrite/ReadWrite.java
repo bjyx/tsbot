@@ -7,7 +7,11 @@ import commands.StartCommand;
 import events.Chernobyl;
 import game.GameData;
 import map.MapManager;
-
+/**
+ * A class that handles the save states of the game.
+ * @author adalbert
+ *
+ */
 public class ReadWrite {
 	/*
 	 * There is something that needs to be said about the structure of the string used here.
@@ -22,7 +26,7 @@ public class ReadWrite {
 	 * Character 178 is the amount of influence in China.
 	 * 
 	 * Characters from 179-318 describe the state of each card: (including the placeholder)
-	 * - 0: does not exist in this game
+	 * - 0: does not exist in this game (i.e. replaced by placeholder)
 	 * - 1: exists. Not in play (e.g. Mid War cards before turn 4, ShuttleDip while active).
 	 * - 2: exists. In deck.
 	 * - 3: exists. In US Hand.
@@ -91,18 +95,34 @@ public class ReadWrite {
 	 * - Natlist China 2
 	 * - Nuclear Proliferation end decision 1
 	 */
+	/**
+	 * Events that have a temporary effect. 
+	 */
 	private static final int[][] a = {{9,25,35,41},{42,43,44,50},{51,60,73,86},{93,0,0,94},{106,109,115,126},{128,129,310,311},{400,401,490,491},{690,691,1001,1002},{1003,1004,1005,1006},{1210,1211,1270,1271},{1350,1351,0,0}};
-	
+	/**
+	 * A way to convert any number into a character for the board state notation in TwiStrug.
+	 * @param i is the number in question
+	 * @return a character.
+	 */
 	private static char urlParser(int i) {
 		if (i<10) return (char) ('0'+i);
 		else if (i<36) return (char) ('a'+i-10);
 		else return (char) ('A'+i-36);
 	}
+	/**
+	 * Undoes the operation performed by {@link readwrite.ReadWrite.urlParser}.
+	 * @param i is the number in question
+	 * @return a character.
+	 */
 	public static int undoParser(char c) {
 		if (c>='0'&&c<='9') return (c-'0');
 		else if (c>='a'&&c<='z') return (c-'a'+10);
 		else return (c-'A'+36);
 	}
+	/**
+	 * Creates a string for the exact save state of the game. 
+	 * @return
+	 */
 	public static String write() {
 		String url = "" + urlParser(StartCommand.ruleset/16)  	//0
 				+ urlParser(StartCommand.ruleset%16) 
@@ -141,7 +161,7 @@ public class ReadWrite {
 					else x += Chernobyl.reg - 3;
 				}
 				if (i==10 && j == 2) {
-					if (!CardList.getCard(35).isRemoved()) x+=2; //natlst china is not removed from the decc but formosa is
+					if (!CardList.getCard(35).isRemoved()) x+=2; //natlst china is not removed from the decc but formosa is, making this a good distinguisher
 				}
 				if (i==10 && j == 3) {
 					if (Operations.tsarbomba) x+=1;

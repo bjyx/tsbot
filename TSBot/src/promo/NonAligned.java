@@ -11,7 +11,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Non-Aligned Movement Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class NonAligned extends Card {
 	
 	public static int target;

@@ -7,7 +7,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Berlin Wall Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class BerlinWall extends Card {
 
 	@Override

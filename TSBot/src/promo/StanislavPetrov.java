@@ -6,7 +6,11 @@ import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Launcher;
-
+/**
+ * The Stanislav Petrov Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class StanislavPetrov extends Card {
 
 	public static int x;

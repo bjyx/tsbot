@@ -11,7 +11,11 @@ import events.Decision;
 import game.GameData;
 //import main.Launcher;
 import logging.Log;
-
+/**
+ * The Kremlin Flu Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class KremlinFlu extends Card {
 
 	@Override
