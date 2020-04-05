@@ -228,7 +228,7 @@ public class GameData {
 		if (victor==-1) {
 			txtchnl.sendMessage(new EmbedBuilder()
 					.setTitle("GAME OVER - DRAW!")
-					.setImage(Launcher.url("draw.png"))
+					.setImage(Launcher.url("victory/draw.png"))
 					.setColor(Color.gray)
 					.build()).complete();
 			Log.writeToLog("Draw Game");
@@ -239,7 +239,7 @@ public class GameData {
 				.setTitle("GAME OVER - The winner is " + MapManager.get(victor==0?84:85) + PlayerList.getArray().get(victor).getName() + "!")
 				.setDescription("Cause: " + getCause(cause))
 				.setColor(victor==0?Color.blue:Color.red)
-				.setImage(Launcher.url("victory_" + (victor==0?"us":"su") + cause + ".png"));
+				.setImage(Launcher.url("victory/" + (victor==0?"us":"su") + cause + ".png"));
 		txtchnl.sendMessage(builder.build()).complete();
 		Log.writeToLog("Game Won By " + (victor==0?"US":"SU"));
 	}
