@@ -8,7 +8,11 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Mobutu Card from the Promo Pack.
+ * @author adalbert
+ *
+ */
 public class MobutuSeseSeko extends Card {
 
 	@Override
@@ -17,8 +21,8 @@ public class MobutuSeseSeko extends Card {
 		builder.setTitle("Mobutu seizes power in Congo")
 			.setDescription("")
 			.setColor(Color.blue)
-			.setFooter("\"Nothing counted for them but power...and what the exercise of power could bring them.\"\n"
-					+ "- Jimmy Carter, 1978", Launcher.url("promo/mobutu.png"));
+			.setFooter("\"We are seeking our own authenticity, and we will find it because we wish, in the innermost fibers of our being to discover it.\"\n"
+					+ "- Mobutu Sésé Seko, n.d.", Launcher.url("promo/mobutu.png"));
 		builder.changeInfluence(62, 0, 2); //add 2 USA influence in Zaire
 		builder.addField("Manifesto of N'Sele","Zaire's stability is now 3.",false);
 		Log.writeToLog("Mobutu Active.");
