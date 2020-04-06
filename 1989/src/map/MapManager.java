@@ -2,8 +2,7 @@ package map;
 
 import java.util.ArrayList;
 
-import game.GameData;
-import readwrite.ReadWrite;
+//import readwrite.ReadWrite;
 /**
  * Handles the map for the game.
  * @author adalbert
@@ -957,7 +956,7 @@ BGW	74
 	 * @param s describes the board state.
 	 * @return true.
 	 */
-	public static boolean customSetup(String s) {
+	/*public static boolean customSetup(String s) {
 		for (int i=0; i<75; i++) {
 			int us = ReadWrite.undoParser(s.charAt(2*i));
 			int su = ReadWrite.undoParser(s.charAt(2*i+1));
@@ -965,5 +964,5 @@ BGW	74
 			MapManager.get(i).support[1]=su;
 		}
 		return true;
-	}
+	}*/
 }

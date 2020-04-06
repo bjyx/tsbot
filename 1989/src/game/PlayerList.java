@@ -100,8 +100,6 @@ public class PlayerList {
 	 * @return an integer. 
 	 */
 	public static int getPhasing() {
-		if (GameData.getAR()==1) return HandManager.precedence; //(I can't deal with this yet)
-		if (GameData.getAR()==2) return (HandManager.precedence+1)%2; //(I can't deal with this yet)
 		return GameData.getAR()%2; //ar1 is USSR, ar2 is US, and so forth until ar12/14/16
 	}
 	/**

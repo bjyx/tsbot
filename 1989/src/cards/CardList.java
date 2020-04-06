@@ -3,7 +3,7 @@ package cards;
 import java.util.ArrayList;
 
 import events.*;
-import game.GameData;
+//import game.GameData;
 /**
  * Implements a list of the cards used in the game.
  * @author adalbert

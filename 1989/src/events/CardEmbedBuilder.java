@@ -27,7 +27,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	
 	@Override
 	public MessageEmbed build() {
-		this.setAuthor("Turn " + GameData.getTurn() + " " + (GameData.isHeadlinePhase()?"Headline":("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR"))), InfoCommand.url());
+		this.setAuthor("Turn " + GameData.getTurn() + " " + ("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR")), InfoCommand.url());
 		return super.build();
 	}
 	
@@ -71,21 +71,9 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	 * @param amt is the amount DEFCON changes by.
 	 * @return the builder with the new field, for chaining.
 	 */
-	public CardEmbedBuilder changeDEFCON(int amt) {
-		if (amt==0) return this;
-		GameData.setDEFCON(GameData.getDEFCON()+amt);
-		return (CardEmbedBuilder) this.addField(":radioactive:" + intToEmoji(amt),"Now at " + GameData.getDEFCON(),false);
-	}
-	/**
-	 * Adds a field to denote a change in military operations. Also changes said Military Operations.
-	 * @param sp is the superpower this change applies to.
-	 * @param mil is the amount to change by.
-	 * @return the builder with the new field, for chaining.
-	 */
-	public CardEmbedBuilder addMilOps(int sp, int mil) {
-		if (mil==0) return this;
-		GameData.addMilOps(sp, mil);
-		return (CardEmbedBuilder) this.addField(StartCommand.emojiID[12]+ (sp==0?StartCommand.emojiID[9]:StartCommand.emojiID[10])+intToEmoji(mil),"Now at " + GameData.getMilOps(sp),false);
+	public CardEmbedBuilder changeStab() {
+		GameData.setStab();
+		return (CardEmbedBuilder) this.addField(":flag_lt: - 1","Now at " + GameData.getStab(),false);
 	}
 	/**
 	 * Applies {@link events.changeInfluence} to every country in a list.

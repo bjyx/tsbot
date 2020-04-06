@@ -264,7 +264,7 @@ public class GameData {
 			//TODO later
 		}
 		turn++; // stage 6
-		ar = 0; 
+		ar = 1; 
 		hasT2[0] = false; 
 		hasT2[1] = false;
 		//effect reminders

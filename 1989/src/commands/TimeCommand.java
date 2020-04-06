@@ -94,27 +94,21 @@ public class TimeCommand extends Command {
 		HandManager.activecard = 0;
 		//Operations.allowedUSA = Operations.influencePossible(0);
 		//Operations.allowedSUN = Operations.influencePossible(1);
-		if (GameData.isHeadlinePhase()) {
-			if (GameData.hasAbility(0, 6)) {
+		if (GameData.getAR()==1) {
+			GameData.startTurn();
+			if (GameData.hasAbility(0, 5)) {
 				isCardDiscarded = false;
 				//GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
 				GameData.dec = new Decision(0, 0);
 				return;
 			}
-			if (GameData.hasAbility(1, 6)) {
+			if (GameData.hasAbility(1, 5)) {
 				isCardDiscarded = false;
 				//GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
 				GameData.dec = new Decision(1, 0);
 				return;
 			}
-			GameData.startTurn();
 			cardPlayed = false;
-			if (!(GameData.getT2(0)>=4&&GameData.getT2(1)<4)) {
-				//GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a headline card.").complete();
-			}
-			if (!(GameData.getT2(1)>=4&&GameData.getT2(0)<4)) {
-				//GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a headline card.").complete();
-			}
 		}/*
 		else if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
 			boolean canDiscard = false;

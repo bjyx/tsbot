@@ -10,7 +10,6 @@ import commands.InfoCommand;
 import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
-import events.Chernobyl;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
@@ -18,7 +17,6 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import readwrite.ReadWrite;
-import turnzero.NationalistChina;
 /**
  * Manages everything related to the cards used in the game - which cards are in the Deck, which are Discarded, which are in the players' hands, and which have ongoing effects.
  * @author adalbert
@@ -244,23 +242,7 @@ public class HandManager {
 			TimeCommand.eventRequired = true;
 		}
 		if (mode=='o') {
-			if (card==6) {
-				China = (China+1)%2+2;
-				if (GameData.phasing()==0&&removeEffect(35)) {
-					Log.writeToLog("Formosan Resolution Cancelled.");
-					GameData.txtchnl.sendMessage(new CardEmbedBuilder()
-							.setTitle("Defense Treaty Abrogated")
-							.setDescription("Taiwan will no longer be a battleground country in any situation.")
-							.setColor(Color.DARK_GRAY)
-							.setFooter("\"Everyone, listen; just let me say one thing. I opposed China, I was wrong.\"\n"
-							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
-							.build()).complete();
-				}
-				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as ops.");
-				playmode = 'o'; //ops only — bug fix
-			}
-			
-			else if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
+			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
 				removeFromHand(sp,card);
 				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " for ops first.");
 				playmode = 'l'; //event last
@@ -271,19 +253,16 @@ public class HandManager {
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
-			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, false, 2);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.operationsRequired = true;
 		}
 		if (mode=='s') {
-			if (card==6) {
-				China = (China+1)%2+2;
-			}
 			Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " to space.");
 			discard(sp, card);
 			playmode = 's';
 			activecard = card;
-			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, false, true, false);
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, true, 2);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;
 		}
@@ -305,11 +284,11 @@ public class HandManager {
 	}
 	public static boolean removeFromHand(int sp, int card) {
 		if (sp==0&&DemHand.contains(card)) {
-			USAHand.remove((Integer) card);
+			DemHand.remove((Integer) card);
 			return true;
 		}
-		else if (sp==1&&SUNHand.contains(card)) {
-			SUNHand.remove((Integer) card);
+		else if (sp==1&&ComHand.contains(card)) {
+			ComHand.remove((Integer) card);
 			return true;
 		}
 		else return false;
@@ -407,7 +386,7 @@ public class HandManager {
 				break;
 			}
 		}
-		for (int c : USAHand) {
+		for (int c : DemHand) {
 			if (CardList.getCard(c).getOps()==0) {
 				i+= 1;
 				break;
@@ -425,7 +404,7 @@ public class HandManager {
 		if (sp==1) for (int c : ComHand) {
 			if (CardList.getCard(c).getOps()==0) i++;
 		}
-		else for (int c : USAHand) {
+		else for (int c : DemHand) {
 			if (CardList.getCard(c).getOps()==0) i++;
 		}
 		return i;
