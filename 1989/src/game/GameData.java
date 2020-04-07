@@ -78,6 +78,10 @@ public class GameData {
 	 */
 	private static int ussr = 5;
 	/**
+	 * The VP granted on each decrement of the ussr's stability.
+	 */
+	private static final int[] ussrVP = {0, -1, 5, 3, 1};
+	/**
 	 * The military ops attained by each side - an integer from 0 to 5 inclusive.
 	 */
 	//private static int[] milops = {0,0};
@@ -224,11 +228,11 @@ public class GameData {
 	 * Resets everything in {@link #GameData()} to its initial state.
 	 */
 	public static void reset() {
-		txtchnl.sendMessage(":hourglass: Charting course for 1949.").complete();
+		txtchnl.sendMessage(":hourglass: Back to January!").complete();
 		started = false;
 		ended = false;
 		turn = 0;
-		ar = 0;
+		ar = 1;
 		ussr = 5;
 		tsquare[0] = 0;
 		tsquare[1] = 0;
@@ -267,8 +271,8 @@ public class GameData {
 		ar = 1; 
 		hasT2[0] = false; 
 		hasT2[1] = false;
-		//effect reminders
-		if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
+		//TODO effect reminders
+		/*if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
 		if (HandManager.removeEffect(25)) builder.addField("Ineffective Policy", "New administration calls for rollback. US loses +1 Operations bonus.", false);	//Containment
 		if (HandManager.removeEffect(41)) builder.addField("Soviets Develop Nuclear Submarines","US coups in battleground countries will now lower DEFCON.",false);	//Nuclear Subs
 		if (HandManager.removeEffect(43)) builder.addField("SALT Treaty Expires","Coup rolls are no longer penalized.",false);	//SALT
@@ -287,7 +291,7 @@ public class GameData {
 		if (HandManager.removeEffect(691)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the USSR.",false);
 		if (HandManager.removeEffect(860)); // just stop the eighth action round effect
 		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "**Thermonuclear war is now very much a possibility.**\nUS coups are now restricted by DEFCON.", false);
-		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);
+		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);*/
 		if (turn==4) {
 			Log.writeToLog("MW Cards Added.");
 			HandManager.addToDeck(1); //Rule 4.4
@@ -381,11 +385,12 @@ public class GameData {
 		return (phasing()+1)%2;
 	}
 	/**
-	 * Decrement {@link #ussr}.
+	 * Decrement {@link #ussr}, and changes the VP accordingly. The Baltic Chain is a linear progression, so this is possible.
 	 */
 	public static void setStab() {
 		ussr--;
 		Log.writeToLog("USSR -1 Stability");
+		changeScore(ussrVP[ussr]);
 	}
 	/**
 	 * 
@@ -467,7 +472,7 @@ public class GameData {
 	 * @param sp is 0 if US, 1 if USSR.
 	 * @return true iff the superpower in question has used all opportunities for spacing. 
 	 */
-	public static boolean hasSpace(int sp) {
+	public static boolean hasT2(int sp) {
 		return hasT2[sp];
 	}
 	/**

@@ -389,6 +389,7 @@ BGW	74
 				new int[] {0,0}, 
 				"plw"
 				));
+		//Czechoslovakia - 26
 		map.add(new Country(
 				"Bratislava", 
 				2, 
@@ -510,6 +511,7 @@ BGW	74
 				new int[] {2,0}, 
 				"csw"
 				));
+		//Hungary - 37
 		map.add(new Country(
 				"Budapest", 
 				3, 

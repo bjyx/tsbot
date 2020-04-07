@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 import cards.CardList;
-import commands.InfoCommand;
 import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
@@ -168,7 +167,7 @@ public class HandManager {
 	 */
 	public static void addToDeck(int era) {
 		for (Card c : CardList.cardList) {
-			if (c.getEra()==era&&!c.getId().equals("006")) Deck.add(CardList.cardList.indexOf(c)); //If the card isn't China and is part of the era listed, add that card
+			if (c.getEra()==era) Deck.add(CardList.cardList.indexOf(c)); //If the card is part of the era listed, add that card
 		}
 	}
 	/**
@@ -226,15 +225,15 @@ public class HandManager {
 		
 		//super complicated area, will nitgrit later
 		
-		GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR"))), InfoCommand.url()).build()).complete();
+		GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
 		if (mode=='e') {
 			removeFromHand(sp,card);
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
-				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " for the event first.");
+				Log.writeToLog((sp==0?"Dem":"Com")+"plays " + CardList.getCard(card).getName() + " for the event first.");
 				playmode = 'f';
 			}
 			else {
-				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as event.");
+				Log.writeToLog((sp==0?"Dem":"Com")+"plays " + CardList.getCard(card).getName() + " as event.");
 				playmode = 'e';
 			}
 			activecard = card;
@@ -244,12 +243,12 @@ public class HandManager {
 		if (mode=='o') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
 				removeFromHand(sp,card);
-				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " for ops first.");
+				Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " for ops first.");
 				playmode = 'l'; //event last
 			}
 			else {
 				discard(sp, card);
-				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as ops.");
+				Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " as ops.");
 				playmode = 'o'; //ops only
 			}
 			activecard = card;
@@ -257,12 +256,12 @@ public class HandManager {
 			TimeCommand.cardPlayed = true;
 			TimeCommand.operationsRequired = true;
 		}
-		if (mode=='s') {
-			Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " to space.");
+		if (mode=='t') {
+			Log.writeToLog((sp==0?"Dem":"Com")+" T-squares " + CardList.getCard(card).getName() + ".");
 			discard(sp, card);
-			playmode = 's';
+			playmode = 't';
 			activecard = card;
-			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, true, 2);
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, true, 0);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;
 		}

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import cards.HandManager;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -100,7 +99,7 @@ public class PlayerList {
 	 * @return an integer. 
 	 */
 	public static int getPhasing() {
-		return GameData.getAR()%2; //ar1 is USSR, ar2 is US, and so forth until ar12/14/16
+		return GameData.getAR()%2; //ar1 is USSR, ar2 is US, and so forth until ar14
 	}
 	/**
 	 * Provides the opposing player for a given action round. 

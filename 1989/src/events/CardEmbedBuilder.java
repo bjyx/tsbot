@@ -52,7 +52,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder changeVP(int amt) {
 		if (amt==0) return this;
 		GameData.changeScore(amt);
-		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:"+StartCommand.emojiID[amt>0?9:10] + intToEmoji(amt),"Now at " + GameData.getScore(),false);
+		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:"+StartCommand.emojiID[amt>0?3:2] + intToEmoji(amt),"Now at " + GameData.getScore(),false);
 	}
 	/**
 	 * Adds a field to denote a change in the influence values of a nation. Also changes said value.
@@ -64,7 +64,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder changeInfluence(int country, int sp, int amt) {
 		if (amt==0) return this;
 		MapManager.get(country).changeInfluence(sp, amt);
-		return (CardEmbedBuilder) this.addField(MapManager.get(country) + ((sp==0?StartCommand.emojiID[amt>0?9:6]:StartCommand.emojiID[amt>0?10:7]))+intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).influence[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).influence[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
+		return (CardEmbedBuilder) this.addField(MapManager.get(country) + ((sp==0?StartCommand.emojiID[amt>0?3:1]:StartCommand.emojiID[amt>0?2:0]))+intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).support[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).support[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
 	}
 	/**
 	 * Adds a field to denote a change in DEFCON. Also changes said DEFCON.
@@ -73,7 +73,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	 */
 	public CardEmbedBuilder changeStab() {
 		GameData.setStab();
-		return (CardEmbedBuilder) this.addField(":flag_lt: - 1","Now at " + GameData.getStab(),false);
+		return (CardEmbedBuilder) this.addField("<:flag_su:648119356387098644>:scales: - 1","Now at " + GameData.getStab(),false);
 	}
 	/**
 	 * Applies {@link events.changeInfluence} to every country in a list.
