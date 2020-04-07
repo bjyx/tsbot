@@ -6,11 +6,9 @@ import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
-import cards.Operations;
 import game.GameData;
 import game.PlayerList;
 import logging.Log;
-import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
@@ -21,7 +19,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import net.dv8tion.jda.core.requests.Route;
 import net.dv8tion.jda.core.requests.restaction.ChannelAction;
-import net.dv8tion.jda.core.requests.restaction.RoleAction;
 /**
  * The command that starts the game.
  * @author adalbert
@@ -70,25 +67,10 @@ public class StartCommand extends Command {
 			return;
 		}*/
 		GameData.txtchnl = e.getTextChannel();
-		// if the roles TSUSA and TSSSR don't exist, create them.
-		if (e.getGuild().getRolesByName("TSUSA", true).isEmpty()) {
-			GameData.roledem = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
-					.setName("TSUSA").setColor(Color.BLUE).setMentionable(true).complete();
-		}
-		else {
-			GameData.roledem = e.getGuild().getRolesByName("TSUSA", true).get(0);
-		}
-		if (e.getGuild().getRolesByName("TSSSR", true).isEmpty()) {
-			GameData.rolecom = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
-					.setName("TSSSR").setColor(Color.RED).setMentionable(true).complete();
-		}
-		else {
-			GameData.rolecom = e.getGuild().getRolesByName("TSSSR", true).get(0);
-		}
 		// create two channels, one for the US and one for the USSR, accessible only by the respective role
 		
-		if (e.getGuild().getTextChannelsByName("89-dem", true).isEmpty()) {
-			GameData.txtdem = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"ts-usa", e.getGuild(), ChannelType.TEXT)
+		if (e.getGuild().getTextChannelsByName("df-dem", true).isEmpty()) {
+			GameData.txtdem = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"df-dem", e.getGuild(), ChannelType.TEXT)
 					.setTopic("O thus be it ever, when freemen shall stand\n" + 
 							"Between their loved homes and the war's desolation.\n" + 
 							"Blest with vict'ry and peace, may the Heav'n rescued land\n" + 
@@ -98,15 +80,15 @@ public class StartCommand extends Command {
 					.complete();
 		}
 		else {
-			GameData.txtdem = e.getGuild().getTextChannelsByName("ts-usa", true).get(0);
+			GameData.txtdem = e.getGuild().getTextChannelsByName("df-dem", true).get(0);
 			for (PermissionOverride po : GameData.txtdem.getPermissionOverrides()) {
 				po.delete().complete();
 			}
 			GameData.txtdem.putPermissionOverride(e.getGuild().getPublicRole()).setPermissions(0, 2146958847).queue();
 			GameData.txtdem.putPermissionOverride(GameData.roledem).setPermissions(68672, 0).queue();
 		}
-		if (e.getGuild().getTextChannelsByName("89-com", true).isEmpty()) {
-			GameData.txtcom = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"ts-ussr", e.getGuild(), ChannelType.TEXT)
+		if (e.getGuild().getTextChannelsByName("df-com", true).isEmpty()) {
+			GameData.txtcom = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"df-com", e.getGuild(), ChannelType.TEXT)
 					.setTopic("В победе бессмертных идей коммунизма\n" + 
 							"Мы видим грядущее нашей страны,\n" + 
 							"И Красному знамени славной Отчизны\n" + 
@@ -115,7 +97,7 @@ public class StartCommand extends Command {
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847).complete();
 		}
 		else {
-			GameData.txtcom = e.getGuild().getTextChannelsByName("ts-ussr", true).get(0);
+			GameData.txtcom = e.getGuild().getTextChannelsByName("df-com", true).get(0);
 			for (PermissionOverride po : GameData.txtcom.getPermissionOverrides()) {
 				po.delete().complete();
 			}
@@ -149,7 +131,7 @@ public class StartCommand extends Command {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "Commence the Cold War.";
+		return "Start 1989.";
 	}
 
 	@Override
@@ -161,21 +143,7 @@ public class StartCommand extends Command {
 	@Override
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.start **[settings]** **[handicap]** - How it all begins.\n"
-				+ "Settings will be a number between 0 and 143 inclusive.\n"
-				+ "If the number in binary has a digit in the following position:\n"
-				+ "`10000000` Late War Scenario\n"
-				+ "`01000000` Year-In Year-Out Expansion and recommended rules enabled\n"
-				+ "`00100000` Chinese Civil War enabled\n"
-				+ "`00010000` Turn Zero enabled\n"
-				+ "`00001000` Optional Space Race enabled\n"
-				+ "`00000100` Promo card pack 1 enabled\n"
-				+ "`00000010` Promo card pack 2 enabled\n"
-				+ "`00000001` Optional cards enabled\n"
-				+ "If no number is given, it will be by default 1 (+optional cards).\n"
-				+ "Be aware that some rules are incompatible with each other—in particular, the Late War cannot be used with Turn Zero, Chinese Civil War, or the YIYO pack.\n\n"
-				+ "Handicap can be any integer (don't make it too big), and indicates the side (negative for USSR, positive for USA) to which a handicap of `|handicap|` influence will be given. This handicap may be placed anywhere where the player already has influence.\n"
-				+ "If no number is given, it will be by default 2 (US+2).");
+		return Arrays.asList("TS.start - How it all begins.\n");
 	}
 
 }

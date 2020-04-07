@@ -21,7 +21,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import net.dv8tion.jda.core.requests.Route;
 import net.dv8tion.jda.core.requests.restaction.ChannelAction;
-import net.dv8tion.jda.core.requests.restaction.RoleAction;
 import turnzero.TurnZero;
 /**
  * The command that starts the game.
@@ -92,21 +91,6 @@ public class StartCommand extends Command {
 			return;
 		}
 		GameData.txtchnl = e.getTextChannel();
-		// if the roles TSUSA and TSSSR don't exist, create them.
-		if (e.getGuild().getRolesByName("TSUSA", true).isEmpty()) {
-			GameData.roleusa = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
-					.setName("TSUSA").setColor(Color.BLUE).setMentionable(true).complete();
-		}
-		else {
-			GameData.roleusa = e.getGuild().getRolesByName("TSUSA", true).get(0);
-		}
-		if (e.getGuild().getRolesByName("TSSSR", true).isEmpty()) {
-			GameData.rolessr = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
-					.setName("TSSSR").setColor(Color.RED).setMentionable(true).complete();
-		}
-		else {
-			GameData.rolessr = e.getGuild().getRolesByName("TSSSR", true).get(0);
-		}
 		// create two channels, one for the US and one for the USSR, accessible only by the respective role
 		
 		if (e.getGuild().getTextChannelsByName("ts-usa", true).isEmpty()) {
@@ -278,7 +262,7 @@ public class StartCommand extends Command {
 				+ "Settings will be a number between 0 and 143 inclusive.\n"
 				+ "If the number in binary has a digit in the following position:\n"
 				+ "`10000000` Late War Scenario\n"
-				+ "`01000000` Year-In Year-Out Expansion and recommended rules enabled\n"
+				+ "`01000000` Year-In Year-Out Expansion and recommended rules enabled (because hey, I liked that expansion).\n"
 				+ "`00100000` Chinese Civil War enabled\n"
 				+ "`00010000` Turn Zero enabled\n"
 				+ "`00001000` Optional Space Race enabled\n"

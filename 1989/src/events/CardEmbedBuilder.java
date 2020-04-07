@@ -2,7 +2,6 @@ package events;
 
 import java.util.ArrayList;
 
-import commands.InfoCommand;
 import commands.StartCommand;
 import game.GameData;
 import map.MapManager;
@@ -27,7 +26,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	
 	@Override
 	public MessageEmbed build() {
-		this.setAuthor("Turn " + GameData.getTurn() + " " + ("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR")), InfoCommand.url());
+		this.setAuthor("Turn " + GameData.getTurn() + " " + ("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR")), "");
 		return super.build();
 	}
 	

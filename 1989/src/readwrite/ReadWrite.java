@@ -2,9 +2,6 @@ package readwrite;
 
 import cards.CardList;
 import cards.HandManager;
-import cards.Operations;
-import commands.StartCommand;
-import events.Chernobyl;
 import game.GameData;
 import map.MapManager;
 /**
@@ -98,7 +95,8 @@ public class ReadWrite {
 	/**
 	 * Events that have a temporary effect. 
 	 */
-	private static final int[][] a = {{9,25,35,41},{42,43,44,50},{51,60,73,86},{93,0,0,94},{106,109,115,126},{128,129,310,311},{400,401,490,491},{690,691,1001,1002},{1003,1004,1005,1006},{1210,1211,1270,1271},{1350,1351,0,0}};
+	//private static final int[][] a = {{9,25,35,41},{42,43,44,50},{51,60,73,86},{93,0,0,94},{106,109,115,126},{128,129,310,311},{400,401,490,491},{690,691,1001,1002},{1003,1004,1005,1006},{1210,1211,1270,1271},{1350,1351,0,0}};
+	//TODO redo the above
 	/**
 	 * A way to convert any number into a character for the board state notation in TwiStrug.
 	 * @param i is the number in question
@@ -124,34 +122,29 @@ public class ReadWrite {
 	 * @return
 	 */
 	public static String write() {
-		String url = "" + urlParser(StartCommand.ruleset/16)  	//0
-				+ urlParser(StartCommand.ruleset%16) 
-				+ urlParser(GameData.getScore()+20)
-				+ urlParser(GameData.getDEFCON())
+		String url = "" 
+				+ urlParser(GameData.getScore()+20)			//0
+				+ urlParser(GameData.getStab())
 				+ urlParser(GameData.getTurn())
-				+ urlParser(GameData.getAR())					//5
-				+ urlParser(GameData.getMilOps(0))
-				+ urlParser(GameData.getMilOps(1))
-				+ urlParser(GameData.getSpace(0))
-				+ urlParser(GameData.getSpace(1));
-		for (int i=0; i<84; i++) {
-			url += urlParser(MapManager.get(i).influence[0]);	//10, ... 
-			url += urlParser(MapManager.get(i).influence[1]);
-		}
-		url += urlParser(MapManager.get(86).influence[1]);
-		for (int i=0; i<=138; i++) {							//179 is 0
+				+ urlParser(GameData.getAR())					
+				+ urlParser(GameData.getT2(0))
+				+ urlParser(GameData.getT2(1));				//5
+		for (int i=0; i<75; i++) {
+			url += urlParser(MapManager.get(i).support[0]);	 
+			url += urlParser(MapManager.get(i).support[1]); 
+		}													//80
+		for (int i=0; i<=110; i++) {
 			if (CardList.getCard(i).getId().equals("000")) url += "0"; //placeholder
 			else {
-				if (i==6) url += (HandManager.China + 3);
-				else if (HandManager.Deck.contains(i)) url += "2";
-				else if (HandManager.USAHand.contains(i)) url += "3";
-				else if (HandManager.SUNHand.contains(i)) url += "4";
+				if (HandManager.Deck.contains(i)) url += "2";
+				else if (HandManager.DemHand.contains(i)) url += "3";
+				else if (HandManager.ComHand.contains(i)) url += "4";
 				else if (HandManager.Discard.contains(i)) url += "5";
 				else if (HandManager.Removed.contains(i)) url += "6";
 				else url += "1";
 			}
-		}
-		for (int i=0; i<11; i++) {
+		}													//190
+		/*for (int i=0; i<11; i++) { //TODO
 			int x=0;
 			for (int j=0; j<4; j++) {
 				if (HandManager.effectActive(a[i][j])) x += (int) Math.pow(2, 3-j);
@@ -168,7 +161,7 @@ public class ReadWrite {
 				}
 			}
 			url += urlParser(x);
-		}
+		}*/
 		return url;
 	}
 }
