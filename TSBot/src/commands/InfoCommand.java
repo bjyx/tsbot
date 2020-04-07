@@ -81,7 +81,7 @@ public class InfoCommand extends Command {
 						+(GameData.hasAbility(0, 4, true)?(Operations.discount>2?":new_moon:":":full_moon:"):"")
 						+(GameData.hasAbility(0, 6, true)?(Operations.coupReroll>2?":boom:":":rocket:"):"")
 						+(GameData.hasAbility(0, 7, true)?":satellite_orbital:":"")+"\n"
-						+(GameData.hasSpace(0)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+
+						+(GameData.hasSpace(1)?StartCommand.emojiID[10]:StartCommand.emojiID[7]) + CardEmbedBuilder.intToEmoji(GameData.getSpace(1))+
 							(GameData.hasAbility(1, 2)?":dog2:":"")+
 							(GameData.hasAbility(1, 4)?":rocket:":"")+
 							(GameData.hasAbility(1, 6)?":full_moon:":"")+
