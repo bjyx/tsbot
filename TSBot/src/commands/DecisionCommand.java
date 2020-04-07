@@ -1110,7 +1110,7 @@ public class DecisionCommand extends Command {
 		}
 		if (GameData.dec.card==104) {
 			int i = MapManager.find(args[1]);
-			if (i!=-1 && CambridgeFive.regions[MapManager.get(i).region]) {
+			if (i!=-1 && (CambridgeFive.regions[MapManager.get(i).region]||(CambridgeFive.regions[4]&&i==86&&MapManager.get(i).influence[1]<3))) { //special case for CCW
 				CardEmbedBuilder builder = new CardEmbedBuilder();
 				builder.setTitle("Intelligence Secrets Leaked")
 				.setDescription("Planned operations in " + MapManager.get(i).name + " busted early")
@@ -1124,7 +1124,7 @@ public class DecisionCommand extends Command {
 				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 			else {
-				sendMessage(e, ":x: Philby would like to inform you that you aren't reacting to anything related to this intelligence.");
+				sendMessage(e, ":x: Philby would like to inform you that you aren't acting on his intel.");
 				return;
 			}
 		}

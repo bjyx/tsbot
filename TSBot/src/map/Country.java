@@ -96,7 +96,7 @@ public class Country {
 	public boolean inRegion(int r) {
 		if ((r==0)&&this.region<=2) return true; //Europe includes 0, 1, 2
 		if (r<=2 && this.region==0) return true; //Western/Eastern Europe includes their own and 0
-		if (r==4&&this.region==5) return true; //Asia includes SE Asia
+		if (r==4&&this.region==5) return true; //Asia includes SE Asia (and China, but the only place where that's important is Cambridge 5 and that has its own contingency; besides, I do NOT want to deal with the problems this would cause with Ussuri/NatChi
 		return r==this.region; //Every region includes itself
 	}
 	/**

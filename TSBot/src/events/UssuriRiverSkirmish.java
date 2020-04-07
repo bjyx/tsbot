@@ -84,7 +84,7 @@ public class UssuriRiverSkirmish extends Card {
 				order.add(c);
 				if (c==-1) return false;
 				if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
-				if (MapManager.get(c).region!=4||MapManager.get(c).region!=5) return false;
+				if (!MapManager.get(c).inRegion(4)) return false;
 				try{
 					values.add(Integer.parseInt(args[i+1]));
 				}
