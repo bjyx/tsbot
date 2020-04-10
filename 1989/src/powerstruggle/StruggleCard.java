@@ -34,6 +34,33 @@ public class StruggleCard {
 		rank = r;
 	}
 	
+	public String toString() {
+		switch(type) {
+			case 0:
+				if (suit==0) return "**Rally in the Square** 1 [r1]";
+				if (suit==1) return "Strike " + rank + " [s" + rank + "]";
+				if (suit==2) return "March " + rank + " [m" + rank + "]";
+				if (suit==3) return "__Petition__ " + rank + " [p" + rank + "]";
+				break;
+			case 1:
+				if (suit==0) return "Worker Leader 3 [l0]";
+				if (suit==2) return "Elite Leader 3 [l2]";
+				if (suit==4) return "Intellectual Leader 3 [l4]";
+				if (suit==5) return "Student Leader 3 [l5]";
+				if (suit==6) return "Church Leader 3 [l6]";
+				break;
+			case 2:
+				if (suit==0) return "Support Falters W (-2 opponent cards) [w0]";
+				if (suit==1) return "Support Surges W (+2 cards) [w1]";
+				if (suit==2) return "Scare Tactics W (-1 opponent SP) [w2]";
+				if (suit==3) return "Tactic Fails W (disable suit) [w3]";
+				break;
+			default:
+				break;
+		}
+		return null;
+	}
+	
 	/**
 	 * Equals.
 	 * @param e is another card.
