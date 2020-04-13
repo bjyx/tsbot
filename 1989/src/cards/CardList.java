@@ -25,7 +25,7 @@ public class CardList {
 		cardList = new ArrayList<Card>();
 		CardList.addCard(new Placeholder()); //just to occupy the 0 slot so I don't get peeved enough to use a map
 		//TODO
-		CardList.addCard(new LegacyOfMartialLaw());
+		/*CardList.addCard(new LegacyOfMartialLaw());
 		CardList.addCard(new Solidarity());
 		CardList.addCard(new Walesa());
 		CardList.addCard(new Michnik());
@@ -35,7 +35,7 @@ public class CardList {
 		CardList.addCard(new Prudence());
 		CardList.addCard(new TheWall());
 		CardList.addCard(new CultOfPersonality());
-		
+		/*
 		CardList.addCard(new DissidentArrested());
 		CardList.addCard(new Apparatchiks());
 		CardList.addCard(new Stasi());
@@ -46,7 +46,7 @@ public class CardList {
 		CardList.addCard(new Poszgay());
 		CardList.addCard(new PapalVisit());
 		CardList.addCard(new DeutscheMarks());
-		
+		/*
 		CardList.addCard(new CommonEuropeanHome());
 		CardList.addCard(new ScoringPoland());
 		CardList.addCard(new ScoringHungary());
@@ -83,7 +83,7 @@ public class CardList {
 		CardList.addCard(new AnniversaryCelebration());
 		CardList.addCard(new Normalisation());
 		CardList.addCard(new LiPeng());
-		CardList.addCard(new TheCrowdTurnsAgainstCeausescu());
+		CardList.addCard(new CrowdTurnsAgainstCeausescu()); //see 7.6
 		CardList.addCard(new ScoringCzechoslovakia());
 		CardList.addCard(new ForeignTelevision());
 		CardList.addCard(new CentralCommitteeReshuffle());
@@ -131,7 +131,7 @@ public class CardList {
 		CardList.addCard(new UnionOfDemocraticForces());
 		CardList.addCard(new ScoringRomania());
 		CardList.addCard(new ChineseSolution());
-		CardList.addCard(new TyrantIsGone());
+		CardList.addCard(new TyrantIsGone()); //see 7.6
 		CardList.addCard(new PolitburoIntrigue());
 		CardList.addCard(new Ligachev());
 		CardList.addCard(new StandFast());
@@ -145,7 +145,7 @@ public class CardList {
 		CardList.addCard(new Timisoara());
 		CardList.addCard(new ArmyBacksRevolution());
 		CardList.addCard(new KremlinCoup());
-		CardList.addCard(new MaltaSummit());
+		CardList.addCard(new MaltaSummit());*/
 	}
 	/**
 	 * Adds the Card to the list.
