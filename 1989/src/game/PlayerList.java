@@ -108,4 +108,10 @@ public class PlayerList {
 	public static int getOpposing() {
 		return (getPhasing()+1)%2;
 	}
+	/**
+	 * Gives the player number of this person.
+	 */
+	public static int getQueried(User u) {
+		return getArray().indexOf(u);
+	}
 }

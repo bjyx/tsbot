@@ -501,7 +501,7 @@ BGW	74
 				"csu"
 				));
 		map.add(new Country(
-				"Bratislava", 
+				"Czech Writers", 
 				2, 
 				4, //writer
 				true, 

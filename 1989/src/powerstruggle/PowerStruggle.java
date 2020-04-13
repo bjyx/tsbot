@@ -3,6 +3,8 @@ package powerstruggle;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import cards.HandManager;
+import commands.StruggleCommand;
 import events.CardEmbedBuilder;
 import game.Die;
 import game.GameData;
@@ -20,35 +22,35 @@ public class PowerStruggle {
 	/**
 	 * Roll for initiative! No, it's not a roll, but the person with initiative plays first.
 	 */
-	public static int initiative = -1;
+	public int initiative = -1;
 	/**
 	 * How many times have the stakes been raised?
 	 */
-	public static int stakes = 0;
+	public int stakes = 0;
 	/**
 	 * Which country this takes place in.
 	 */
-	public static int region;
+	public int region;
 	/**
 	 * The failed tactic that may not be played for the rest of this power struggle. There is only one Tactic Fails card.
 	 */
-	public static int failed = -1;
+	public int failed = -1;
 	/**
 	 * The current tactic.
 	 */
-	public static int tactic = -1;
+	public int tactic = -1;
 	/**
 	 * The deck of Power Struggle Cards.
 	 */
-	public static ArrayList<StruggleCard> deck;
+	public ArrayList<StruggleCard> deck;
 	/**
 	 * The Democrat's hand.
 	 */
-	public static ArrayList<StruggleCard> DemHand;
+	public ArrayList<StruggleCard> DemHand;
 	/**
 	 * The Communist's hand.
 	 */
-	public static ArrayList<StruggleCard> ComHand;
+	public ArrayList<StruggleCard> ComHand;
 	/**
 	 * The last message sent to the Dem containing the Dem's hand of struggle cards.
 	 */
@@ -60,7 +62,7 @@ public class PowerStruggle {
 	/**
 	 * The rank of the attacker's card, used as a threshold for gaining initiative.
 	 */
-	public static int thresh;
+	public int thresh;
 	/**
 	 * Whether a player controls a given icon's territory. 
 	 */
@@ -70,27 +72,48 @@ public class PowerStruggle {
 	 */
 	public int[] control = {0,0};
 	/**
+	 * The winner.
+	 */
+	public int victor;
+	/**
+	 * The result of the first die roll, which determines the support removed from the region.
+	 */
+	public int supportloss;
+	/**
+	 * A table of results for the first die roll.
+	 */
+	public static final int[] table = {0, 0, 1, 1, 2, 2, 3, 4};
+	/**
+	 * The Power value for each region.
+	 */
+	public static final int[] power = {3, 3, 2, 1, 2, 1};
+	/**
+	 * How many times the communist has retained power for that region.
+	 */
+	public static int[] retained = {0,0,0,0,0,0};
+	
+	/**
 	 * Constructor.
 	 * @param r is the region being contested.
 	 * @param in is the player initially having initiative. 
 	 */
 	public PowerStruggle(int r, int in) {
 		region = r;
-		control[0]=0;
-		control[1]=0;
 		for (int i=0; i<75; i++) {
 			if (MapManager.get(i).inRegion(r)&&MapManager.get(i).isControlledBy()!=-1) {
 				icons[MapManager.get(i).icon][MapManager.get(i).isControlledBy()]=true;
 				control[MapManager.get(i).isControlledBy()]++;
 			}
 		}
-		stakes = 0;
 		initiative = in;
-		failed = -1;
-		tactic = -1;
 		int d = 4+(2*control[0]);
 		int c = 4+(2*control[1]);
 		//TODO events
+		
+		initializeDeck();
+		for (int i=0; i<d; i++) addToHand(0);
+		for (int i=0; i<c; i++) addToHand(1);
+		Common.spChannel(in).sendMessage(Common.spRole(in).getAsMention() + ", would you like to raise the stakes? Respond with ");
 	}
 	
 	public void raiseStakes(StruggleCard[] cards, int sp) {
@@ -129,7 +152,7 @@ public class PowerStruggle {
 		
 	}
 	
-	public static boolean addToHand(int sp) {
+	public boolean addToHand(int sp) {
 		if (sp==0) {
 			return DemHand.add(deck.remove((int) Math.random()*deck.size()));
 		}
@@ -138,7 +161,7 @@ public class PowerStruggle {
 		}
 	}
 	
-	public static boolean removeRandom(int sp) {
+	public boolean removeRandom(int sp) {
 		if (sp==0) {
 			DemHand.remove((int) Math.random()*DemHand.size());
 		}
@@ -148,7 +171,7 @@ public class PowerStruggle {
 		return true;
 	}
 	
-	public static boolean inHand(int sp, int type, int suit, int rank) {
+	public boolean inHand(int sp, int type, int suit, int rank) {
 		if (sp==0) {
 			return DemHand.remove(new StruggleCard(type, suit, rank));
 		}
@@ -157,7 +180,7 @@ public class PowerStruggle {
 		}
 	}
 	
-	public static boolean play(int sp, String card, String s) {
+	public boolean play(int sp, String card, String s) {
 		if (card.length()!=2) return false;
 		char c = card.charAt(0);
 		int r = card.charAt(1)-'0';
@@ -196,13 +219,13 @@ public class PowerStruggle {
 				if (MapManager.get(MapManager.find(s)).support[(sp+1)%2]==0) return false; //province must have enemy support
 			}
 			if (type==0&&suit==failed) return false; //cannot play failed
-			if (type==1&&!suited.contains(s.charAt(0))) return false; //suit must exist
+			if (type==1&&(!suited.contains(s.charAt(0))||suited.indexOf(s.charAt(0))==failed)) return false; //suit must exist
 		}
 		else {
 			if (type==0&&suit!=tactic) return false; //must match suit
 			if (type==2&&suit!=3) return false; //cannot play not-fails
 		}
-		if (!PowerStruggle.inHand(sp, type, suit, rank)) return false;
+		if (!inHand(sp, type, suit, rank)) return false;
 		//enact effects.
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setColor(Common.spColor(sp));
@@ -258,27 +281,51 @@ public class PowerStruggle {
 		return true;
 	}
 	public void concede() {
-		endStruggle(initiative);
+		victor = initiative;
+		endStruggle();
 	}
-	public void endStruggle(int victor) {
+	public void endStruggle() {
 		if (tactic == 0) stakes += 2;
 		if (tactic == 3) stakes -= 2;
 		int support = new Die().roll()+stakes;
-		int points = new Die().roll()+stakes;
+		supportloss = table[Math.max(0, Math.min(support, 7))];
 		
-		if (points>=4) 
+		//TODO add more
 	}
+	public void actuallyEndStruggle() {
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Power Struggle Aftermath").setColor(Common.spColor(GameData.ps.victor));
+		builder.bulkChangeInfluence(StruggleCommand.order, 1, StruggleCommand.values); //8.4.2 done
+		int points = new Die().roll()+GameData.ps.stakes; //8.4.3
+		builder.addField("Points Roll (after modifiers)", ":game_die: " + CardEmbedBuilder.numbers[Math.max(0, Math.min(points, 7))], false);
+		builder.changeVP((1-victor*2)*table[Math.max(0, Math.min(points, 7))]);
+		if (points>=4&&victor==0) { //democrat rolls more than a 4
+			HandManager.Removed.add(HandManager.activecard);
+			builder.setDescription("Democrat seizes power in " + Common.countries[region] + "!");
+			PowerStruggle.retained[region]=-1;
+		}
+		else {
+			builder.setDescription("Communist retains power in " + Common.countries[region] + "!");
+		}
+		GameData.txtchnl.sendMessage(builder.build()).complete();
+		if (PowerStruggle.retained[region]!=-1) Common.spChannel(1).sendMessage(Common.spRole(1).getAsMention() + ", you now have the option of a peaceful transition to Democratic Rule. If you wish to do so, write `TS.struggle s 1`. Otherwise, write `TS.struggle s 0`.");
+	}
+	
+	public void scorePower() {
+		
+	}
+	
 	public static void sendHands() {
 		if (lastDemHand!=null) lastDemHand.delete().complete();
 
     	if (lastComHand!=null) lastComHand.delete().complete();
 		EmbedBuilder usahand = new EmbedBuilder().setTitle("Power Struggle Cards");
-		for (StruggleCard c : DemHand) {
+		for (StruggleCard c : GameData.ps.DemHand) {
 			usahand.addField(c.toString(), "", false);
 		}
 		lastDemHand=GameData.txtdem.sendMessage(usahand.build()).complete();
 		EmbedBuilder ssrhand = new EmbedBuilder().setTitle("Power Struggle Cards");
-		for (StruggleCard c : ComHand) {
+		for (StruggleCard c : GameData.ps.ComHand) {
 			ssrhand.addField(c.toString(), "", false);
 		}
 		lastComHand=GameData.txtcom.sendMessage(ssrhand.build()).complete();

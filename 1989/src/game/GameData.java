@@ -16,6 +16,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import powerstruggle.PowerStruggle;
+import powerstruggle.Scoring;
 import readwrite.ReadWrite;
 /**
  * Deals with the variables in the game, including the score, the space race, and time.
@@ -267,10 +268,17 @@ public class GameData {
 			endGame((scoring/2+1)%2, 3); //1 -> 1, 2 -> 0, 3 -> 0
 		} //stage 4
 		if (HandManager.effectActive(104)) { //stage 5
-			//TODO later
+			dec = new Decision(0,104);
+			return;
+			//TODO you're gonna have to code in this later
 		}
 		if (turn==10) { // stage 7
-			//TODO later
+			for (int i=0; i<6; i++) {
+				Scoring.score(i);
+				if (PowerStruggle.retained[i]!=-1) builder.changeVP(-4);
+			}
+			checkScore(true, false);
+			return;
 		}
 		turn++; // stage 6
 		ar = 1; 
