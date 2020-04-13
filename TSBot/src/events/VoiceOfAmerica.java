@@ -90,13 +90,13 @@ public class VoiceOfAmerica extends Card {
 		for (int i=21; i<84; i++) { //not-Europe
 			if (MapManager.get(i).influence[1]>0) {
 				doable.add(i);
-				maxInfRem += Math.min(MapManager.get(i).influence[0], 2);
+				maxInfRem += Math.min(MapManager.get(i).influence[1], 2);
 			}
 		}
 		if (maxInfRem<=4) {
 			order = doable;
 			for (int i : order) {
-				values.add(Math.max(-MapManager.get(i).influence[0], -2));
+				values.add(Math.max(-MapManager.get(i).influence[1], -2));
 			}
 			return true;
 		}
