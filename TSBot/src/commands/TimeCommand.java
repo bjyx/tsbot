@@ -308,5 +308,21 @@ public class TimeCommand extends Command {
 			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();
 		}
 	}
-
+	public static void reset() {
+		cardPlayed = true;
+		cardPlayedSkippable = true;
+		hl1 = true;
+		hl2 = true;
+		eventDone = false;
+		operationsDone = false;
+		eventRequired = false;
+		operationsRequired = false;
+		spaceRequired = false;
+		spaceDone = false;
+		trapDone = true;
+		NORAD = true;
+		nukePro = true;
+		checkpointC = true;
+		isCardDiscarded = true;
+	}
 }
