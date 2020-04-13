@@ -18,7 +18,7 @@ import net.dv8tion.jda.core.entities.Message;
  */
 public class PowerStruggle {
 	/**
-	 * initiative.
+	 * Roll for initiative! No, it's not a roll, but the person with initiative plays first.
 	 */
 	public static int initiative = -1;
 	/**
@@ -65,6 +65,38 @@ public class PowerStruggle {
 	 * Whether a player controls a given icon's territory. 
 	 */
 	public boolean[][] icons = new boolean[8][2];
+	/**
+	 * The number of controlled spaces, used to determine the number of cards a given player receives. 
+	 */
+	public int[] control = {0,0};
+	/**
+	 * Constructor.
+	 * @param r is the region being contested.
+	 * @param in is the player initially having initiative. 
+	 */
+	public PowerStruggle(int r, int in) {
+		region = r;
+		control[0]=0;
+		control[1]=0;
+		for (int i=0; i<75; i++) {
+			if (MapManager.get(i).inRegion(r)&&MapManager.get(i).isControlledBy()!=-1) {
+				icons[MapManager.get(i).icon][MapManager.get(i).isControlledBy()]=true;
+				control[MapManager.get(i).isControlledBy()]++;
+			}
+		}
+		stakes = 0;
+		initiative = in;
+		failed = -1;
+		tactic = -1;
+		int d = 4+(2*control[0]);
+		int c = 4+(2*control[1]);
+		//TODO events
+	}
+	
+	public void raiseStakes(StruggleCard[] cards, int sp) {
+		stakes++;
+		//TODO get cards out of hand
+	}
 	
 	public void initializeDeck() {
 		deck = new ArrayList<StruggleCard>();
@@ -91,6 +123,10 @@ public class PowerStruggle {
 		}
 		deck.add(new StruggleCard(1,5,3));
 		deck.add(new StruggleCard(1,6,3));
+	}
+	
+	public void deal() {
+		
 	}
 	
 	public static boolean addToHand(int sp) {
@@ -221,11 +257,16 @@ public class PowerStruggle {
 		}
 		return true;
 	}
-	public static void concede() {
-		
+	public void concede() {
+		endStruggle(initiative);
 	}
-	public static void endStruggle() {
+	public void endStruggle(int victor) {
+		if (tactic == 0) stakes += 2;
+		if (tactic == 3) stakes -= 2;
+		int support = new Die().roll()+stakes;
+		int points = new Die().roll()+stakes;
 		
+		if (points>=4) 
 	}
 	public static void sendHands() {
 		if (lastDemHand!=null) lastDemHand.delete().complete();

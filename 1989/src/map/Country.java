@@ -8,6 +8,7 @@ import commands.StartCommand;
 import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
+import main.Common;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -17,10 +18,6 @@ import net.dv8tion.jda.core.entities.MessageEmbed;
  *
  */
 public class Country {
-	/**
-	 * An array of strings, used to mark down the country.
-	 */
-	public static final String[] regions = {"<:flag_dd:648119347469877268>",":flag_pl:",":flag_cz:",":flag_hu:",":flag_ro:",":flag_bg:"}; //2.1.1
 	/**
 	 * An array of strings, used to mark down an emoji for the icon of this space.
 	 */
@@ -173,7 +170,7 @@ public class Country {
 	}
 	
 	public String toString() {
-		return Country.regions[this.region] + Country.emoji[this.icon] + " " + this.shorthand + (this.isBattleground?"*":" ");
+		return Common.flags[this.region] + Country.emoji[this.icon] + " " + this.shorthand + (this.isBattleground?"*":" ");
 	}
 	/**
 	 * Assigns a color to each region. 
@@ -197,7 +194,7 @@ public class Country {
 		EmbedBuilder builder = new EmbedBuilder()
 				.setAuthor("Information", null, Launcher.url("emoji/InflNC.png"))
 				.setTitle(name+" "+emoji[icon] + " (" + shorthand + ")")
-				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "space in " + regions[region])
+				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "space in " + Common.countries[region])
 				.setColor(getColor())
 				.addField("Influence", StartCommand.emojiID[(this.isControlledBy()==0?9:6)]+CardEmbedBuilder.intToEmoji(support[0])+StartCommand.emojiID[(this.isControlledBy()==1?10:7)]+CardEmbedBuilder.intToEmoji(support[1]), false)
 				.setFooter(desc, Launcher.url("emoji/InflNC.png"));

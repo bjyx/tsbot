@@ -85,6 +85,12 @@ public class Operations {
 	
 	private TextChannel txtsp = (sp==0)?GameData.txtdem:GameData.txtcom;
 	/**
+	 * 
+	 */
+	public Operations(int party, int ops, boolean infl, boolean sc, boolean t2) {
+		this(party, ops, infl, sc, t2, 2, 0);
+	}
+	/**
 	 * Constructor, specifying the number of ops on the card used and the conditions under which they can be used.
 	 * @param party is the superpower in charge of these Operations points.
 	 * @param ops is the number of Operation Points usable in this instance of Operations.
@@ -93,14 +99,7 @@ public class Operations {
 	 * @param t2 indicates whether one can send this instance of Operations to China.
 	 */
 	public Operations(int party, int ops, boolean infl, boolean sc, boolean t2, int nosc) {
-		sp = party;
-		opnumber = ops;
-		influence = infl;
-		supportcheck = sc;
-		tsquare = t2;
-		restrictions = 0;
-		remainingsc = nosc;
-		txtsp = (sp==0)?GameData.txtdem:GameData.txtcom;
+		this(party, ops, infl, sc, t2, nosc, 0);
 	}
 	/**
 	 * Constructor, specifying the number of ops on the card used and the conditions under which they can be used.
@@ -121,6 +120,7 @@ public class Operations {
 		restrictions = restr;
 		txtsp = (sp==0)?GameData.txtdem:GameData.txtcom;
 	}
+	
 	/**
 	 * Handles the Operations Command; moved here in order to also handle any events brought about by the decision command.
 	 * @param args are the arguments entered into the Operations or Decision command that contain the argument(s) required for an Operation to take place.

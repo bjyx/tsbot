@@ -15,6 +15,7 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
+import powerstruggle.PowerStruggle;
 import readwrite.ReadWrite;
 /**
  * Deals with the variables in the game, including the score, the space race, and time.
@@ -105,6 +106,10 @@ public class GameData {
 	 * A Decision object, denoting any decision required to be made.
 	 */
 	public static Decision dec = null;
+	/**
+	 * A PowerStruggle object, denoting the current power struggle occurring.
+	 */
+	public static PowerStruggle ps = null;
 	/**
 	 * You never know when you'll need a synchronized object.
 	 */
