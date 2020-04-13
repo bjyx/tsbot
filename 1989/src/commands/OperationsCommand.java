@@ -32,6 +32,10 @@ public class OperationsCommand extends Command {
 			sendMessage(e, ":x: Don't. You're compromising your play.");
 			return;
 		}
+		if (GameData.ps!=null) {
+			sendMessage(e, ":x: No.");
+			return;
+		}
 		if (HandManager.activecard==0) {
 			sendMessage(e, ":x: What's the play?");
 			return;

@@ -35,6 +35,10 @@ public class EventCommand extends Command {
 			sendMessage(e, ":x: Don't. You're compromising your play.");
 			return;
 		}
+		if (GameData.ps!=null) {
+			sendMessage(e, ":x: No.");
+			return;
+		}
 		if (TimeCommand.eventRequired^TimeCommand.eventDone) {
 			sendMessage(e, ":x: Trying to change your mind already?");
 			return;
@@ -63,7 +67,7 @@ public class EventCommand extends Command {
 			if (CardList.getCard(HandManager.activecard).isRemoved()) {
 				HandManager.Removed.add(HandManager.activecard);
 			}
-			else if (HandManager.activecard!=73) {
+			else if (CardList.getCard(HandManager.activecard).getOps()!=0) { //TODO more cards?
 				HandManager.Discard.add(HandManager.activecard);
 			}
 			Log.writeToLog(CardList.getCard(HandManager.activecard).getName()+":");

@@ -241,5 +241,16 @@ public class TimeCommand extends Command {
 			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();
 		}
 	}
-
+	public static void reset() {
+		cardPlayed = true;
+		cardPlayedSkippable = true;
+		eventDone = false;
+		operationsDone = false;
+		eventRequired = false;
+		operationsRequired = false;
+		spaceRequired = false;
+		spaceDone = false;
+		extraCheck = true;
+		isCardDiscarded = true;
+	}
 }

@@ -69,6 +69,10 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: Indecision is not an option.");
 			return;
 		}
+		if (GameData.ps!=null) {
+			sendMessage(e, ":x: No.");
+			return;
+		}
 		if (GameData.dec == null) {
 			sendMessage(e, ":x: No pending decisions. Are you sure you've satisfied the conditions for that?");
 			return;
