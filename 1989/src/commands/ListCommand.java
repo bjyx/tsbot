@@ -20,7 +20,7 @@ public class ListCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("TS.list", "TS.players");
+		return Arrays.asList("DF.list", "DF.players");
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class ListCommand extends Command {
 	@Override
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.list - Lists any players in the current game.");
+		return Arrays.asList("DF.list - Lists any players in the current game.");
 	}
 
 }

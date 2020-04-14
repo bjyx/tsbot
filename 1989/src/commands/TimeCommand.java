@@ -183,7 +183,7 @@ public class TimeCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.time", "TS.+", "TS.done");
+		return Arrays.asList("DF.time", "DF.+", "DF.done");
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class TimeCommand extends Command {
 	@Override
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.time");
+		return Arrays.asList("DF.time");
 	}
 
 	public static void prompt() {

@@ -96,7 +96,7 @@ public class DecisionCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("TS.decide","TS.decision","TS.choose");
+		return Arrays.asList("DF.decide","DF.decision","DF.choose");
 	}
 
 	@Override

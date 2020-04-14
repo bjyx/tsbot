@@ -125,7 +125,7 @@ public class StartCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.start");
+		return Arrays.asList("DF.start");
 	}
 
 	@Override
@@ -143,7 +143,7 @@ public class StartCommand extends Command {
 	@Override
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.start - How it all begins.\n");
+		return Arrays.asList("DF.start - How it all begins.\n");
 	}
 
 }

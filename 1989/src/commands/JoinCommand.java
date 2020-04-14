@@ -61,7 +61,7 @@ public class JoinCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("TS.join");
+		return Arrays.asList("DF.join");
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class JoinCommand extends Command {
 
 	@Override
 	public List<String> getUsageInstructions() {
-		return Arrays.asList("TS.join - Join a game.");
+		return Arrays.asList("DF.join - Join a game.");
 	}
 
 }

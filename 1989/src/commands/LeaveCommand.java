@@ -34,7 +34,7 @@ public class LeaveCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		return Arrays.asList("TS.leave");
+		return Arrays.asList("DF.leave");
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class LeaveCommand extends Command {
 
 	@Override
 	public List<String> getUsageInstructions() {
-		return Arrays.asList("TS.leave - Leave a game.");
+		return Arrays.asList("DF.leave - Leave a game.");
 	}
 
 }
