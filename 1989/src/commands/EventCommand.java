@@ -87,7 +87,7 @@ public class EventCommand extends Command {
 	@Override
 	public List<String> getAliases() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("TS.event", "TS.e");
+		return Arrays.asList("DF.event", "DF.e");
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class EventCommand extends Command {
 
 	@Override
 	public List<String> getUsageInstructions() {
-		return Arrays.asList("TS.event *<arguments>*\n"
+		return Arrays.asList("DF.event *<arguments>*\n"
 				+ "- Events may require arguments. The arguments required will be specified by the \"Info\" command.");
 	}
 
