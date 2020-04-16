@@ -152,7 +152,7 @@ public class StartCommand extends Command {
 		if (settings>=64) {
 			GameData.yiyo = true;
 			settings-=64;
-			builder.addField("Year-In and Year-Out", "Fan-made expansion pack, adding 20 cards and an extra action round to the Early War. To be implemented soonish.", false);
+			builder.addField("Year-In and Year-Out", "Fan-made expansion pack by u/Aogu, adding 20 cards and an extra action round to the Early War. To be implemented soonish.", false);
 		}
 		else {
 			GameData.yiyo = false;
