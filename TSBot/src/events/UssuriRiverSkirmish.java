@@ -95,6 +95,7 @@ public class UssuriRiverSkirmish extends Card {
 			int sum = 0;
 			for (int i=0; i<order.size(); i++) {
 				if (values.get(i)<=0) return false; //no non-positive numbers please
+				if (values.get(i)>2) return false; // cannot be > 2
 				sum += values.get(i);
 			}
 			if (sum!=4) return false;
