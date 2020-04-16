@@ -81,7 +81,18 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
 			return;
 		}
-		
+		/*
+		 * Card that let you have ops:
+		 * - 1 Legacy of Martial Law
+		 * - 3 Walesa
+		 * - 
+		 */
+		if (GameData.dec.card==1) { //in general, events that let you have ops route here
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);
 

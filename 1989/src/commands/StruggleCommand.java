@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;
@@ -174,6 +176,8 @@ public class StruggleCommand extends Command {
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			Scoring.score(GameData.ps.region);
+			TimeCommand.eventDone = true;
+			TimeCommand.prompt();
 		}
 		if (args[1].charAt(0)=='l') {
 			//copied and modified from VoA

@@ -1,17 +1,13 @@
 package commands;
 
-import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
-import cards.Operations;
-import events.CardEmbedBuilder;
 import events.Decision;
 import game.GameData;
 import game.PlayerList;
-import map.MapManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * The command handling the flow of time.

@@ -53,7 +53,8 @@ public class Operations {
 	public static boolean[] tried = {false, false};
 	/**
 	 * A set of restrictions under which this instance of ops operates: <br>
-	 * TODO
+	 * 0 - no restrictions <br>
+	 * 1 - Polan only (e.g. Legacy of Martial Law) <br>
 	 */
 	private int restrictions = 0;
 	/**
@@ -265,7 +266,10 @@ public class Operations {
 				txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have influence on the board.").complete();
 				return true;
 			}
-		
+		if (HandManager.effectActive(2) && country==14 && sp==1) { //checking gdansk as com under solidarity
+			txtsp.sendMessage(":x: Solidarity is legal, sir. Nothing we can do about that.").complete();
+			return false;
+		}
 		if (MapManager.get(country).support[(sp+1)%2]==0) {
 			txtsp.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.").complete();
 			return false;

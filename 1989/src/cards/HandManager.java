@@ -2,20 +2,15 @@ package cards;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 import cards.CardList;
 import commands.TimeCommand;
 import events.Card;
-import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
-import main.Launcher;
-import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
-import readwrite.ReadWrite;
 /**
  * Manages everything related to the cards used in the game - which cards are in the Deck, which are Discarded, which are in the players' hands, and which have ongoing effects.
  * @author adalbert
@@ -47,7 +42,42 @@ public class HandManager {
 	 * <br>
 	 * Valid cards to put here:
 	 * <ul>
-	 * <li>
+	 * <li> {@code 002 Solidarity Legalized} - Allows {@code 003 Walesa}. Com can no longer check Gdansk.
+	 * <li> {@code 005 General Strike} - Bear Trap.
+	 * <li> {@code 008 Prudence} - RSP.
+	 * <li> {@code 009 The Wall} - The next Com support check ignores adjacency for the Democrat.
+	 * <li> {@code 013 Stasi} - Fuck Stasi.
+	 * <li> {@code 015 Honecker} - Com gets an extra action round (skippable)
+	 * <li> {@code 017 Roundtable Talks} - Dem gets two cards from Com in next power struggle.
+	 * <li> {@code 024 St. Nicholas} - Allows {@code 061 Monday Demonstrations}.
+	 * <li> {@code 025 Perestroika} - Brezhnev.
+	 * <li> {@code 026 Helsinki Final Act} - Com support checks in student and intellectual spaces give +1 VP to the Democrat.
+	 * <li> {@code 030 Tear Gas} - The next Com support check in a Student Space gets +1.
+	 * <li> {@code 039 Ecoglasnost} - Com support checks in Ruse give +1 VP to Dem.
+	 * <li> {@code 048 We Are The People} - Com can no longer check Leipzig.
+	 * <li> {@code 049 Debt Burden} - Chernobyl, but for support checks.
+	 * <li> {@code 050 Sinatra Doctrine} - Containment.
+	 * <li> {@code 053 Li Peng} - +1 to Com TSquares.
+	 * <li> {@code 054 Crowd Turns Against Ceausescu} - On the next scoring of Romania, sample 15 cards from the PS deck after drawing. Then Dem gets 3x the number of rally cards in that sample as Ops for the turn. (aaaaa) Also allows {@code 097 Tyrant is Gone}. <br>
+	 * <li> {@code 058 Austria-Hungary Border} - +1 Ops for Dem if ops used in E. Germany.
+	 * <li> {@code 059 Grenztruppen} - -1 to Dem checks in E. Germany for rest of turn.
+	 * <li> {@code 062 Yakolev} - Winning the next struggle gives +1 to rolls.
+	 * <li> {@code 063 Genscher} - Ignores extra cost in E. Germany.
+	 * <li> {@code 065 Presidential Visit} - Com draws 7 cards next turn.
+	 * <li> {@code 070 Securitate} - Dem must reveal hand during next power struggle in Romania.
+	 * <li> {@code 072 Peasant Revolt} - If Dem holds Farmer Space in next PS, draw one card from communist.
+	 * <li> {@code 073 Laszlo Tokes} - Allows {@code Massacre in Timisoara}.
+	 * <li> {@code 074 FRG Embassies} - +1 to Dem checks in E. Europe
+	 * <li> {@code 077 Samizdat} - Delay a card.
+	 * <li> {@code 083 Modrow} - Prevents {@code 015 Honecker}.
+	 * <li> {@code 097 Tyrant Is Gone} - Prevents Ceausescu Events.
+	 * <li> {@code 970 Tyrant Is Gone pending} - Plays Tyrant Is Gone as soon as Romania Scoring is resolved.
+	 * <li> {@code 099 Ligachev} - WWBY. 
+	 * <li> {@code 100 Stand Fast} - -1 to opponent checks in your spaces for rest of turn.
+	 * <li> {@code 101 Elena} - -1 to Dem checks in Romania for rest of turn.
+	 * <li> {@code 102 National Salvation Front} - Com gets two cards from Dem in next Balkan PS.
+	 * <li> {@code 104 New Year's Eve} - AAAAAAAAAAAAAAAAAAA
+	 * <li> {@code 108 Army Backs Revolution} - Cancels {@code 070 Securitate}.
 	 */
 	public static ArrayList<Integer> Effects = new ArrayList<Integer>();
 	/**

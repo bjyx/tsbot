@@ -5,7 +5,6 @@ import java.awt.Color;
 import events.CardEmbedBuilder;
 import game.GameData;
 import main.Common;
-import main.Launcher;
 import map.Country;
 import map.MapManager;
 

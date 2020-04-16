@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import cards.HandManager;
 import commands.StruggleCommand;
+import commands.TimeCommand;
 import events.CardEmbedBuilder;
 import game.Die;
 import game.GameData;
@@ -305,7 +306,12 @@ public class PowerStruggle {
 			builder.setDescription("Communist retains power in " + Common.countries[region] + "!");
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		if (PowerStruggle.retained[region]!=-1) Common.spChannel(1).sendMessage(Common.spRole(1).getAsMention() + ", you now have the option of a peaceful transition to Democratic Rule. If you wish to do so, write `TS.struggle s 1`. Otherwise, write `TS.struggle s 0`.");
+		if (PowerStruggle.retained[region]!=-1) Common.spChannel(1).sendMessage(Common.spRole(1).getAsMention() + ", you now have the option of a peaceful transition to Democratic Rule. If you wish to do so, write `TS.struggle s 1`. Otherwise, write `TS.struggle s 0`.").complete();
+		else {
+			Scoring.score(region);
+			TimeCommand.eventDone = true;
+			TimeCommand.prompt();
+		}
 	}
 	
 	public static void sendHands() {
