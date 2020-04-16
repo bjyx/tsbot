@@ -2,6 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import cards.CardList;
@@ -14,6 +15,8 @@ import main.Common;
 import map.MapManager;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import powerstruggle.PowerStruggle;
+import powerstruggle.Scoring;
+import powerstruggle.StruggleCard;
 
 public class StruggleCommand extends Command {
 	public static ArrayList<Integer> doable;
@@ -30,6 +33,10 @@ public class StruggleCommand extends Command {
 			sendMessage(e, ":hourglass: There's a time and place for everything, but not now.");
 			return;
 		}
+		if (!PlayerList.getArray().contains(e.getAuthor())) {
+			sendMessage(e, ":x: Excuse me, but who are *you* playing as? There's no third way here.");
+			return;
+		}
 		if (e.getChannel().equals(GameData.txtchnl)) {
 			sendMessage(e, ":x: Don't. You're compromising your play.");
 			return;
@@ -44,23 +51,111 @@ public class StruggleCommand extends Command {
 		}
 		int sp = PlayerList.getQueried(e.getAuthor());
 		if (args[1].charAt(0)=='c') {
+			if (GameData.ps.progression!=2) {
+				sendMessage(e, ":x: This isn't the time.");
+				return;
+			}
 			if (sp==GameData.ps.initiative) {
 				sendMessage(e, ":x: So long as you have initiative, there is no giving up this fight.");
+				return;
+			}
+			if (GameData.ps.tactic==-1) {
+				sendMessage(e, ":x: Not your turn yet.");
 				return;
 			}
 			GameData.ps.concede();
 		}
 		if (args[1].charAt(0)=='d') {
-			//TODO later
+			if (GameData.ps.progression>=2) {
+				sendMessage(e, ":x: This isn't the time.");
+				return;
+			}
+			if (sp==GameData.ps.initiative^GameData.ps.progression==0) {
+				sendMessage(e, ":x: It's not your turn to do this yet.");
+				return;
+			}
+			GameData.ps.progression++;
+			if (GameData.ps.progression==1) Common.spChannel((GameData.ps.initiative+1)%2).sendMessage(Common.spRole((GameData.ps.initiative+1)%2).getAsMention()+", you may choose to raise the stakes.").complete();
+			else Common.spChannel(GameData.ps.initiative).sendMessage(Common.spRole(GameData.ps.initiative).getAsMention()+", play your card.").complete();
 		}
 		else if (args.length<3) {
 			sendMessage(e, ":x: How?");
 			return;
 		}
+		/*
+		 * An acceptable time for each:
+		 * r/d - progression = 0/1, you have three cards to throw away for r
+		 * p - progression = 2, it's your turn (tactics = -1 for initiative, tactics = some other number for no initiative)
+		 * c - progression = 2, you are defending, it's your turn
+		 * s - progression = 4, you are the commie, you hold power
+		 * l - progression = 3, you are the one losing support
+		 */
 		if (args[1].charAt(0)=='r') {
+			if (GameData.ps.progression>=2) {
+				sendMessage(e, ":x: This isn't the time.");
+				return;
+			}
+			if (sp==GameData.ps.initiative^GameData.ps.progression==0) {
+				sendMessage(e, ":x: It's not your turn to do this yet.");
+				return;
+			}
+			if (args.length < 5) {
+				sendMessage(e, ":x: What cards will you throw away?");
+				return;
+			}
+			ArrayList<StruggleCard> list = new ArrayList<StruggleCard>();
+			for (int i=0; i<3; i++) {
+				String card = args[2+i];
+				if (card.length()!=2) {
+					sendMessage(e, ":x: Not a card ID.");
+					return;
+				}
+				char c = card.charAt(0);
+				int r = card.charAt(1)-'0';
+				ArrayList<Character> suited = new ArrayList<Character>(Arrays.asList('r','s','m','p'));
+				int rank, suit, type;
+				if (suited.contains(c)) {
+					type = 0;
+					suit = suited.indexOf(c);
+					rank = r;
+				}
+				else if (c=='l') {
+					type = 1;
+					suit = r;
+					rank = 3;
+				}
+				else if (c=='w') {
+					type = 2;
+					suit = r;
+					rank = 0;
+				}
+				else {
+					sendMessage(e, ":x: Not a card ID.");
+					return;
+				}
+				
+				list.add(new StruggleCard(type, suit, rank));
+				if ((sp==0&&Collections.frequency(GameData.ps.DemHand, list.get(i))<Collections.frequency(list, list.get(i)))||sp==1&&Collections.frequency(GameData.ps.ComHand, list.get(i))<Collections.frequency(list, list.get(i))) {
+					sendMessage(e, ":x: You do not have this.");
+					return;
+				}
+			}
+			GameData.ps.raiseStakes((StruggleCard[]) list.toArray(), sp);
 			//TODO later
 		}
 		if (args[1].charAt(0)=='s') {
+			if (GameData.ps.progression!=4) {
+				sendMessage(e, ":x: This isn't the time.");
+				return;
+			}
+			if (sp!=1) {
+				sendMessage(e, ":x: The Democrat's goal is to gain power in these countries. You cannot step down.");
+				return;
+			}
+			if (PowerStruggle.retained[GameData.ps.region]==-1) {
+				sendMessage(e, ":x: You've already lost.");
+				return;
+			}
 			int x;
 			try{x = Integer.parseInt(args[2]);}catch(NumberFormatException err) {sendMessage(e,":x: NaN");return;}
 			CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -80,8 +175,10 @@ public class StruggleCommand extends Command {
 				return;
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
+			Scoring.score(GameData.ps.region);
 		}
 		if (args[1].charAt(0)=='l') {
+			//copied and modified from VoA
 			doable = new ArrayList<Integer>();
 			order = new ArrayList<Integer>();
 			values = new ArrayList<Integer>();
@@ -121,7 +218,18 @@ public class StruggleCommand extends Command {
 			GameData.ps.actuallyEndStruggle();
 		}
 		if (args[1].charAt(0)=='p') {
-			//TODO later
+			if (GameData.ps.progression>=2) {
+				sendMessage(e, ":x: This isn't the time.");
+				return;
+			}
+			if (sp==GameData.ps.initiative^GameData.ps.tactic==-1) {
+				sendMessage(e, ":x: Not your turn yet.");
+				return;
+			}
+			if (!GameData.ps.play(sp, args[2], args[3])) {
+				sendMessage(e, ":x: Second argument must be a valid card. If it's a leader, third argument must be a suit; if it's Scare Tactics, third argument must be a region.");
+				return;
+			}
 		}
 	}
 
@@ -144,7 +252,7 @@ public class StruggleCommand extends Command {
 	public List<String> getUsageInstructions() {
 		return Arrays.asList("DF.struggle <usage> <parameters>\n"
 				+ "<usage>:\n"
-				+ "- [r]aise/[d]ecline, respectively to raise the stakes or decline to. May only be done at the start of the struggle. Indicate three cards to discard from your hand.\n"
+				+ "- [r]aise/[d]ecline, respectively to raise the stakes or decline to do so. May only be done at the start of the struggle. Indicate three cards to discard from your hand.\n"
 				+ "- [p]lay, to play a card. Indicate said card.\n"
 				+ "- [c]oncede, to concede the struggle. May only be done as the defender. No parameters required.\n"
 				+ "- [s]tepdown, to decide whether to voluntarily cede power as the communist. May only be done if you have not been forced from office by the Point roll. 0 to retain power, 1 to cede power. \n"

@@ -1,4 +1,11 @@
 package powerstruggle;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import game.GameData;
+import map.MapManager;
+
 /**
  * Cards for the struggle.
  * @author wes4zhang
@@ -68,5 +75,35 @@ public class StruggleCard {
 	 */
 	public boolean equals(StruggleCard e) {
 		return this.type==e.type&&this.suit==e.suit&&this.rank==e.rank;
+	}
+	/**
+	 * Whether this card is playable in the current struggle. 
+	 * @return
+	 */
+	public boolean playable(int sp, int x) {
+		if (type==1) {	//play leader iff they control something
+			boolean flag = false;
+			for (int i=0; i<75; i++) {
+				if (MapManager.get(i).inRegion(GameData.ps.region) && MapManager.get(i).icon==suit && MapManager.get(i).isControlledBy()==sp) {
+					flag = true;
+					break;
+				}
+			}
+			if (!flag) return false;
+		}
+		if (sp==GameData.ps.initiative) {
+			if (type==2&&suit==3) return false; //cannot play fails
+			if (type==2&&suit==2) {
+				if (x==-1) return false;			//province must exist
+				if (MapManager.get(x).support[(sp+1)%2]==0) return false; //province must have enemy support
+			}
+			if (type==0&&suit==GameData.ps.failed) return false; //cannot play failed
+			if (type==1&&(x==-1||x==GameData.ps.failed)) return false; //suit must exist
+		}
+		else {
+			if (type==0&&suit!=GameData.ps.tactic) return false; //must match suit
+			if (type==2&&suit!=3) return false; //cannot play not-fails
+		}
+		return true;
 	}
 }

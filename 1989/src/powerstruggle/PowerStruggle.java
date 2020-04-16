@@ -20,6 +20,15 @@ import net.dv8tion.jda.core.entities.Message;
  */
 public class PowerStruggle {
 	/**
+	 * An integer for progression: <br>
+	 * 
+	 * 0 for a newly created struggle<br>
+	 * +1 after each player decides on the stakes<br>
+	 * +1 after someone has lost the struggle<br>
+	 * +1 after influence loss and the commie is preparing to step down<br>
+	 */
+	public int progression = 0;
+	/**
 	 * Roll for initiative! No, it's not a roll, but the person with initiative plays first.
 	 */
 	public int initiative = -1;
@@ -118,7 +127,11 @@ public class PowerStruggle {
 	
 	public void raiseStakes(StruggleCard[] cards, int sp) {
 		stakes++;
-		//TODO get cards out of hand
+		for (int i=0; i<2; i++) {
+			if (sp==0) DemHand.remove(cards[i]);
+			if (sp==1) ComHand.remove(cards[i]);
+		}
+		progression++;
 	}
 	
 	public void initializeDeck() {
@@ -186,6 +199,7 @@ public class PowerStruggle {
 		int r = card.charAt(1)-'0';
 		ArrayList<Character> suited = new ArrayList<Character>(Arrays.asList('r','s','m','p'));
 		int rank, suit, type;
+		int x = -1; //must initialize
 		if (suited.contains(c)) {
 			type = 0;
 			suit = suited.indexOf(c);
@@ -195,36 +209,16 @@ public class PowerStruggle {
 			type = 1;
 			suit = r;
 			rank = 3;
+			x = suited.indexOf(s.charAt(0));
 		}
 		else if (c=='w') {
 			type = 2;
 			suit = r;
 			rank = 0;
+			if (suit==2) x=MapManager.find(s);
 		}
 		else return false;
-		if (type==1) {	//play leader iff they control something
-			boolean flag = false;
-			for (int i=0; i<75; i++) {
-				if (MapManager.get(i).inRegion(region) && MapManager.get(i).icon==suit && MapManager.get(i).isControlledBy()==sp) {
-					flag = true;
-					break;
-				}
-			}
-			if (!flag) return false;
-		}
-		if (sp==initiative) {
-			if (type==2&&suit==3) return false; //cannot play fails
-			if (type==2&&suit==2) {
-				if (MapManager.find(s)==-1) return false;			//province must exist
-				if (MapManager.get(MapManager.find(s)).support[(sp+1)%2]==0) return false; //province must have enemy support
-			}
-			if (type==0&&suit==failed) return false; //cannot play failed
-			if (type==1&&(!suited.contains(s.charAt(0))||suited.indexOf(s.charAt(0))==failed)) return false; //suit must exist
-		}
-		else {
-			if (type==0&&suit!=tactic) return false; //must match suit
-			if (type==2&&suit!=3) return false; //cannot play not-fails
-		}
+		if (!(new StruggleCard(type, suit, rank).playable(sp, x))) return false; 
 		if (!inHand(sp, type, suit, rank)) return false;
 		//enact effects.
 		CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -246,8 +240,8 @@ public class PowerStruggle {
 					.addField("Initiative passed to the " + Common.players[Common.opp(sp)], "", false);
 				}
 				if (suit==2) {
-					builder.changeInfluence(MapManager.find(s), (sp+1)%2, -1)
-					.setTitle("Scare Tactics Employed Against" + Common.adject[Common.opp(sp)] + " supporters in " + MapManager.get(MapManager.find(s)))
+					builder.changeInfluence(x, (sp+1)%2, -1)
+					.setTitle("Scare Tactics Employed Against" + Common.adject[Common.opp(sp)] + " supporters in " + MapManager.get(x).name)
 					.addField("Initiative passed to the " + Common.players[Common.opp(sp)], "", false);
 				}
 				initiative = (sp+1)%2; //switch initiative
@@ -255,7 +249,7 @@ public class PowerStruggle {
 			}
 			else {
 				if (type==1) {
-					tactic = suited.indexOf(s.charAt(0));
+					tactic = x;
 					builder.setTitle(Common.icons[suit]+" Leader leads " + Common.suits[tactic]);
 				}
 				else {
@@ -277,7 +271,9 @@ public class PowerStruggle {
 				}
 			}
 			tactic = -1;
+			
 		}
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 		return true;
 	}
 	public void concede() {
@@ -285,6 +281,7 @@ public class PowerStruggle {
 		endStruggle();
 	}
 	public void endStruggle() {
+		progression++;
 		if (tactic == 0) stakes += 2;
 		if (tactic == 3) stakes -= 2;
 		int support = new Die().roll()+stakes;
@@ -309,10 +306,6 @@ public class PowerStruggle {
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		if (PowerStruggle.retained[region]!=-1) Common.spChannel(1).sendMessage(Common.spRole(1).getAsMention() + ", you now have the option of a peaceful transition to Democratic Rule. If you wish to do so, write `TS.struggle s 1`. Otherwise, write `TS.struggle s 0`.");
-	}
-	
-	public void scorePower() {
-		
 	}
 	
 	public static void sendHands() {
