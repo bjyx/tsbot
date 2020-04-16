@@ -5,6 +5,7 @@ import java.awt.Color;
 import cards.CardList;
 import cards.Operations;
 import game.GameData;
+import main.Common;
 import main.Launcher;
 import map.MapManager;
 /**
@@ -37,12 +38,10 @@ public class Junta extends Card {
 		if(opponentInfluence) {
 			GameData.ops=new Operations(sp, CardList.getCard(47).getOpsMod(sp), false, true, true, false, true, 47);
 			GameData.dec=new Decision(sp, 47);
-			if (sp==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.").complete();
-			else GameData.txtssr.sendMessage(GameData.rolessr.getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.").complete();
+			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention()+", you may now conduct realignments or a coup on a country of your choosing in Latin America.").complete();
 		}
 		else {
-			if (sp==0) GameData.txtusa.sendMessage("Your opponent has not infiltrated Latin America yet.").complete();
-			else GameData.txtssr.sendMessage("Your opponent has not infiltrated Latin America yet.").complete();
+			Common.spChannel(sp).sendMessage("Your opponent has not infiltrated Latin America yet.").complete();
 		}
 		
 	}

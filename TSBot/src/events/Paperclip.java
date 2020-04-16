@@ -8,7 +8,7 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 /**
- * The Captured Scientist Card.
+ * The Captured Scientist Card, which has had its name changed.
  * @author adalbert
  *
  */

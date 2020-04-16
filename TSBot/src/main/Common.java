@@ -2,6 +2,10 @@ package main;
 
 import java.awt.Color;
 
+import game.GameData;
+import net.dv8tion.jda.core.entities.MessageChannel;
+import net.dv8tion.jda.core.entities.Role;
+
 /**
  * A class used to store things that may be used across multiple classes. 
  * @author adalbert
@@ -26,5 +30,19 @@ public class Common {
 	 */
 	public static Color spColor(int sp) {
 		return (sp==0?Color.blue:Color.red);
+	}
+	/**
+	 * The text channel for a given power.
+	 * 
+	 */
+	public static MessageChannel spChannel(int sp) {
+		return (sp==0?GameData.txtusa:GameData.txtssr);
+	}
+	
+	/**
+	 * The role for a given power.
+	 */
+	public static Role spRole(int sp) {
+		return (sp==0?GameData.roleusa:GameData.rolessr);
 	}
 }
