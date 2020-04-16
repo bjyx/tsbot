@@ -9,6 +9,7 @@ import cards.HandManager;
 import cards.Operations;
 import events.CardEmbedBuilder;
 import game.GameData;
+import main.Common;
 import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -57,40 +58,13 @@ public class InfoCommand extends Command {
 						+(GameData.hasAbility(1, 6)?":<:pla:696879280935927898>:":"")
 						+(GameData.hasAbility(1, 7)?(Operations.seven>2?":black_square:":":japanese_castle:"):"")
 						+(GameData.hasAbility(1, 8)?(Operations.eight>2?"<:InflCC:696610045575692308>":"<:InflC:696610045621829713>"):"")+"\n","",false);
-			String map = "";
-			for (int i=0; i<12; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).support[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).support[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
+			for (int i=0; i<6; i++) {
+				String map = "";
+				for (int j=Common.bracket[i]; j<Common.bracket[i+1]; j++) {
+					map += MapManager.get(j) + (MapManager.get(j).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(j).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(j).isControlledBy()==0?"**":"") + MapManager.get(j).support[0] + (MapManager.get(j).isControlledBy()==0?"**":"") + "/" + (MapManager.get(j).isControlledBy()==1?"**":"") + MapManager.get(j).support[1] + (MapManager.get(j).isControlledBy()==1?"**\n":"\n");
+				}
+				builder.addField(Common.flags[i] + " " + Common.countries[i], map, false);
 			}
-			builder.addField("<:flag_dd:648119347469877268> East Germany", map, false);
-			map = "";
-			for (int i=12; i<26; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).support[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).support[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
-			}
-			builder.addField(":flag_pl: Poland", map, false);
-			map = "";
-			for (int i=26; i<37; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).support[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).support[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
-			}
-			builder.addField(":flag_cz: Czechoslovakia", map, false);
-			map = "";
-			for (int i=37; i<49; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).support[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).support[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
-			}
-			builder.addField(":flag_hu: Hungary", map, false);
-			map = "";
-			for (int i=49; i<63; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).support[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).support[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
-			}
-			builder.addField(":flag_ro: Romania", map, false);
-			map = "";
-			for (int i=63; i<75; i++) {
-				map += MapManager.get(i) + (MapManager.get(i).isControlledBy()==0?StartCommand.emojiID[3]:(MapManager.get(i).isControlledBy()==1?StartCommand.emojiID[2]:"<:InflN:648119362619834373>"))+ (MapManager.get(i).isControlledBy()==0?"**":"") + MapManager.get(i).support[0] + (MapManager.get(i).isControlledBy()==0?"**":"") + "/" + (MapManager.get(i).isControlledBy()==1?"**":"") + MapManager.get(i).support[1] + (MapManager.get(i).isControlledBy()==1?"**\n":"\n");
-			}
-			builder.addField(":flag_bg: Bulgaria", map, false);
-			String effects = "";
-				//TODO
-			builder.addField("Effects:", effects, false);
-			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
 		else if (args[1].equals("cards")) {
 			EmbedBuilder builder = new CardEmbedBuilder()
