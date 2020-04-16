@@ -5,7 +5,6 @@ import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
-import cards.Operations;
 import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;

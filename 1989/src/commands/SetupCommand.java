@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
-import cards.HandManager;
 import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;
@@ -43,7 +42,7 @@ public class SetupCommand extends Command {
 			return;
 		}
 		if (!((setup%2==0&&e.getAuthor().equals(PlayerList.getCom()))||(setup%2==1&&e.getAuthor().equals(PlayerList.getDem())))) {
-			sendMessage(e, ":x: There's only two sides in this battle.");
+			sendMessage(e, ":x: Play the game correctly.");
 			return;
 		}
 		if (args.length%2!=1) {

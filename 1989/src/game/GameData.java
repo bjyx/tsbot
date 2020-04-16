@@ -2,10 +2,8 @@ package game;
 
 import java.awt.Color;
 
-import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
-import commands.TimeCommand;
 import events.CardEmbedBuilder;
 import events.Decision;
 import logging.Log;
@@ -17,7 +15,6 @@ import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import powerstruggle.PowerStruggle;
 import powerstruggle.Scoring;
-import readwrite.ReadWrite;
 /**
  * Deals with the variables in the game, including the score, the space race, and time.
  * @author adalbert
