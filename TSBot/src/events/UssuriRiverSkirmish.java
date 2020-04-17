@@ -79,7 +79,7 @@ public class UssuriRiverSkirmish extends Card {
 			order = new ArrayList<Integer>();
 			values = new ArrayList<Integer>();
 			if (args.length%2!=1) return false;
-			for (int i=2; i<args.length; i+=2) {
+			for (int i=1; i<args.length; i+=2) {
 				int c = MapManager.find(args[i]);
 				order.add(c);
 				if (c==-1) return false;
