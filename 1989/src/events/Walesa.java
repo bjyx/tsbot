@@ -9,7 +9,11 @@ import game.GameData;
 import main.Common;
 import main.Launcher;
 import map.MapManager;
-
+/**
+ * The Walesa Card.
+ * @author wes4zhang
+ *
+ */
 public class Walesa extends Card {
 
 	private static ArrayList<Integer> order;

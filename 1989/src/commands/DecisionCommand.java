@@ -1,13 +1,18 @@
 package commands;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
+import events.CardEmbedBuilder;
+import game.Die;
 import game.GameData;
 import game.PlayerList;
+import logging.Log;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * The command that handles any decisions to be made with regards to any card that cannot be handled by the event command list. The following cards have such an effect:
@@ -71,6 +76,47 @@ public class DecisionCommand extends Command {
 		}
 		if (GameData.ps!=null) {
 			sendMessage(e, ":x: No.");
+			return;
+		}
+		if (!TimeCommand.trapDone) {
+			int x;
+			if (e.getAuthor().equals(PlayerList.getDem())) {
+				sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
+				return;
+			}
+			try {
+				x = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: That's not a number.");
+				return;
+			}
+			if (!HandManager.ComHand.contains(x)) {
+				sendMessage(e, ":x: Don't generate cards out of thin air.");
+				return;
+			}
+			if (CardList.getCard(x).getOps()!=0) {
+				Log.writeToLog("General Strike: Discarded " + CardList.getCard(x).getName());
+				HandManager.discard(1, x);
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("General Strike!").setDescription("Discarded " + CardList.getCard(x));
+				Die die = new Die();
+				die.roll();
+				builder.addField(die.toString(), (die.result + CardList.getCard(x).getOpsMod(1)>5)?"Success - Bear Trap cancelled!":"Failure", false).setColor((die.result + CardList.getCard(x).getOpsMod(1)>5)?Color.red:Color.blue);
+				if (die.result + CardList.getCard(x).getOpsMod(1)>5) { //must EXCEED 5 - correct me if I'm wrong
+					Log.writeToLog("Strike broken.");
+					HandManager.removeEffect(5);
+				}
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+				TimeCommand.trapDone=true;
+				TimeCommand.prompt();
+			}
+			else {
+				Log.writeToLog("General Strike: Played " + CardList.getCard(x).getName());
+				CardList.getCard(x).onEvent(1, new String[] {});
+				HandManager.removeFromHand(1, x);
+				TimeCommand.trapDone=true;
+				TimeCommand.eventRequired=true; //just so the Power Struggle works without needing conditionals
+			}
 			return;
 		}
 		if (GameData.dec == null) {

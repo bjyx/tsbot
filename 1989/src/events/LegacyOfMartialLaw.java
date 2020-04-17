@@ -9,7 +9,7 @@ import main.Launcher;
 import map.MapManager;
 
 /**
- * The Legacy of Martial Law Card, representing... well, the legacy of the martial law period in Poland, including the roundup of Solidarity.
+ * The Legacy of Martial Law Card.
  * @author adalbert
  *
  */
@@ -107,7 +107,7 @@ public class LegacyOfMartialLaw extends Card {
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "Replace 1 Democratic Support with Communist Support in any space in Poland. Then, make one Support Check in Poland using this card's value.";
+		return "Replace 1 Democratic SP with a Communist SP in any space in Poland. Then, make one Support Check in Poland using this card's value.";
 	}
 
 	@Override

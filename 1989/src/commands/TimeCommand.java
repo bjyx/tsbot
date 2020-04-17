@@ -28,9 +28,10 @@ public class TimeCommand extends Command {
 	public static boolean spaceDone = false;
 	public static boolean extraCheck = true;
 	public static boolean isCardDiscarded = true;
+	public static boolean trapDone = true;
 	
 	public static boolean canAdvance() {
-		return cardPlayed&&cardPlayedSkippable&&!(eventRequired^eventDone)&&!(operationsDone^operationsRequired)&&!(spaceDone^spaceRequired)&&isCardDiscarded&&extraCheck;
+		return cardPlayed&&cardPlayedSkippable&&!(eventRequired^eventDone)&&!(operationsDone^operationsRequired)&&!(spaceDone^spaceRequired)&&isCardDiscarded&&extraCheck&&trapDone;
 	}
 	
 	@Override
@@ -104,55 +105,11 @@ public class TimeCommand extends Command {
 				GameData.dec = new Decision(1, 0);
 				return;
 			}
-			cardPlayed = false;
-		}/*
-		else if (HandManager.Effects.contains(42) && (GameData.phasing()==0)) {
-			boolean canDiscard = false;
-			boolean scoring = false;
-			for (Integer c : HandManager.DemHand) {
-				if (CardList.getCard(c).getOpsMod(0)>=2) {
-					canDiscard = true;
-				}
-				else if (CardList.getCard(c).getOps()==0) {
-					scoring = true;
-				}
-			}
-			if (canDiscard) {
-				trapDone = false;
-				GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you must discard a card worth two Operations points or more to Quagmire. (TS.decide [card])").complete();
-			}
-			else if (scoring) {
-				trapDone = false;
-				GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
-			}
-			else {
-				GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
-			}
 		}
-		else if (HandManager.Effects.contains(44) && (GameData.phasing()==1)) {
-			boolean canDiscard = false;
-			boolean scoring = false;
-			for (Integer c : HandManager.ComHand) {
-				if (CardList.getCard(c).getOpsMod(0)>=2) {
-					canDiscard = true;
-				}
-				else if (CardList.getCard(c).getOps()==0) {
-					scoring = true;
-				}
-			}
-			if (canDiscard) {
-				trapDone = false;
-				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you must discard a card worth two Operations points or more to Bear Trap. (TS.decide [card])").complete();
-			}
-			else if (scoring) {
-				trapDone = false;
-				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. You must now play a scoring card. (TS.decide [card])").complete();
-			}
-			else {
-				GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards to discard. This action round will be passed over.").complete();
-			}
-		}*/
-		else if (GameData.getAR()>14) { //skippable eighth action round
+		if (HandManager.Effects.contains(5) && (GameData.phasing()==1)) {
+			trapDone = false;
+		}
+		else if (GameData.getAR()>14) { //skippable eighth action round from Honecker
 			cardPlayedSkippable = false;
 			//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
 			//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
@@ -222,6 +179,9 @@ public class TimeCommand extends Command {
 		else if (spaceRequired&&!spaceDone) {
 			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
 			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
+		}
+		else if (!trapDone) {
+			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you must discard a card to attempt to break up this General Strike. Alternatively, you may play a scoring card for the event, but this will allow the strike to continue. (TS.decide [card])").complete();
 		}
 		else if (!isCardDiscarded) {
 			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();

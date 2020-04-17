@@ -10,7 +10,7 @@ import main.Launcher;
 import map.MapManager;
 
 /**
- * The Solidarity Legalized card, representing the 
+ * The Solidarity Legalized card. 
  * @author adalbert
  *
  */
@@ -77,7 +77,7 @@ public class Solidarity extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Place 1 Democratic Support in every uncontrolled Farmer and Worker Space in Poland. *The Communist player is no longer allowed to conduct Support Checks in Gdańsk. Allows the play of " + CardList.getCard(3) + ".*";
+		return "Place 1 Democratic SP in every uncontrolled Farmer and Worker Space in Poland. *The Communist player is no longer allowed to conduct Support Checks in Gdańsk. Allows the play of " + CardList.getCard(3) + ".*";
 	}
 
 	@Override
