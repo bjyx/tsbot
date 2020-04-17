@@ -44,7 +44,6 @@ public class HandManager {
 	 * <ul>
 	 * <li> {@code 002 Solidarity Legalized} - Allows {@code 003 Walesa}. Com can no longer check Gdansk.
 	 * <li> {@code 005 General Strike} - Bear Trap.
-	 * <li> {@code 008 Prudence} - RSP.
 	 * <li> {@code 009 The Wall} - The next Com support check ignores adjacency for the Democrat.
 	 * <li> {@code 013 Stasi} - Fuck Stasi.
 	 * <li> {@code 015 Honecker} - Com gets an extra action round (skippable)
@@ -69,6 +68,8 @@ public class HandManager {
 	 * <li> {@code 073 Laszlo Tokes} - Allows {@code Massacre in Timisoara}.
 	 * <li> {@code 074 FRG Embassies} - +1 to Dem checks in E. Europe
 	 * <li> {@code 077 Samizdat} - Delay a card.
+	 * <li> {@code 080 Prudence, Bush 41} - Red Scare.
+	 * <li> {@code 081 Prudence, Shev} - Purge.
 	 * <li> {@code 083 Modrow} - Prevents {@code 015 Honecker}.
 	 * <li> {@code 097 Tyrant Is Gone} - Prevents Ceausescu Events.
 	 * <li> {@code 970 Tyrant Is Gone pending} - Plays Tyrant Is Gone as soon as Romania Scoring is resolved.

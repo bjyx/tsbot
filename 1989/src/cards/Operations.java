@@ -166,11 +166,7 @@ public class Operations {
 				txtsp.sendMessage(":x: "+args[2]+" isn't a country or alias of one.").complete();
 				return false;
 			}
-			if (MapManager.get(country).region==9) {
-				txtsp.sendMessage(":x: You cannot realign this country.").complete();
-				return false;
-			}
-			if (MapManager.get(country).region!=7&&MapManager.get(country).region!=8&&restrictions==47) {
+			/*if (MapManager.get(country).region!=7&&MapManager.get(country).region!=8&&restrictions==47) {
 				txtsp.sendMessage(":x: Juntas are only a thing in Latin America.").complete();
 				return false;
 			}
@@ -181,13 +177,13 @@ public class Operations {
 			if (MapManager.get(country).region!=7&&restrictions==136) {
 				txtsp.sendMessage(":x: That's a bit far to be part of your backyard.").complete();
 				return false;
-			}
+			}*/
 			return this.realignment(country);
 		}
 		//legacy
 		if (usage.equals("t")||usage.equals("tsquare")||usage.equalsIgnoreCase("t2")) {
 			if (GameData.getT2(sp)==8) {
-				txtsp.sendMessage(":x: This is as far as you go towards the Final Frontier. How did you get here, anyways?").complete();
+				txtsp.sendMessage(":x: This is as far as you go on the square. How did you get here, anyways?").complete();
 				return false;
 			}
 			return this.space();
@@ -255,17 +251,20 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
+		if (!influence&&!tsquare) {
 			boolean flag = true;
 			for (int i=0; i<75; i++) {
+				if (sp==1 && i==14 && HandManager.effectActive(2)) continue;
 				if (MapManager.get(i).support[(sp+1)%2]>0) {
 					flag = false;
 					break;
 				}
 			}
 			if (flag) {
-				txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have influence on the board.").complete();
+				txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have (checkable) influence on the board.").complete();
 				return true;
 			}
+		}
 		if (HandManager.effectActive(2) && country==14 && sp==1) { //checking gdansk as com under solidarity
 			txtsp.sendMessage(":x: Solidarity is legal, sir. Nothing we can do about that.").complete();
 			return false;
@@ -276,6 +275,12 @@ public class Operations {
 		}
 		influence = false;
 		tsquare = false;
+		boolean wall = false;
+		if (sp==1&&MapManager.get(country).inRegion(0)&&HandManager.effectActive(9)) {
+			HandManager.removeEffect(9);
+			wall = true;
+			Log.writeToLog("The Wall: ignore maluses.");
+		}
 		Log.writeToLog("Check in " + MapManager.get(country).shorthand.toUpperCase());
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Support Check")
@@ -291,7 +296,7 @@ public class Operations {
 				modifiers[MapManager.get(adj).isControlledBy()] += MapManager.get(adj);
 				Log.writeToLog("+1 to roll (control of "+MapManager.get(adj).shorthand.toUpperCase()+").");
 			}
-			else if (MapManager.get(adj).isControlledBy()==(sp+1)%2) {
+			else if (MapManager.get(adj).isControlledBy()==(sp+1)%2&&!wall) { //wall bypass
 				roll--;
 				modifiers[MapManager.get(adj).isControlledBy()] += MapManager.get(adj);
 				Log.writeToLog("-1 to roll (enemy control of "+MapManager.get(adj).shorthand.toUpperCase()+").");

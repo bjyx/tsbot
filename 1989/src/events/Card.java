@@ -104,15 +104,15 @@ public abstract class Card {
 				.setColor(sp==0?Color.blue:(sp==1?Color.red:Color.gray));
 	}
 	/**
-	 * Applies the effects of Red Scare/Purge and Containment/Brezhnev Doctrine to the cards.
+	 * Applies the effects of Prudence and Perestroika/Sinatra Doctrine to the cards.
 	 * @param sp
 	 * @return the actual number of Operations able to be used using this card. 
 	 */
 	public int getOpsMod(int sp) {
 		if (getOps()==0) return 0;
 		if (sp==0) {
-			return Math.max(1, Math.min(4, this.getOps() + (HandManager.Effects.contains(25)?1:0) - (HandManager.Effects.contains(310)?1:0)));
+			return Math.max(1, this.getOps() + (HandManager.Effects.contains(50)?1:0) - (HandManager.Effects.contains(80)?1:0));
 		}
-		else return Math.max(1, Math.min(4, this.getOps() + (HandManager.Effects.contains(51)?1:0) - (HandManager.Effects.contains(311)?1:0)));
+		else return Math.max(1, this.getOps() + (HandManager.Effects.contains(25)?1:0) - (HandManager.Effects.contains(81)?1:0));
 	}
 }

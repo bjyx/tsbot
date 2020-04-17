@@ -7,7 +7,7 @@ import java.util.List;
 import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
-import events.CardEmbedBuilder;
+import events.*;
 import game.Die;
 import game.GameData;
 import game.PlayerList;
@@ -128,7 +128,7 @@ public class DecisionCommand extends Command {
 			return;
 		}
 		/*
-		 * Card that let you have ops:
+		 * Cards that let you have ops, mostly support checks, use id 1
 		 * - 1 Legacy of Martial Law
 		 * - 3 Walesa
 		 * - 
@@ -137,6 +137,26 @@ public class DecisionCommand extends Command {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
+			}
+		}
+		if (GameData.dec.card==6) { //brought in for questioning: = FYP
+			if (!CardList.getCard(Questioning.card).isFormatted(1, args)) {
+				sendMessage(e, ":x: Format your arguments correctly.");
+				return;
+			}
+			if (!CardList.getCard(Questioning.card).isPlayable(1)) { //should never trigger but good to have
+				sendMessage(e, "Oops. Forgot you can't play that card for an event. Let's rectify that.");
+				HandManager.discard(0, Questioning.card);
+			}
+			else {
+				if (CardList.getCard(Questioning.card).isRemoved()) {
+					HandManager.removeFromGame(0, Questioning.card);
+				}
+				else {
+					HandManager.discard(0, Questioning.card);
+				}
+				Log.writeToLog(CardList.getCard(Questioning.card).getName()+":");
+				CardList.getCard(Questioning.card).onEvent(0, args);
 			}
 		}
 		// TODO more events as enumerated above as they come

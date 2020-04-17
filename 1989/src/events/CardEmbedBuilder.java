@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import commands.StartCommand;
 import game.GameData;
+import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -22,6 +23,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	 */
 	public CardEmbedBuilder() {
 		super();
+		this.setTitle("<missing flavortext>").setDescription("<missing flavortext>").setFooter("\"<missing flavortext>\"\n- <missing flavortext>", Launcher.url("people/qmark.png"));
 	}
 	
 	@Override

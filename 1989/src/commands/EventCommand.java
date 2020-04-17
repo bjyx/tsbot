@@ -16,7 +16,7 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  *
  */
 public class EventCommand extends Command {
-
+	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.hasGameEnded()) {
@@ -67,7 +67,7 @@ public class EventCommand extends Command {
 			if (CardList.getCard(HandManager.activecard).isRemoved()) {
 				HandManager.Removed.add(HandManager.activecard);
 			}
-			else if (CardList.getCard(HandManager.activecard).getOps()!=0) { //TODO more cards?
+			else if (CardList.getCard(HandManager.activecard).getOps()!=0) {
 				HandManager.Discard.add(HandManager.activecard);
 			}
 			Log.writeToLog(CardList.getCard(HandManager.activecard).getName()+":");
