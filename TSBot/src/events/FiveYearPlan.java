@@ -31,6 +31,7 @@ public class FiveYearPlan extends Card {
 		card = HandManager.SUNHand.get((int) (Math.random()*HandManager.SUNHand.size()));
 		if (CardList.getCard(card).getAssociation()==0&&CardList.getCard(card).isPlayable(0)) {
 			GameData.dec = new Decision(0, 5);
+			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play the event you just pulled from the Soviet hand.").complete();
 		}
 		else {
 			HandManager.discard(1, card);
@@ -38,9 +39,6 @@ public class FiveYearPlan extends Card {
 		Log.writeToLog("The Soviets discard " + CardList.getCard(card).getName() + ".");
 		builder.addField("Centralization","The Soviets lose " + CardList.getCard(card) + " attempting to improve their economy.",false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		if (CardList.getCard(card).getAssociation()==0) {
-			GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play the event you just pulled from the Soviet hand.").complete();
-		}
 	}
 
 	@Override
