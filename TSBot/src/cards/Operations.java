@@ -390,68 +390,73 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
-		if (restrictions==47) {
-			boolean flag = true;
-			for (int i=64; i<84; i++) {
-				if (MapManager.get(i).influence[(sp+1)%2]>0) {
-					flag = false;
-					break;
+		if (!coupdetat&&!influence&&!spaceable) { //this should only occur if you are locked into realigning
+			if (restrictions==47) {
+				boolean flag = true;
+				for (int i=64; i<84; i++) {
+					if (MapManager.get(i).influence[(sp+1)%2]>0) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+					return true;
 				}
 			}
-			if (flag) {
-				txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
-				return true;
-			}
-		}
-		else if (restrictions==96) {
-			boolean flag = true;
-			for (int i=0; i<21; i++) {
-				if (MapManager.get(i).influence[1]>0) {
-					flag = false;
-					break;
+			else if (restrictions==96) {
+				boolean flag = true;
+				for (int i=0; i<21; i++) {
+					if (MapManager.get(i).influence[1]>0) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+					return true;
 				}
 			}
-			if (flag) {
-				txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
-				return true;
-			}
-		}
-		else if (restrictions==136) {
-			boolean flag = true;
-			for (int i=64; i<74; i++) {
-				if (MapManager.get(i).influence[1]>0) {
-					flag = false;
-					break;
+			else if (restrictions==136) {
+				boolean flag = true;
+				for (int i=64; i<74; i++) {
+					if (MapManager.get(i).influence[1]>0) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+					return true;
 				}
 			}
-			if (flag) {
-				txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
-				return true;
-			}
-		}
-		else {
-			boolean flag = true;
-			for (int i=0; i<84; i++) {
-				if (MapManager.get(i).influence[(sp+1)%2]>0) {
-					flag = false;
-					break;
+			else {
+				boolean flag = true;
+				for (int i=0; i<84; i++) {
+					if (!MapManager.get(i).checkIsCoupable()&&!HandManager.effectActive(1003)) continue;
+					if (MapManager.get(i).inRegion(0)&&HandManager.effectActive(21)&&MapManager.get(i).isControlledBy()==0&&!(i==8&&HandManager.Effects.contains(17)) && !(i==19&&HandManager.Effects.contains(55)) && sp == 1) continue;
+					if (i==36&&sp==1&&HandManager.effectActive(27)) continue;
+					if (MapManager.get(i).influence[(sp+1)%2]>0) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have influence you can realign on the board.").complete();
+					return true;
 				}
 			}
-			if (flag) {
-				txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have influence on the board.").complete();
-				return true;
-			}
 		}
-		if (!HandManager.effectActive(1003)&&(!MapManager.get(country).checkIsCoupable() && !(MapManager.get(country).region<=2 && restrictions==96))) {
-			txtsp.sendMessage(":x: DEFCON restricts you from realigning this country.").complete();
-			return false;
-		}
-		if (MapManager.get(country).region<=2 && HandManager.effectActive(21) && MapManager.get(country).isControlledBy()==0 && (country!=8 || !HandManager.Effects.contains(17)) && (country != 19 || !HandManager.Effects.contains(55)) && sp == 1) {
+		if (MapManager.get(country).inRegion(0) && HandManager.effectActive(21) && MapManager.get(country).isControlledBy()==0 && (country!=8 || !HandManager.Effects.contains(17)) && (country != 19 || !HandManager.Effects.contains(55)) && sp == 1) {
 			txtsp.sendMessage(":x: This country is under the protection of NATO.").complete();
 			return false;
 		}
 		if (country==36 && sp==1 && HandManager.effectActive(27)) {
 			txtsp.sendMessage(":x: Japan's under one defense pact you don't want to violate...").complete();
+			return false;
+		}
+		if (!HandManager.effectActive(1003)&&(!MapManager.get(country).checkIsCoupable() && !(MapManager.get(country).region<=2 && restrictions==96))) {
+			txtsp.sendMessage(":x: DEFCON restricts you from realigning this country.").complete();
 			return false;
 		}
 		if (MapManager.get(country).influence[(sp+1)%2]==0) {
