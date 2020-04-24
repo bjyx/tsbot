@@ -6,7 +6,6 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import logging.Log;
-import main.Launcher;
 
 /**
  * The Brought In For Questioning card.

@@ -6,6 +6,7 @@ import java.util.List;
 import cards.CardList;
 import cards.HandManager;
 import events.CardEmbedBuilder;
+import events.Stasi;
 import game.GameData;
 import game.PlayerList;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
@@ -96,6 +97,9 @@ public class PlayCommand extends Command {
 		if (TimeCommand.cardPlayed) {
 			sendMessage(e, ":x: This is hardly your priority right now.");
 			return;
+		}
+		if (GameData.phasing()==0&&HandManager.effectActive(13)&&card!=Stasi.card) {
+			sendMessage(e, ":x: The Stasi are watching. .̄_.̄");
 		}
 		if (mode == 'o'&&CardList.getCard(card).getOps()==0) { //All cards have either an op value or is a scoring card that is obligatorily played for the event
 			sendMessage(e, ":x: A scoring card? For ops!? Preposterous!");

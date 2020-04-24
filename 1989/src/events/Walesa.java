@@ -23,10 +23,7 @@ public class Walesa extends Card {
 	public void onEvent(int sp, String[] args) {
 		boolean opponentInfluence=false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("<missing flavortext>")
-			.setDescription("Polish leadership evaluates 1981 decision to impose martial law")
-			.setFooter("\"<missing flavortext>\"\n" + 
-					"- <missing person>", Launcher.url("people/qmark.png"))
+		builder
 			.setColor(Color.blue);
 		builder.bulkChangeInfluence(order, 0, values);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -87,7 +84,7 @@ public class Walesa extends Card {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		if (args.length%2!=1) return false;
-		for (int i=2; i<args.length; i+=2) {
+		for (int i=1; i<args.length; i+=2) {
 			int c = MapManager.find(args[i]);
 			order.add(c);
 			if (c==-1) return false;

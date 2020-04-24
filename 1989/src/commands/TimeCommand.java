@@ -1,13 +1,17 @@
 package commands;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
+import events.CardEmbedBuilder;
 import events.Decision;
+import events.Stasi;
 import game.GameData;
 import game.PlayerList;
+import main.Common;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * The command handling the flow of time.
@@ -60,10 +64,6 @@ public class TimeCommand extends Command {
 			sendMessage(e, ":x: Declare your intent to skip. Alternatively, play a card.");
 			return;
 		}
-		if (!extraCheck) {
-			sendMessage(e, ":x: You can use an extra support check. For some reason, you have military support in China.");
-			return;
-		}
 		if (eventRequired&&!eventDone) {
 			sendMessage(e, ":x: You played a card for the event; you must finish it.");
 			return;
@@ -80,6 +80,28 @@ public class TimeCommand extends Command {
 			sendMessage(e, ":x: You may choose to discard a card - make that decision first.");
 			return;
 		}
+		if (!extraCheck&&GameData.arsLeft()==0) {
+			GameData.dec = new Decision(GameData.aheadInSpace(), 0); //whoever has the ability is obligatorily ahead in space
+			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.aheadInSpace()).getAsMention() + ", you can now use your extra support check.");
+		}
+		if (GameData.phasing()==0&&HandManager.effectActive(13)&&GameData.getAR()!=14) {
+			if (args.length<2) {
+				sendMessage(e, ":x: The Stasi are watching. .̄_.̄");
+				return;
+			}
+			try {
+				Stasi.card = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: The Stasi are not amused. This will go on your next report. .̄_.̄");
+				return;
+			}
+			if (!HandManager.DemHand.contains(Stasi.card)) {
+				sendMessage(e, ":x: The Stasi are not amused. This will go on your next report. .̄_.̄");
+				return;
+			}
+		}
+		
 		GameData.changeScore(0); //removes We Will Bury You if it's still active for some reason
 		GameData.checkScore(false, false);
 		
@@ -89,19 +111,20 @@ public class TimeCommand extends Command {
 		}
 		GameData.advanceTime();
 		HandManager.activecard = 0;
-		//Operations.allowedUSA = Operations.influencePossible(0);
-		//Operations.allowedSUN = Operations.influencePossible(1);
+		if (HandManager.effectActive(13)&&GameData.getAR()!=14) {
+			GameData.txtchnl.sendMessage(new CardEmbedBuilder().setTitle("Intel from the Stasi").setDescription("Dissidents planning to use " + CardList.getCard(Integer.parseInt(args[1]))).setColor(Color.red).build()).complete();
+		}
 		if (GameData.getAR()==1) {
 			GameData.startTurn();
 			if (GameData.hasAbility(0, 5)) {
 				isCardDiscarded = false;
-				//GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
+				GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
 				GameData.dec = new Decision(0, 0);
 				return;
 			}
 			if (GameData.hasAbility(1, 5)) {
 				isCardDiscarded = false;
-				//GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
+				GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
 				GameData.dec = new Decision(1, 0);
 				return;
 			}
@@ -184,13 +207,11 @@ public class TimeCommand extends Command {
 			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you must discard a card to attempt to break up this General Strike. Alternatively, you may play a scoring card for the event, but this will allow the strike to continue. (TS.decide [card])").complete();
 		}
 		else if (!isCardDiscarded) {
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
 		}
 		else if (!extraCheck) {
 			GameData.dec = new Decision(GameData.phasing(), 121);
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", would you like to lower the DEFCON level?  (TS.decide yes/no)").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", would you like to lower the DEFCON level? (TS.decide yes/no)").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", ").complete();
 		}
 		else if (canAdvance()) {
 			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();

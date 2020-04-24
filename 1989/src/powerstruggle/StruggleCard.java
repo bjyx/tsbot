@@ -1,8 +1,5 @@
 package powerstruggle;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import game.GameData;
 import map.MapManager;
 

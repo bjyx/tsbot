@@ -22,7 +22,7 @@ public class Prudence extends Card {
 			.setColor(Color.blue)
 			.setFooter("\"It is time to realize that neither socialism, nor friendship, nor good-neighborliness, nor respect can be produced by bayonets, tanks or blood.\"\n"
 					+ "- Eduard Shevardnadze", Launcher.url("people/shevardnadze.png"));
-			builder.addField("Prudence","The USSR subtracts 1 Operations point from any card played for operations.",false);
+			builder.addField("Prudence","The Communist subtracts 1 Operations point from any card played for operations for the rest of this turn.",false);
 			HandManager.addEffect(81);
 			Log.writeToLog("Prudence Active - favors Dem.");
 		}
@@ -32,7 +32,7 @@ public class Prudence extends Card {
 			.setColor(Color.red)
 			.setFooter("\"I’m certainly not seen as visionary... But I hope I’m seen as steady and prudent and able.\"\n"
 					+ "- George H. W. Bush", Launcher.url("people/bush.png"));
-			builder.addField("Prudence","The US subtracts 1 Operations point from any card played for operations.",false);
+			builder.addField("Prudence","The Democrat subtracts 1 Operations point from any card played for operations for the rest of this turn.",false);
 			HandManager.addEffect(80);
 			Log.writeToLog("Prudence Active - favors Com.");
 		}
