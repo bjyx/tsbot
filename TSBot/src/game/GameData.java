@@ -396,9 +396,36 @@ public class GameData {
 	 * Performs all functions necessary at the start of the turn.
 	 */
 	public static void startTurn() {
-		txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(defcon!=5?1:0).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build()).complete(); //stage A
+		txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(defcon!=5?1:0).setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).setFooter(GameData.turnQuote(GameData.turn),GameData.turnImage(GameData.turn)).build()).complete(); //stage A
 		HandManager.deal(); // stage B; also reshuffles automatically
 		Log.writeToLog("-+-+- Turn "+getTurn()+" -+-+-");
+	}
+	
+	private static String turnQuote(int t) {
+		if (t==1) return "\"It cannot be otherwise. If now there is not a communist government in Paris, this is only because Russia has no an army which can reach Paris in 1945.\"\n- Joseph Stalin, 1945";
+		if (t==2) return "\"No government is perfect. One of the chief virtues of a democracy, however, is that its defects are always visible and under democratic processes can be pointed out and corrected.\"\n- Harry Truman announcing his doctrine, 1947";
+		if (t==3) return "\"But let no one think that the expenditure of vast sums for weapons and systems of defense can guarantee absolute safety for the cities and citizens of any nation. The awful arithmetic of the atomic bomb does not permit any such easy solution.\"\n- Dwight D. Eisenhower, 1953";
+		if (t==4) return "\"We wish to live in peace, tranquility. But if anyone believes that our smiles involve abandonment of the teaching of Marx, Engels and Lenin he deceives himself poorly. Those who wait for that must wait until a shrimp learns to whistle.\"\n- Nikita Khrushchev, 1955";
+		if (t==5) return "\"Let every nation know, whether it wishes us well or ill, that we shall pay any price, bear any burden, meet any hardship, support any friend, oppose any foe to assure the survival and the success of liberty.\"\n- John F. Kennedy, 1961";
+		if (t==6) return "\"Our American unity does not depend upon unanimity. We have differences; but now, as in the past, we can derive from those differences strength, not weakness, wisdom, not despair. Both as a people and a government, we can unite upon a program, a program which is wise and just, enlightened and constructive.\"\n- Lyndon B. Johnson, 1963";
+		if (t==7) return "\"\"\n- Leonid Brezhnev, 1945";
+		if (t==8) return "\"\"\n- James E. Carter, 1945";
+		if (t==9) return "\"\"\n- Ronald Reagan, 1945";
+		if (t==10) return "\"\"\n- Mikhail Gorbachev, 1945";
+		return "";
+	}
+	private static String turnImage(int t) {
+		if (t==1) return Launcher.url("people/stalin.png");
+		if (t==2) return Launcher.url("people/truman.png");
+		if (t==3) return Launcher.url("people/eisenhower.png");
+		if (t==4) return Launcher.url("people/khrushchev.png");
+		if (t==5) return Launcher.url("people/jfk.png");
+		if (t==6) return Launcher.url("people/lbj.png");
+		if (t==7) return Launcher.url("people/brezhnev.png");
+		if (t==8) return Launcher.url("people/carter.png");
+		if (t==9) return Launcher.url("people/reagan.png");
+		if (t==10) return Launcher.url("people/gorbachev.png");
+		return "";
 	}
 	
 	/**

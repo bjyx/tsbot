@@ -69,7 +69,7 @@ public class StartCommand extends Command {
 		}
 		int settings = 1;
 		try {
-			if (args.length>=2 && Integer.parseInt(args[1])%256<144 && Integer.parseInt(args[1])<512) settings=Integer.parseInt(args[1]);
+			if (args.length>=2 && Integer.parseInt(args[1])/*%256*/<144 /*&& Integer.parseInt(args[1])<512*/) settings=Integer.parseInt(args[1]);
 			else if (args.length>=2){
 				sendMessage(e, ":x: Leave this field blank if you want to. Settings must be written as non-negative integers less than 144.");
 				return;
@@ -136,11 +136,11 @@ public class StartCommand extends Command {
 		Log.writeToLog("New Game: "+settings+" "+SetupCommand.handicap);
 		ruleset = settings;
 		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Twilight Struggle Game Has Started.").setDescription(":hourglass: It is now seven minutes to midnight and counting. Good luck.").setColor(Color.WHITE);
-		if (settings>=256) {
+		/*if (settings>=256) {
 			Launcher.change();
 			settings-=256;
 			builder.addField("Secret mode activated", "Well, you got a bit too inquisitive. This world behaves a bit... differently. Nahh, it's just an aesthetic change, don't mind.", false);
-		}
+		}*/
 		if (settings>=128) {
 			GameData.latewar = true;
 			settings-=128;

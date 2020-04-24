@@ -154,7 +154,7 @@ public class InfoCommand extends Command {
 				if (HandManager.effectActive(55)) effects+=":flag_de: Willy Brandt\n";
 				//Activators
 				if (HandManager.effectActive(16)&&!HandManager.effectActive(21)) effects+=":flag_pl: NATO formable\n";
-				if (HandManager.effectActive(23)&&!HandManager.effectActive(21)) effects+=":money_with_wings: NATO formable\n";
+				if (HandManager.effectActive(23)&&!HandManager.effectActive(21)) effects+=":tractor: NATO formable\n";
 				if (HandManager.effectActive(68)) effects+=":flag_va: John Paul II\n";
 				//provides an action round
 				if (HandManager.effectActive(129)) effects+=":flag_in: Indo-Soviet Treaty";
@@ -201,8 +201,8 @@ public class InfoCommand extends Command {
 			}
 			builder.addField("Removed From Game", cards, false);
 			builder.addField("Deck", "Size: " + HandManager.Deck.size(), false);
-			builder.addField("US Hand", "Size: " + HandManager.USAHand.size() + (HandManager.China==0?" + :flag_cn:":""), false);
-			builder.addField("USSR Hand", "Size: " + HandManager.SUNHand.size()+(HandManager.China==1?" + :flag_cn:":""), false);
+			builder.addField("US Hand", "Size: " + HandManager.USAHand.size() + (HandManager.China==0?" + :flag_cn:":(HandManager.China==2?StartCommand.emojiID[0]:"")), false);
+			builder.addField("USSR Hand", "Size: " + HandManager.SUNHand.size()+(HandManager.China==1?" + :flag_cn:":(HandManager.China==3?StartCommand.emojiID[0]:"")), false);
 			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
 		else if (args.length<3) {
