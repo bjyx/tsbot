@@ -35,7 +35,7 @@ public class CardList {
 		CardList.addCard(new Prudence());
 		CardList.addCard(new TheWall());
 		CardList.addCard(new CultOfPersonality());
-		/*
+		
 		CardList.addCard(new DissidentArrested());
 		CardList.addCard(new Apparatchiks());
 		CardList.addCard(new Stasi());
