@@ -56,19 +56,19 @@ Cards:
 053 - By Andrew Hall - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=56177562
 054 - By James N. Wallace - This image is available from the United States Library of Congress's Prints and Photographs divisionunder the digital ID cph.3c34154.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing for more information., Public Domain, https://commons.wikimedia.org/w/index.php?curid=186370
 055 - By Bundesarchiv, B 145 Bild-F064862-0019 / Schaack, Lothar / CC-BY-SA 3.0, CC BY-SA 3.0 de, https://commons.wikimedia.org/w/index.php?curid=5470955
-056
-057
-058
-059
-060
-061
-062
-063
-064
-065
-066
+056 - By nknown - http://www.15khordad42.net/pic/picshow/75.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=15060978
+057 - By US Army, Redstone Arsenal - http://www.redstone.army.mil/history/chron2b/1957.html, Public Domain, https://commons.wikimedia.org/w/index.php?curid=54446
+058 - By 《人民画报》 - 《人民画报》1968年2月, Public Domain, https://commons.wikimedia.org/w/index.php?curid=75465830
+059 - By By S.Sgt. Albert R. Simpson. Department of Defense. Department of the Army. Office of the Deputy Chief of Staff for Operations. U.S. Army Audiovisual Center. - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 594360., Public Domain, https://commons.wikimedia.org/w/index.php?curid=1111279
+060 - By NASA - Armstrong Photo Gallery: Home - info - picGreat Images in NASA: Home - info - pic, Public Domain, https://commons.wikimedia.org/w/index.php?curid=6448042
+061 - By David Falconer, Photographer (NARA record: 1427627) - U.S. National Archives and Records Administration, Public Domain, https://commons.wikimedia.org/w/index.php?curid=17173521
+062 - By unattributed - HST-AVC, Public Domain, https://commons.wikimedia.org/w/index.php?curid=11532372
+063 - By Station Chief, Southern Africa Branch, Africa Division, Central Intelligence Agency Office of African and Latin American Analyses (Name of actual individual has been redacted) - Picture scanned from declassified Central Intelligence Agency research report on the People's Liberation Army of Namibia, a (currently defunct) guerrilla force which operated during the South African Border War., Public Domain, https://commons.wikimedia.org/w/index.php?curid=60543590
+064 - By White House photo - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 176083., Public Domain, https://commons.wikimedia.org/w/index.php?curid=1236043
+065 - By Unknown author - US govt. archives, Public Domain, https://commons.wikimedia.org/w/index.php?curid=619628
+066 - By Department of Defense. Department of the Air Force. NAIL Control Number: NWDNS-342-AF-18302USAF - https://arcweb.archives.gov/arc/digital_detail.jsp?&pg=1&rn=1&tn=542175&st=b&rp=details&nh=1, Public Domain, https://commons.wikimedia.org/w/index.php?curid=5969391
 067
-068
+068 - By Barbara Bartkowiak - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=36654106
 069
 070 - By Martin Baran - Own work http://spojenestaty.blogspot.com/2013/11/noc-vo-washingtone-dc.html, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=29793484
 071
