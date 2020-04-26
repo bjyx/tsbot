@@ -69,18 +69,18 @@ Cards:
 066 - By Department of Defense. Department of the Air Force. NAIL Control Number: NWDNS-342-AF-18302USAF - https://arcweb.archives.gov/arc/digital_detail.jsp?&pg=1&rn=1&tn=542175&st=b&rp=details&nh=1, Public Domain, https://commons.wikimedia.org/w/index.php?curid=5969391
 067
 068 - By Barbara Bartkowiak - Own work, CC BY-SA 4.0, https://commons.wikimedia.org/w/index.php?curid=36654106
-069
+069 - By Razi Sol from Santiago, Chile, (México) - Parque por la paz Villa Grimaldi, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=9067094
 070 - By Martin Baran - Own work http://spojenestaty.blogspot.com/2013/11/noc-vo-washingtone-dc.html, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=29793484
-071
-072
-073
+071 - By Oliver F. Atkins, 1916-1977, Photographer (NARA record: 8451334) - U.S. National Archives and Records Administration, Public Domain, https://commons.wikimedia.org/w/index.php?curid=16454285
+072 - By National Archives - Egypt - National Security Council. Central Intelligence Agency. (09/18/1947 - 12/04/1981). - This film documents how 1972 marked a shift in Egypt's relationship with the Soviet Union and why this period of time was a crossroads in Egyptian politics. - DVD Copied by IASL Scanner John Williams. - ARC 1687981 / LI 263.1363
+073 - By Knudsen, Robert L. (Robert LeRoy), 1929-1989, White House Photographer - This media is available in the holdings of the National Archives and Records Administration, cataloged under the National Archives Identifier (NAID) 194552., Public Domain, https://commons.wikimedia.org/w/index.php?curid=526900
 074 - By Sarah Stierch - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=16518454
-075
-076
-077
-078
+075 - By Douglas Radamez Barahona, Giovani Ascencio Ardón y Raul Lemus- Grupo Cinteupiltzin CENAR El Salvador - Mural pintado con acrílico y óleos, CC BY-SA 3.0, https://commons.wikimedia.org/w/index.php?curid=1791979
+076 - By China Photo Service - [1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANeFo), 1945-1989, Nummer toegang 2.24.01.04 Bestanddeelnummer 922-3864, CC BY-SA 3.0 nl, https://commons.wikimedia.org/w/index.php?curid=59466219
+077 - Public Domain, https://commons.wikimedia.org/w/index.php?curid=118610
+078 - By Cecil Stoughton - Cecil Stoughton. White House Photographs. John F. Kennedy Presidential Library and Museum, Boston. https://www.jfklibrary.org/Asset-Viewer/Archives/JFKWHP-ST-C290-2-61.aspx, Public Domain, https://commons.wikimedia.org/w/index.php?curid=66395127
 079 - Own work
-080 - 
+080 - By NASA photo As11-40-5886 - http://www.hq.nasa.gov/alsj/a11/AS11-40-5886.jpg, Public Domain, https://commons.wikimedia.org/w/index.php?curid=525386
 081 - Own work
 082
 083
@@ -103,7 +103,7 @@ Cards:
 100
 101
 102
-103
+103 - 
 104
 105
 106
@@ -111,6 +111,8 @@ Cards:
 108
 109
 110
+
+promo:
 111
 112
 113
@@ -119,6 +121,11 @@ Cards:
 116
 117
 118
+
+yiyo:
+119
+...
+138
 
 Leader images:
 allende: By S.Allende_7_dias_ilustrados.JPG: Revista Argentina "Siete días ilustrados"derivative work: Rec79 (talk) - S.Allende_7_dias_ilustrados.JPG, Public Domain, https://commons.wikimedia.org/w/index.php?curid=10899068
@@ -156,6 +163,8 @@ degaulle: By Bundesarchiv, B 145 Bild-F010324-0002 / Steiner, Egon / CC-BY-SA 3.
 eisenhower: By White House - Eisenhower Presidential Library, Public Domain, https://commons.wikimedia.org/w/index.php?curid=3025709
 
 gorbachev: By The Official CTBTO Photostream - Reagan and Gorbachev Arrive, CC BY 2.0, https://commons.wikimedia.org/w/index.php?curid=64270071
+
+gutierrez: By Mohan - Own work, Public Domain, https://commons.wikimedia.org/w/index.php?curid=2894684
 
 havel: By Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA - VACLAC HAVEL, CC BY-SA 2.0, https://commons.wikimedia.org/w/index.php?curid=74769308
 
@@ -219,7 +228,7 @@ truman: By National Archives and Records Administration. Office of Presidential 
 
 voa: By Voice of America - https://www.voanews.com/, Public Domain, https://commons.wikimedia.org/w/index.php?curid=60739870
 
-Turn Zero:
+tz:
 potsdam: By Unknown author or not provided - U.S. National Archives and Records Administration, Public Domain, https://commons.wikimedia.org/w/index.php?curid=17060795
 ve: Public Domain, https://commons.wikimedia.org/w/index.php?curid=640412
 C2
