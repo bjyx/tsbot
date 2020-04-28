@@ -801,6 +801,10 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: Modes can be any of r, e, o, s, or u. Not the one you chose, though.");
 				return;
 			}
+			if (GameData.isHeadlinePhase()&&(card == 32)) { //UN Intervention be played in the headline phase
+				sendMessage(e, ":x: That is not a card you can play in the headline.");
+				return;
+			}
 			if (mode == 'o'&&CardList.getCard(card).getOps()==0) { //All cards have either an op value or is a scoring card that is obligatorily played for the event
 				sendMessage(e, ":x: This card must be played for the event only.");
 				return;

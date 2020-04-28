@@ -608,7 +608,7 @@ public class GameData {
 			GameData.checkScore(false, false);
 		}
 		score += amt;
-		Log.writeToLog("VP" + (amt>0?"+":"") + amt);
+		if (amt!=0) Log.writeToLog("VP" + (amt>0?"+":"") + amt + ", now " + score);
 	}
 	/**
 	 * 

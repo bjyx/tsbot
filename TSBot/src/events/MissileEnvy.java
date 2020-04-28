@@ -10,15 +10,13 @@ import game.GameData;
  */
 public class MissileEnvy extends Card {
 	
-	public static int maxops = 0;
+	public static int maxops = -1;
 	
 	public static int card = 0;
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		for (Integer i : (sp==0?HandManager.SUNHand:HandManager.USAHand)) {
-			if (i!=6) maxops = Math.max(maxops, CardList.getCard(i).getOps());
-		}
+		
 		GameData.dec = new Decision((sp+1)%2, 490);
 		if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", your opponent has played " + CardList.getCard(49) + ". "
 				+ "Select a card with "+CardEmbedBuilder.intToEmoji(maxops)+" Operations Points to give to your opponent.").complete();
@@ -28,7 +26,10 @@ public class MissileEnvy extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return true;
+		for (Integer i : (sp==0?HandManager.SUNHand:HandManager.USAHand)) {
+			if (i!=6) maxops = Math.max(maxops, CardList.getCard(i).getOps());
+		}
+		return maxops!=-1;
 	}
 
 	@Override
