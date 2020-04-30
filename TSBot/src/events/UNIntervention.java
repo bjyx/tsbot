@@ -50,17 +50,16 @@ public class UNIntervention extends Card {
 		EmbedBuilder builder = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
 				.setDescription("The UN collectively agrees on something for once")
 				.setFooter("\"It is not the Soviet Union or indeed any other big Powers who need the United Nations for their protection. "
-						+ "It is all the others. In this sense, the Organization is first of all their Organization "
-						+ "and I deeply believe in the wisdom with which they will be able to use it and guide it. "
+						+ "It is all the others... "
 						+ "I shall remain in my post during the term of my office as a servant of the Organization in the interests of all those other nations, as long as they wish me to do so.\"\n"
 						+ "- Dag Hammarskjöld, 1960", Launcher.url("people/hammarskjold.png"))
 				.setColor(sp==0?Color.blue:Color.red)
-				.addField("UN Security Council Resolution", "The event of "+ CardList.getCard(target)+" has been condemned by the UN, and will not occur.", false);
+				.addField("UN Security Council Resolution " + getNumber(), "The event of "+ CardList.getCard(target)+" has been condemned by the UN, and will not occur.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		HandManager.discard(sp, target);
 		Log.writeToLog("Event of " + CardList.getCard(target).getName() + " is cancelled.");
 		GameData.dec = new Decision(sp, 32);
-		GameData.ops = new Operations (sp, CardList.getCard(target).getOpsMod(sp), true, true, true, false, false);
+		GameData.ops = new Operations (sp, CardList.getCard(target).getOpsMod(sp), true, true, true, true, false); //imagine using ops sanctioned by the UN for space race
 	}
 
 	@Override
@@ -131,4 +130,7 @@ public class UNIntervention extends Card {
 				+ "\nDecision: Operations. Must be actual operations.";
 	}
 
+	private int getNumber() {
+		return 70*(GameData.getTurn()-1) + (int) (Math.random()*70) + 1;
+	}
 }

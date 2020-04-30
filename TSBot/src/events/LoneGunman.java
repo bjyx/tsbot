@@ -25,7 +25,7 @@ public class LoneGunman extends Card {
 			.setColor(Color.red);
 		GameData.txtssr.sendMessage(HandManager.getUSAHand()).complete();
 		GameData.dec = new Decision(1, 62);
-		GameData.ops = new Operations(1, CardList.getCard(62).getOpsMod(1), true, true, true, false, false);
+		GameData.ops = new Operations(1, CardList.getCard(62).getOpsMod(1), true, true, true, true, false);
 		builder.addField("Lee Harvey Oswald", "The USSR may now look at the USA's hand.", false);
 		Log.writeToLog("US Hand: " + HandManager.USAHand);
 		GameData.txtchnl.sendMessage(builder.build()).complete();

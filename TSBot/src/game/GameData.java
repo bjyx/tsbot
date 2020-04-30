@@ -228,6 +228,7 @@ public class GameData {
 		if (victor==-1) {
 			txtchnl.sendMessage(new EmbedBuilder()
 					.setTitle("GAME OVER - DRAW!")
+					.setDescription("If this makes it any better for the USSR player, at least we're not on Playdek.")
 					.setImage(Launcher.url("victory/draw.png"))
 					.setColor(Color.gray)
 					.build()).complete();
@@ -407,8 +408,8 @@ public class GameData {
 		if (t==3) return "\"But let no one think that the expenditure of vast sums for weapons and systems of defense can guarantee absolute safety for the cities and citizens of any nation. The awful arithmetic of the atomic bomb does not permit any such easy solution.\"\n- Dwight D. Eisenhower, 1953";
 		if (t==4) return "\"We wish to live in peace, tranquility. But if anyone believes that our smiles involve abandonment of the teaching of Marx, Engels and Lenin he deceives himself poorly. Those who wait for that must wait until a shrimp learns to whistle.\"\n- Nikita Khrushchev, 1955";
 		if (t==5) return "\"Let every nation know, whether it wishes us well or ill, that we shall pay any price, bear any burden, meet any hardship, support any friend, oppose any foe to assure the survival and the success of liberty.\"\n- John F. Kennedy, 1961";
-		if (t==6) return "\"Our American unity does not depend upon unanimity. We have differences; but now, as in the past, we can derive from those differences strength, not weakness, wisdom, not despair. Both as a people and a government, we can unite upon a program, a program which is wise and just, enlightened and constructive.\"\n- Lyndon B. Johnson, 1963";
-		if (t==7) return "\"\"\n- Leonid Brezhnev, 1945";
+		if (t==6) return "\"\"\n- Leonid Brezhnev, 1945";
+		if (t==7) return "\"\"\n- Richard Nixon, 1963";
 		if (t==8) return "\"\"\n- James E. Carter, 1945";
 		if (t==9) return "\"\"\n- Ronald Reagan, 1945";
 		if (t==10) return "\"\"\n- Mikhail Gorbachev, 1945";

@@ -270,7 +270,7 @@ public class Operations {
 			}
 			return this.coup(country);
 		}
-		//legacy
+		//no longer legacy, but still cannot be accessed via the OpsCommand
 		if (usage.equals("s")||usage.equals("space")) {
 			if (GameData.getSpace(sp)==8) {
 				txtsp.sendMessage(":x: This is as far as you go towards the Final Frontier. How did you get here, anyways?").complete();

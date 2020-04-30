@@ -730,7 +730,7 @@ public class DecisionCommand extends Command {
 			HandManager.getFromDiscard(GameData.dec.sp, 49);
 			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {
 				HandManager.discard(GameData.dec.sp, i);
-				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, false, false);
+				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, true, false);
 			}
 			else {
 				if (CardList.getCard(i).isRemoved()) {
@@ -931,7 +931,7 @@ public class DecisionCommand extends Command {
 				HandManager.discard(0, 32);
 				GrainSales.status = 'o';
 				builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card matched with UN Intervention for operations.", false);
-				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
+				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, true, false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.");
 				GameData.dec = new Decision(0, 671);
 				Log.writeToLog("UN Intervention played with card for ops.");
