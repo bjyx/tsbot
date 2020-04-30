@@ -351,7 +351,7 @@ public class HandManager {
 			builder.changeDEFCON(-1);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s') {
+		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s'&&mode!='u') {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			Log.writeToLog("Flower Power:");
 			builder.setTitle("Student Strikes Rock American Universities")

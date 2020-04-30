@@ -829,7 +829,7 @@ public class DecisionCommand extends Command {
 				sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
 				return;
 			}
-			if (HandManager.effectActive(59)&&((card==13&&!HandManager.effectActive(65))||card==11||card==24||card==36||card==102)&&mode!='s'&&mode!='r') {
+			if (HandManager.effectActive(59)&&((card==13&&!HandManager.effectActive(65))||card==11||card==24||card==36||card==102)&&(mode=='e'||mode=='o')) {
 				CardEmbedBuilder builder = new CardEmbedBuilder();
 				builder.setTitle("Flower Power")
 					.setDescription("Anti-war protests erupt against the " + CardList.getCard(card).getName() + "!")
