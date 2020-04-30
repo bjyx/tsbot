@@ -59,7 +59,7 @@ public class UNIntervention extends Card {
 		HandManager.discard(sp, target);
 		Log.writeToLog("Event of " + CardList.getCard(target).getName() + " is cancelled.");
 		GameData.dec = new Decision(sp, 32);
-		GameData.ops = new Operations (sp, CardList.getCard(target).getOpsMod(sp), true, true, true, true, false); //imagine using ops sanctioned by the UN for space race
+		GameData.ops = new Operations (sp, CardList.getCard(target).getOpsMod(sp), true, true, true, false, false);
 	}
 
 	@Override

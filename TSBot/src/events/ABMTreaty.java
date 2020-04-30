@@ -27,7 +27,7 @@ public class ABMTreaty extends Card {
 					"- Leonid Brezhnev, 1979", Launcher.url("people/brezhnev.png"));
 		builder.changeDEFCON(1);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		GameData.ops = new Operations(sp, CardList.getCard(57).getOpsMod(sp), true, true, true, true, false);
+		GameData.ops = new Operations(sp, CardList.getCard(57).getOpsMod(sp), true, true, true, false, false);
 		GameData.dec = new Decision(sp, 57);
 		if (sp==0) GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now use the " + CardList.getCard(57).getOpsMod(sp) + " Operations points of this card.").complete();
 	}

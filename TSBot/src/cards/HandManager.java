@@ -457,6 +457,16 @@ public class HandManager {
 		if (mode=='s') {
 			if (card==6) {
 				China = (China+1)%2+2;
+				if (GameData.phasing()==0&&removeEffect(35)) {
+					Log.writeToLog("Formosan Resolution Cancelled.");
+					GameData.txtchnl.sendMessage(new CardEmbedBuilder()
+							.setTitle("Defense Treaty Abrogated")
+							.setDescription("Taiwan will no longer be a battleground country in any situation.")
+							.setColor(Color.DARK_GRAY)
+							.setFooter("\"Everyone, listen; just let me say one thing. I opposed China, I was wrong.\"\n"
+							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
+							.build()).complete();
+				}
 			}
 			Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " to space.");
 			discard(sp, card);

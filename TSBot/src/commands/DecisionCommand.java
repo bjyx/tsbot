@@ -610,7 +610,7 @@ public class DecisionCommand extends Command {
 				GameData.txtchnl.sendMessage(builder.build()).complete();
 				GameData.txtchnl.sendMessage("Awaiting " + (GameData.phasing()==0?GameData.roleusa.getAsMention():GameData.rolessr.getAsMention())+" to play 4 Operations points (remember to adjust to account for Red Scare/Purge/Containment/Brezhnev Doctrine).").complete();
 				GameData.dec = new Decision(OlympicGames.host, 201);
-				GameData.ops = new Operations(GameData.dec.sp, CardList.getCard(34).getOpsMod(GameData.dec.sp), true, true, true, true, false);
+				GameData.ops = new Operations(GameData.dec.sp, CardList.getCard(34).getOpsMod(GameData.dec.sp), true, true, true, false, false);
 				return;
 			}
 			else if (args[1].equals("compete")) {
@@ -730,7 +730,7 @@ public class DecisionCommand extends Command {
 			HandManager.getFromDiscard(GameData.dec.sp, 49);
 			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {
 				HandManager.discard(GameData.dec.sp, i);
-				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, true, false);
+				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, false, false);
 			}
 			else {
 				if (CardList.getCard(i).isRemoved()) {
@@ -847,7 +847,7 @@ public class DecisionCommand extends Command {
 			if (mode=='r') {
 				Log.writeToLog("Card is returned.");
 				HandManager.transfer(0, card);
-				GameData.ops = new Operations (0, CardList.getCard(67).getOpsMod(0), true, true, true, true, false);
+				GameData.ops = new Operations (0, CardList.getCard(67).getOpsMod(0), true, true, true, false, false);
 				GrainSales.status = 'o';
 				builder.addField("Obtained card: " + CardList.getCard(card), "Card to be returned to the USSR.", false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have returned the card. You may conduct operations using Grain Sales to Soviets.").complete();
@@ -931,7 +931,7 @@ public class DecisionCommand extends Command {
 				HandManager.discard(0, 32);
 				GrainSales.status = 'o';
 				builder.addField("Obtained card: " + CardList.getCard(GrainSales.card), "Card matched with UN Intervention for operations.", false);
-				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, true, false);
+				GameData.ops = new Operations(0, CardList.getCard(card).getOpsMod(0), true, true, true, false, false);
 				GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you may now perform the operations.");
 				GameData.dec = new Decision(0, 671);
 				Log.writeToLog("UN Intervention played with card for ops.");

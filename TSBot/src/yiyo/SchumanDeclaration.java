@@ -114,7 +114,7 @@ public class SchumanDeclaration extends Card {
 			abssum += Math.abs(values.get(i));
 		}
 		if (sum!=0) return false; // there should be no change in the amount of influence
-		if (abssum>10) return false; //up to 4 influence may be moved
+		if (abssum>10) return false; //up to 5 influence may be moved
 		return true;
 	}
 
@@ -128,7 +128,7 @@ public class SchumanDeclaration extends Card {
 	@Override
 	public String getArguments() {
 		// TODO Auto-generated method stub
-		return "Countries and influence values. The values are non-zero, but must add to zero. Their absolute values can add up to at most ten. No influence value may cause a country's USSR Influence level to fall below zero. If the number is associated with a positive integer, the country should not be controlled by the USA. Can omit all arguments altogether - this will have no effect.";
+		return "Countries and influence values. The values are non-zero, but must add to zero. Their absolute values can add up to at most ten. No influence value may cause a country's US Influence level to fall below zero. Can omit all arguments altogether - this will have no effect. All countries must be adjacent to France or West Germany.";
 	}
 
 }

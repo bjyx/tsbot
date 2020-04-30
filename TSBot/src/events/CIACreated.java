@@ -27,7 +27,7 @@ public class CIACreated extends Card {
 			.setColor(Color.blue);
 		GameData.txtusa.sendMessage(HandManager.getSUNHand()).complete();
 		GameData.dec = new Decision(0, 26);
-		GameData.ops = new Operations(0, CardList.getCard(26).getOpsMod(0), true, true, true, true, false);
+		GameData.ops = new Operations(0, CardList.getCard(26).getOpsMod(0), true, true, true, false, false);
 		builder.addField("National Security Act", "The USA may now look at the USSR's hand.", false);
 		Log.writeToLog("USSR Hand: " + HandManager.SUNHand);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
