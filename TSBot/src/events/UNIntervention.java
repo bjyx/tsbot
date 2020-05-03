@@ -50,8 +50,7 @@ public class UNIntervention extends Card {
 		EmbedBuilder builder = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
 				.setDescription("The UN collectively agrees on something for once")
 				.setFooter("\"It is not the Soviet Union or indeed any other big Powers who need the United Nations for their protection. "
-						+ "It is all the others... "
-						+ "I shall remain in my post during the term of my office as a servant of the Organization in the interests of all those other nations, as long as they wish me to do so.\"\n"
+						+ "It is all the others.\"\n"
 						+ "- Dag Hammarskjöld, 1960", Launcher.url("people/hammarskjold.png"))
 				.setColor(sp==0?Color.blue:Color.red)
 				.addField("UN Security Council Resolution " + getNumber(), "The event of "+ CardList.getCard(target)+" has been condemned by the UN, and will not occur.", false);
