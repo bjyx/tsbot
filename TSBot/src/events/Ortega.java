@@ -28,13 +28,13 @@ public class Ortega extends Card {
 			.setColor(Color.red);
 		builder.changeInfluence(72, 0, -MapManager.get(72).influence[0]);
 		if (doable.isEmpty()) {
-			builder.addField("No countries to target!","No leftist guerrillas to supply here.",false);
+			builder.addField("No target!","No leftist guerrillas to supply here.",false);
 		}
 		else {
+			GameData.ops = new Operations(1, CardList.getCard(91).getOpsMod(1), false, false, true, false, true);
+			GameData.ops.coup(target);
 			builder.addField("Arms shipments", "A coup will now be conducted in " + MapManager.get(target).name, false);
 		}
-		GameData.ops = new Operations(1, CardList.getCard(91).getOpsMod(1), false, false, true, false, true);
-		GameData.ops.coup(target);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 

@@ -300,6 +300,7 @@ public class DecisionCommand extends Command {
 					}
 					GameData.txtchnl.sendMessage(builder.build()).complete();
 					TimeCommand.trapDone=true;
+					TimeCommand.prompt();
 				}
 				else {
 					if (CardList.getCard(x).getOpsMod(0)!=0) {
@@ -310,6 +311,7 @@ public class DecisionCommand extends Command {
 					CardList.getCard(x).onEvent(0, new String[] {});
 					HandManager.discard(0, x);
 					TimeCommand.trapDone=true;
+					TimeCommand.prompt();
 				}
 				
 			}
@@ -377,12 +379,16 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: No pending decisions. Are you sure you've satisfied the conditions for that?");
 			return;
 		}
-		if (e.getAuthor().equals(PlayerList.getArray().get((GameData.dec.sp+1)%2))) {
+		int event = GameData.dec.card;
+		int sp = GameData.dec.sp;
+		GameData.dec=null;
+		
+		if (e.getAuthor().equals(PlayerList.getArray().get((sp+1)%2))) {
 			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
 			return;
 		}
-		if (GameData.dec.card==1001) {
-			if (GameData.dec.sp==0) { 
+		if (event==1001) {
+			if (sp==0) { 
 				int card;
 				try {
 					card = Integer.parseInt(args[1]);
@@ -406,7 +412,7 @@ public class DecisionCommand extends Command {
 					sendMessage(e, ":x: Marshall Plan or bust.");
 				}
 			}
-			else if (GameData.dec.sp==1) { 
+			else if (sp==1) { 
 				int card;
 				try {
 					card = Integer.parseInt(args[1]);
@@ -464,11 +470,11 @@ public class DecisionCommand extends Command {
 			GameData.txtssr.sendMessage(PlayerList.getSSR().getAsMention() + ", please place six influence markers in Eastern Europe. (Use TS.setup)").complete();
 			return;
 		}
-		if (GameData.dec.card==4176) {
+		if (event==4176) {
 			if (args[1].equalsIgnoreCase("reroll")) {
 				Log.writeToLog("Used Space Race Ability 6.");
 				Operations.coupReroll += 2;
-				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Space Race Advantage").setDescription("The "+(GameData.dec.sp==0?"US":"USSR")+" has used its technological edge for a second shot at a coup!").setColor(GameData.dec.sp==0?Color.blue:Color.red).build());
+				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Space Race Advantage").setDescription("The "+(sp==0?"US":"USSR")+" has used its technological edge for a second shot at a coup!").setColor(sp==0?Color.blue:Color.red).build());
 				GameData.ops.coupPreDet(Operations.target6, new Die().roll());
 			}
 			else if (args[1].equalsIgnoreCase("accept")) {
@@ -483,7 +489,7 @@ public class DecisionCommand extends Command {
 			}
 			return;
 		}
-		if (GameData.dec.card==0) {
+		if (event==0) {
 			int card;
 			try {
 				card = Integer.parseInt(args[1]);
@@ -499,7 +505,7 @@ public class DecisionCommand extends Command {
 				TimeCommand.isCardDiscarded=true;
 			}
 			else if (card<=CardList.numberOfCards()) {
-				if (!HandManager.discard(GameData.dec.sp, card)) {
+				if (!HandManager.discard(sp, card)) {
 					sendMessage(e, ":x: You don't have this card.");
 					return;
 				}
@@ -529,7 +535,7 @@ public class DecisionCommand extends Command {
 			GameData.dec=null;
 			return;
 		}
-		if (GameData.dec.card==5) {
+		if (event==5) {
 			if (!CardList.getCard(FiveYearPlan.card).isFormatted(0, args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
@@ -549,7 +555,7 @@ public class DecisionCommand extends Command {
 				CardList.getCard(FiveYearPlan.card).onEvent(0, args);
 			}
 		}
-		if (GameData.dec.card==10) {
+		if (event==10) {
 			if (args[1].equals("airlift")) {
 				if (args.length < 3) {
 					sendMessage(e, ":x: Allocate some resources to your airlift.");
@@ -597,7 +603,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==20) {
+		if (event==20) {
 			if (args[1].equals("boycott")) {
 				Log.writeToLog("Olympics Boycotted.");
 				CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -610,7 +616,7 @@ public class DecisionCommand extends Command {
 				GameData.txtchnl.sendMessage(builder.build()).complete();
 				GameData.txtchnl.sendMessage("Awaiting " + (GameData.phasing()==0?GameData.roleusa.getAsMention():GameData.rolessr.getAsMention())+" to play 4 Operations points (remember to adjust to account for Red Scare/Purge/Containment/Brezhnev Doctrine).").complete();
 				GameData.dec = new Decision(OlympicGames.host, 201);
-				GameData.ops = new Operations(GameData.dec.sp, CardList.getCard(34).getOpsMod(GameData.dec.sp), true, true, true, false, false);
+				GameData.ops = new Operations(sp, CardList.getCard(34).getOpsMod(sp), true, true, true, false, false);
 				return;
 			}
 			else if (args[1].equals("compete")) {
@@ -636,25 +642,25 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==201) {
+		if (event==201) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==26) {
+		if (event==26) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==32) {
+		if (event==32) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==45) {
+		if (event==45) {
 			int i;
 			try {
 				i = Integer.parseInt(args[1]);
@@ -686,13 +692,13 @@ public class DecisionCommand extends Command {
 			builder.changeDEFCON(i);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (GameData.dec.card==47) {
+		if (event==47) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==49) {
+		if (event==49) {
 			int i;
 			try {
 				i = Integer.parseInt(args[1]);
@@ -705,7 +711,7 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: 别摸我.");
 				return;
 			}
-			if (!(GameData.dec.sp==0?HandManager.USAHand.contains(i):HandManager.SUNHand.contains(i))) {
+			if (!(sp==0?HandManager.USAHand.contains(i):HandManager.SUNHand.contains(i))) {
 				sendMessage(e, ":x: Don't conjure cards out of thin air...");
 				return;
 			}
@@ -717,33 +723,33 @@ public class DecisionCommand extends Command {
 			Log.writeToLog("Handed over " + CardList.getCard(i).getName());
 			builder.setTitle("The Arms Race and Nuclear War")
 				.setDescription("Helen Caldicott")
-				.setColor(GameData.dec.sp==0?Color.red:Color.blue)
+				.setColor(sp==0?Color.red:Color.blue)
 				.setFooter("The superpowers often behave like two heavily armed blind men "
 						+ "feeling their way around a room, each believing himself in mortal peril from the other, "
 						+ "whom he assumes to have perfect vision... Of course, over time, "
 						+ "even two armed blind men can do enormous damage to each other, "
 						+ "not to speak of the room.\n" + 
 						"- Henry Kissinger, 1979", Launcher.url("people/kissinger.png"));
-			builder.addField("Missile Envy", GameData.dec.sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
+			builder.addField("Missile Envy", sp==0?"The USA":"The USSR" + " has given " + CardList.getCard(i) + " in exchange for " + CardList.getCard(49) + ".", false);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			MissileEnvy.card = i;
-			HandManager.getFromDiscard(GameData.dec.sp, 49);
-			if (CardList.getCard(i).getAssociation()==GameData.dec.sp) {
-				HandManager.discard(GameData.dec.sp, i);
-				GameData.ops = new Operations((GameData.dec.sp+1)%2, CardList.getCard(i).getOpsMod((GameData.dec.sp+1)%2), true, true, true, false, false);
+			HandManager.getFromDiscard(sp, 49);
+			if (CardList.getCard(i).getAssociation()==sp) {
+				HandManager.discard(sp, i);
+				GameData.ops = new Operations((sp+1)%2, CardList.getCard(i).getOpsMod((sp+1)%2), true, true, true, false, false);
 			}
 			else {
 				if (CardList.getCard(i).isRemoved()) {
-					HandManager.removeFromGame(GameData.dec.sp, i);
+					HandManager.removeFromGame(sp, i);
 				}
 				else if (i!=73) {
-					HandManager.discard(GameData.dec.sp, i);
+					HandManager.discard(sp, i);
 				}
 				else {
-					HandManager.removeFromHand(GameData.dec.sp, i);
+					HandManager.removeFromHand(sp, i);
 				}
 			}
-			if (HandManager.effectActive(59)&&((i==13&&!HandManager.effectActive(65))||i==11||i==24||i==36||i==102)&&GameData.dec.sp==0) {
+			if (HandManager.effectActive(59)&&((i==13&&!HandManager.effectActive(65))||i==11||i==24||i==36||i==102)&&sp==0) {
 				Log.writeToLog("Flower Power:");
 				CardEmbedBuilder fp = new CardEmbedBuilder();
 				fp.setTitle("Flower Power")
@@ -755,19 +761,19 @@ public class DecisionCommand extends Command {
 				fp.changeVP(-2);
 				GameData.txtchnl.sendMessage(fp.build()).complete();
 			} //flowerpower still activates here
-			GameData.dec = new Decision((GameData.dec.sp+1)%2, 491);
+			GameData.dec = new Decision((sp+1)%2, 491);
 			return;
 		}
-		if (GameData.dec.card==491) {
-			HandManager.addEffect(490 + (GameData.dec.sp+1)%2); //handles part 2
-			if (CardList.getCard(MissileEnvy.card).getAssociation()==(GameData.dec.sp+1)%2) {
+		if (event==491) {
+			HandManager.addEffect(490 + (sp+1)%2); //handles part 2
+			if (CardList.getCard(MissileEnvy.card).getAssociation()==(sp+1)%2) {
 				boolean result = GameData.ops.ops(args);
 				if (!result) return;
 			}
-			else if (CardList.getCard(MissileEnvy.card).isPlayable(GameData.dec.sp)) {
-				if (CardList.getCard(MissileEnvy.card).isFormatted(GameData.dec.sp, args)) {
+			else if (CardList.getCard(MissileEnvy.card).isPlayable(sp)) {
+				if (CardList.getCard(MissileEnvy.card).isFormatted(sp, args)) {
 					Log.writeToLog(CardList.getCard(MissileEnvy.card).getName()+":");
-					CardList.getCard(MissileEnvy.card).onEvent(GameData.dec.sp, args);
+					CardList.getCard(MissileEnvy.card).onEvent(sp, args);
 				}
 				else {
 					sendMessage(e, "Format this correctly, please.");
@@ -775,19 +781,19 @@ public class DecisionCommand extends Command {
 				}
 			}
 		}
-		if (GameData.dec.card==57) {
+		if (event==57) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==62) {
+		if (event==62) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==67) {
+		if (event==67) {
 			List<Character> modes = Arrays.asList('r','e','o','s','u');
 
 			if (args.length<2) {
@@ -809,11 +815,11 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: This card must be played for the event only.");
 				return;
 			}
-			if (mode == 's' && (GameData.getSpace(PlayerList.getArray().indexOf(e.getAuthor()))==8||CardList.getCard(card).getOpsMod(GameData.phasing())<Operations.spaceOps[GameData.getSpace(GameData.phasing())])) {
+			if (mode == 's' && (GameData.getSpace(0)==8||CardList.getCard(card).getOpsMod(0)<Operations.spaceOps[GameData.getSpace(0)])) {
 				sendMessage(e, ":x: You cannot play this card on the space race.");
 				return;
 			}
-			if (mode=='s'&&GameData.hasSpace(PlayerList.getArray().indexOf(e.getAuthor()))) {
+			if (mode=='s'&&GameData.hasSpace(0)) {
 				sendMessage(e, ":x: Wait until next turn to space this card.");
 				return;
 			}
@@ -825,7 +831,7 @@ public class DecisionCommand extends Command {
 				sendMessage(e, "Actually have the 'UN Intervention' Card in your hand first.");
 				return;
 			}
-			if (mode=='u'&&CardList.getCard(card).getAssociation()!=(GameData.phasing()+1)%2) {
+			if (mode=='u'&&CardList.getCard(card).getAssociation()!=1) {
 				sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
 				return;
 			}
@@ -920,9 +926,7 @@ public class DecisionCommand extends Command {
 				EmbedBuilder un = new CardEmbedBuilder().setTitle("UN INTERVENTION!")
 						.setDescription("The UN collectively agrees on something for once")
 						.setFooter("\"It is not the Soviet Union or indeed any other big Powers who need the United Nations for their protection. "
-								+ "It is all the others. In this sense, the Organization is first of all their Organization "
-								+ "and I deeply believe in the wisdom with which they will be able to use it and guide it. "
-								+ "I shall remain in my post during the term of my office as a servant of the Organization in the interests of all those other nations, as long as they wish me to do so.\"\n"
+								+ "It is all the others.\"\n"
 								+ "- Dag Hammarskjöld, 1960", Launcher.url("people/hammarskjold.png"))
 						.setColor(Color.blue)
 						.addField("UN Security Council Resolution", "The event of "+ CardList.getCard(GrainSales.card)+" has been condemned by the UN, and will not occur.", false);
@@ -939,7 +943,7 @@ public class DecisionCommand extends Command {
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			return;
 		}
-		if (GameData.dec.card==671) {
+		if (event==671) {
 			if (GrainSales.status=='e'||GrainSales.status=='f') {
 				if (!CardList.getCard(GrainSales.card).isFormatted(0, args)) {
 					sendMessage(e, ":x: Format your arguments correctly.");
@@ -969,7 +973,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==85) {
+		if (event==85) {
 			if (!CardList.getCard(StarWars.target).isFormatted(0, args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
@@ -991,19 +995,19 @@ public class DecisionCommand extends Command {
 				CardList.getCard(StarWars.target).onEvent(0, args);
 			}
 		}
-		if (GameData.dec.card==89) {
+		if (event==89) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==90) {
+		if (event==90) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==95) {
+		if (event==95) {
 			if (args[1].equals("aid")) {
 				if (args.length < 3) {
 					sendMessage(e, ":x: Allocate some resources to that relief package.");
@@ -1043,7 +1047,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==951) {
+		if (event==951) {
 			ArrayList<Integer> doable = new ArrayList<Integer>();
 			ArrayList<Integer> order = new ArrayList<Integer>();
 			for (int i=74; i<84; i++) {
@@ -1083,13 +1087,13 @@ public class DecisionCommand extends Command {
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (GameData.dec.card==96) {
+		if (event==96) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==98) {
+		if (event==98) {
 			int card;
 			try {
 				card = Integer.parseInt(args[1]);
@@ -1112,7 +1116,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==104) {
+		if (event==104) {
 			int i = MapManager.find(args[1]);
 			if (i!=-1 && (CambridgeFive.regions[MapManager.get(i).region]||(CambridgeFive.regions[4]&&i==86&&MapManager.get(i).influence[1]<3))) { //special case for CCW
 				CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -1132,7 +1136,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==106) {
+		if (event==106) {
 			int i = MapManager.find(args[1]);
 			if (i!=1 && MapManager.get(i).influence[0]>0) {
 				Log.writeToLog("NORAD: ");
@@ -1149,7 +1153,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
-		if (GameData.dec.card==108) {
+		if (event==108) {
 			ArrayList<Integer> order = new ArrayList<Integer>();
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Our Man in " + OurManInTehran.capital[OurManInTehran.country-21])
@@ -1195,25 +1199,25 @@ public class DecisionCommand extends Command {
 			HandManager.Deck.addAll(OurManInTehran.cards);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (GameData.dec.card==115) {
+		if (event==115) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==116) {
+		if (event==116) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==119) {
+		if (event==119) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 		}
-		if (GameData.dec.card==121) {
+		if (event==121) {
 			if (args[1].equalsIgnoreCase("yes")) {
 				Log.writeToLog("Nuclear Proliferation: ");
 				GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(-1).setTitle("Nuclear Proliferation").setColor(GameData.phasing()==0?Color.blue:Color.red).build()).complete();
@@ -1230,7 +1234,7 @@ public class DecisionCommand extends Command {
 			TimeCommand.prompt();
 			return;
 		}
-		if (GameData.dec.card==128) {
+		if (event==128) {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("Standoff in Berlin continues")
 			.setDescription("")
@@ -1362,7 +1366,7 @@ public class DecisionCommand extends Command {
 			TimeCommand.prompt();
 			return;
 		}
-		if (GameData.dec.card==130) {
+		if (event==130) {
 			int discard;
 			try {
 				discard = Integer.parseInt(args[1]);			
@@ -1374,7 +1378,7 @@ public class DecisionCommand extends Command {
 			if (discard==0) {
 				//continue
 			}
-			else if (CardList.getCard(discard).getAssociation()==(GameData.dec.sp+1)%2) {
+			else if (CardList.getCard(discard).getAssociation()==(sp+1)%2) {
 				sendMessage(e, ":x: The event cannot be your opponent's.");
 				return;
 			}
@@ -1383,23 +1387,23 @@ public class DecisionCommand extends Command {
 				return;
 			}
 
-			else if (!HandManager.discard(GameData.dec.sp, discard)) {
+			else if (!HandManager.discard(sp, discard)) {
 				sendMessage(e, ":x: This event is not in your hand.");
 				return;
 			}
 			//flavor only
 			int victor;
 			if (discard==0) {
-				victor=(GameData.dec.sp+1)%2;
+				victor=(sp+1)%2;
 			}
-			else if (CardList.getCard(discard).getOpsMod(GameData.dec.sp)==2) {
+			else if (CardList.getCard(discard).getOpsMod(sp)==2) {
 				victor=-1;
 			}
-			else if (CardList.getCard(discard).getOpsMod(GameData.dec.sp)>2) {
-				victor=GameData.dec.sp;
+			else if (CardList.getCard(discard).getOpsMod(sp)>2) {
+				victor=sp;
 			}
 			else {
-				victor =(GameData.dec.sp+1)%2;
+				victor =(sp+1)%2;
 			}
 			//actual things
 			CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -1409,12 +1413,12 @@ public class DecisionCommand extends Command {
 						+ "- Boris Spassky, 1972",Launcher.url("yiyo/spassky.png"))
 				.setColor(victor==-1?Color.gray:(victor==0?Color.blue:Color.red));
 			builder.addField(discard==0?"No discard.":"Discarded card: "+CardList.getCard(discard),"", false);
-			if (discard==0) builder.changeVP((GameData.dec.sp*2-1)*2);
-			else builder.changeVP((GameData.dec.sp*2-1)*(2-CardList.getCard(discard).getOpsMod(GameData.dec.sp)));
+			if (discard==0) builder.changeVP((sp*2-1)*2);
+			else builder.changeVP((sp*2-1)*(2-CardList.getCard(discard).getOpsMod(sp)));
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (GameData.dec.card==131) {
-			if (GameData.dec.sp==0) {
+		if (event==131) {
+			if (sp==0) {
 				ApolloSoyuz.usa = new ArrayList<Integer>();
 				if (args.length>ApolloSoyuz.sun.size()+1) {
 					sendMessage(e, ":x: You can't contribute more.");
@@ -1442,7 +1446,7 @@ public class DecisionCommand extends Command {
 					sendMessage(e, ":x: Trying to get out of scoring this region? I don't think so.");
 					return;
 				}
-				if (GameData.dec.sp==0) {
+				if (sp==0) {
 					if (HandManager.USAHand.contains(card)) ApolloSoyuz.usa.add(card);
 					else {
 						sendMessage(e, ":x: Use cards that you actually have.");
@@ -1502,12 +1506,12 @@ public class DecisionCommand extends Command {
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (GameData.dec.card==135) { //what a pain to code
+		if (event==135) { //what a pain to code
 			if (args[1].equalsIgnoreCase("flip")) {
 				Log.writeToLog("The Revolution That Surprised The World:");
 				HandManager.removeEffect(1350);
 				HandManager.removeEffect(1351);
-				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Marcos leaves the Philippines").setDescription("People's Power Revolution succeeds in ousting dictator").setFooter("\"My spirit will rise from the grave and the world shall know that I was right.\"\n- Ferdinand Marcos, 1989", Launcher.url("yiyo/marcos.png")).setColor(GameData.dec.sp==0?Color.blue:Color.red).addField("\"The revolution that surprised the world\"", "A die result of " + GameData.diestore + " has been flipped!", false).build());
+				GameData.txtchnl.sendMessage(new EmbedBuilder().setTitle("Marcos leaves the Philippines").setDescription("People's Power Revolution succeeds in ousting dictator").setFooter("\"My spirit will rise from the grave and the world shall know that I was right.\"\n- Ferdinand Marcos, 1989", Launcher.url("yiyo/marcos.png")).setColor(sp==0?Color.blue:Color.red).addField("\"The revolution that surprised the world\"", "A die result of " + GameData.diestore + " has been flipped!", false).build());
 				GameData.diestore = 7-GameData.diestore;
 			}
 			else if (args[1].equalsIgnoreCase("accept")) {
@@ -1522,7 +1526,7 @@ public class DecisionCommand extends Command {
 			}
 			return;
 		}
-		if (GameData.dec.card==136) {
+		if (event==136) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
@@ -1544,26 +1548,26 @@ public class DecisionCommand extends Command {
 		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);
-
-		GameData.dec=null;
-		if (GameData.isHeadlinePhase()) {
-			if (TimeCommand.hl1) TimeCommand.hl2 = true;
-			else TimeCommand.hl1 = true;
-			if (HandManager.precedence==0&&TimeCommand.hl2==false) {
-				HandManager.activecard=HandManager.headline[1];
+		if (GameData.dec==null) {
+			if (GameData.isHeadlinePhase()) {
+				if (TimeCommand.hl1) TimeCommand.hl2 = true;
+				else TimeCommand.hl1 = true;
+				if (HandManager.precedence==0&&TimeCommand.hl2==false) {
+					HandManager.activecard=HandManager.headline[1];
+				}
+				else if (HandManager.precedence==1) {
+					HandManager.activecard=HandManager.headline[0];
+				}	
+				TimeCommand.prompt();
+				return;
 			}
-			else if (HandManager.precedence==1) {
-				HandManager.activecard=HandManager.headline[0];
-			}	
+			TimeCommand.eventDone = true;
+			if (HandManager.playmode == 'f') {
+				TimeCommand.operationsRequired = true;
+				GameData.ops = new Operations(GameData.phasing(), CardList.getCard(HandManager.activecard).getOpsMod(GameData.phasing()), true, true, true, false, false);
+			}
 			TimeCommand.prompt();
-			return;
 		}
-		TimeCommand.eventDone = true;
-		if (HandManager.playmode == 'f') {
-			TimeCommand.operationsRequired = true;
-			GameData.ops = new Operations(GameData.phasing(), CardList.getCard(HandManager.activecard).getOpsMod(GameData.phasing()), true, true, true, false, false);
-		}
-		TimeCommand.prompt();
 	}
 
 	@Override

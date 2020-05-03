@@ -61,6 +61,10 @@ public class TimeCommand extends Command {
 			sendMessage(e, ":x: This is not something to be doing right now; you don't even have influence on the board!");
 			return;
 		}
+		if (GameData.phasing()!=PlayerList.getArray().indexOf(e.getAuthor())) {
+			sendMessage(e, ":x: Not your turn yet. Be patient!");
+			return;
+		}
 		if (!checkpointC) {
 			sendMessage(e, ":x: There are tanks at the wall. You better show some resolve.");
 			return;

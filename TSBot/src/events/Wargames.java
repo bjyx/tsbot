@@ -36,6 +36,7 @@ public class Wargames extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
+		if (GameData.latewar&&sp==1) return false; //cannot be played by soviets during late war scenario
 		return GameData.getDEFCON()==2;
 	}
 

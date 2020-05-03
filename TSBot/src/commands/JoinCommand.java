@@ -34,10 +34,10 @@ public class JoinCommand extends Command {
 			else {
 				GameData.rolessr = e.getGuild().getRolesByName("TSSSR", true).get(0);
 			}
-			for (Member m : e.getGuild().getMembers()) {
-				if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
-				if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
-			}
+		}
+		for (Member m : e.getGuild().getMembers()) {
+			if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
+			if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
 		}
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");

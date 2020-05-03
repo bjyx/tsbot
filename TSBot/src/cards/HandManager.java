@@ -341,27 +341,28 @@ public class HandManager {
 	 * @param mode is the mode of playing, as described under playmode.
 	 */
 	public static void play(int sp, int card, char mode) {
-		
-		if (card==116&&mode!='s') {
-			Log.writeToLog("First Lightning:");
-			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("American Nuclear Monopoly Broken!")
-				.setDescription("")
-				.setColor(Color.red);
-			builder.changeDEFCON(-1);
-			GameData.txtchnl.sendMessage(builder.build()).complete();
-		}
-		if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s'&&mode!='u') {
-			CardEmbedBuilder builder = new CardEmbedBuilder();
-			Log.writeToLog("Flower Power:");
-			builder.setTitle("Student Strikes Rock American Universities")
-				.setDescription("Protests against the " + CardList.getCard(card).getName() + " intensify after Kent State Massacre")
-				.setFooter("\"I think that we're up against the strongest, well-trained, "
+		if (!GameData.isHeadlinePhase()) { //this has to specifically be handled differently by the headline phase to actually do
+			if (card==116&&mode!='s') {
+				Log.writeToLog("First Lightning:");
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("American Nuclear Monopoly Broken!")
+					.setDescription("")
+					.setColor(Color.red);
+				builder.changeDEFCON(-1);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			if (effectActive(59)&&((card==13&&!effectActive(65))||card==11||card==24||card==36||card==102)&&sp==0&&mode!='s'&&mode!='u') {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				Log.writeToLog("Flower Power:");
+				builder.setTitle("Student Strikes Rock American Universities")
+					.setDescription("Protests against the " + CardList.getCard(card).getName() + " intensify after Kent State Massacre")
+					.setFooter("\"I think that we're up against the strongest, well-trained, "
 						+ "militant, revolutionary group that has ever assembled in America.\" \n"
 						+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))
-				.setColor(Color.red);
-			builder.changeVP(-2);
-			GameData.txtchnl.sendMessage(builder.build()).complete();
+					.setColor(Color.red);
+				builder.changeVP(-2);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
 		}
 		if (HandManager.effectActive(115)&&sp==1&&!GameData.isHeadlinePhase()) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder()
@@ -372,7 +373,6 @@ public class HandManager {
 			HandManager.removeEffect(115);
 			return;
 		}
-		//super complicated area, will nitgrit later
 		if (mode=='h') {
 			Log.writeToLog((sp==0?"US":"SU")+" h");
 			removeFromHand(sp, card);
@@ -382,6 +382,27 @@ public class HandManager {
 			if (headline[(sp+1)%2]!=0) {
 				Log.writeToLog("US plays " + CardList.getCard(headline[0]).getName() + " as headline");
 				Log.writeToLog("SU plays " + CardList.getCard(headline[1]).getName() + " as headline");
+				if (headline[0]==116||headline[1]==116) {
+					Log.writeToLog("First Lightning:");
+					CardEmbedBuilder builder = new CardEmbedBuilder();
+					builder.setTitle("American Nuclear Monopoly Broken!")
+						.setDescription("")
+						.setColor(Color.red);
+					builder.changeDEFCON(-1);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+				}
+				if (effectActive(59)&&((headline[0]==13&&!effectActive(65))||headline[0]==11||headline[0]==24||headline[0]==36||headline[0]==102)) {
+					CardEmbedBuilder builder = new CardEmbedBuilder();
+					Log.writeToLog("Flower Power:");
+					builder.setTitle("Student Strikes Rock American Universities")
+						.setDescription("Protests against the " + CardList.getCard(card).getName() + " intensify after Kent State Massacre")
+						.setFooter("\"I think that we're up against the strongest, well-trained, "
+							+ "militant, revolutionary group that has ever assembled in America.\" \n"
+							+ "- Jim Rhodes, 1970", Launcher.url("people/rhodes.png"))
+						.setColor(Color.red);
+					builder.changeVP(-2);
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+				}
 				if (headline[0]==103) {
 					precedence = 0;
 					activecard = headline[0];
