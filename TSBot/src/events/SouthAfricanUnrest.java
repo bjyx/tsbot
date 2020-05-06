@@ -30,7 +30,7 @@ public class SouthAfricanUnrest extends Card {
 			.setFooter("\"Mandela has overstepped the mark. He has broken the law. The judiciary of this country has put him where he belongs according to the rules of democracy.\"\n"
 					+ "- P. W. Botha, 1980", Launcher.url("people/botha.png"));
 		if (option==-1) {
-			builder.bulkChangeInfluence(new ArrayList<Integer>(VALID_OPTIONS), sp, new ArrayList<Integer>(Arrays.asList(1,1,1)));
+			builder.bulkChangeInfluence(new ArrayList<Integer>(VALID_OPTIONS), 1, new ArrayList<Integer>(Arrays.asList(1,1,1)));
 		}
 		else {
 			builder.changeInfluence(option, 1, 2);

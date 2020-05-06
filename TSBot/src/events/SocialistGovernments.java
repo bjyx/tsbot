@@ -98,14 +98,14 @@ public class SocialistGovernments extends Card {
 		if (args.length%2!=1) return false; //each country must associate with a number
 		for (int i=1; i<args.length; i+=2) {
 			int c = MapManager.find(args[i]);
-			order.add(c);
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}
 			catch (NumberFormatException e){
 				return false; //this isn't an integer. xP
 			}
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
+			order.add(c);
 		}
 		int sum = 0;
 		if (!doable.containsAll(order)) return false;

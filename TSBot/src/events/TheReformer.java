@@ -77,7 +77,9 @@ public class TheReformer extends Card {
 		if (args.length%2!=1) return false;
 		for (int i=1; i<args.length; i+=2) {
 			int c = MapManager.find(args[i]);
-			if (MapManager.get(c).region>2) return false;
+			if (c==-1) return false;
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
+			if (!MapManager.get(c).inRegion(0)) return false;
 			order.add(c);
 			try{
 				values.add(Integer.parseInt(args[i+1]));
@@ -85,7 +87,6 @@ public class TheReformer extends Card {
 			catch (NumberFormatException e){
 				return false; //this isn't an integer. xP
 			}
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 		}
 		int sum = 0;
 		for (int i=0; i<order.size(); i++) {

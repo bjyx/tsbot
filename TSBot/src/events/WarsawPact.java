@@ -95,8 +95,8 @@ public class WarsawPact extends Card {
 			}
 			for (int i=2; i<=5; i++) {
 				int c = MapManager.find(args[i]);
+				if (order.indexOf(c)!=-1) return false; // no duplicates plox
 				order.add(c);
-				if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 			}
 			if (!doable.containsAll(order)) return false;
 			return true;
@@ -105,6 +105,7 @@ public class WarsawPact extends Card {
 			if (args.length%2!=0) return false;
 			for (int i=2; i<args.length; i+=2) {
 				int c = MapManager.find(args[i]);
+				if (order.indexOf(c)!=-1) return false; // no duplicates plox
 				order.add(c);
 				if (!(MapManager.get(c).region==0||MapManager.get(c).region==2)) return false;
 				try{
@@ -113,7 +114,6 @@ public class WarsawPact extends Card {
 				catch (NumberFormatException e){
 					return false; //this isn't an integer. xP
 				}
-				if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 			}
 			int sum = 0;
 			for (int i=0; i<order.size(); i++) {

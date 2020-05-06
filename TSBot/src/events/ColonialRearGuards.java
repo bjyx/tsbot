@@ -43,31 +43,26 @@ public class ColonialRearGuards extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Colonial Rear Guards";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -83,8 +78,8 @@ public class ColonialRearGuards extends Card {
 		if (args.length!=5) return false;
 		for (int i=1; i<=4; i++) {
 			int c = MapManager.find(args[i]);
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
-			if (order.indexOf(c)!=i) return false; // no duplicates plox
 		}
 		if (!doable.containsAll(order)) return false;
 		return true;

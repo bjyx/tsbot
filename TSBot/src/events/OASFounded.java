@@ -71,10 +71,10 @@ public class OASFounded extends Card {
 		if (args.length%2!=1) return false;
 		for (int i=2; i<args.length; i+=2) {
 			int c = MapManager.find(args[i]);
-			order.add(c);
 			if (c==-1) return false;
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			if (MapManager.get(c).region!=8||MapManager.get(c).region!=7) return false;
+			order.add(c);
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}

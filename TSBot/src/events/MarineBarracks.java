@@ -86,7 +86,10 @@ public class MarineBarracks extends Card {
 		}
 		if (args.length%2!=1) return false; //each country must associate with a number
 		for (int i=1; i<args.length; i+=2) {
-			order.add(MapManager.find(args[i]));
+			int c = MapManager.find(args[i]);
+			if (c==-1) return false;
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
+			order.add(c);
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}

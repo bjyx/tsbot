@@ -92,8 +92,8 @@ public class EastEuropeanUnrest extends Card {
 		if (args.length!=4) return false;
 		for (int i=1; i<=3; i++) {
 			int c = MapManager.find(args[i]);
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 		}
 		if (!doable.containsAll(order)) return false; // all need to be able to be played into
 		

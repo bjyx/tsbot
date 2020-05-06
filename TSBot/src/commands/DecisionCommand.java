@@ -802,7 +802,6 @@ public class DecisionCommand extends Command {
 			}
 			int card = GrainSales.card;
 			char mode = args[1].charAt(0);
-			e.getMessage().delete().complete();
 			if (!modes.contains(mode)) {
 				sendMessage(e, ":x: Modes can be any of r, e, o, s, or u. Not the one you chose, though.");
 				return;

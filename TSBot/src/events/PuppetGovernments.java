@@ -83,8 +83,8 @@ public class PuppetGovernments extends Card {
 		}
 		for (int i=1; i<=3; i++) {
 			int c = MapManager.find(args[i]);
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 		}
 		return doable.containsAll(order);
 	}

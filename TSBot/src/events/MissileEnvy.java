@@ -17,7 +17,7 @@ public class MissileEnvy extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		
-		GameData.dec = new Decision((sp+1)%2, 490);
+		GameData.dec = new Decision((sp+1)%2, 49);
 		if (sp==0) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", your opponent has played " + CardList.getCard(49) + ". "
 				+ "Select a card with "+CardEmbedBuilder.intToEmoji(maxops)+" Operations Points to give to your opponent.").complete();
 		else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", your opponent has played " + CardList.getCard(49) + ". "
