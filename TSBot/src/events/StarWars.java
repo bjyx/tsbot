@@ -27,10 +27,15 @@ public class StarWars extends Card {
 					+ "- Ronald Reagan, 1983", Launcher.url("people/reagan.png"))
 			.setColor(Color.BLUE);
 		builder.addField("Brilliant Pebbles", "The USA retrieves " + CardList.getCard(target) + " to play as an event.", false);
-		HandManager.getFromDiscard(0, target);
-		if (CardList.getCard(target).isRemoved()) HandManager.removeFromGame(0, target);
-		else HandManager.discard(0, target);
-		GameData.dec = new Decision(CardList.getCard(target).getAssociation()==1?1:0, 85);
+		if (target==-1) {
+			builder.addField("Oops!", "The discard pile is empty. You sure picked a good time to play this.", false);
+		}
+		else {
+			HandManager.getFromDiscard(0, target);
+			if (CardList.getCard(target).isRemoved()) HandManager.removeFromGame(0, target);
+			else HandManager.discard(0, target);
+			GameData.dec = new Decision(CardList.getCard(target).getAssociation()==1?1:0, 85);
+		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -76,6 +81,10 @@ public class StarWars extends Card {
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
+		if (HandManager.Discard.isEmpty()) {
+			target = -1;
+			return true;
+		}
 		if (args.length<2) return false;
 		try {
 			target = Integer.parseInt(args[1]);

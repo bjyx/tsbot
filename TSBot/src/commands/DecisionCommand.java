@@ -381,8 +381,6 @@ public class DecisionCommand extends Command {
 		}
 		int event = GameData.dec.card;
 		int sp = GameData.dec.sp;
-		GameData.dec=null;
-		
 		if (e.getAuthor().equals(PlayerList.getArray().get((sp+1)%2))) {
 			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
 			return;
@@ -977,6 +975,10 @@ public class DecisionCommand extends Command {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
 			}
+			else {
+				Log.writeToLog(CardList.getCard(StarWars.target).getName()+":");
+				CardList.getCard(StarWars.target).onEvent(0, args);
+			}
 			if (HandManager.effectActive(59)&&((StarWars.target==13&&!HandManager.effectActive(65))||StarWars.target==11||StarWars.target==24||StarWars.target==36||StarWars.target==102)) {
 				Log.writeToLog("Flower Power:");
 				CardEmbedBuilder builder = new CardEmbedBuilder();
@@ -988,10 +990,6 @@ public class DecisionCommand extends Command {
 					.setColor(Color.red);
 				builder.changeVP(-2);
 				GameData.txtchnl.sendMessage(builder.build()).complete();
-			}
-			else {
-				Log.writeToLog(CardList.getCard(StarWars.target).getName()+":");
-				CardList.getCard(StarWars.target).onEvent(0, args);
 			}
 		}
 		if (event==89) {
@@ -1547,6 +1545,7 @@ public class DecisionCommand extends Command {
 		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);
+		if (GameData.dec.card==event&&GameData.dec.sp==sp) GameData.dec=null; //if the decision is left as is and completes successfully, reset
 		if (GameData.dec==null) {
 			if (GameData.isHeadlinePhase()) {
 				if (TimeCommand.hl1) TimeCommand.hl2 = true;
