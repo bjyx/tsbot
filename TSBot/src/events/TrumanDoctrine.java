@@ -15,13 +15,13 @@ public class TrumanDoctrine extends Card {
 	
 	private static ArrayList<Integer> doable;
 	
-	private static int target;
+	private static int target = 17; //Turkey is default for flavor purposes
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Truman addresses Congress")
-			.setDescription("Outlines reasons for aid to Greece and Turkey")
+			.setDescription("Speech urges swift aid to " + MapManager.get(target).name)
 			.setFooter("\"I believe that it must be the policy of the United States to support free peoples who are resisting attempted subjugation by armed minorities or by outside pressures.\"\n"
 					+ "- Harry S. Truman, 1947",Launcher.url("people/truman.png"))
 			.setColor(Color.BLUE);
