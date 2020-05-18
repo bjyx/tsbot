@@ -7,6 +7,7 @@ import java.util.Random;
 import cards.CardList;
 import commands.TimeCommand;
 import events.Card;
+import events.CardEmbedBuilder;
 import game.GameData;
 import logging.Log;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -251,7 +252,7 @@ public class HandManager {
 	 * @param card is the card in question.
 	 * @param mode is the mode of playing, as described under playmode.
 	 */
-	public static void play(int sp, int card, char mode) {
+	public static void play(int sp, int card, char mode, boolean a) {
 		
 		
 		//super complicated area, will nitgrit later
@@ -260,12 +261,21 @@ public class HandManager {
 		if (mode=='e') {
 			removeFromHand(sp,card);
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2) {
-				Log.writeToLog((sp==0?"Dem":"Com")+"plays " + CardList.getCard(card).getName() + " for the event first.");
+				Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " for the event first.");
 				playmode = 'f';
 			}
 			else {
-				Log.writeToLog((sp==0?"Dem":"Com")+"plays " + CardList.getCard(card).getName() + " as event.");
-				playmode = 'e';
+				if (a&&Operations.eight==sp) {
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("T-Square Initiative").setDescription(CardList.getCard(card) + " to be used for both Operations and Events.");
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					Operations.eight+=2;
+					Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " for the event first, using ability 8.");
+					playmode = 'f';
+				}
+				else {
+					Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " as event.");
+					playmode = 'e';
+				}
 			}
 			activecard = card;
 			TimeCommand.cardPlayed = true;
@@ -273,14 +283,32 @@ public class HandManager {
 		}
 		if (mode=='o') {
 			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
-				removeFromHand(sp,card);
-				Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " for ops first.");
-				playmode = 'l'; //event last
+				if (a&&Operations.seven==sp) {
+					Operations.seven+=2;
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("T-Square Initiative").setDescription(CardList.getCard(card) + " event cancelled.");
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " as ops, using ability 7.");
+					playmode = 'o';
+				}
+				else {
+					removeFromHand(sp,card);
+					Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " for ops first.");
+					playmode = 'l'; //event last
+				}
 			}
 			else {
-				discard(sp, card);
-				Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " as ops.");
-				playmode = 'o'; //ops only
+				if (a&&Operations.eight==sp) {
+					Operations.eight+=2;
+					EmbedBuilder builder = new CardEmbedBuilder().setTitle("T-Square Initiative").setDescription(CardList.getCard(card) + " to be used for both Operations and Events.");
+					GameData.txtchnl.sendMessage(builder.build()).complete();
+					Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " for ops first, using ability 8.");
+					playmode = 'l';
+				}
+				else {
+					discard(sp, card);
+					Log.writeToLog((sp==0?"Dem":"Com")+" plays " + CardList.getCard(card).getName() + " as ops.");
+					playmode = 'o'; //ops only
+				}
 			}
 			activecard = card;
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, false, 2);

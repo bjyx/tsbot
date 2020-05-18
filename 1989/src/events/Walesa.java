@@ -108,7 +108,7 @@ public class Walesa extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Place 4 Democratic SPs in Poland. The Democrat may conduct two support checks in Poland using this card.";
+		return "Place 4 Democratic SPs in Poland (unrestricted). The Democrat may conduct two support checks in Poland using this card.";
 	}
 
 	@Override

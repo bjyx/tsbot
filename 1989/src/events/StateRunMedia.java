@@ -66,7 +66,7 @@ public class StateRunMedia extends Card {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		int maxInfRem = 0;
-		for (int i=0; i<84; i++) {
+		for (int i=0; i<75; i++) {
 			if (MapManager.get(i).support[0]>0) {
 				doable.add(i);
 				maxInfRem += Math.min(MapManager.get(i).support[0], 2);

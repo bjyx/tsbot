@@ -2,12 +2,17 @@ package cards;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Random;
 
+import commands.TimeCommand;
 import events.CardEmbedBuilder;
+import events.Decision;
 import game.Die;
 import game.GameData;
 import logging.Log;
+import main.Common;
 import map.MapManager;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.TextChannel;
 /**
  * Class for handling all related to operations.
@@ -65,6 +70,10 @@ public class Operations {
 	 * The set of countries in which the USSR is allowed to place influence.
 	 */
 	//public static ArrayList<Integer> allowedSUN;
+	/**
+	 * The cards revealed by T2 ability 3.
+	 */
+	public static ArrayList<Integer> three = new ArrayList<Integer>();
 	/**
 	 * The superpower that has T2 ability 7, and whether he has used it or not. <br>
 	 * -1 - no one has access <br>
@@ -252,18 +261,38 @@ public class Operations {
 			return false;
 		}
 		if (!influence&&!tsquare) {
-			boolean flag = true;
-			for (int i=0; i<75; i++) {
-				if (sp==1 && i==14 && HandManager.effectActive(2)) continue;
-				if (MapManager.get(i).support[(sp+1)%2]>0) {
-					flag = false;
-					break;
+			if (restrictions==1) {
+				boolean flag = true;
+				for (int i=Common.bracket[1]; i<Common.bracket[2]; i++) {
+					if (sp==1 && i==14 && HandManager.effectActive(2)) continue; //Solidarity
+					if (MapManager.get(i).support[(sp+1)%2]>0) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					txtsp.sendMessage("Oh, it seems you can no longer realign in this region.").complete();
+					return true;
 				}
 			}
-			if (flag) {
-				txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have (checkable) influence on the board.").complete();
-				return true;
+			else {
+				boolean flag = true;
+				for (int i=0; i<75; i++) {
+					if (sp==1 && i==14 && HandManager.effectActive(2)) continue; //Solidarity
+					if (MapManager.get(i).support[(sp+1)%2]>0) {
+						flag = false;
+						break;
+					}
+				}
+				if (flag) {
+					txtsp.sendMessage("Dear god, how did this happen!? Your enemy doesn't have (checkable) influence on the board.").complete();
+					return true;
+				}
 			}
+		}
+		if (restrictions==1&&MapManager.get(country).inRegion(1)) {
+			txtsp.sendMessage(":x: Poland only.").complete();
+			return false;
 		}
 		if (HandManager.effectActive(2) && country==14 && sp==1) { //checking gdansk as com under solidarity
 			txtsp.sendMessage(":x: Solidarity is legal, sir. Nothing we can do about that.").complete();
@@ -338,8 +367,14 @@ public class Operations {
 		int die = new Die().roll();
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		Log.writeToLog("Roll: " + die);
-		builder.setTitle("Space Race")
+		
+		builder.setTitle("T-Square")
 		.setDescription("Card used: " + CardList.getCard(HandManager.activecard));
+		if (GameData.hasAbility(sp, 1)) { //Reformer Memorialized/Discredited
+			die++;
+			builder.addField("In Memory of Hu Yaobang", "+1", false);
+			Log.writeToLog("Reformer: +1");
+		}
 		if (die+opnumber >= (sp==0?spaceOpsD[spaceLevel]:spaceOpsC[spaceLevel])) {
 			builder.setColor(sp==0?Color.blue:Color.red)
 				.addField("Roll: :"+CardEmbedBuilder.numbers[die]+"::heavy_plus_sign:"+opnumber,getSpaceNames(spaceLevel, sp),false);
@@ -349,9 +384,36 @@ public class Operations {
 			builder.setColor(Color.ORANGE);
 			builder.addField("Roll: :"+CardEmbedBuilder.numbers[die]+"::heavy_plus_sign:"+opnumber,"Failure.",false);
 		}
-		if (spaceLevel<3&&GameData.getT2(sp)>=3&&sp==1&&HandManager.removeEffect(124)) {
-			builder.addField("Vostok 1", "The Soviets have acquired the capability to send a man into space. They will no longer receive a -1 bonus to their space race die rolls.", false);
-			Log.writeToLog("Laika no longer active.");
+		if (spaceLevel<3&&GameData.getT2(sp)>=3) {
+			EmbedBuilder omit = new EmbedBuilder()
+					.setTitle("April 26 Editorial")
+					.setAuthor(sp==0?"Foreign News":"People's Daily");
+			three = new ArrayList<Integer>();
+			for (int i=0; i<3; i++) {
+				three.add(HandManager.Deck.remove(new Random().nextInt(HandManager.Deck.size())));
+				if (HandManager.Deck.isEmpty()) {
+					HandManager.Deck.addAll(HandManager.Discard);
+					HandManager.Discard.clear();
+				}
+			}
+			for (Integer c : three) {
+				omit.addField(""+CardList.getCard(c), CardList.getCard(c).getDescription(), false);
+			}
+			GameData.dec = new Decision(sp, 203); // 
+			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention() + ", here are the next three cards in the deck. Select the one card you wish to keep. (TS.decide **<ID>**").complete();
+			Common.spChannel(sp).sendMessage(omit.build()).complete();
+		}
+		if (spaceLevel<4&&GameData.getT2(sp)>=4) {
+			GameData.dec = new Decision(sp, 204); // 
+			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention() + ", you may now remove two of your opponent's SPs from the board. (TS.decide <influence>").complete();
+		}
+		if (spaceLevel<5&&GameData.getT2(sp)>=6) {
+			if (GameData.getT2((sp+1)%2)<6) {
+				TimeCommand.extraCheck = false; //enables
+			}
+			else {
+				TimeCommand.extraCheck = true; //disables
+			}
 		}
 		if (spaceLevel<7&&GameData.getT2(sp)>=7) {
 			if (GameData.getT2((sp+1)%2)<7) {

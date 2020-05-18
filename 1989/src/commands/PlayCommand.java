@@ -125,11 +125,15 @@ public class PlayCommand extends Command {
 			sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
 			return;
 		}*/
+		boolean ability = false;
+		if (args.length>3 && args[3].length()!=0) {
+			ability = true;
+		}
 		if (e.getAuthor().equals(PlayerList.getCom())&&(HandManager.ComHand.contains(card))) {
-			HandManager.play(1, card, mode);
+			HandManager.play(1, card, mode, ability);
 		}
 		else if (e.getAuthor().equals(PlayerList.getDem())&&(HandManager.DemHand.contains(card))) {
-			HandManager.play(0, card, mode);
+			HandManager.play(0, card, mode, ability);
 		}
 		else {
 			sendMessage(e, ":x: Do you even own that card?");
@@ -154,11 +158,12 @@ public class PlayCommand extends Command {
 	@Override
 	public List<String> getUsageInstructions() {
 		// TODO Auto-generated method stub
-		return Arrays.asList("DF.play **[ID]** **[usage method]** \n"
+		return Arrays.asList("DF.play **<ID>** **<usage method>** **[ability]**\n"
 				+ "- The user (who should be phasing player) plays the card with ID **ID** in one of the following manners:\n"
 				+ "- `e`vent (first)\n"
 				+ "- `o`perations (first)\n"
-				+ "- `t`square\n");
+				+ "- `t`square\n"
+				+ "If anything is entered in **ability**, a T-Square ability is activated, if applicable. If this is an enemy's card, the card may be played for operations only (as if Common European Home was played); this requires ability 7, and **usage method** must be `o`. Otherwise, this card may be played for both Operations and the Event, in either order; this requires ability 8.");
 	}
 	
 	

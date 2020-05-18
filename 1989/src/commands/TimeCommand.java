@@ -6,6 +6,7 @@ import java.util.List;
 
 import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import events.CardEmbedBuilder;
 import events.Decision;
 import events.Stasi;
@@ -80,8 +81,9 @@ public class TimeCommand extends Command {
 			sendMessage(e, ":x: You may choose to discard a card - make that decision first.");
 			return;
 		}
-		if (!extraCheck&&GameData.arsLeft()==0) {
-			GameData.dec = new Decision(GameData.aheadInSpace(), 0); //whoever has the ability is obligatorily ahead in space
+		if (!extraCheck&&GameData.arsLeft()==0) { //Turn Sequence: 3
+			GameData.ops = new Operations(GameData.aheadInSpace(), 2, false, true, false, 1);
+			GameData.dec = new Decision(GameData.aheadInSpace(), 1); //whoever has the ability is obligatorily ahead in space
 			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.aheadInSpace()).getAsMention() + ", you can now use your extra support check.");
 		}
 		if (GameData.phasing()==0&&HandManager.effectActive(13)&&GameData.getAR()!=14) {
@@ -93,11 +95,11 @@ public class TimeCommand extends Command {
 				Stasi.card = Integer.parseInt(args[1]);
 			}
 			catch (NumberFormatException err) {
-				sendMessage(e, ":x: The Stasi are not amused. This will go on your next report. .̄_.̄");
+				sendMessage(e, ":x: The Stasi are not amused. This is clearly not a card. .̄_.̄");
 				return;
 			}
 			if (!HandManager.DemHand.contains(Stasi.card)) {
-				sendMessage(e, ":x: The Stasi are not amused. This will go on your next report. .̄_.̄");
+				sendMessage(e, ":x: The Stasi are not amused at your lies. This will go on your next report. .̄_.̄");
 				return;
 			}
 		}
@@ -109,23 +111,26 @@ public class TimeCommand extends Command {
 			HandManager.removeEffect(490);
 			HandManager.removeEffect(491);
 		}
-		GameData.advanceTime();
+		GameData.advanceTime(); //everything else in the turn sequence
 		HandManager.activecard = 0;
 		if (HandManager.effectActive(13)&&GameData.getAR()!=14) {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder().setTitle("Intel from the Stasi").setDescription("Dissidents planning to use " + CardList.getCard(Integer.parseInt(args[1]))).setColor(Color.red).build()).complete();
 		}
-		if (GameData.getAR()==1) {
+		if (GameData.getAR()==1) { //ar1
+			if (GameData.hasAbility(0, 6)||GameData.hasAbility(0, 6)) extraCheck = false;
+			Operations.seven%=2;
+			Operations.eight%=2;
 			GameData.startTurn();
 			if (GameData.hasAbility(0, 5)) {
 				isCardDiscarded = false;
 				GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
-				GameData.dec = new Decision(0, 0);
+				GameData.dec = new Decision(0, 205);
 				return;
 			}
 			if (GameData.hasAbility(1, 5)) {
 				isCardDiscarded = false;
 				GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you may now elect to discard one of your held cards. (`TS.decide *card no.*`, or `TS.decide 0` if you do not want to discard anything)").complete();
-				GameData.dec = new Decision(1, 0);
+				GameData.dec = new Decision(1, 205);
 				return;
 			}
 		}
@@ -207,11 +212,10 @@ public class TimeCommand extends Command {
 			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you must discard a card to attempt to break up this General Strike. Alternatively, you may play a scoring card for the event, but this will allow the strike to continue. (TS.decide [card])").complete();
 		}
 		else if (!isCardDiscarded) {
-			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
+			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
 		}
 		else if (!extraCheck) {
-			GameData.dec = new Decision(GameData.phasing(), 121);
-			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", ").complete();
+			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", ").complete();
 		}
 		else if (canAdvance()) {
 			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();

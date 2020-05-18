@@ -12,14 +12,37 @@ import net.dv8tion.jda.core.entities.Role;
  *
  */
 public class Common {
+	/**
+	 * Strings for the players. Flavor only.
+	 */
 	public static final String[] players = {"Democrat", "Communist"};
+	/**
+	 * Strings for the players. Flavor only.
+	 */
 	public static final String[] adject = {"Democratic", "Communist"};
+	/**
+	 * Strings for the players. Flavor only.
+	 */
 	public static final String[] ideology = {"Democracy", "Communism"};
+	/**
+	 * Strings for the icons on the board.
+	 */
 	public static final String[] icons = {"Worker", "Farmer", "Elite", "Bureaucrat", "Intellectual", "Student", "Church", "Minority"};
+	/**
+	 * Strings for the power struggle suits.
+	 */
 	public static final String[] suits = {"Rally", "Strike", "March", "Petition"};
+	/**
+	 * Strings for the countries.
+	 */
 	public static final String[] countries = {"East Germany", "Poland", "Czechoslovakia", "Hungary", "Romania", "Bulgaria"};
+	/**
+	 * Strings for each country's flag.
+	 */
 	public static final String[] flags = {"<:flag_dd:648119347469877268>",":flag_pl:",":flag_cz:",":flag_hu:",":flag_ro:",":flag_bg:"};
-	
+	/**
+	 * The boundaries of each region, in order of presentation.
+	 */
 	public static final int[] bracket = {0, 12, 26, 37, 49, 63, 75};
 	
 	/**

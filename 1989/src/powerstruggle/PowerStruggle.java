@@ -1,5 +1,6 @@
 package powerstruggle;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -108,6 +109,10 @@ public class PowerStruggle {
 	 * @param in is the player initially having initiative. 
 	 */
 	public PowerStruggle(int r, int in) {
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Power Struggle in " + Common.countries[r] + "!")
+			.setDescription(Common.players + "s hold initiative")
+			.setColor(Color.YELLOW);
 		region = r;
 		for (int i=0; i<75; i++) {
 			if (MapManager.get(i).inRegion(r)&&MapManager.get(i).isControlledBy()!=-1) {
@@ -119,16 +124,23 @@ public class PowerStruggle {
 		int d = 4+(2*control[0]);
 		int c = 4+(2*control[1]);
 		//TODO events
-		
+		if (HandManager.removeEffect(17)) {
+			HandManager.Discard.add(17);
+			d+=2;
+			c-=2;
+			builder.addField("Round Table Talks", "The Democrat gets cards from the Communist.", false);
+		}
 		initializeDeck();
+		builder.addField("Card Count", "Democrat: "+d+"\nCommunist: "+c, false);
 		for (int i=0; i<d; i++) addToHand(0);
 		for (int i=0; i<c; i++) addToHand(1);
-		Common.spChannel(in).sendMessage(Common.spRole(in).getAsMention() + ", would you like to raise the stakes? Respond with ");
+		GameData.txtchnl.sendMessage(builder.build()).complete();
+		Common.spChannel(in).sendMessage(Common.spRole(in).getAsMention() + ", would you like to raise the stakes? Respond with `TS.struggle r`aise or `TS.struggle d`ecline.");
 	}
 	
 	public void raiseStakes(StruggleCard[] cards, int sp) {
 		stakes++;
-		for (int i=0; i<2; i++) {
+		for (int i=0; i<3; i++) {
 			if (sp==0) DemHand.remove(cards[i]);
 			if (sp==1) ComHand.remove(cards[i]);
 		}

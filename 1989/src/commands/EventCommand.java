@@ -67,7 +67,7 @@ public class EventCommand extends Command {
 			if (CardList.getCard(HandManager.activecard).isRemoved()) {
 				HandManager.Removed.add(HandManager.activecard);
 			}
-			else if (CardList.getCard(HandManager.activecard).getOps()!=0) {
+			else if (CardList.getCard(HandManager.activecard).getOps()!=0&&HandManager.activecard!=17) { //not scoring card, not suspended events (RTT, 
 				HandManager.Discard.add(HandManager.activecard);
 			}
 			Log.writeToLog(CardList.getCard(HandManager.activecard).getName()+":");

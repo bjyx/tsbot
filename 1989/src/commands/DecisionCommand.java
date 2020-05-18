@@ -1,8 +1,10 @@
 package commands;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import cards.CardList;
 import cards.HandManager;
@@ -12,6 +14,9 @@ import game.Die;
 import game.GameData;
 import game.PlayerList;
 import logging.Log;
+import main.Common;
+import main.Launcher;
+import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
@@ -75,7 +80,7 @@ public class DecisionCommand extends Command {
 			return;
 		}
 		if (GameData.ps!=null) {
-			sendMessage(e, ":x: No.");
+			sendMessage(e, ":x: And you're going to just ignore the Power Struggle in " + Common.countries[GameData.ps.region] + "!?");
 			return;
 		}
 		if (!TimeCommand.trapDone) {
@@ -127,11 +132,17 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
 			return;
 		}
+		//end of turn shenanigans.
+		if (GameData.dec.card==0) {
+			
+		}
 		/*
 		 * Cards that let you have ops, mostly support checks, use id 1
-		 * - 1 Legacy of Martial Law
-		 * - 3 Walesa
-		 * - 
+		 * - 001 Legacy of Martial Law
+		 * - 003 Walesa
+		 * - 014 Gorby
+		 * 
+		 * - Space Ability 6
 		 */
 		if (GameData.dec.card==1) { //in general, events that let you have ops route here
 			boolean result = GameData.ops.ops(args);
@@ -139,6 +150,9 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
+		/*
+		 * 006 - Brought in for Questioning
+		 */
 		if (GameData.dec.card==6) { //brought in for questioning: = FYP
 			if (!CardList.getCard(Questioning.card).isFormatted(1, args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
@@ -156,8 +170,173 @@ public class DecisionCommand extends Command {
 					HandManager.discard(0, Questioning.card);
 				}
 				Log.writeToLog(CardList.getCard(Questioning.card).getName()+":");
-				CardList.getCard(Questioning.card).onEvent(0, args);
+				CardList.getCard(Questioning.card).onEvent(1, args);
 			}
+		}
+		/*
+		 * Space Ability 3.
+		 */
+		if (GameData.dec.card==203) {
+			int order;
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("April 26 Editorial")
+			.setDescription(GameData.dec.sp==0?"Foreign News Supports Protests":"People's Daily Condemns Protests")
+			
+			.setColor(Common.spColor(GameData.dec.sp));
+			if (GameData.dec.sp==1) builder.setFooter("\"If we are tolerant of or conniving with this disturbance and let it go unchecked, a seriously chaotic state will appear.\"\n"
+					+ "- *People's Daily*, April 26", Launcher.url("people/lipeng.png"));
+			try {
+				order = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: This is not a card. This isn't even a number!");
+				return;
+			}
+			if (Operations.three.contains(order)) {
+				if (GameData.dec.sp==0) HandManager.DemHand.add(order);
+				else HandManager.ComHand.add(order);
+				Operations.three.remove((Integer) order);
+			}
+			else {
+				sendMessage(e, ":x: This definitely didn't turn up in the news.");
+				return;
+			}
+			builder.addField("Discarded the following:", Operations.three.toString(), false);
+			HandManager.Discard.addAll(Operations.three);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		/*
+		 * Space Ability 4
+		 */
+		if (GameData.dec.card==204) {
+			ArrayList<Integer>doable = new ArrayList<Integer>();
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			int maxInfRem = 0;
+			for (int i=0; i<75; i++) {
+				if (MapManager.get(i).support[Common.opp(GameData.dec.sp)]>0) {
+					doable.add(i);
+					maxInfRem += Math.min(MapManager.get(i).support[Common.opp(GameData.dec.sp)], 2);
+				}
+			}
+			if (maxInfRem<=2) {
+				order = doable;
+				for (int i : order) {
+					values.add(Math.max(-MapManager.get(i).support[Common.opp(GameData.dec.sp)], -2));
+				}
+			}
+			else {
+			if (args.length%2!=1) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			for (int i=1; i<args.length; i+=2) {
+				order.add(MapManager.find(args[i]));
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}
+			}
+			int sum = 0;
+			if (!doable.containsAll(order)) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)>=0) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} //no non-negative numbers please
+				if (values.get(i)<-2) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}// cannot remove >2 influence from a given country
+				if (MapManager.get(order.get(i)).support[Common.opp(GameData.dec.sp)]+values.get(i)<0){
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} //don't give me negative influence values
+				sum += values.get(i);
+			}
+			if (sum!=-2) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle(GameData.dec.sp==0?"Hunger Strike Garners Foreign Sympathy":"Hunger Striking Students Arrested")
+				.setColor(Common.spColor(GameData.dec.sp));
+			builder.bulkChangeInfluence(order, Common.opp(GameData.dec.sp), values); //remove opponent sps
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (GameData.dec.card==205) {
+			int card;
+			try {
+				card = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Give the number of the card you wish to discard, or 0 if you do not wish to do so.");
+				return;
+			}
+			if (card==0) {
+				sendMessage(e, "Roger.");
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("Space Race Advantage").setDescription("Discarded nothing.");
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+				TimeCommand.isCardDiscarded=true;
+			}
+			else if (card<=CardList.numberOfCards()) {
+				if (!HandManager.discard(GameData.dec.sp, card)) {
+					sendMessage(e, ":x: You don't have this card.");
+					return;
+				}
+				if (CardList.getCard(card).getOps()==0) {
+					sendMessage(e, ":x: Scoring cards are not valid discards.");
+					return;
+				}
+				EmbedBuilder builder = new CardEmbedBuilder().setTitle("T-Square Initiative").setDescription("Discarded " + CardList.getCard(card));
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+				TimeCommand.isCardDiscarded=true;
+				Log.writeToLog("Used T-Square Ability 5 to discard " + CardList.getCard(card).getName());
+				//draw replacement
+				Random random = new Random();
+				HandManager.DemHand.add(HandManager.Deck.remove(random.nextInt(HandManager.Deck.size())));
+				if(HandManager.Deck.isEmpty()) {
+					HandManager.Deck.addAll(HandManager.Discard);
+					HandManager.Discard.clear();
+				}
+			}
+			else {
+				sendMessage(e, ":x: Give the number of the card you wish to discard.");
+				return;
+			}
+			if (HandManager.Effects.contains(5) && (GameData.phasing()==1)) {
+				TimeCommand.trapDone = false;
+			}
+			else if (GameData.getAR()>14) { //skippable eighth action round from Honecker
+				TimeCommand.cardPlayedSkippable = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you have an extra action round. You may play a card or pass the turn (TS.play 0).").complete();
+			}
+			else if ((GameData.phasing()==1 && !HandManager.ComHand.isEmpty()) || (GameData.phasing()==0 && !HandManager.DemHand.isEmpty())) { //phasing player must play a card if he isn't in a skippable eighth action round
+				TimeCommand.cardPlayed = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", play a card.").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", play a card.").complete();
+			}
+			else { //if hand is empty
+				TimeCommand.cardPlayedSkippable = false;
+				//if (GameData.phasing()==1) GameData.txtssr.sendMessage(GameData.rolessr.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+				//else GameData.txtusa.sendMessage(GameData.roleusa.getAsMention() + ", you are out of cards. You may pass the turn (TS.play 0) or play the China Card if you have it.").complete();
+			}
+			TimeCommand.eventDone = false;
+			TimeCommand.operationsDone = false;
+			TimeCommand.eventRequired = false;
+			TimeCommand.operationsRequired = false;
+			TimeCommand.spaceRequired = false;
+			TimeCommand.spaceDone = false;
+			TimeCommand.prompt();
 		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);

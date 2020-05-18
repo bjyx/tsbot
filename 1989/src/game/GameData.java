@@ -282,6 +282,7 @@ public class GameData {
 		hasT2[0] = false; 
 		hasT2[1] = false;
 		//TODO effect reminders
+		HandManager.removeEffect(15); //Honecker
 		/*if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
 		if (HandManager.removeEffect(25)) builder.addField("Ineffective Policy", "New administration calls for rollback. US loses +1 Operations bonus.", false);	//Containment
 		if (HandManager.removeEffect(41)) builder.addField("Soviets Develop Nuclear Submarines","US coups in battleground countries will now lower DEFCON.",false);	//Nuclear Subs
@@ -367,7 +368,7 @@ public class GameData {
 	}
 	
 	public static int arsLeft() {
-		if (HandManager.Effects.contains(15)&&ar==14) {
+		if (HandManager.Effects.contains(15)) {
 			return 8-(getAR()-1)/2;
 		}
 		return 7-(getAR()-1)/2;

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import commands.StartCommand;
+import game.GameData;
 import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 
@@ -110,9 +111,11 @@ public abstract class Card {
 	 */
 	public int getOpsMod(int sp) {
 		if (getOps()==0) return 0;
+		int x = this.getOps();
+		if (GameData.hasAbility(sp, 2) && x==1) x = 2; //Rally space
 		if (sp==0) {
-			return Math.max(1, this.getOps() + (HandManager.Effects.contains(50)?1:0) - (HandManager.Effects.contains(80)?1:0));
+			return Math.max(1, x + (HandManager.Effects.contains(50)?1:0) - (HandManager.Effects.contains(80)?1:0));
 		}
-		else return Math.max(1, this.getOps() + (HandManager.Effects.contains(25)?1:0) - (HandManager.Effects.contains(81)?1:0));
+		else return Math.max(1, x + (HandManager.Effects.contains(25)?1:0) - (HandManager.Effects.contains(81)?1:0));
 	}
 }

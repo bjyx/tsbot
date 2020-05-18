@@ -2,25 +2,19 @@ package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import game.GameData;
-import main.Launcher;
 
-/**
- * The Michnik card.
- * @author adalbert
- *
- */
-public class Michnik extends Card {
+public class RoundTableTalks extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Your President, Our Prime Minister")
-		.setDescription("Adam Michnik advocates compromise with Jaruzelski")
-		.setColor(Color.blue)
-		.setFooter("\"In an explosive situation, the responsible thing to do is defuse the mine.\"\n"
-				+ "- Tadeusz Mazowiecki", Launcher.url("people/mazowiecki.png"));
-		builder.changeInfluence(25, 0, 3);
+		builder.setTitle("Talks organized")
+			.setDescription("Communist government to debate inclusion of banned parties in politics")
+			.setColor(Color.blue);
+		HandManager.addEffect(17);
+		builder.addField("Round Table", "When the next Power Struggle happens, the Democrat gains two Power Struggle cards, and the Communist loses two.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -31,17 +25,17 @@ public class Michnik extends Card {
 
 	@Override
 	public String getId() {
-		return "004";
+		return "017";
 	}
 
 	@Override
 	public String getName() {
-		return "Michnik";
+		return "Round Table Talks";
 	}
 
 	@Override
 	public int getOps() {
-		return 1;
+		return 3;
 	}
 
 	@Override
@@ -56,7 +50,7 @@ public class Michnik extends Card {
 
 	@Override
 	public boolean isRemoved() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -66,7 +60,7 @@ public class Michnik extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Place 3 Democratic SPs in the Polish Writers space.";
+		return "*When the next Power Struggle starts, the Democrat may draw two Power Struggle cards from the Communist hand.*";
 	}
 
 	@Override
