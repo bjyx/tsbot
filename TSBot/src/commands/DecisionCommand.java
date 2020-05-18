@@ -737,15 +737,7 @@ public class DecisionCommand extends Command {
 				GameData.ops = new Operations((sp+1)%2, CardList.getCard(i).getOpsMod((sp+1)%2), true, true, true, false, false);
 			}
 			else {
-				if (CardList.getCard(i).isRemoved()) {
-					HandManager.removeFromGame(sp, i);
-				}
-				else if (i!=73) {
-					HandManager.discard(sp, i);
-				}
-				else {
-					HandManager.removeFromHand(sp, i);
-				}
+				HandManager.removeFromHand(sp, i);
 			}
 			if (HandManager.effectActive(59)&&((i==13&&!HandManager.effectActive(65))||i==11||i==24||i==36||i==102)&&sp==0) {
 				Log.writeToLog("Flower Power:");
@@ -763,21 +755,26 @@ public class DecisionCommand extends Command {
 			return;
 		}
 		if (event==491) {
-			HandManager.addEffect(490 + (sp+1)%2); //handles part 2
-			if (CardList.getCard(MissileEnvy.card).getAssociation()==(sp+1)%2) {
+			int i = MissileEnvy.card;
+			if (CardList.getCard(i).getAssociation()==(sp+1)%2) {
 				boolean result = GameData.ops.ops(args);
 				if (!result) return;
 			}
-			else if (CardList.getCard(MissileEnvy.card).isPlayable(sp)) {
-				if (CardList.getCard(MissileEnvy.card).isFormatted(sp, args)) {
-					Log.writeToLog(CardList.getCard(MissileEnvy.card).getName()+":");
-					CardList.getCard(MissileEnvy.card).onEvent(sp, args);
-				}
-				else {
-					sendMessage(e, "Format this correctly, please.");
+			else if (CardList.getCard(i).isPlayable(sp)) {
+				if (!CardList.getCard(i).isFormatted(sp, args)) {
+					sendMessage(e, ":x: Format your arguments correctly.");
 					return;
 				}
+				if (CardList.getCard(i).isRemoved()) {
+					HandManager.Removed.add(i);
+				}
+				else if (HandManager.activecard!=73) {
+					HandManager.Discard.add(i);
+				}
+				Log.writeToLog(CardList.getCard(i).getName()+":");
+				CardList.getCard(i).onEvent(sp, args);
 			}
+			HandManager.addEffect(490 + (sp+1)%2); //handles part 2
 		}
 		if (event==57) {
 			boolean result = GameData.ops.ops(args);

@@ -79,7 +79,7 @@ public class MarshallPlan extends Card {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=0; i<21; i++) {
-			if ((MapManager.get(i).region<=1)&&MapManager.get(i).isControlledBy()!=1) {
+			if ((MapManager.get(i).inRegion(1))&&MapManager.get(i).isControlledBy()!=1) {
 				doable.add(i);
 			}
 		}

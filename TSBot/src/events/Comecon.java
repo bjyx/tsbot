@@ -18,7 +18,6 @@ public class Comecon extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Council for Mutual Economic Assistance founded")
 			.setDescription("")
@@ -73,7 +72,7 @@ public class Comecon extends Card {
 		doable = new ArrayList<Integer>();
 		order = new ArrayList<Integer>();
 		for (int i=0; i<21; i++) {
-			if ((MapManager.get(i).region==0||MapManager.get(i).region==2)&&MapManager.get(i).isControlledBy()!=0) {
+			if (MapManager.get(i).inRegion(2)&&MapManager.get(i).isControlledBy()!=0) {
 				doable.add(i);
 			}
 		}

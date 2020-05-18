@@ -84,7 +84,7 @@ public class WarsawPact extends Card {
 		values = new ArrayList<Integer>();
 		if (args[1].equals("remove")) {
 			for (int i=0; i<21; i++) {
-				if (MapManager.get(i).region!=1&&MapManager.get(i).influence[0]>0) {
+				if (MapManager.get(i).inRegion(2)&&MapManager.get(i).influence[0]>0) {
 					doable.add(i);
 				}
 			}
@@ -107,7 +107,7 @@ public class WarsawPact extends Card {
 				int c = MapManager.find(args[i]);
 				if (order.indexOf(c)!=-1) return false; // no duplicates plox
 				order.add(c);
-				if (!(MapManager.get(c).region==0||MapManager.get(c).region==2)) return false;
+				if (!MapManager.get(c).inRegion(2)) return false;
 				try{
 					values.add(Integer.parseInt(args[i+1]));
 				}
