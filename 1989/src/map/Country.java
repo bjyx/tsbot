@@ -129,9 +129,9 @@ public class Country {
 			
 	}
 	/**
-	 * An implementation of Rule 2.1.2 and the Austria/Finland clause of Rule 2.1.1, so I don't need to deal with parentheses and logic gates every time I talk about Europe or Asia.
+	 * An implementation of Rule 2.1.2, so I don't need to deal with parentheses and logic gates every time I talk about a superregion.
 	 * @param r is the region being tested for
-	 * @return whether this country is in r, as described in 2.1.2 (Europe and Asia include their own sub-regions) and the Austria/Finland clause of 2.1.1 (which are in both Eastern AND Western Europe).
+	 * @return whether this country is in r, as described in 2.1.2.
 	 */
 	public boolean inRegion(int r) {
 		if (r==6&&this.region<=3) return true; //Eastern Europe

@@ -55,7 +55,6 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
  * <li> {@code 067 Grain Sales to Soviets} - Any event
  * <li> {@code 085 Star Wars} - Non-scoring cards
  * 
- * The command will also handle discarding of the card at the end of the turn. 
  * @author [REDACTED]
  *
  */
@@ -128,12 +127,14 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: No pending decisions. Are you sure you've satisfied the conditions for that?");
 			return;
 		}
+		int event = GameData.dec.card;
+		int sp = GameData.dec.sp;
 		if (e.getAuthor().equals(PlayerList.getArray().get((GameData.dec.sp+1)%2))) {
 			sendMessage(e, ":x: You aren't a puppeteer. Especially not for your opponent.");
 			return;
 		}
 		//end of turn shenanigans.
-		if (GameData.dec.card==0) {
+		if (event==0) {
 			
 		}
 		/*
@@ -142,9 +143,9 @@ public class DecisionCommand extends Command {
 		 * - 003 Walesa
 		 * - 014 Gorby
 		 * 
-		 * - Space Ability 6
+		 * - 206 Space Ability 6
 		 */
-		if (GameData.dec.card==1) { //in general, events that let you have ops route here
+		if (event==1) { //in general, events that let you have ops route here
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
@@ -153,7 +154,7 @@ public class DecisionCommand extends Command {
 		/*
 		 * 006 - Brought in for Questioning
 		 */
-		if (GameData.dec.card==6) { //brought in for questioning: = FYP
+		if (event==6) { //brought in for questioning: = FYP
 			if (!CardList.getCard(Questioning.card).isFormatted(1, args)) {
 				sendMessage(e, ":x: Format your arguments correctly.");
 				return;
@@ -173,10 +174,66 @@ public class DecisionCommand extends Command {
 				CardList.getCard(Questioning.card).onEvent(1, args);
 			}
 		}
+		if (event==20) {
+			int i;
+			try {
+				i = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Card IDs are integers. I suppose you forgot that.");
+				return;
+			}
+			if (!HandManager.DemHand.contains(i)) {
+				sendMessage(e, ":x: Don't conjure cards out of thin air...");
+				return;
+			}
+			if (CardList.getCard(i).getOps()<DeutscheMarks.maxops) {
+				sendMessage(e, ":x: Don't be a trickster. There are cards with a higher OP value.");
+				return;
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			Log.writeToLog("Handed over " + CardList.getCard(i).getName());
+			builder.setTitle("East German Government Ransoms Dissident")
+			.setDescription("West Germany to pay in Deutsche Marks")
+			.setColor(Color.red);
+			builder.addField("Hard currency", "The Democrat player has given " + CardList.getCard(i) + " as ransom for an East German dissident.", false);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			DeutscheMarks.card = i;
+			if (CardList.getCard(i).getAssociation()==1&&CardList.getCard(i).isPlayable(1)) {
+				HandManager.removeFromHand(sp, i);
+			}
+			else {
+				HandManager.discard(sp, i);
+				GameData.ops = new Operations(1, CardList.getCard(i).getOpsMod(1), true, true, false);
+			}
+			GameData.dec = new Decision(1, 201);
+			return;
+		}
+		if (event==201) {
+			
+			if (CardList.getCard(DeutscheMarks.card).getAssociation()==1&&CardList.getCard(DeutscheMarks.card).isPlayable(1)) {
+				if (!CardList.getCard(DeutscheMarks.card).isFormatted(PlayerList.getArray().indexOf(e.getAuthor()), args)) {
+					sendMessage(e, ":x: Format your arguments correctly.");
+					return;
+				}
+				if (CardList.getCard(DeutscheMarks.card).isRemoved()) {
+					HandManager.Removed.add(DeutscheMarks.card);
+				}
+				else if (CardList.getCard(DeutscheMarks.card).getOps()!=0&&HandManager.activecard!=17) { //not scoring card, not suspended events (RTT, 
+					HandManager.Discard.add(DeutscheMarks.card);
+				}
+				Log.writeToLog(CardList.getCard(DeutscheMarks.card).getName()+":");
+				CardList.getCard(DeutscheMarks.card).onEvent(1, args);
+			}
+			else {
+				boolean result = GameData.ops.ops(args);
+				if (!result) return;
+			}
+		}
 		/*
 		 * Space Ability 3.
 		 */
-		if (GameData.dec.card==203) {
+		if (event==203) {
 			int order;
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("April 26 Editorial")
@@ -208,7 +265,7 @@ public class DecisionCommand extends Command {
 		/*
 		 * Space Ability 4
 		 */
-		if (GameData.dec.card==204) {
+		if (event==204) {
 			ArrayList<Integer>doable = new ArrayList<Integer>();
 			ArrayList<Integer>order = new ArrayList<Integer>();
 			ArrayList<Integer>values = new ArrayList<Integer>();
@@ -272,7 +329,7 @@ public class DecisionCommand extends Command {
 			builder.bulkChangeInfluence(order, Common.opp(GameData.dec.sp), values); //remove opponent sps
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (GameData.dec.card==205) {
+		if (event==205) {
 			int card;
 			try {
 				card = Integer.parseInt(args[1]);
@@ -341,13 +398,15 @@ public class DecisionCommand extends Command {
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);
 
-		GameData.dec=null;
-		TimeCommand.eventDone = true;
-		if (HandManager.playmode == 'f') {
-			TimeCommand.operationsRequired = true;
-			GameData.ops = new Operations(GameData.phasing(), CardList.getCard(HandManager.activecard).getOpsMod(GameData.phasing()), true, true, false);
+		if (GameData.dec.card==event&&GameData.dec.sp==sp) GameData.dec=null; //if the decision is left as is and completes successfully, reset
+		if (GameData.dec==null) {
+			TimeCommand.eventDone = true;
+			if (HandManager.playmode == 'f') {
+				TimeCommand.operationsRequired = true;
+				GameData.ops = new Operations(GameData.phasing(), CardList.getCard(HandManager.activecard).getOpsMod(GameData.phasing()), true, true, false);
+			}
+			TimeCommand.prompt();
 		}
-		TimeCommand.prompt();
 	}
 
 	@Override

@@ -43,7 +43,7 @@ public class CardList {
 		CardList.addCard(new Honecker());
 		CardList.addCard(new Nomenklatura());
 		CardList.addCard(new RoundTableTalks());
-		CardList.addCard(new Poszgay());
+		CardList.addCard(new Pozsgay());
 		CardList.addCard(new PapalVisit());
 		CardList.addCard(new DeutscheMarks());
 		/*
