@@ -147,11 +147,12 @@ public class PlayCommand extends Command {
 			sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
 			return;
 		}
+		//legacy
 		if (mode=='u'&&!HandManager.handContains(GameData.phasing(), 32)) {
 			sendMessage(e, "Actually have the 'UN Intervention' Card in your hand first.");
 			return;
 		}
-		if (mode=='u'&&CardList.getCard(card).getAssociation()!=(GameData.phasing()+1)%2&&CardList.getCard(card).isPlayable((GameData.phasing()+1)%2)) {
+		if (mode=='u'&&(CardList.getCard(card).getAssociation()!=(GameData.phasing()+1)%2||!CardList.getCard(card).isPlayable((GameData.phasing()+1)%2))) {
 			sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
 			return;
 		}

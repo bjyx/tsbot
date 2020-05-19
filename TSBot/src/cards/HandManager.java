@@ -453,7 +453,7 @@ public class HandManager {
 							.setDescription("Taiwan will no longer be a battleground country in any situation.")
 							.setColor(Color.DARK_GRAY)
 							.setFooter("\"Everyone, listen; just let me say one thing. I opposed China, I was wrong.\"\n"
-							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
+							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("people/nixon.png"))
 							.build()).complete();
 				}
 				Log.writeToLog((sp==0?"US":"SU")+"plays " + CardList.getCard(card).getName() + " as ops.");
@@ -485,7 +485,7 @@ public class HandManager {
 							.setDescription("Taiwan will no longer be a battleground country in any situation.")
 							.setColor(Color.DARK_GRAY)
 							.setFooter("\"Everyone, listen; just let me say one thing. I opposed China, I was wrong.\"\n"
-							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("countries/us.png"))
+							+ "- Richard M. Nixon, *Nixon in China*", Launcher.url("people/nixon.png"))
 							.build()).complete();
 				}
 			}

@@ -124,18 +124,18 @@ public class InfoCommand extends Command {
 			String effects = "";
 				//top priority!
 				//DEFCON affectors
-				if (HandManager.effectActive(126)) effects+=":: **Tsar Bomba**";
-				if (HandManager.effectActive(1270)||HandManager.effectActive(1271)) effects+=":: Vasili Arkhipov";
-				if (HandManager.effectActive(1210)||HandManager.effectActive(1211)) effects+=":: **Nuclear Weapons Proliferation**";
-				if (HandManager.effectActive(128)) effects+=StartCommand.emojiID[12]+" **Checkpoint C**";
+				if (HandManager.effectActive(126)) effects+=":radioactive: **Tsar Bomba**\n";
+				if (HandManager.effectActive(1270)||HandManager.effectActive(1271)) effects+=":man_pilot: Vasili Arkhipov (" + (HandManager.effectActive(1270)?"US":"USSR") + ")\n";
+				if (HandManager.effectActive(1210)||HandManager.effectActive(1211)) effects+=":flag_cn: **Nuclear Weapons Proliferation** (" + (HandManager.effectActive(1210)?"US":"USSR") + ")\n";
+				if (HandManager.effectActive(128)) effects+=StartCommand.emojiID[12]+" **Checkpoint C**\n";
 				//coup modifiers
-				if (HandManager.effectActive(400)||HandManager.effectActive(401)) effects+=":rocket: **Missile Crisis**\n"; //loses the game if coups happen
+				if (HandManager.effectActive(400)||HandManager.effectActive(401)) effects+=":rocket: **Missile Crisis** (" + (HandManager.effectActive(1270)?"US":"USSR") + ")\n"; //loses the game if coups happen
 				if (HandManager.effectActive(41)) effects+=":anchor: Nuclear Submarines\n";
 				if (HandManager.effectActive(43)) effects+=":atom: Salt Negotiations\n";
-				if (HandManager.effectActive(690)||HandManager.effectActive(691)) effects += ":earth_americas: Latin American Death Squads\n";
+				if (HandManager.effectActive(690)||HandManager.effectActive(691)) effects += ":earth_americas: Latin American Death Squads ("+ (HandManager.effectActive(1270)?"US":"USSR") + ")\n";
 				//other ops modifiers
 				if (HandManager.effectActive(93)) effects+=":flag_ni: Iran-Contra Affair\n";
-				if (HandManager.effectActive(94)) effects+=":radioactive: Chernobyl\n";
+				if (HandManager.effectActive(94)) effects+=":boom: Chernobyl\n";
 				if (HandManager.effectActive(124)) effects+=":dog2: Laika";
 				//UN
 				if (HandManager.effectActive(50)) effects+=":coffin: \"We Will Bury You\"\n";
@@ -160,7 +160,7 @@ public class InfoCommand extends Command {
 				if (HandManager.effectActive(129)) effects+=":flag_in: Indo-Soviet Treaty";
 				if (HandManager.effectActive(861)) effects+=":eight: North Sea Oil's eighth action round";
 				//Deactivators
-				if (HandManager.effectActive(86)) effects+=":flag_no: North Sea Oil\n";
+				if (HandManager.effectActive(86)) effects+=":oil: North Sea Oil\n";
 				if (HandManager.effectActive(65)) effects+=":flag_il: Camp David Accords\n";
 				if (HandManager.effectActive(83)) effects+=":flag_gb: Iron Lady\n";
 				if (HandManager.effectActive(96)) effects+=StartCommand.emojiID[1] + " \"Tear Down This Wall\"\n";
