@@ -25,7 +25,7 @@ public class CardList {
 		cardList = new ArrayList<Card>();
 		CardList.addCard(new Placeholder()); //just to occupy the 0 slot so I don't get peeved enough to use a map
 
-		CardList.addCard(new LegacyOfMartialLaw());
+		CardList.addCard(new LegacyOfMartialLaw()); //red
 		CardList.addCard(new Solidarity());
 		CardList.addCard(new Walesa());
 		CardList.addCard(new Michnik());
@@ -46,13 +46,13 @@ public class CardList {
 		CardList.addCard(new Pozsgay());
 		CardList.addCard(new PapalVisit());
 		CardList.addCard(new DeutscheMarks());
-		/*
+		
 		CardList.addCard(new CommonEuropeanHome());
 		CardList.addCard(new ScoringPoland());
 		CardList.addCard(new ScoringHungary());
-		CardList.addCard(new StNicholasChurch());
+		CardList.addCard(new StNicholasChurch()); //red
 		CardList.addCard(new Perestroika());
-		CardList.addCard(new HelsinkiFinalAct());
+		CardList.addCard(new HelsinkiFinalAct()); //red
 		CardList.addCard(new Consumerism());
 		CardList.addCard(new FactoryPartyCells());
 		CardList.addCard(new JanPalachWeek());
@@ -60,7 +60,7 @@ public class CardList {
 		/*
 		CardList.addCard(new Intelligentsia());
 		CardList.addCard(new PeasantParties());
-		CardList.addCard(new Sajudis());
+		CardList.addCard(new Sajudis());		//red
 		CardList.addCard(new FIDESZ());
 		CardList.addCard(new HealOurBleedingWound());
 		CardList.addCard(new DashForTheWest());
@@ -84,7 +84,7 @@ public class CardList {
 		CardList.addCard(new AnniversaryCelebration());
 		CardList.addCard(new Normalisation());
 		CardList.addCard(new LiPeng());
-		CardList.addCard(new CrowdTurnsAgainstCeausescu()); //see 7.6
+		CardList.addCard(new CrowdTurnsAgainstCeausescu()); //red; see 7.6
 		CardList.addCard(new ScoringCzechoslovakia());
 		CardList.addCard(new ForeignTelevision());
 		CardList.addCard(new CentralCommitteeReshuffle());
@@ -105,7 +105,7 @@ public class CardList {
 		/*
 		CardList.addCard(new KissOfDeath());
 		CardList.addCard(new PeasantPartiesRevolt());
-		CardList.addCard(new LaszloTokes());
+		CardList.addCard(new LaszloTokes());		//red
 		CardList.addCard(new FRGEmbassies());
 		CardList.addCard(new ExitVisas());
 		CardList.addCard(new WarsawPactSummit());
@@ -114,11 +114,11 @@ public class CardList {
 		CardList.addCard(new TheThirdWay());
 		CardList.addCard(new Nepotism());
 		/*
-		CardList.addCard(new TheBalticWay());
+		CardList.addCard(new TheBalticWay());		//red
 		//LateWar
 		CardList.addCard(new Spitzel());
 		CardList.addCard(new Modrow());
-		CardList.addCard(new BreakawayBaltics());
+		CardList.addCard(new BreakawayBaltics());	//red
 		CardList.addCard(new RubberDucks()); ///s
 		CardList.addCard(new TheWallMustGo());
 		CardList.addCard(new KohlReunification());

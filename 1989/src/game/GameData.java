@@ -283,31 +283,24 @@ public class GameData {
 		hasT2[1] = false;
 		//TODO effect reminders
 		HandManager.removeEffect(15); //Honecker
-		/*if (HandManager.removeEffect(9)) builder.addField("Geneva Accords","Vietnam now independent. USSR loses +1 Operations bonus in Southeast Asia.",false);	//Vietnam
-		if (HandManager.removeEffect(25)) builder.addField("Ineffective Policy", "New administration calls for rollback. US loses +1 Operations bonus.", false);	//Containment
-		if (HandManager.removeEffect(41)) builder.addField("Soviets Develop Nuclear Submarines","US coups in battleground countries will now lower DEFCON.",false);	//Nuclear Subs
-		if (HandManager.removeEffect(43)) builder.addField("SALT Treaty Expires","Coup rolls are no longer penalized.",false);	//SALT
-		if (HandManager.removeEffect(51)) builder.addField("Polish Crisis","USSR loses +1 Operations bonus.",false);;	//Brezhnev
-		if (HandManager.removeEffect(60)) builder.addField("Prisoner Exchange","Powers traded for Abel. UN Intervention will no longer incur a VP penalty.",false);	//U2
-		if (HandManager.removeEffect(93)) builder.addField("Mistakes were made","US rolls on realignments are no longer penalized.",false);	//Iran Contra
-		if (HandManager.removeEffect(94)) builder.addField("Sarcophagus","USSR influence placements are no longer restricted by region.",false);	//Chernobyl
-		if (HandManager.removeEffect(109)) builder.addField("Bar Harbor Airlines Flight 1808","Coups conducted by the US no longer award VP to the USSR",false);	//Samantha Smith
-		if (HandManager.removeEffect(126)) builder.addField("Test Ban","Coups conducted on US Action Rounds no longer drop DEFCON.",false);	//Tsar Bomba
-		HandManager.removeEffect(129); //Indo-Soviet
-		if (HandManager.removeEffect(310)) builder.addField("Army Hearings","US malus to Operations removed.",false);	//Red Scare/Purge
-		if (HandManager.removeEffect(311)) builder.addField("Purges End","USSR malus to Operations removed.",false);
-		if (HandManager.removeEffect(400)) builder.addField("Missiles removed","Coups now allowed by the US.",false);	//Missile Crisis
-		if (HandManager.removeEffect(401)) builder.addField("Missiles removed","Coups now allowed by the USSR.",false);
-		if (HandManager.removeEffect(690)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the US.",false);	//LADS
-		if (HandManager.removeEffect(691)) builder.addField("Dictator deposed","Coups in Latin America are no longer tilted towards the USSR.",false);
-		if (HandManager.removeEffect(860)); // just stop the eighth action round effect
-		if (turn==2) if (HandManager.removeEffect(1003)) builder.addField("First Lightning", "**Thermonuclear war is now very much a possibility.**\nUS coups are now restricted by DEFCON.", false);
-		if (turn==3) if (HandManager.removeEffect(1004)) builder.addField("UK Coalition Government Dissolves","Socialist Governments now has an effect.",false);*/
+		if (HandManager.removeEffect(13)) builder.addField("","The Stasi have moved you off the watch-list. The Communist no longer has advance knowledge of the Democrat's plays.",false);	//Stasi
+		if (HandManager.removeEffect(50)) builder.addField("", "The Democrat loses +1 Operations bonus.", false);	//Sinatra
+		if (HandManager.removeEffect(58)) builder.addField("","The Democrat loses bonus to Operations in East Germany.",false);	//A-H Border
+		if (HandManager.removeEffect(63)) builder.addField("","The Democrat will now pay normal cost to place influence in Communist East German spaces.",false);	//Genscher
+		if (HandManager.removeEffect(25)) builder.addField("","The Communist loses +1 Operations bonus.",false);;	//Perestroika
+		if (HandManager.removeEffect(74)) builder.addField("","The Democrat loses bonus to support checks in Eastern Europe.",false);	//FRG
+		if (HandManager.removeEffect(59)) builder.addField("","US rolls on support checks in East Germany are no longer penalized.",false);	//Grenz
+		if (HandManager.removeEffect(49)) builder.addField("Debt Burden Lifted","USSR support checks are no longer restricted by region.",false);	//Debt Burden
+		if (HandManager.removeEffect(77)) builder.addField("","The card set aside by the Democrat has returned to the hand.",false);	//Samizdat
+		if (HandManager.removeEffect(101)) builder.addField("","US rolls on support checks in Romania are no longer penalized.",false);	//Elena
+		if (HandManager.removeEffect(80)) builder.addField("","Democrat malus to Operations removed.",false);	//Prudence
+		if (HandManager.removeEffect(81)) builder.addField("","Communist malus to Operations removed.",false);
+		if (HandManager.removeEffect(1000)) builder.addField("","Communist Support Checks in Democratic spaces no longer have a -1 malus.",false);	//Stand Fast
+		if (HandManager.removeEffect(1001)) builder.addField("","Democratic Support Checks in Communist spaces no longer have a -1 malus.",false);
 		if (turn==4) {
 			Log.writeToLog("MW Cards Added.");
 			HandManager.addToDeck(1); //Rule 4.4
 			builder.addField("Mid War","Mid War cards now available for use. You will now get nine cards per turn instead of eight, and there will be eight action rounds per turn.",false);
-			if (HandManager.removeEffect(1001)) builder.addField("Deténte","USSR will now go first on all subsequent turns.",false);
 		}
 		if (turn==8) {
 			Log.writeToLog("LW Cards Added.");

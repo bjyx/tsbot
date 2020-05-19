@@ -8,8 +8,11 @@ import cards.CardList;
 import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
+import events.Decision;
 import game.GameData;
 import logging.Log;
+import main.Common;
+import main.Launcher;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 /**
@@ -58,7 +61,8 @@ public class HandManager {
 	 * <li> {@code 049 Debt Burden} - Chernobyl, but for support checks.
 	 * <li> {@code 050 Sinatra Doctrine} - Containment.
 	 * <li> {@code 053 Li Peng} - +1 to Com TSquares.
-	 * <li> {@code 054 Crowd Turns Against Ceausescu} - On the next scoring of Romania, sample 15 cards from the PS deck after drawing. Then Dem gets 3x the number of rally cards in that sample as Ops for the turn. (aaaaa) Also allows {@code 097 Tyrant is Gone}. <br>
+	 * <li> {@code 054 Crowd Turns Against Ceausescu} - Also allows {@code 097 Tyrant is Gone}. <br>
+	 * <li> {@code 540 Crowd Turns Against Ceausescu} - On the next scoring of Romania, sample 15 cards from the PS deck after drawing. Then Dem gets 3x the number of rally cards in that sample as Ops for the turn. <br>
 	 * <li> {@code 058 Austria-Hungary Border} - +1 Ops for Dem if ops used in E. Germany.
 	 * <li> {@code 059 Grenztruppen} - -1 to Dem checks in E. Germany for rest of turn.
 	 * <li> {@code 062 Yakolev} - Winning the next struggle gives +1 to rolls.
@@ -75,11 +79,12 @@ public class HandManager {
 	 * <li> {@code 097 Tyrant Is Gone} - Prevents Ceausescu Events.
 	 * <li> {@code 970 Tyrant Is Gone pending} - Plays Tyrant Is Gone as soon as Romania Scoring is resolved.
 	 * <li> {@code 099 Ligachev} - WWBY. 
-	 * <li> {@code 100 Stand Fast} - -1 to opponent checks in your spaces for rest of turn.
 	 * <li> {@code 101 Elena} - -1 to Dem checks in Romania for rest of turn.
 	 * <li> {@code 102 National Salvation Front} - Com gets two cards from Dem in next Balkan PS.
 	 * <li> {@code 104 New Year's Eve} - AAAAAAAAAAAAAAAAAAA
 	 * <li> {@code 108 Army Backs Revolution} - Cancels {@code 070 Securitate}.
+	 * <li> {@code 1000 Stand Fast} - -1 to Com checks in Dem spaces for rest of turn.
+	 * <li> {@code 1001 Stand Fast} - -1 to Dem checks in Com spaces for rest of turn.
 	 */
 	public static ArrayList<Integer> Effects = new ArrayList<Integer>();
 	/**
@@ -256,7 +261,7 @@ public class HandManager {
 		
 		
 		//super complicated area, will nitgrit later
-		
+		activecard = card;
 		GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
 		if (mode=='e') {
 			removeFromHand(sp,card);
@@ -277,12 +282,20 @@ public class HandManager {
 					playmode = 'e';
 				}
 			}
-			activecard = card;
 			TimeCommand.cardPlayed = true;
 			TimeCommand.eventRequired = true;
 		}
 		if (mode=='o') {
-			if (CardList.getCard(card).getAssociation()==(GameData.getAR()+1)%2&&CardList.getCard(card).isPlayable(sp)) {
+			if (card==21) {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				Log.writeToLog("Common European Home:");
+				builder.setTitle("Gorbachev Blasts " + Common.players[sp] + "s")
+					.setDescription("Common European Home policy used to justify violence")
+					.setColor(Common.spColor(Common.opp(sp)));
+				builder.changeVP(1-sp*2);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			if (CardList.getCard(card).getAssociation()==Common.opp(sp)&&CardList.getCard(card).isPlayable(sp)) {
 				if (a&&Operations.seven==sp) {
 					Operations.seven+=2;
 					EmbedBuilder builder = new CardEmbedBuilder().setTitle("T-Square Initiative").setDescription(CardList.getCard(card) + " event cancelled.");
@@ -297,7 +310,7 @@ public class HandManager {
 				}
 			}
 			else {
-				if (a&&Operations.eight==sp) {
+				if (a&&Operations.eight==sp&&CardList.getCard(card).getAssociation()!=Common.opp(sp)&&CardList.getCard(card).isPlayable(sp)) {
 					Operations.eight+=2;
 					EmbedBuilder builder = new CardEmbedBuilder().setTitle("T-Square Initiative").setDescription(CardList.getCard(card) + " to be used for both Operations and Events.");
 					GameData.txtchnl.sendMessage(builder.build()).complete();
@@ -310,7 +323,6 @@ public class HandManager {
 					playmode = 'o'; //ops only
 				}
 			}
-			activecard = card;
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, false, 2);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.operationsRequired = true;
@@ -319,10 +331,25 @@ public class HandManager {
 			Log.writeToLog((sp==0?"Dem":"Com")+" T-squares " + CardList.getCard(card).getName() + ".");
 			discard(sp, card);
 			playmode = 't';
-			activecard = card;
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, true, 0);
 			TimeCommand.cardPlayed = true;
 			TimeCommand.spaceRequired = true;
+		}
+		if (mode=='c') {
+			EmbedBuilder un = new CardEmbedBuilder().setTitle("Common European Home")
+					.setColor(Common.spColor(sp))
+					.setFooter("\"We assign an overriding significance to the European course of our foreign policy.... We are resolutely against the division of the continent into military blocs facing each other, against the accumulation of military arsenals in Europe, against everything that is the source of the threat of war.\"\n"
+							+ "- Mikhail Gorbachev, 1987", Launcher.url("people/gorbachev.png"))
+					.addField("Common European Home", "The event of "+ CardList.getCard(card)+" will not occur.", false);
+			GameData.txtchnl.sendMessage(un.build()).complete();
+			HandManager.discard(sp, card);
+			HandManager.discard(sp, 21);
+			playmode = 'o';
+			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, false);
+			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention() + ", you may now perform the operations.");
+			TimeCommand.cardPlayed = true;
+			TimeCommand.operationsRequired = true;
+			Log.writeToLog("UN Intervention played with card for ops.");
 		}
 		TimeCommand.prompt();
 	}

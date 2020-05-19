@@ -138,11 +138,11 @@ public class PowerStruggle {
 		Common.spChannel(in).sendMessage(Common.spRole(in).getAsMention() + ", would you like to raise the stakes? Respond with `TS.struggle r`aise or `TS.struggle d`ecline.");
 	}
 	
-	public void raiseStakes(StruggleCard[] cards, int sp) {
+	public void raiseStakes(ArrayList<StruggleCard> cards, int sp) {
 		stakes++;
 		for (int i=0; i<3; i++) {
-			if (sp==0) DemHand.remove(cards[i]);
-			if (sp==1) ComHand.remove(cards[i]);
+			if (sp==0) DemHand.remove(cards.get(i));
+			if (sp==1) ComHand.remove(cards.get(i));
 		}
 		progression++;
 	}
@@ -172,10 +172,6 @@ public class PowerStruggle {
 		}
 		deck.add(new StruggleCard(1,5,3));
 		deck.add(new StruggleCard(1,6,3));
-	}
-	
-	public void deal() {
-		
 	}
 	
 	public boolean addToHand(int sp) {
@@ -249,7 +245,7 @@ public class PowerStruggle {
 					addToHand(sp);
 					addToHand(sp);
 					builder.setTitle("Support Surges For " + Common.ideology[sp])
-					.setDescription(Common.adject[sp] + " hand draws two cards.")
+					.setDescription(Common.adject[sp] + " hand gains two cards.")
 					.addField("Initiative passed to the " + Common.players[Common.opp(sp)], "", false);
 				}
 				if (suit==2) {
@@ -267,24 +263,39 @@ public class PowerStruggle {
 				}
 				else {
 					tactic = suit;
-					builder.setTitle(Common.suits[tactic]);
+					builder.setTitle(Common.suits[tactic] + "!");
 				}
 				thresh = rank;
+				builder.setDescription("Strength: " + thresh);
+			}
+			if (sp==1?DemHand.isEmpty():ComHand.isEmpty()) { //whosever turn it is
+				builder.addField("Worn Down", "The " + Common.players[Common.opp(initiative)] + " has run out of cards!", false);
+				victor = sp;
+				endStruggle();
 			}
 		}
 		else {
 			if (type==2) {
 				failed=tactic;
-				builder.setTitle(Common.suits[tactic] + " Fails");
+				builder.setTitle(Common.suits[tactic] + " Fails")
+				.setDescription("This tactic may not be used again during this Power Struggle.");
 			}
 			else {
 				int roll = new Die().roll();
 				if (roll>=thresh) {
 					initiative = Common.opp(sp);
+					builder.setTitle(Common.players[initiative] + " Seize Initiative");
+				}
+				else {
+					builder.setTitle(Common.players[initiative] + " Retain Initiative");
 				}
 			}
 			tactic = -1;
-			
+			if (initiative==0?DemHand.isEmpty():ComHand.isEmpty()) {
+				builder.addField("Running Out of Steam", "The " + Common.players[initiative] + " has run out of cards!", false);
+				victor = Common.opp(initiative);
+				endStruggle();
+			}
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		return true;
@@ -294,19 +305,28 @@ public class PowerStruggle {
 		endStruggle();
 	}
 	public void endStruggle() {
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Power Struggle Aftermath").setColor(Common.spColor(GameData.ps.victor));
+		
 		progression++;
 		if (tactic == 0) stakes += 2;
 		if (tactic == 3) stakes -= 2;
 		int support = new Die().roll()+stakes;
+		if (HandManager.removeEffect(62)) {
+			builder.addField("Yakolev Counsels Gorbachev", "Stakes increased by 1.", false);
+			if (victor==0) stakes++;
+		}
 		supportloss = table[Math.max(0, Math.min(support, 7))];
 		
-		//TODO add more
+		builder.setDescription("Stakes: " + stakes).addField("Support Roll (after modifiers)", ":game_die: " + CardEmbedBuilder.numbers[Math.max(0, Math.min(support, 7))], false);
+		GameData.txtchnl.sendMessage(builder.build()).complete();
+		Common.spChannel(Common.opp(victor)).sendMessage(Common.spRole(Common.opp(victor)).getAsMention() + ", you now have to remove " + supportloss + " support from " + Common.countries[region]).complete();
 	}
 	public void actuallyEndStruggle() {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Power Struggle Aftermath").setColor(Common.spColor(GameData.ps.victor));
 		builder.bulkChangeInfluence(StruggleCommand.order, 1, StruggleCommand.values); //8.4.2 done
-		int points = new Die().roll()+GameData.ps.stakes; //8.4.3
+		int points = new Die().roll()+stakes; //8.4.3
 		builder.addField("Points Roll (after modifiers)", ":game_die: " + CardEmbedBuilder.numbers[Math.max(0, Math.min(points, 7))], false);
 		builder.changeVP((1-victor*2)*table[Math.max(0, Math.min(points, 7))]);
 		if (points>=4&&victor==0) { //democrat rolls more than a 4
@@ -318,6 +338,7 @@ public class PowerStruggle {
 			builder.setDescription("Communist retains power in " + Common.countries[region] + "!");
 		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
+		progression++;
 		if (PowerStruggle.retained[region]!=-1) Common.spChannel(1).sendMessage(Common.spRole(1).getAsMention() + ", you now have the option of a peaceful transition to Democratic Rule. If you wish to do so, write `TS.struggle s 1`. Otherwise, write `TS.struggle s 0`.").complete();
 		else {
 			Scoring.score(region);

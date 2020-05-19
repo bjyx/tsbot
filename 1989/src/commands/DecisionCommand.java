@@ -142,6 +142,7 @@ public class DecisionCommand extends Command {
 		 * - 001 Legacy of Martial Law
 		 * - 003 Walesa
 		 * - 014 Gorby
+		 * - 021 Common European Home
 		 * 
 		 * - 206 Space Ability 6
 		 */

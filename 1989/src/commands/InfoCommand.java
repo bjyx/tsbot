@@ -65,6 +65,64 @@ public class InfoCommand extends Command {
 				}
 				builder.addField(Common.flags[i] + " " + Common.countries[i], map, false);
 			}
+			String effects = "";
+			//top priority!
+			if (HandManager.effectActive(104)) effects+=":hourglass_flowing_sand: **New Years' Eve Party**\n";
+
+			//coup affectors
+			if (HandManager.effectActive(26)) effects+=":flag_fi: Helsinki Final Act\n";
+			if (HandManager.effectActive(39)) effects+=":flag_bg: Ecoglasnost\n";
+			if (HandManager.effectActive(30)) effects+=":oncoming_police_car: Tear Gas\n";
+			if (HandManager.effectActive(9)) effects+=":lock: The Wall\n";
+			if (HandManager.effectActive(49)) effects+=":money_with_wings: Foreign Currency Debt Burden\n";
+			if (HandManager.effectActive(59)) effects+=":gun: Grenztruppen\n";
+			if (HandManager.effectActive(39)) effects+=":flag_de: FRG Embassies\n";
+			if (HandManager.effectActive(101)) effects+=":woman_scientist: Elena\n";
+			if (HandManager.effectActive(1000)) effects+=":stop_sign: Stand Fast (Democrat)\n";
+			if (HandManager.effectActive(1001)) effects+=":stop_sign: Stand Fast (Communist)\n";
+
+
+			//struggle affectors
+			if (HandManager.effectActive(17)) effects+=":speaking_head: Round Table Talks\n";
+			if (HandManager.effectActive(540)) effects+=":fist: The Crowd Turns Against Ceausescu (short term)\n";
+			if (HandManager.effectActive(62)) effects+=":ear_of_rice: Yakolev Counsels Gorbachev\n";
+			if (HandManager.effectActive(70)) effects+=":flag_ro: Securitate\n";
+			if (HandManager.effectActive(72)) effects+=":man_farmer: Peasant Revolt\n";
+			if (HandManager.effectActive(102)) effects+=":fingers_crossed: National Salvation Front\n";
+
+			if (HandManager.effectActive(48)) effects+=":calendar: We Are The People\n";
+			//allowers
+			if (HandManager.effectActive(2)) effects+=":anchor: Solidarity Legalized\n";
+			if (HandManager.effectActive(24)) effects+=":latin_cross: St. Nicholas Church\n";
+			if (HandManager.effectActive(73)) effects+=":orthodox_cross: László Tőkés\n";
+			if (HandManager.effectActive(54)&&!HandManager.effectActive(97)) effects+=":fist: The Crowd Turns Against Ceausescu (long term)\n";
+			//ops modifiers
+			if (HandManager.effectActive(80)) effects+="<:InflD:696610045663772723> Prudence\n";
+			if (HandManager.effectActive(81)) effects+="<:InflC:696610045621829713> Prudence\n";
+			if (HandManager.effectActive(25)) effects+="<:InflCC:696610045575692308> Perestroika\n";
+			if (HandManager.effectActive(50)) effects+="<:InflDC:696610045730881588> Sinatra Doctrine\n";
+			if (HandManager.effectActive(58)) effects+=":flag_at: Austria-Hungary Border Opens\n";
+
+			if (HandManager.effectActive(53)) effects+="<:pla:696879280935927898> Li Peng\n";
+
+			if (HandManager.effectActive(63)) effects+=":pencil: Genscher\n";
+			
+			//the strike isn't that bad
+			if (HandManager.effectActive(5)) effects+=":construction: General Strike\n";
+			if (HandManager.effectActive(13)) effects+=":police_car: Stasi\n";
+			if (HandManager.effectActive(65)) effects+=":flag_us: Presidential Visit\n";
+			if (HandManager.effectActive(77)) effects+=":newspaper2: Samizdat\n";
+			if (HandManager.effectActive(99)) effects+=":anger: Ligachev\n";
+			if (HandManager.effectActive(15)) effects+=":eight: Honecker's 8th Action Round\n";
+			//banners
+			if (HandManager.effectActive(83)) effects+=Common.flags[0] + " Modrow\n";
+			if (HandManager.effectActive(97)) effects+=":helicopter: The Tyrant is Gone\n";
+			if (HandManager.effectActive(970)) effects+=":timer: The Tyrant is Gone (pending)\n";
+			if (HandManager.effectActive(108)) effects+=":boom: Army Backs Revolution\n";
+
+
+			builder.addField("Effects:", effects, false);
+			sendMessage(e, new MessageBuilder().setEmbed(builder.build()).build());
 		}
 		else if (args[1].equals("cards")) {
 			EmbedBuilder builder = new CardEmbedBuilder()

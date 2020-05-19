@@ -9,6 +9,7 @@ import events.CardEmbedBuilder;
 import events.Stasi;
 import game.GameData;
 import game.PlayerList;
+import main.Common;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 /**
  * The command allowing players to play cards.
@@ -117,14 +118,14 @@ public class PlayCommand extends Command {
 			sendMessage(e, "This card's event is currently disabled. (Perhaps read the description again? Or, if you intended to use it for ops, try using 'o' there instead of 'e'.");
 			return;
 		}
-		/*if (mode=='u'&&HandManager.handContains(GameData.phasing(), 32)) {
-			sendMessage(e, "Actually have the 'UN Intervention' Card in your hand first.");
+		if (mode=='c'&&HandManager.handContains(GameData.phasing(), 21)) {
+			sendMessage(e, "Actually have the 'Common European Home' Card in your hand first.");
 			return;
 		}
-		if (mode=='u'&&CardList.getCard(card).getAssociation()!=(GameData.phasing()+1)%2) {
-			sendMessage(e, "This is not a card you can match with UN Intervention - just play it for Ops directly.");
+		if (mode=='c'&&(CardList.getCard(card).getAssociation()!=Common.opp(GameData.phasing())||!CardList.getCard(card).isPlayable(Common.opp(GameData.phasing())))) {
+			sendMessage(e, "This is not a card you can match with Common European Home - just play it for Ops directly.");
 			return;
-		}*/
+		}
 		boolean ability = false;
 		if (args.length>3 && args[3].length()!=0) {
 			ability = true;
@@ -163,6 +164,7 @@ public class PlayCommand extends Command {
 				+ "- `e`vent (first)\n"
 				+ "- `o`perations (first)\n"
 				+ "- `t`square\n"
+				+ "- `c`ommon (this will cancel the event and allow you to conduct Operations)\n"
 				+ "If anything is entered in **ability**, a T-Square ability is activated, if applicable. If this is an enemy's card, the card may be played for operations only (as if Common European Home was played); this requires ability 7, and **usage method** must be `o`. Otherwise, this card may be played for both Operations and the Event, in either order; this requires ability 8.");
 	}
 	

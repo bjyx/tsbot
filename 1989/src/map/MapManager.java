@@ -163,7 +163,7 @@ BGW	74
 				0, //worker
 				true, 
 				new String[] {"lpz","leipzig"}, 
-				new Integer[] {0, 1, 3, 4},
+				new Integer[] {0, 1, 3, 4, 9},
 				"", 
 				new int[] {0,0}, 
 				"lpz"

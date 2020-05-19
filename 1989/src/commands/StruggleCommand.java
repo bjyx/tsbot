@@ -138,7 +138,7 @@ public class StruggleCommand extends Command {
 					return;
 				}
 			}
-			GameData.ps.raiseStakes((StruggleCard[]) list.toArray(), sp);
+			GameData.ps.raiseStakes(list, sp);
 			//TODO later
 		}
 		if (args[1].charAt(0)=='s') {
@@ -178,12 +178,20 @@ public class StruggleCommand extends Command {
 			TimeCommand.prompt();
 		}
 		if (args[1].charAt(0)=='l') {
+			if (GameData.ps.progression!=3) {
+				sendMessage(e, ":x: This isn't the time.");
+				return;
+			}
+			if (sp!=Common.opp(GameData.ps.victor)) {
+				sendMessage(e, ":x: No.");
+				return;
+			}
 			//copied and modified from VoA
 			doable = new ArrayList<Integer>();
 			order = new ArrayList<Integer>();
 			values = new ArrayList<Integer>();
 			int maxInfRem = 0;
-			for (int i=0; i<75; i++) {
+			for (int i=Common.bracket[GameData.ps.region]; i<Common.bracket[GameData.ps.region+1]; i++) {
 				if (MapManager.get(i).support[1]>0) {
 					doable.add(i);
 					maxInfRem += MapManager.get(i).support[0];
@@ -218,7 +226,7 @@ public class StruggleCommand extends Command {
 			GameData.ps.actuallyEndStruggle();
 		}
 		if (args[1].charAt(0)=='p') {
-			if (GameData.ps.progression>=2) {
+			if (GameData.ps.progression! =2) {
 				sendMessage(e, ":x: This isn't the time.");
 				return;
 			}
@@ -227,7 +235,7 @@ public class StruggleCommand extends Command {
 				return;
 			}
 			if (!GameData.ps.play(sp, args[2], args[3])) {
-				sendMessage(e, ":x: Second argument must be a valid card. If it's a leader, third argument must be a suit; if it's Scare Tactics, third argument must be a region.");
+				sendMessage(e, ":x: Second argument must be a valid card. If it's a leader, third argument must be a suit; if it's Scare Tactics, third argument must be a space.");
 				return;
 			}
 		}
