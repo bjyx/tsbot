@@ -71,9 +71,9 @@ public class CultOfPersonality extends Card {
 		if (args.length%2!=1) return false;
 		for (int i=2; i<args.length; i+=2) {
 			int c = MapManager.find(args[i]);
+			if (c==-1) return false;
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
-			if (c==-1) return false; //must exist
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
 			if (!MapManager.get(c).inRegion(4)) return false; // must be Romania
 			if (MapManager.get(c).icon>=2) return false; //must be farmer/worker
 			try{

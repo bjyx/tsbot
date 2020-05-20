@@ -1,13 +1,20 @@
 package events;
 
-import game.GameData;
-import powerstruggle.PowerStruggle;
+import java.awt.Color;
 
-public class ScoringHungary extends Card {
+import game.GameData;
+import main.Launcher;
+
+public class JanPalachWeek extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		GameData.ps = new PowerStruggle(3, sp);
+		CardEmbedBuilder builder = new CardEmbedBuilder();
+		builder.setTitle("Jan Palach Week")
+		.setDescription("Self-immolation commemorated by demonstrations")
+		.setColor(Color.blue);
+		builder.changeInfluence(35, 0, 6);
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
@@ -17,17 +24,17 @@ public class ScoringHungary extends Card {
 
 	@Override
 	public String getId() {
-		return "023";
+		return "029";
 	}
 
 	@Override
 	public String getName() {
-		return "Scoring Card: Hungary";
+		return "Jan Palach Week";
 	}
 
 	@Override
 	public int getOps() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -37,12 +44,12 @@ public class ScoringHungary extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 2;
+		return 0;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -52,7 +59,7 @@ public class ScoringHungary extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Initiates a Power Struggle for Hungary. Then, scores Hungary (worth 1).";
+		return "Place 6 Democratic SPs in Charles University (the Czech Student space).";
 	}
 
 	@Override

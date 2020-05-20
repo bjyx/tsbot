@@ -58,8 +58,8 @@ public class Operations {
 	public static boolean[] tried = {false, false};
 	/**
 	 * A set of restrictions under which this instance of ops operates: <br>
-	 * 0 - no restrictions <br>
-	 * 1 - Polan only (e.g. Legacy of Martial Law) <br>
+	 * -1 - no restrictions <br>
+	 * 0-5 - reserved for that region only (e.g. Legacy of Martial Law for Poland, Consumerism) <br>
 	 */
 	private int restrictions = 0;
 	/**
@@ -98,7 +98,7 @@ public class Operations {
 	 * 
 	 */
 	public Operations(int party, int ops, boolean infl, boolean sc, boolean t2) {
-		this(party, ops, infl, sc, t2, 2, 0);
+		this(party, ops, infl, sc, t2, 2, -1);
 	}
 	/**
 	 * Constructor, specifying the number of ops on the card used and the conditions under which they can be used.
@@ -109,7 +109,7 @@ public class Operations {
 	 * @param t2 indicates whether one can send this instance of Operations to China.
 	 */
 	public Operations(int party, int ops, boolean infl, boolean sc, boolean t2, int nosc) {
-		this(party, ops, infl, sc, t2, nosc, 0);
+		this(party, ops, infl, sc, t2, nosc, -1);
 	}
 	/**
 	 * Constructor, specifying the number of ops on the card used and the conditions under which they can be used.
@@ -260,10 +260,14 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
+		if (remainingsc==0) { //shouldn't happen but contingencies &shrug;
+			txtsp.sendMessage("Oops, you have zero support checks! Moving on.").complete();
+			return true;
+		}
 		if (!influence&&!tsquare) {
-			if (restrictions==1) {
+			if (restrictions!=-1&&restrictions<=5) {
 				boolean flag = true;
-				for (int i=Common.bracket[1]; i<Common.bracket[2]; i++) {
+				for (int i=Common.bracket[restrictions]; i<Common.bracket[restrictions+1]; i++) {
 					if (sp==1 && i==14 && HandManager.effectActive(2)) continue; //Solidarity
 					if (MapManager.get(i).support[(sp+1)%2]>0) {
 						flag = false;
@@ -290,8 +294,8 @@ public class Operations {
 				}
 			}
 		}
-		if (restrictions==1&&MapManager.get(country).inRegion(1)) {
-			txtsp.sendMessage(":x: Poland only.").complete();
+		if (restrictions!=-1&&restrictions<=5&&MapManager.get(country).inRegion(restrictions)) {
+			txtsp.sendMessage(":x: " + Common.countries[restrictions] + " only.").complete();
 			return false;
 		}
 		if (HandManager.effectActive(2) && country==14 && sp==1) { //checking gdansk as com under solidarity
@@ -305,11 +309,7 @@ public class Operations {
 		influence = false;
 		tsquare = false;
 		boolean wall = false;
-		if (sp==1&&MapManager.get(country).inRegion(0)&&HandManager.effectActive(9)) {
-			HandManager.removeEffect(9);
-			wall = true;
-			Log.writeToLog("The Wall: ignore maluses.");
-		}
+		
 		Log.writeToLog("Check in " + MapManager.get(country).shorthand.toUpperCase());
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Support Check")
@@ -318,6 +318,22 @@ public class Operations {
 		int raw = new Die().roll() + opnumber;
 		int roll = raw;
 		Log.writeToLog("Roll: "+roll);
+		if (sp==1&&MapManager.get(country).inRegion(0)&&HandManager.effectActive(9)) {
+			HandManager.removeEffect(9);
+			wall = true;
+			builder.addField("The Wall", "This coup ignores maluses.", false);
+			Log.writeToLog("The Wall: ignore maluses.");
+		}
+		if (sp==1&&MapManager.get(country).icon==5&&HandManager.effectActive(30)) {
+			HandManager.removeEffect(30);
+			roll++;
+			builder.addField("Tear Gas", "+1", false);
+			Log.writeToLog("Tear Gas: +1.");
+		}
+		if (sp==1&&(MapManager.get(country).icon==4||MapManager.get(country).icon==5)&&HandManager.effectActive(26)) {
+			builder.addField("Human Rights Violations", "The Communist has violated the Helsinki Final Act.", false);
+			builder.changeVP(1);
+		}
 		String[] modifiers = {"",""};
 		for (int adj : MapManager.get(country).adj) {
 			if (MapManager.get(adj).isControlledBy()==sp) {
@@ -332,7 +348,7 @@ public class Operations {
 			}
 		}
 		int amt = opnumber + roll - MapManager.get(country).stab*2;
-		builder.addField("Roll: :game_die:"+ CardEmbedBuilder.numbers[raw] + "::heavy_plus_sign::" + CardEmbedBuilder.numbers[opnumber] + "::heavy_plus_sign:" + modifiers[0] + ":heavy_minus_sign:" + modifiers[1] + ":heavy_minus_sign:" + MapManager.get(country).stab + ":heavy_multiplication_x: 2", CardEmbedBuilder.intToEmoji(amt), false);
+		builder.addField("Roll: :game_die::"+ CardEmbedBuilder.numbers[raw] + "::heavy_plus_sign::" + CardEmbedBuilder.numbers[opnumber] + "::heavy_plus_sign:" + modifiers[0] + ":heavy_minus_sign:" + modifiers[1] + ":heavy_minus_sign:" + MapManager.get(country).stab + ":heavy_multiplication_x: 2 = ", CardEmbedBuilder.intToEmoji(amt), false);
 		if (amt>0) {
 			if (amt>MapManager.get(country).support[(sp+1)%2]) {
 				int x = MapManager.get(country).support[(sp+1)%2];

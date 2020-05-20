@@ -79,6 +79,7 @@ public class Pozsgay extends Card {
 		if (args.length!=5) return false;
 		for (int i=1; i<=4; i++) {
 			int c = MapManager.find(args[i]);
+			if (c==-1) return false;
 			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
 		}

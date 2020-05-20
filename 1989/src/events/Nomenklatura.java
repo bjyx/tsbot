@@ -83,6 +83,7 @@ public class Nomenklatura extends Card {
 			if (args.length%2!=0) return false;
 			for (int i=2; i<args.length; i+=2) {
 				int c = MapManager.find(args[i]);
+				if (c==-1) return false;
 				if (order.indexOf(c)!=-1) return false; // no duplicates plox
 				order.add(c);
 				if (!(MapManager.get(c).icon==2)) return false; // elite spaces only

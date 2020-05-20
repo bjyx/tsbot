@@ -20,6 +20,11 @@ public class Gorby extends Card {
 			.setTitle("Gorbachev Charms the West")
 			.setDescription("Soviet Arms Reduction Proposals wildly popular")
 			.setColor(Common.spColor(sp));
+		if (doable.isEmpty()) {
+			builder.addField("No spaces to target!", "Congratulations. You've managed to dodge Gorby. Was it worth it? Actually, why the f@%k did you play this? It's meaningless.", false);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			return;
+		}
 		builder.bulkChangeInfluence(order, Common.opp(sp), values); //remove opponent sps
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
@@ -32,10 +37,10 @@ public class Gorby extends Card {
 		if(opponentInfluence) {
 			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 1); //one check
 			GameData.dec=new Decision(sp, 1); //uses a general channel for ops
-			Common.spChannel(0).sendMessage(Common.spRole(0).getAsMention()+", you may now conduct your support check.").complete();
+			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention()+", you may now conduct your support check.").complete();
 		}
 		else {
-			Common.spChannel(0).sendMessage("For the oddest reason, you cannot support check Poland.").complete();
+			Common.spChannel(sp).sendMessage("For the oddest reason, you cannot support check. Period... How the f@%k did you wipe the other side from the board!?").complete();
 		}
 	}
 
@@ -83,19 +88,22 @@ public class Gorby extends Card {
 		for (int i=0; i<75; i++) {
 			if (MapManager.get(i).support[Common.opp(sp)]>0) {
 				doable.add(i);
-				maxInfRem += Math.min(MapManager.get(i).support[Common.opp(sp)], 2);
+				maxInfRem += MapManager.get(i).support[Common.opp(sp)];
 			}
 		}
 		if (maxInfRem<=2) {
 			order = doable;
 			for (int i : order) {
-				values.add(Math.max(-MapManager.get(i).support[Common.opp(sp)], -2));
+				values.add(-MapManager.get(i).support[Common.opp(sp)]);
 			}
 			return true;
 		}
 		if (args.length%2!=1) return false; //each country must associate with a number
 		for (int i=1; i<args.length; i+=2) {
-			order.add(MapManager.find(args[i]));
+			int c = MapManager.find(args[i]);
+			if (c==-1) return false;
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
+			order.add(c);
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}

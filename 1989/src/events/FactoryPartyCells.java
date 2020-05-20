@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import game.GameData;
 import map.MapManager;
 
-public class StateRunMedia extends Card {
+public class FactoryPartyCells extends Card {
 	private static ArrayList<Integer> order;
 	private static ArrayList<Integer> values;
 	
@@ -14,10 +14,10 @@ public class StateRunMedia extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("State Run Media")
+		builder.setTitle("Factory Party Cells")
 		.setColor(Color.red);
 		if (doable.isEmpty()) {
-			builder.addField("No spaces to target!", "Congratulations. You've managed to dodge State-Run Media. Was it worth losing your shot at liberating the Communist bloc?", false);
+			builder.addField("No spaces to target!", "How the f@%k does the Democrat not have *some* influence in a Worker space right now!?", false);
 		}
 		else {
 			builder.bulkChangeInfluence(order, 0, values);
@@ -32,17 +32,17 @@ public class StateRunMedia extends Card {
 
 	@Override
 	public String getId() {
-		return "007";
+		return "028";
 	}
 
 	@Override
 	public String getName() {
-		return "State Run Media";
+		return "Factory Party Cells";
 	}
 
 	@Override
 	public int getOps() {
-		return 2;
+		return 3;
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class StateRunMedia extends Card {
 
 	@Override
 	public boolean isRemoved() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -67,12 +67,12 @@ public class StateRunMedia extends Card {
 		values = new ArrayList<Integer>();
 		int maxInfRem = 0;
 		for (int i=0; i<75; i++) {
-			if (MapManager.get(i).support[0]>0) {
+			if (MapManager.get(i).support[0]>0&&MapManager.get(i).icon==0) {
 				doable.add(i);
 				maxInfRem += Math.min(MapManager.get(i).support[0], 2);
 			}
 		}
-		if (maxInfRem<=4) {
+		if (maxInfRem<=3) {
 			order = doable;
 			for (int i : order) {
 				values.add(Math.max(-MapManager.get(i).support[0], -2));
@@ -85,6 +85,7 @@ public class StateRunMedia extends Card {
 			if (c==-1) return false;
 			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
+			if (MapManager.get(c).icon!=0) return false; //workers only
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}
@@ -100,18 +101,18 @@ public class StateRunMedia extends Card {
 			if (MapManager.get(order.get(i)).support[0]+values.get(i)<0) return false; //don't give me negative influence values
 			sum += values.get(i);
 		}
-		if (sum!=-4) return false; // up to 4 influence may be removed...
+		if (sum!=-3) return false; // up to 3 influence may be removed...
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		return "Remove a total of 4 Democratic SPs (no more than 2 per space).";
+		return "Remove a total of 3 Democratic Support from Worker spaces (no more than 2 per space).";
 	}
 
 	@Override
 	public String getArguments() {
-		return "Influence. The values must be negative (at least -2) and not cause Democratic support values to be negative. They must also sum to -4.";
+		return "Influence.";
 	}
 
 }

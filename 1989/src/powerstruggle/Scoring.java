@@ -16,7 +16,7 @@ import map.MapManager;
 public class Scoring {
 	private static final int[] presence = {3,3,2,1,2,1};
 	private static final int[] domination = {6,6,4,2,4,2};
-	private static final int[] control = {9,9,6,4,6,3};
+	private static final int[] control = {9,9,6,4,6,3}; //literally the only reason I have to use this is because Hungary has 4 here
 	
 	public static void score(int region) {
 		int[] totalCountries = {0,0};

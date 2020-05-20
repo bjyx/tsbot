@@ -67,9 +67,9 @@ public class Apparatchiks extends Card {
 		if (args.length%2!=1) return false;
 		for (int i=1; i<args.length; i+=2) {
 			int c = MapManager.find(args[i]);
-			order.add(c);
 			if (c==-1) return false;
-			if (order.indexOf(c)!=order.lastIndexOf(c)) return false; // no duplicates plox
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
+			order.add(c);
 			if (MapManager.get(c).icon!=3) return false; // must be bureaucratic
 			try{
 				values.add(Integer.parseInt(args[i+1]));
