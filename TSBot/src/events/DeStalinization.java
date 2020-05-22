@@ -114,6 +114,7 @@ public class DeStalinization extends Card {
 		int abssum = 0;
 		for (int i=0; i<order.size(); i++) {
 			if (order.get(i)==-1) return false;
+			if (values.get(i)==0) return false; //no zeroes
 			if (MapManager.get(order.get(i)).isControlledBy()==0 && values.get(i)>0) return false; //can't put influence in US controlled countries
 			if (values.get(i)>2) return false; // cannot add >2 influence to a given country
 			if (MapManager.get(order.get(i)).influence[1]+values.get(i)<0) return false; //don't give me negative influence values
