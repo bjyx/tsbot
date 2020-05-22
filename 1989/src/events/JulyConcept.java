@@ -3,61 +3,37 @@ package events;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import cards.HandManager;
-import cards.Operations;
 import game.GameData;
-import main.Common;
-import main.Launcher;
 import map.MapManager;
-/**
- * The Walesa Card.
- * @author wes4zhang
- *
- */
-public class Walesa extends Card {
+
+public class JulyConcept extends Card {
 
 	private static ArrayList<Integer> order;
 	private static ArrayList<Integer> values;
-
+	
 	@Override
 	public void onEvent(int sp, String[] args) {
-		boolean opponentInfluence=false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder
-			.setTitle("Wałęsa")
-			.setColor(Color.blue);
-		builder.bulkChangeInfluence(order, 0, values);
+			.setTitle("July Concept")
+			.setColor(Color.red);
+		builder.bulkChangeInfluence(order, 1, values);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		
-		for (int i=Common.bracket[1]; i<Common.bracket[2]; i++) {
-			if (MapManager.get(i).support[1]>0) {
-				opponentInfluence=true;
-				break;
-			}
-		}
-		if(opponentInfluence) {
-			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 2, 1); //two checks in poland
-			GameData.dec=new Decision(sp, 1); //uses a general channel for ops
-			Common.spChannel(0).sendMessage(Common.spRole(0).getAsMention()+", you may now conduct your support check in Poland.").complete();
-		}
-		else {
-			Common.spChannel(0).sendMessage("For the oddest reason, you cannot support check Poland.").complete();
-		}
 	}
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return HandManager.effectActive(2);
+		return true;
 	}
 
 	@Override
 	public String getId() {
-		return "003";
+		return "038";
 	}
 
 	@Override
 	public String getName() {
-		return "Wałęsa";
+		return "The July Concept";
 	}
 
 	@Override
@@ -72,7 +48,7 @@ public class Walesa extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -90,7 +66,7 @@ public class Walesa extends Card {
 			if (c==-1) return false;
 			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
-			if (!MapManager.get(c).inRegion(1)) return false; // must be Poland
+			if (!MapManager.get(c).inRegion(5)) return false; // must be Bulgaria
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}
@@ -103,19 +79,18 @@ public class Walesa extends Card {
 			if (values.get(i)<=0) return false; //no non-positive numbers please
 			sum += values.get(i);
 		}
-		if (sum!=4) return false;
+		if (sum!=3) return false;
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		return "Place 4 Democratic SPs in Poland (unrestricted). The Democrat may conduct two support checks in Poland using this card.";
+		return "Place 3 Communist Support in Bulgaria.";
 	}
 
 	@Override
 	public String getArguments() {
-		return "Event: Influence placement. \n"
-				+ "Decision: Support Checks.";
+		return "Support.";
 	}
 
 }

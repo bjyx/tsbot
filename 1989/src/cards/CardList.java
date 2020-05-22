@@ -25,8 +25,8 @@ public class CardList {
 		cardList = new ArrayList<Card>();
 		CardList.addCard(new Placeholder()); //just to occupy the 0 slot so I don't get peeved enough to use a map
 
-		CardList.addCard(new LegacyOfMartialLaw()); //red
-		CardList.addCard(new Solidarity());
+		CardList.addCard(new LegacyOfMartialLaw());
+		CardList.addCard(new Solidarity()); //red
 		CardList.addCard(new Walesa());
 		CardList.addCard(new Michnik());
 		CardList.addCard(new GeneralStrike());
@@ -57,7 +57,7 @@ public class CardList {
 		CardList.addCard(new FactoryPartyCells());
 		CardList.addCard(new JanPalachWeek());
 		CardList.addCard(new TearGas());
-		/*
+		
 		CardList.addCard(new Intelligentsia());
 		CardList.addCard(new PeasantParties());
 		CardList.addCard(new Sajudis());		//red
@@ -69,7 +69,6 @@ public class CardList {
 		CardList.addCard(new EcoGlasnost());
 		CardList.addCard(new MagyarDemokrataForum());
 		//MidWar
-		/*
 		CardList.addCard(new Ceausescu());
 		CardList.addCard(new ScoringEastGermany());
 		CardList.addCard(new ScoringBulgaria());

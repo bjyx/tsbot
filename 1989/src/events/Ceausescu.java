@@ -1,82 +1,84 @@
 package events;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
+import cards.CardList;
+import cards.HandManager;
 import cards.Operations;
 import game.GameData;
 import main.Common;
 import map.MapManager;
 
-public class Gorby extends Card {
-	
+public class Ceausescu extends Card {
+
 	private static ArrayList<Integer> doable;
 	private static ArrayList<Integer> order;
 	private static ArrayList<Integer> values;
-
 	@Override
 	public void onEvent(int sp, String[] args) {
 		boolean opponentInfluence=false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder
-			.setTitle("Gorbachev Charms the West")
-			.setDescription("Soviet Arms Reduction Proposals wildly popular")
-			.setColor(Common.spColor(sp));
+			.setTitle("Ceaușescu Cracks Down on Dissent")
+			.setColor(Color.red);
 		if (doable.isEmpty()) {
-			builder.addField("No spaces to target!", "Congratulations. You've managed to dodge Gorby. Was it worth it? Actually, why the f@%k did you play this? It's meaningless.", false);
+			builder.addField("No spaces to target!", "Why crack down on a loyal populace?", false);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			return;
 		}
-		builder.bulkChangeInfluence(order, Common.opp(sp), values); //remove opponent sps
+		builder.bulkChangeInfluence(order, 0, values); //remove opponent sps
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
-		for (int i=Common.bracket[0]; i<Common.bracket[6]; i++) {
-			if (MapManager.get(i).support[Common.opp(sp)]>0) {
+		for (int i=Common.bracket[4]; i<Common.bracket[5]; i++) {
+			if (MapManager.get(i).support[1]>0) {
 				opponentInfluence=true;
 				break;
 			}
 		}
 		if(opponentInfluence) {
-			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 1); //one check
-			GameData.dec=new Decision(sp, 1); //uses a general channel for ops
-			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention()+", you may now conduct your support check.").complete();
+			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 1, 4); //one check in Romania
+			GameData.dec=new Decision(sp, 41); //Ceausescu is a special case because of what comes after
+			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention()+", you may now conduct your support check in Romania.").complete();
 		}
 		else {
-			Common.spChannel(sp).sendMessage("For the oddest reason, you cannot support check. Period... How the f@%k did you wipe the other side from the board!?").complete();
+			Common.spChannel(sp).sendMessage("For the oddest reason, you cannot conduct a check in Romania. Mission success?").complete();
 		}
 	}
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return GameData.getStab()>2; //Breakaway Baltics not played
+		return true;
 	}
 
 	@Override
 	public String getId() {
-		return "014";
+		return "041";
 	}
 
 	@Override
 	public String getName() {
-		return "Gorbachev Charms the West";
+		return "Ceaușescu";
 	}
 
 	@Override
 	public int getOps() {
-		return 4;
+		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		return 2;
+		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -85,16 +87,16 @@ public class Gorby extends Card {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		int maxInfRem = 0;
-		for (int i=0; i<75; i++) {
-			if (MapManager.get(i).support[Common.opp(sp)]>0) {
+		for (int i=Common.bracket[4]; i<Common.bracket[5]; i++) {
+			if (MapManager.get(i).support[0]>0) {
 				doable.add(i);
-				maxInfRem += MapManager.get(i).support[Common.opp(sp)];
+				maxInfRem += MapManager.get(i).support[0];
 			}
 		}
 		if (maxInfRem<=2) {
 			order = doable;
 			for (int i : order) {
-				values.add(-MapManager.get(i).support[Common.opp(sp)]);
+				values.add(-MapManager.get(i).support[0]);
 			}
 			return true;
 		}
@@ -115,23 +117,22 @@ public class Gorby extends Card {
 		if (!doable.containsAll(order)) return false;
 		for (int i=0; i<order.size(); i++) {
 			if (values.get(i)>=0) return false; //no non-negative numbers please
-			if (values.get(i)<-2) return false; // cannot remove >2 influence from a given country
-			if (MapManager.get(order.get(i)).support[Common.opp(sp)]+values.get(i)<0) return false; //don't give me negative influence values
+			if (MapManager.get(order.get(i)).support[0]+values.get(i)<0) return false; //don't give me negative influence values
 			sum += values.get(i);
 		}
-		if (sum!=-2) return false; // up to 4 influence may be removed...
+		if (sum!=-3) return false; // up to 3 influence may be removed...
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		return "Remove 2 of your Opponent's Support Points from the board. Then, conduct one support check using this card's Operations value.";
+		if (HandManager.effectActive(97)) return "Ceaușescu has been deposed! Play for Operations only.";
+		return "Remove 3 Democratic Support from Romania. Then, the Communist makes 1 Support Check in Romania using this card's Operations. If the Democrat, at the end of the turn, has at least 1 Support in a space adjacent to Cluj-Napoca, the Communist loses 1 Support in București. *This event prevented by " + CardList.getCard(97) + ".*";
 	}
 
 	@Override
 	public String getArguments() {
-		return "Event: SPs to remove. \n"
-				+ "Decision: Support check.";
+		return "Support.";
 	}
 
 }

@@ -143,6 +143,7 @@ public class DecisionCommand extends Command {
 		 * - 003 Walesa
 		 * - 014 Gorby
 		 * - 021 Common European Home
+		 * ...
 		 * 
 		 * - 206 Space Ability 6
 		 */
@@ -152,6 +153,7 @@ public class DecisionCommand extends Command {
 				return;
 			}
 		}
+		
 		/*
 		 * 006 - Brought in for Questioning
 		 */
@@ -209,6 +211,92 @@ public class DecisionCommand extends Command {
 			}
 			GameData.dec = new Decision(1, 201);
 			return;
+		}
+		if (event==36) {
+			int i;
+			try {
+				i = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Card IDs are integers. I suppose you forgot that.");
+				return;
+			}
+			if (!HandManager.Discard.contains(i)) {
+				sendMessage(e, ":x: This card must be in the pile.");
+				return;
+			}
+			if (CardList.getCard(i).getAssociation()!=0) {
+				sendMessage(e, ":x: Democrat cards only.");
+				return;
+			}
+			if (!CardList.getCard(i).isRemoved()) {
+				sendMessage(e, ":x: Card cannot be recurring.");
+				return;
+			}
+			if (!CardList.getCard(i).isPlayable(0)) { //should never trigger but good to have
+				sendMessage(e, ":x: You can't even play that event!");
+				return;
+			}
+			if (!CardList.getCard(i).isFormatted(0, Arrays.copyOfRange(args, 1, args.length))) {
+				sendMessage(e, ":x: Format your arguments correctly.");
+				return;
+			}
+			
+			else {
+				HandManager.Removed.add(i);
+				HandManager.Discard.remove((Integer) i);
+				Log.writeToLog(CardList.getCard(i).getName()+":");
+				CardList.getCard(i).onEvent(0, Arrays.copyOfRange(args, 1, args.length));
+			}
+		}
+		/*
+		 * 041 Ceausescu
+		 */
+		if (event==41) {
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+			boolean cluj = false;
+			for (int i : MapManager.get(51).adj) {
+				if (MapManager.get(i).support[0]>0) {
+					cluj = true;
+					break;
+				}
+			}
+			if (cluj) {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				Log.writeToLog("The Democrat has influence around Cluj.");
+				builder.setTitle("Incomplete Crackdown")
+				.setColor(Color.blue);
+				builder.changeInfluence(50, 1, -1);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+		}
+		if (event==46) {
+			int c = Integer.parseInt(args[1]);
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Goodbye Lenin!").setColor(Color.blue);
+			if (c==46) {
+				boolean result = GameData.ops.ops(Arrays.copyOfRange(args, 1, args.length));
+				if (!result) return;
+				builder.addField(CardList.getCard(c).getName(), "Used card for Operations.", false);
+			}
+			else {
+				if (!GoodbyeLenin.found.contains(c)) {
+					sendMessage(e, ":x: Act on what you know.");
+					return;
+				}
+				if (!CardList.getCard(c).isFormatted(PlayerList.getArray().indexOf(e.getAuthor()), Arrays.copyOfRange(args, 1, args.length))) {
+					sendMessage(e, ":x: Format your arguments correctly.");
+					return;
+				}
+				HandManager.removeFromGame(1, c);
+				Log.writeToLog(CardList.getCard(c).getName()+":");
+				CardList.getCard(c).onEvent(0, Arrays.copyOfRange(args, 1, args.length));
+				builder.addField(CardList.getCard(c).getName(), "Played for the event.", false);
+			}
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
 		if (event==201) {
 			
@@ -395,6 +483,112 @@ public class DecisionCommand extends Command {
 			TimeCommand.spaceRequired = false;
 			TimeCommand.spaceDone = false;
 			TimeCommand.prompt();
+		}
+		if (event==440) {
+			ArrayList<Integer> doable = new ArrayList<Integer>();
+			ArrayList<Integer> order = new ArrayList<Integer>();
+			ArrayList<Integer> values = new ArrayList<Integer>();
+			int maxInfRem = 0;
+			for (int i=Common.bracket[InflationaryCurrency.target]; i<Common.bracket[InflationaryCurrency.target+1]; i++) {
+				if (MapManager.get(i).support[Common.opp(sp)]>0) {
+					doable.add(i);
+					maxInfRem += MapManager.get(i).support[Common.opp(sp)];
+				}
+			}
+			if (maxInfRem<=2) {
+				order = doable;
+				for (int i : order) {
+					values.add(-MapManager.get(i).support[Common.opp(sp)]);
+				}
+			}
+			else {
+			if (args.length%2!=1) return; //each country must associate with a number
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) return;
+				if (order.indexOf(c)!=-1) return; // no duplicates plox
+				order.add(c);
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					return; //this isn't an integer. xP
+				}
+			}
+			int sum = 0;
+			if (!doable.containsAll(order)) return;
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)>=0) return; //no non-negative numbers please
+				if (values.get(i)<-2) return; // cannot remove >2 influence from a given country
+				if (MapManager.get(order.get(i)).support[Common.opp(sp)]+values.get(i)<0) return; //don't give me negative influence values
+				sum += values.get(i);
+			}
+			if (sum!=-2) return; // up to 2 influence may be removed...
+			}
+			boolean opponentInfluence=false;
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+			.setTitle("Skyrocketing Prices in " + Common.countries[InflationaryCurrency.target])
+			.setDescription("Inflation rocks the " + InflationaryCurrency.currencies[InflationaryCurrency.target])
+			.setColor(Common.spColor(sp))
+			.setFooter("GMTBot is nothing more than a game, and these infoboxes do not represent real life happenings. GMTBot may not be held responsible for any financial irresponsibility caused by the misinterpretation of game events as real life news.", null);
+			builder.bulkChangeInfluence(order, Common.opp(sp), values); //remove opponent sps
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			
+			for (int i=Common.bracket[InflationaryCurrency.target]; i<Common.bracket[InflationaryCurrency.target+1]; i++) {
+				if (MapManager.get(i).support[Common.opp(sp)]>0) {
+					opponentInfluence=true;
+					break;
+				}
+			}
+			if(opponentInfluence) {
+				GameData.dec=new Decision(Common.opp(sp), 441);
+				Common.spChannel(Common.opp(sp)).sendMessage(Common.spRole(Common.opp(sp)).getAsMention()+", "+Common.countries[InflationaryCurrency.target]+" is suffering from inflation. Remedy by discarding a 3 Ops card, or respond with `TS.decide 0` to discard nothing and allow your opponent to conduct a support check.").complete();
+			}
+			else {
+				Common.spChannel(sp).sendMessage("For the oddest reason, you cannot support check in your target region.").complete();
+			}
+		}
+		if (event==441) {
+			int card;
+			try {
+				card = Integer.parseInt(args[1]);
+			}
+			catch (NumberFormatException err) {
+				sendMessage(e, ":x: Give the number of the card you wish to discard, or 0 if you do not wish to do so.");
+				return;
+			}
+			if (card==0) {
+				EmbedBuilder builder = new CardEmbedBuilder()
+						.setTitle(Common.players[sp]+"s Fail to Address Inflation Crisis")
+						.setFooter("GMTBot is nothing more than a game, and these infoboxes do not represent real life happenings. GMTBot may not be held responsible for any financial irresponsibility caused by the misinterpretation of game events as real life news.", null)
+						.setColor(Common.spColor(Common.opp(sp)));
+				GameData.dec=new Decision(Common.opp(sp), 1);
+				GameData.ops=new Operations(Common.opp(sp), CardList.getCard(44).getOpsMod(Common.opp(sp)),false,true,false,1,InflationaryCurrency.target);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else if (card<=CardList.numberOfCards()) {
+				if (CardList.getCard(card).getOpsMod(sp)<3) {
+					sendMessage(e, ":x: That won't be enough.");
+					return;
+				}
+				if (!HandManager.discard(sp, card)) {
+					sendMessage(e, ":x: We don't have that. At least not at our disposal.");
+					return;
+				}
+				Log.writeToLog(Common.players[sp].substring(0, 3) + " discards "+CardList.getCard(card).getName()+".");
+
+				EmbedBuilder builder = new CardEmbedBuilder()
+						.setTitle(Common.players[sp]+"s Fight Inflation Crisis")
+						.setDescription("Discarded " + CardList.getCard(card))
+						.setFooter("GMTBot is nothing more than a game, and these infoboxes do not represent real life happenings. GMTBot may not be held responsible for any financial irresponsibility caused by the misinterpretation of game events as real life news.", null)
+						.setColor(Common.spColor(sp));
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else {
+				sendMessage(e, ":x: Give the number of the card you wish to discard.");
+				return;
+			}
 		}
 		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);

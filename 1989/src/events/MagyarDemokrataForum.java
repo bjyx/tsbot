@@ -3,61 +3,55 @@ package events;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import cards.HandManager;
 import cards.Operations;
 import game.GameData;
 import main.Common;
-import main.Launcher;
 import map.MapManager;
-/**
- * The Walesa Card.
- * @author wes4zhang
- *
- */
-public class Walesa extends Card {
+
+public class MagyarDemokrataForum extends Card {
 
 	private static ArrayList<Integer> order;
 	private static ArrayList<Integer> values;
-
+	
 	@Override
 	public void onEvent(int sp, String[] args) {
 		boolean opponentInfluence=false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder
-			.setTitle("Wałęsa")
+			.setTitle("Hungarian Democratic Forum")
 			.setColor(Color.blue);
 		builder.bulkChangeInfluence(order, 0, values);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
-		for (int i=Common.bracket[1]; i<Common.bracket[2]; i++) {
+		for (int i=Common.bracket[3]; i<Common.bracket[4]; i++) {
 			if (MapManager.get(i).support[1]>0) {
 				opponentInfluence=true;
 				break;
 			}
 		}
 		if(opponentInfluence) {
-			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 2, 1); //two checks in poland
+			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 1, 3); //one check in hungary
 			GameData.dec=new Decision(sp, 1); //uses a general channel for ops
-			Common.spChannel(0).sendMessage(Common.spRole(0).getAsMention()+", you may now conduct your support check in Poland.").complete();
+			Common.spChannel(0).sendMessage(Common.spRole(0).getAsMention()+", you may now conduct your support check in Hungary.").complete();
 		}
 		else {
-			Common.spChannel(0).sendMessage("For the oddest reason, you cannot support check Poland.").complete();
+			Common.spChannel(0).sendMessage("For the oddest reason, you cannot support check Hungary.").complete();
 		}
 	}
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return HandManager.effectActive(2);
+		return true;
 	}
 
 	@Override
 	public String getId() {
-		return "003";
+		return "040";
 	}
 
 	@Override
 	public String getName() {
-		return "Wałęsa";
+		return "Hungarian Democratic Forum";
 	}
 
 	@Override
@@ -90,7 +84,7 @@ public class Walesa extends Card {
 			if (c==-1) return false;
 			if (order.indexOf(c)!=-1) return false; // no duplicates plox
 			order.add(c);
-			if (!MapManager.get(c).inRegion(1)) return false; // must be Poland
+			if (!MapManager.get(c).inRegion(3)) return false; // must be Hungary
 			try{
 				values.add(Integer.parseInt(args[i+1]));
 			}
@@ -103,19 +97,20 @@ public class Walesa extends Card {
 			if (values.get(i)<=0) return false; //no non-positive numbers please
 			sum += values.get(i);
 		}
-		if (sum!=4) return false;
+		if (sum!=3) return false;
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		return "Place 4 Democratic SPs in Poland (unrestricted). The Democrat may conduct two support checks in Poland using this card.";
+		// TODO Auto-generated method stub
+		return "Place 3 Democratic Support in Hungary. Then, the Democrat makes 1 Support Check in Hungary using the Operations of this card.";
 	}
 
 	@Override
 	public String getArguments() {
-		return "Event: Influence placement. \n"
-				+ "Decision: Support Checks.";
+		return "Event: Support placement.\n"
+				+ "Decision: The Support Check.";
 	}
 
 }

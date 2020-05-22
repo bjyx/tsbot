@@ -2,22 +2,16 @@ package events;
 
 import java.awt.Color;
 
-import cards.CardList;
-import cards.HandManager;
 import game.GameData;
-import map.MapManager;
 
-public class StNicholasChurch extends Card {
+public class HealOurBleedingWound extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("St. Nicholas Church conducts Peace Prayers")
-			.setDescription("Leipzig residents demand peaceful resolution to Cold War")
-			.setColor(Color.blue);
-		builder.changeInfluence(9, 0, Math.max(0, MapManager.get(9).stab+MapManager.get(9).support[1]-MapManager.get(9).support[0]));
-		HandManager.addEffect(24);
-		builder.addField("Prelude", CardList.getCard(61) + " may now be played for the event.", false);
+		builder.setTitle("Soviet Troops Pull Out of Afghanistan")
+		.setColor(GameData.getEra()==2?Color.blue:Color.red);
+		builder.changeVP(GameData.getEra()==0?-3:(GameData.getEra()==1?-1:3));
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -28,17 +22,17 @@ public class StNicholasChurch extends Card {
 
 	@Override
 	public String getId() {
-		return "024";
+		return "035";
 	}
 
 	@Override
 	public String getName() {
-		return "St. Nicholas Church";
+		return "Heal Our Bleeding Would";
 	}
 
 	@Override
 	public int getOps() {
-		return 1;
+		return 3;
 	}
 
 	@Override
@@ -48,7 +42,7 @@ public class StNicholasChurch extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -63,7 +57,7 @@ public class StNicholasChurch extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The Democrat gains control of the Lutheran Church in East Germany. *Allows play of " + CardList.getCard(61) + ".*";
+		return GameData.getEra()==2?"The Democrat gains 3 VPs.":("The Communist gains " + (GameData.getEra()==0?3:1) + " VPs. *This will be " +(GameData.getEra()==0?"1 VP":"3 VPs in the Democrat's favor")+ " in the next part of the year.*");
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import java.util.Random;
 import commands.TimeCommand;
 import events.CardEmbedBuilder;
 import events.Decision;
+import events.ForeignCurrencyDebtBurden;
 import game.Die;
 import game.GameData;
 import logging.Log;
@@ -269,6 +270,8 @@ public class Operations {
 				boolean flag = true;
 				for (int i=Common.bracket[restrictions]; i<Common.bracket[restrictions+1]; i++) {
 					if (sp==1 && i==14 && HandManager.effectActive(2)) continue; //Solidarity
+					if (sp==1 && i==5 && HandManager.effectActive(48)) continue; //We Are The People
+					if (sp==1 && MapManager.get(i).region==ForeignCurrencyDebtBurden.target&&HandManager.effectActive(49)) continue; //FCDB
 					if (MapManager.get(i).support[(sp+1)%2]>0) {
 						flag = false;
 						break;
@@ -283,6 +286,8 @@ public class Operations {
 				boolean flag = true;
 				for (int i=0; i<75; i++) {
 					if (sp==1 && i==14 && HandManager.effectActive(2)) continue; //Solidarity
+					if (sp==1 && i==5 && HandManager.effectActive(48)) continue; //We Are The People
+					if (sp==1 && MapManager.get(i).region==ForeignCurrencyDebtBurden.target&&HandManager.effectActive(49)) continue; //FCDB
 					if (MapManager.get(i).support[(sp+1)%2]>0) {
 						flag = false;
 						break;
@@ -300,6 +305,14 @@ public class Operations {
 		}
 		if (HandManager.effectActive(2) && country==14 && sp==1) { //checking gdansk as com under solidarity
 			txtsp.sendMessage(":x: Solidarity is legal, sir. Nothing we can do about that.").complete();
+			return false;
+		}
+		if (HandManager.effectActive(48) && country==5 && sp==1) { //checking leipzig as com under we are the ppl
+			txtsp.sendMessage(":x: What do you mean, \"Wir sind das Volk\"!?").complete();
+			return false;
+		}
+		if (HandManager.effectActive(49) && MapManager.get(country).region==ForeignCurrencyDebtBurden.target && sp==1) { //checking under fcdb
+			txtsp.sendMessage(":x: Do we not have the resources to crush this? What do you mean, debt!?").complete();
 			return false;
 		}
 		if (MapManager.get(country).support[(sp+1)%2]==0) {
@@ -332,6 +345,10 @@ public class Operations {
 		}
 		if (sp==1&&(MapManager.get(country).icon==4||MapManager.get(country).icon==5)&&HandManager.effectActive(26)) {
 			builder.addField("Human Rights Violations", "The Communist has violated the Helsinki Final Act.", false);
+			builder.changeVP(1);
+		}
+		if (sp==1&&country==67&&HandManager.effectActive(39)) {
+			builder.addField("Ecoglasnost March", "", false);
 			builder.changeVP(1);
 		}
 		String[] modifiers = {"",""};

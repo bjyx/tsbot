@@ -120,7 +120,7 @@ BGW	74
 				true, 
 				new String[] {"drs","dresden"}, 
 				new Integer[] {4, 5, 22, 31},
-				"", 
+				"The target of a massive Allied bombing raid at the close of World War II, the capital of Saxony has since been rebuilt. Being so close to the Czechoslovak border, it is sure to be a focal point of conflict should the curtain weaken elsewhere.", 
 				new int[] {0,2}, 
 				"drs"
 				));
@@ -153,7 +153,7 @@ BGW	74
 				true, 
 				new String[] {"kms","karlmarxstadt","chemnitz"}, 
 				new Integer[] {1, 3, 5, 6},
-				"", 
+				"Formerly the city of Chemnitz, Karl-Marx-Stadt was renamed as such on the 70th anniversary of Karl Marx's death. Extensive destruction during World War II prompted the Communists to rebuild the city as a symbol for socialist cities in general.", 
 				new int[] {0,0}, 
 				"kms"
 				));
@@ -208,7 +208,7 @@ BGW	74
 				true, 
 				new String[] {"ddc","lutheran","dchurch","gchurch"}, 
 				new Integer[] {5},
-				"", 
+				"The space used to represent the St. Nicholas Church, an institution pivotal in initiating the Monday Demonstrations throughout East Germany.", 
 				new int[] {0,0}, 
 				"ddc"
 				));
@@ -518,7 +518,7 @@ BGW	74
 				3,
 				true, 
 				new String[] {"budapest","bud"}, 
-				new Integer[] {40, 42, 45, 47},
+				new Integer[] {40, 42, 43, 45, 47},
 				"", 
 				new int[] {1,0}, 
 				"bud"
@@ -716,7 +716,7 @@ BGW	74
 				4, 
 				7,
 				false, 
-				new String[] {"hrg","harghita","covasna"}, 
+				new String[] {"hrg","harghita","covasna","szekely"}, 
 				new Integer[] {58},
 				"", 
 				new int[] {0,0}, 
@@ -850,7 +850,7 @@ BGW	74
 				0,
 				true, 
 				new String[] {"rus","ruse"}, 
-				new Integer[] {66,70,71,72},
+				new Integer[] {63,66,70,71,72},
 				"", 
 				new int[] {0,0}, 
 				"rus"
