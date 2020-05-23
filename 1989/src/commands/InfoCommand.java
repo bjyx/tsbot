@@ -73,7 +73,7 @@ public class InfoCommand extends Command {
 			if (HandManager.effectActive(26)) effects+=":flag_fi: Helsinki Final Act\n";
 			if (HandManager.effectActive(39)) effects+=":flag_bg: Ecoglasnost\n";
 			if (HandManager.effectActive(30)) effects+=":oncoming_police_car: Tear Gas\n";
-			if (HandManager.effectActive(9)) effects+=":lock: The Wall\n";
+			if (HandManager.effectActive(9)) effects+=":bricks: The Wall\n";
 			if (HandManager.effectActive(49)) effects+=":money_with_wings: Foreign Currency Debt Burden\n";
 			if (HandManager.effectActive(59)) effects+=":gun: Grenztruppen\n";
 			if (HandManager.effectActive(39)) effects+=":flag_de: FRG Embassies\n";

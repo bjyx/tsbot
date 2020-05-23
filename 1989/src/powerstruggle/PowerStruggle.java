@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import cards.CardList;
 import cards.HandManager;
+import cards.Operations;
 import commands.StruggleCommand;
 import commands.TimeCommand;
 import events.CardEmbedBuilder;
+import events.Decision;
 import game.Die;
 import game.GameData;
 import main.Common;
@@ -134,8 +137,24 @@ public class PowerStruggle {
 		builder.addField("Card Count", "Democrat: "+d+"\nCommunist: "+c, false);
 		for (int i=0; i<d; i++) addToHand(0);
 		for (int i=0; i<c; i++) addToHand(1);
+		if (r==4&&HandManager.effectActive(540)) {
+			HandManager.removeEffect(540);
+			int rally=0;
+			for (int i=0; i<15; i++) {
+				if (deck.remove((int) Math.random()*deck.size()).equals(new StruggleCard(0,0,1))) {
+					rally++;
+				}
+			}
+			builder.addField("The Crowd Turns Against Ceausescu","There are " + rally + " Rally in the Squares in the next 15 cards.",false);
+			GameData.dec = new Decision(0, 54);
+			GameData.ops = new Operations(0, rally*3, true, true, false);
+			Common.spChannel(0).sendMessage(Common.spRole(0).getAsMention() + ", you may conduct your action round in Romania courtesy of those protestors.").complete();
+		}
+		else {
+			Common.spChannel(in).sendMessage(Common.spRole(in).getAsMention() + ", would you like to raise the stakes? Respond with `DF.struggle r`aise or `DF.struggle d`ecline.");
+		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		Common.spChannel(in).sendMessage(Common.spRole(in).getAsMention() + ", would you like to raise the stakes? Respond with `TS.struggle r`aise or `TS.struggle d`ecline.");
+
 	}
 	
 	public void raiseStakes(ArrayList<StruggleCard> cards, int sp) {

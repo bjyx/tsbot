@@ -48,7 +48,7 @@ public class Ceausescu extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return true;
+		return !HandManager.effectActive(97); //tyrant is gone
 	}
 
 	@Override

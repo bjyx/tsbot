@@ -78,10 +78,6 @@ public class DecisionCommand extends Command {
 			sendMessage(e, ":x: Indecision is not an option.");
 			return;
 		}
-		if (GameData.ps!=null) {
-			sendMessage(e, ":x: And you're going to just ignore the Power Struggle in " + Common.countries[GameData.ps.region] + "!?");
-			return;
-		}
 		if (!TimeCommand.trapDone) {
 			int x;
 			if (e.getAuthor().equals(PlayerList.getDem())) {
@@ -297,6 +293,13 @@ public class DecisionCommand extends Command {
 				builder.addField(CardList.getCard(c).getName(), "Played for the event.", false);
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (event==54) { //in general, events that let you have ops route here
+			boolean result = GameData.ops.ops(args);
+			if (!result) {
+				return;
+			}
+			Common.spChannel(GameData.ps.initiative).sendMessage(Common.spRole(GameData.ps.initiative).getAsMention() + ", would you like to raise the stakes? Respond with `DF.struggle r`aise or `DF.struggle d`ecline.");
 		}
 		if (event==201) {
 			

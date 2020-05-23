@@ -20,7 +20,7 @@ public class Pozsgay extends Card {
 			.setDescription("State Minister deems 1956 a \"popular uprising\"")
 			.setColor(Color.red);
 		if (doable.isEmpty()) {
-			builder.addField("No countries to target!", "All of Hungary has embraced Democratic ideals. How did *that* happen?", false);
+			builder.addField("No spaces to target!", "All of Hungary has embraced Democratic ideals. How did *that* happen?", false);
 		}
 		else for (int c : order) {
 			builder.changeInfluence(c, 1, 1);

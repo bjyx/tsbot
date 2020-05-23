@@ -43,6 +43,10 @@ public class StruggleCommand extends Command {
 			sendMessage(e, ":x: Where's your scoring card?");
 			return;
 		}
+		if (GameData.dec!=null) {
+			sendMessage(e, ":x: I feel decisions are more important.");
+			return;
+		}
 		if (args.length<2) {
 			sendMessage(e, ":x: What for?");
 			return;
@@ -226,7 +230,7 @@ public class StruggleCommand extends Command {
 			GameData.ps.actuallyEndStruggle();
 		}
 		if (args[1].charAt(0)=='p') {
-			if (GameData.ps.progression! =2) {
+			if (GameData.ps.progression!=2) {
 				sendMessage(e, ":x: This isn't the time.");
 				return;
 			}

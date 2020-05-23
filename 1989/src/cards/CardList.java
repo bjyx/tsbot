@@ -79,9 +79,9 @@ public class CardList {
 		CardList.addCard(new WeAreThePeople());
 		CardList.addCard(new ForeignCurrencyDebtBurden());
 		CardList.addCard(new SinatraDoctrine());
-		/*
+		
 		CardList.addCard(new AnniversaryCelebration());
-		CardList.addCard(new Normalisation());
+		CardList.addCard(new Normalization());
 		CardList.addCard(new LiPeng());
 		CardList.addCard(new CrowdTurnsAgainstCeausescu()); //red; see 7.6
 		CardList.addCard(new ScoringCzechoslovakia());

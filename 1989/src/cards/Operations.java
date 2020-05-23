@@ -477,7 +477,7 @@ public class Operations {
 			if (spaceLevel==0) return "\"It's all because of you people.\"\n- Li Zhao, at the funeral of Hu Yaobang";
 			if (spaceLevel==1) return "Rally in the Square!";
 			if (spaceLevel==2) return "Foreign News Covers Incident.";
-			if (spaceLevel==3) return "Hunger Strikes begin.";
+			if (spaceLevel==3) return "\"I understand it is quite rude of me to interrupt you, Premier, but there are people sitting out there in the square, being hungry, as we sit here and exchange pleasantries. We are only here to discuss concrete matters, sir.\"\n- Örkesh Dölet, May";
 			if (spaceLevel==4) return "\"At this grim moment, what we need most is to remain calm and united in a single purpose. We need a powerful cementing force to strengthen our resolve: That is the Goddess of Democracy.\"\n- Unknown";
 			if (spaceLevel==5) return "\"The PLA came on orders. We support you. There is no disorder in Beijing. You guys go on home.\"\n- Unknown";
 			if (spaceLevel==6) return "Barricades erected.";
