@@ -101,8 +101,8 @@ public class Inaugural extends Card {
 				return false;
 			}
 			if (!HandManager.handContains(0, x)) return false;
+			if (order.indexOf(x)!=-1) return false;
 			order.add(x);
-			if (order.indexOf(x)!=order.lastIndexOf(x)) return false;
 		}
 		return true;
 	}

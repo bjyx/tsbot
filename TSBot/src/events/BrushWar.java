@@ -70,31 +70,26 @@ public class BrushWar extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Brush War";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -110,13 +105,11 @@ public class BrushWar extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Target a single country with at most 2 stability. Add 3 Military Operations. Roll a die and subtract the number of countries neighboring the target under your opponent's control. On a roll of 3-6, gain 1 VP and replace all opposing influence in the country with your own.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "The country to target, which must have at most 2 stability.";
 	}
 
