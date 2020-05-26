@@ -6,7 +6,7 @@ public class CommonEuropeanHome extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		GameData.txtchnl.sendMessage("Data indicates that you have managed to play Common European Home for the event. This isn't supposed to happen. Mark it as a bug on my GitHub and I'll be sure to fix it.");
+		GameData.txtchnl.sendMessage("Data indicates that you have managed to play Common European Home for the event. This isn't supposed to happen. Mark it as a bug on my GitHub with appropriate context and I'll be sure to fix it.");
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class CommonEuropeanHome extends Card {
 
 	@Override
 	public String getArguments() {
-		return "TS.play **<id>** c, where **id** is the card to cancel the event of. Attempting to play this card directly will fail.";
+		return "TS.play **<id>** c, where **id** is the card to cancel the event of. Attempting to play this card directly for the event will fail.";
 	}
 
 }

@@ -5,18 +5,18 @@ import java.awt.Color;
 import cards.HandManager;
 import game.GameData;
 import logging.Log;
+import main.Launcher;
 
-public class RoundTableTalks extends Card {
+public class BorderReopened extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Talks organized")
-			.setDescription("Communist government to debate inclusion of banned parties in politics")
+		builder.setTitle("Hungary Tears Down Border Fence")
 			.setColor(Color.blue);
-		HandManager.addEffect(17);
-		Log.writeToLog("Round Table Talks active.");
-		builder.addField("Round Table", "When the next Power Struggle happens, the Democrat gains two Power Struggle cards, and the Communist loses two.", false);
+		builder.addField("", "All Democratic Operations exclusively used in East Germany will now have one extra point to use.", false);
+		HandManager.addEffect(58);
+		Log.writeToLog("Austria-Hungary Border Reopened active.");
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -27,22 +27,22 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public String getId() {
-		return "017";
+		return "058";
 	}
 
 	@Override
 	public String getName() {
-		return "Round Table Talks";
+		return "Austria—Hungary Border Reopened";
 	}
 
 	@Override
 	public int getOps() {
-		return 3;
+		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public boolean isRemoved() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -62,12 +62,13 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public String getDescription() {
-		return "*When the next Power Struggle starts, the Democrat may draw two Power Struggle cards from the Communist hand.*";
+		return "*For the rest of this turn, the Democrat gets a +1 bonus to Operations if they are all used in East Germany.*";
 	}
 
 	@Override
 	public String getArguments() {
-		return "None.";
+		return "Event: None.\n"
+				+ "Operations for the rest of this turn: if you want to take advantage of this ability on support checks in East Germany, write `habsburg` after your target—this locks your second support check to East Germany.";
 	}
 
 }

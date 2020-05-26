@@ -15,6 +15,7 @@ import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.MessageBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import powerstruggle.StruggleCard;
 /**
  * The command to get information about a card. 
  * @author adalbert
@@ -36,6 +37,14 @@ public class InfoCommand extends Command {
 		if (args.length<2) {
 			sendMessage(e, ":x: Not enough arguments.");
 			return;
+		}
+		//securitate
+		if (args[1].equals("iulian") && HandManager.effectActive(70) && e.getChannel().equals(GameData.txtcom) && GameData.ps.region==4) {
+			EmbedBuilder usahand = new EmbedBuilder().setTitle("Power Struggle Cards");
+			for (StruggleCard c : GameData.ps.DemHand) {
+				usahand.addField(c.toString(), "", false);
+			}
+			GameData.txtdem.sendMessage(usahand.build()).complete();
 		}
 		//game data
 		else if (args[1].equals("game")) {

@@ -5,18 +5,19 @@ import java.awt.Color;
 import cards.HandManager;
 import game.GameData;
 import logging.Log;
+import main.Launcher;
 
-public class RoundTableTalks extends Card {
+public class PeasantPartiesRevolt extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Talks organized")
-			.setDescription("Communist government to debate inclusion of banned parties in politics")
+		builder.setTitle("Government Formation Reaches Impasse")
+			.setDescription("Proposed communist government rejected by influential democratic parties")
 			.setColor(Color.blue);
-		HandManager.addEffect(17);
-		Log.writeToLog("Round Table Talks active.");
-		builder.addField("Round Table", "When the next Power Struggle happens, the Democrat gains two Power Struggle cards, and the Communist loses two.", false);
+		HandManager.addEffect(72);
+		Log.writeToLog("Peasant Parties Revolt active.");
+		builder.addField("Coalition Proposal", "If the Democrat controls a Farmer Space in the next country targeted by a Power Struggle, the Democrat gains one Power Struggle card, and the Communist loses one.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -27,12 +28,12 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public String getId() {
-		return "017";
+		return "072";
 	}
 
 	@Override
 	public String getName() {
-		return "Round Table Talks";
+		return "Peasant Parties Revolt";
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public int getEra() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -52,7 +53,7 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public boolean isRemoved() {
-		return false;
+		return true;
 	}
 
 	@Override
@@ -62,7 +63,7 @@ public class RoundTableTalks extends Card {
 
 	@Override
 	public String getDescription() {
-		return "*When the next Power Struggle starts, the Democrat may draw two Power Struggle cards from the Communist hand.*";
+		return "If the Democrat controls a Farmer space in the next country targeted by a Power Struggle, the Democrat gains one card in that Power Struggle, and the Communist loses one.";
 	}
 
 	@Override

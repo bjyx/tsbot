@@ -3,19 +3,22 @@ package events;
 import java.awt.Color;
 
 import game.GameData;
+import main.Common;
+import main.Launcher;
 import map.MapManager;
 
-public class Normalization extends Card {
+public class LegacyOf1968 extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder
-			.setTitle("Czechoslovak Government Experiences Purge")
-			.setDescription("Sympathizers to the Prague Spring dismissed")
-			.setColor(Color.red);
-		builder.changeInfluence(31, 0, -MapManager.get(44).support[1]);
-		builder.changeInfluence(32, 0, -MapManager.get(44).support[1]);
+		builder.setTitle("Legacy of 1968")
+			.setColor(Color.blue);
+		for (int i=Common.bracket[2]; i<Common.bracket[3]; i++) {
+			if (MapManager.get(i).isControlledBy()!=1) {
+				builder.changeInfluence(i, 0, 1);
+			}
+		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -26,17 +29,17 @@ public class Normalization extends Card {
 
 	@Override
 	public String getId() {
-		return "052";
+		return "064";
 	}
 
 	@Override
 	public String getName() {
-		return "Normalization";
+		return "Legacy of 1968";
 	}
 
 	@Override
 	public int getOps() {
-		return 3;
+		return 4;
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class Normalization extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -61,7 +64,7 @@ public class Normalization extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove all Democratic support from Praha and Plzen.";
+		return "Place 1 Democratic SP in every space in Czechoslovakia not controlled by the Communist.";
 	}
 
 	@Override

@@ -212,7 +212,7 @@ public class HandManager {
 	 */
 	public static void deal() {
 		Random random = new Random();
-		while (8 > ComHand.size()||8 > DemHand.size()) {
+		while ((HandManager.effectActive(65)?7:8) > ComHand.size()||8 > DemHand.size()) {
 			if (8 > ComHand.size()&&!Deck.isEmpty()) {
 				ComHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
@@ -228,6 +228,7 @@ public class HandManager {
 				Discard.clear();
 			}
 		}
+		HandManager.removeEffect(65);
 	}
 	/**
 	 * Creates a MessageEmbed containing the details of the US's cards. To be sent after every turn. 

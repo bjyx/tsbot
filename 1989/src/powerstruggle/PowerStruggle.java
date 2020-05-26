@@ -131,7 +131,21 @@ public class PowerStruggle {
 			HandManager.Discard.add(17);
 			d+=2;
 			c-=2;
-			builder.addField("Round Table Talks", "The Democrat gets cards from the Communist.", false);
+			builder.addField("Round Table Talks", "The Democrat gets two cards from the Communist.", false);
+		}
+		if (HandManager.removeEffect(72)) {
+			for (int i=Common.bracket[r]; i<Common.bracket[r+1]; i++) {
+				if (MapManager.get(i).icon==1&&MapManager.get(i).isControlledBy()==0) {
+					d+=1;
+					c-=1;
+					builder.addField("Peasant Parties Revolt", "The Democrat gets one card from the Communist.", false);
+					break;
+				}
+			}
+			
+		}
+		if (HandManager.effectActive(70)&&r==4) {
+			builder.addField("Securitate", "The Communist may query the Democrat's Power Struggle hand at any time using `DF.info iulian`.", false);
 		}
 		initializeDeck();
 		builder.addField("Card Count", "Democrat: "+d+"\nCommunist: "+c, false);
@@ -332,8 +346,10 @@ public class PowerStruggle {
 		if (tactic == 3) stakes -= 2;
 		int support = new Die().roll()+stakes;
 		if (HandManager.removeEffect(62)) {
-			builder.addField("Yakolev Counsels Gorbachev", "Stakes increased by 1.", false);
-			if (victor==0) stakes++;
+			if (victor==0) {
+				builder.addField("Yakovlev Counsels Gorbachev", "Stakes increased by 1.", false);
+				stakes++;
+			}
 		}
 		supportloss = table[Math.max(0, Math.min(support, 7))];
 		

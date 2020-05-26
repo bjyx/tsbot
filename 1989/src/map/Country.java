@@ -21,7 +21,7 @@ public class Country {
 	/**
 	 * An array of strings, used to mark down an emoji for the icon of this space.
 	 */
-	public static final String[] emoji = {":hammer:",":tractor:",":oncoming_automobile:",":star:",":memo:",":v:",":church:",":crescent_moon:"};
+	public static final String[] emoji = {":hammer:",":axe:",":oncoming_automobile:",":star:",":memo:",":v:",":church:",":crescent_moon:",":tractor:"};
 	/**
 	 * A counter for the number of spaces, used to create an ID.
 	 */

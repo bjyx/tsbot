@@ -967,4 +967,25 @@ BGW	74
 		}
 		return true;
 	}*/
+	public static void systematize(int target) {
+		map.get(50).support[1] += map.get(target).support[1];
+		for (int i : map.get(target).adj) {
+			map.get(i).adj.remove((Integer) target); //cannot be accessed by adjacency
+			for (int j : map.get(target).adj) {
+				if (!map.get(i).adj.contains(j)) map.get(i).adj.add(j);
+			}
+		}
+		Country c = new Country(
+				map.get(target).name,
+				-1, //<- removes space from consideration by region-specific but not from bounds
+				8, //<- removes space from consideration by icon-specific
+				false, //removes space from being considered significant by scoring cards
+				new String[] {}, //<- this is the primary way of accessing the space by the player; cannot be reached by volitional action
+				new Integer[] {}, //cannot be accessed by adjacency
+				map.get(target).desc,
+				new int[] {0,0}, //since there is no way to drop influence manually, this removes from consideration from influence-removing events in Romania
+				map.get(target).shorthand
+				);
+		map.set(target, c);
+	}
 }

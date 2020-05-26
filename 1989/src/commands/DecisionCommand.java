@@ -294,12 +294,54 @@ public class DecisionCommand extends Command {
 			}
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
-		if (event==54) { //in general, events that let you have ops route here
+		if (event==54) {
 			boolean result = GameData.ops.ops(args);
 			if (!result) {
 				return;
 			}
 			Common.spChannel(GameData.ps.initiative).sendMessage(Common.spRole(GameData.ps.initiative).getAsMention() + ", would you like to raise the stakes? Respond with `DF.struggle r`aise or `DF.struggle d`ecline.");
+		}
+		if (event==67) {
+			if (!CardList.getCard(ReformerRehabilitated.target).isFormatted(sp, args)) {
+				sendMessage(e, ":x: Format your arguments correctly.");
+				return;
+			}
+			else {
+				Log.writeToLog(CardList.getCard(ReformerRehabilitated.target).getName()+":");
+				CardList.getCard(ReformerRehabilitated.target).onEvent(sp, args);
+			}
+		}
+		if (event==80) {
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			if (args.length%2!=1) return;
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) return;
+				if (order.indexOf(c)!=-1) return; // no duplicates plox
+				order.add(c);
+				if (!MapManager.get(c).inRegion(7)) return; // must be Balkan
+				if (MapManager.get(c).icon!=0) return; //must be worker
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					return; //this isn't an integer. xP
+				}
+			}
+			int sum = 0;
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)<=0) return; //no non-positive numbers please
+				sum += values.get(i);
+			}
+			if (sum!=Nepotism.results[Nepotism.roll]) return;
+			
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle("Nepotism")
+				.setColor(Color.red);
+			builder.bulkChangeInfluence(order, 1, values);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
 		if (event==201) {
 			

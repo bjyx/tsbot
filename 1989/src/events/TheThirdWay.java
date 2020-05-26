@@ -2,20 +2,18 @@ package events;
 
 import java.awt.Color;
 
+import events.Card;
 import game.GameData;
-import map.MapManager;
 
-public class Normalization extends Card {
+public class TheThirdWay extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder
-			.setTitle("Czechoslovak Government Experiences Purge")
-			.setDescription("Sympathizers to the Prague Spring dismissed")
-			.setColor(Color.red);
-		builder.changeInfluence(31, 0, -MapManager.get(44).support[1]);
-		builder.changeInfluence(32, 0, -MapManager.get(44).support[1]);
+		builder.setTitle("\"The Third Way\"")
+		.setColor(Color.red);
+		builder.changeVP(-2);
+		builder.changeInfluence(11, 1, 3);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -26,17 +24,17 @@ public class Normalization extends Card {
 
 	@Override
 	public String getId() {
-		return "052";
+		return "079";
 	}
 
 	@Override
 	public String getName() {
-		return "Normalization";
+		return "The Third Way";
 	}
 
 	@Override
 	public int getOps() {
-		return 3;
+		return 2;
 	}
 
 	@Override
@@ -61,7 +59,8 @@ public class Normalization extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove all Democratic support from Praha and Plzen.";
+		// TODO Auto-generated method stub
+		return "The Communist gains 2 VP. Place 3 Communist Support in the East German Writers space.";
 	}
 
 	@Override

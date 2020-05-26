@@ -1,21 +1,24 @@
 package events;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 import game.GameData;
+import main.Common;
 import map.MapManager;
 
-public class Normalization extends Card {
+public class NewForum extends Card {
+	
+	private static ArrayList<Integer> order;
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder
-			.setTitle("Czechoslovak Government Experiences Purge")
-			.setDescription("Sympathizers to the Prague Spring dismissed")
-			.setColor(Color.red);
-		builder.changeInfluence(31, 0, -MapManager.get(44).support[1]);
-		builder.changeInfluence(32, 0, -MapManager.get(44).support[1]);
+		builder.setTitle("New Forum")
+			.setColor(Color.blue);
+		for (int c : order) {
+			builder.changeInfluence(c, 0, 1);
+		}
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -26,17 +29,17 @@ public class Normalization extends Card {
 
 	@Override
 	public String getId() {
-		return "052";
+		return "066";
 	}
 
 	@Override
 	public String getName() {
-		return "Normalization";
+		return "New Forum";
 	}
 
 	@Override
 	public int getOps() {
-		return 3;
+		return 1;
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class Normalization extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -56,17 +59,26 @@ public class Normalization extends Card {
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
+		order = new ArrayList<Integer>();
+		if (args.length!=4) return false;
+		for (int i=1; i<=3; i++) {
+			int c = MapManager.find(args[i]);
+			if (c==-1) return false;
+			if (order.indexOf(c)!=-1) return false; // no duplicates plox
+			order.add(c);
+			if (!MapManager.get(c).inRegion(0)) return false;
+		}
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		return "Remove all Democratic support from Praha and Plzen.";
+		return "Place 1 Democratic Support in each of 3 spaces in East Germany.";
 	}
 
 	@Override
 	public String getArguments() {
-		return "None.";
+		return "The three spaces.";
 	}
 
 }

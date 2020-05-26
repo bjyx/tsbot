@@ -88,11 +88,11 @@ public class CardList {
 		CardList.addCard(new ForeignTelevision());
 		CardList.addCard(new CentralCommitteeReshuffle());
 		CardList.addCard(new BorderReopened());
-		CardList.addCard(new GrenzTruppen());
+		CardList.addCard(new Grenztruppen());
 		CardList.addCard(new ToxicWaste());
-		/*
+		
 		CardList.addCard(new MondayDemonstrations());
-		CardList.addCard(new Yakolev());
+		CardList.addCard(new Yakovlev());
 		CardList.addCard(new Genscher());
 		CardList.addCard(new LegacyOf1968());
 		CardList.addCard(new PresidentialVisit());
@@ -101,7 +101,7 @@ public class CardList {
 		CardList.addCard(new KlausAndKomarek());
 		CardList.addCard(new Systematisation());
 		CardList.addCard(new Securitate());
-		/*
+		
 		CardList.addCard(new KissOfDeath());
 		CardList.addCard(new PeasantPartiesRevolt());
 		CardList.addCard(new LaszloTokes());		//red
@@ -112,9 +112,9 @@ public class CardList {
 		CardList.addCard(new WorkersRevolt());
 		CardList.addCard(new TheThirdWay());
 		CardList.addCard(new Nepotism());
-		/*
+		
 		CardList.addCard(new TheBalticWay());		//red
-		//LateWar
+		/*//LateWar
 		CardList.addCard(new Spitzel());
 		CardList.addCard(new Modrow());
 		CardList.addCard(new BreakawayBaltics());	//red

@@ -64,6 +64,10 @@ public class Operations {
 	 */
 	private int restrictions = 0;
 	/**
+	 * Because I need to keep track of if the player decides to take advantage of AHBR. FML.
+	 */
+	private boolean ahbr = false;
+	/**
 	 * The set of countries in which the USA is allowed to place influence.
 	 */
 	//public static ArrayList<Integer> allowedUSA;
@@ -171,23 +175,25 @@ public class Operations {
 			return this.influence(countries, amt);
 		}
 		if (usage.equals("check")||usage.equals("c")) {
+			if (args.length<3) {
+				txtsp.sendMessage(":x: Where?").complete();
+				return false;
+			}
 			int country = MapManager.find(args[2]);
 			if (country==-1) {
 				txtsp.sendMessage(":x: "+args[2]+" isn't a country or alias of one.").complete();
 				return false;
 			}
-			/*if (MapManager.get(country).region!=7&&MapManager.get(country).region!=8&&restrictions==47) {
-				txtsp.sendMessage(":x: Juntas are only a thing in Latin America.").complete();
-				return false;
+			if (HandManager.effectActive(58)&&!ahbr) {
+				ahbr=true;
+				if (args.length>3) { 
+					if (MapManager.get(country).inRegion(0)&&args[3].equalsIgnoreCase("habsburg")) {
+						opnumber++;
+						restrictions = 0;
+					}
+				}
 			}
-			if (MapManager.get(country).region>=3&&restrictions==96) {
-				txtsp.sendMessage(":x: Aren't you trying to tear down the Iron Curtain?").complete();
-				return false;
-			}
-			if (MapManager.get(country).region!=7&&restrictions==136) {
-				txtsp.sendMessage(":x: That's a bit far to be part of your backyard.").complete();
-				return false;
-			}*/
+			
 			return this.realignment(country);
 		}
 		//legacy
@@ -212,15 +218,18 @@ public class Operations {
 			txtsp.sendMessage(":x: You must do something else with these ops.").complete();
 			return false;
 		}
+		ahbr = true;
 		int ops = 0;
 		
 		for (int i=0; i<countries.length; i++) {
-			ops += (Math.min(amt[i], 
+			if (MapManager.get(countries[i]).inRegion(0)&&sp==0&&HandManager.effectActive(63)) ops += amt[i]; //Genscher's bypass
+			else ops += (Math.min(amt[i], 
 					Math.max(0,MapManager.get(countries[i]).support[(sp+1)%2]
 							- MapManager.get(countries[i]).support[sp] //get difference between you and opponent op values
 							- MapManager.get(countries[i]).stab+1))) //subtract stab, add 1; this represents the amount of influence needed to break control of a country.
 							+ amt[i]; //add the amount to add to the country
 			//This is the same as Twilight Struggle Math.
+			if (!MapManager.get(countries[i]).inRegion(0)) ahbr = false;
 			if (MapManager.get(countries[i]).support[sp]!=0);
 			else {
 				boolean flag = false;
@@ -233,6 +242,7 @@ public class Operations {
 				}
 			}
 		}
+		if (ahbr && HandManager.Effects.contains(58)&&sp==1) ops--;
 		if (ops<opnumber) {
 			txtsp.sendMessage(":x: Endeavor to use all available ops.").complete();
 			return false;
@@ -303,6 +313,13 @@ public class Operations {
 			txtsp.sendMessage(":x: " + Common.countries[restrictions] + " only.").complete();
 			return false;
 		}
+		if (restrictions==76) {
+			if (MapManager.get(country).icon==4||MapManager.get(country).icon==5);
+			else {
+				txtsp.sendMessage(":x: Hardliners do not coup their own. Your enemy is the Intellectuals and the Students they lead.").complete();
+				return false;
+			}
+		}
 		if (HandManager.effectActive(2) && country==14 && sp==1) { //checking gdansk as com under solidarity
 			txtsp.sendMessage(":x: Solidarity is legal, sir. Nothing we can do about that.").complete();
 			return false;
@@ -322,7 +339,6 @@ public class Operations {
 		influence = false;
 		tsquare = false;
 		boolean wall = false;
-		
 		Log.writeToLog("Check in " + MapManager.get(country).shorthand.toUpperCase());
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Support Check")
@@ -345,11 +361,28 @@ public class Operations {
 		}
 		if (sp==1&&(MapManager.get(country).icon==4||MapManager.get(country).icon==5)&&HandManager.effectActive(26)) {
 			builder.addField("Human Rights Violations", "The Communist has violated the Helsinki Final Act.", false);
+			Log.writeToLog("Helsinki Final Act:");
 			builder.changeVP(1);
 		}
 		if (sp==1&&country==67&&HandManager.effectActive(39)) {
 			builder.addField("Ecoglasnost March", "", false);
+			Log.writeToLog("Ecoglasnost: -1.");
 			builder.changeVP(1);
+		}
+		if (sp==0&&MapManager.get(country).inRegion(0)&&HandManager.effectActive(59)) {
+			roll--;
+			builder.addField("Grenztruppen", "-1", false);
+			Log.writeToLog("Grenztruppen: -1.");
+		}
+		if (sp==0&&MapManager.get(country).inRegion(6)&&HandManager.effectActive(74)) {
+			roll++;
+			builder.addField("FRG Embassies", "+1", false);
+			Log.writeToLog("FRG Embassies: +1.");
+		}
+		if (sp==1&&restrictions==76) {
+			roll+=2;
+			builder.addField("Warsaw Pact Summit", "+2", false);
+			Log.writeToLog("Warsaw Pact Summit: +2.");
 		}
 		String[] modifiers = {"",""};
 		for (int adj : MapManager.get(country).adj) {

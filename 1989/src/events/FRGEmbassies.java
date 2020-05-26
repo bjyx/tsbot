@@ -2,21 +2,21 @@ package events;
 
 import java.awt.Color;
 
-import game.GameData;
-import map.MapManager;
+import cards.HandManager;
+import logging.Log;
+import main.Launcher;
 
-public class Normalization extends Card {
+public class FRGEmbassies extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder
-			.setTitle("Czechoslovak Government Experiences Purge")
-			.setDescription("Sympathizers to the Prague Spring dismissed")
-			.setColor(Color.red);
-		builder.changeInfluence(31, 0, -MapManager.get(44).support[1]);
-		builder.changeInfluence(32, 0, -MapManager.get(44).support[1]);
-		GameData.txtchnl.sendMessage(builder.build()).complete();
+		builder.setTitle("Travel Restrictions Strand East Germans Abroad")
+		.setDescription("West German embassies converted into refugee camps")
+		.setColor(Color.blue);
+		builder.addField("","The Democrat receives a +1 bonus to Support Checks in Eastern Europe for the rest of this turn.",false);
+		HandManager.addEffect(74);
+		Log.writeToLog("FRG Embassies active.");
 	}
 
 	@Override
@@ -26,12 +26,12 @@ public class Normalization extends Card {
 
 	@Override
 	public String getId() {
-		return "052";
+		return "074";
 	}
 
 	@Override
 	public String getName() {
-		return "Normalization";
+		return "FRG Embassies";
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class Normalization extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class Normalization extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove all Democratic support from Praha and Plzen.";
+		return "*For the rest of this turn, the Democrat receives a +1 bonus to Support Checks in Eastern Europe.*";
 	}
 
 	@Override

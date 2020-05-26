@@ -11,7 +11,7 @@ public class Perestroika extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Gorbachev Proposes Domestic Reform") //rnged a historical figure
+		builder.setTitle("Gorbachev Proposes Domestic Reform")
 		.setDescription("USSR urges Eastern Europe to follow suit")
 		.setColor(Color.red)
 		.setFooter("\"If the Russian word \'perestroika\' has easily entered the international lexicon, this is due to more than just interest in what is going on in the Soviet Union. Now the whole world needs restructuring, i.e. progressive development, a fundamental change.\"\n"

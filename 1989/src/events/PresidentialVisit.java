@@ -2,21 +2,20 @@ package events;
 
 import java.awt.Color;
 
-import game.GameData;
-import map.MapManager;
+import cards.HandManager;
+import logging.Log;
+import main.Launcher;
 
-public class Normalization extends Card {
+public class PresidentialVisit extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder
-			.setTitle("Czechoslovak Government Experiences Purge")
-			.setDescription("Sympathizers to the Prague Spring dismissed")
-			.setColor(Color.red);
-		builder.changeInfluence(31, 0, -MapManager.get(44).support[1]);
-		builder.changeInfluence(32, 0, -MapManager.get(44).support[1]);
-		GameData.txtchnl.sendMessage(builder.build()).complete();
+		builder.setTitle("George Bush Visits Eastern Europe")
+		.setColor(Color.blue);
+		builder.addField("Prudence (yes, again)","The Communist hand next turn is reduced to 7 cards.",false);
+		HandManager.addEffect(65);
+		Log.writeToLog("Presidential Visit active.");
 	}
 
 	@Override
@@ -26,12 +25,12 @@ public class Normalization extends Card {
 
 	@Override
 	public String getId() {
-		return "052";
+		return "065";
 	}
 
 	@Override
 	public String getName() {
-		return "Normalization";
+		return "Presidential Visit";
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class Normalization extends Card {
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -61,7 +60,7 @@ public class Normalization extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove all Democratic support from Praha and Plzen.";
+		return "*The Communist hand is reduced to 7 cards next turn.*";
 	}
 
 	@Override

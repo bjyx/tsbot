@@ -29,10 +29,10 @@ public class Questioning extends Card {
 		card = HandManager.DemHand.get((int) (Math.random()*HandManager.DemHand.size()));
 		if (CardList.getCard(card).getAssociation()==1&&CardList.getCard(card).isPlayable(1)) {
 			GameData.dec = new Decision(1, 6);
-			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", play the event you just pulled from the Soviet hand.").complete();
+			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", play the event you just pulled from the Democrat's hand.").complete();
 		}
 		else {
-			HandManager.discard(1, card);
+			HandManager.discard(0, card);
 		}
 		Log.writeToLog("Democrat discards " + CardList.getCard(card).getName() + ".");
 		builder.addField("Security Services","The Democrats lose " + CardList.getCard(card) + " to communist police.",false);

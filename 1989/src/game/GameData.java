@@ -6,6 +6,7 @@ import cards.HandManager;
 import cards.Operations;
 import events.CardEmbedBuilder;
 import events.Decision;
+import events.Samizdat;
 import logging.Log;
 import main.Launcher;
 import map.Country;
@@ -285,13 +286,16 @@ public class GameData {
 		HandManager.removeEffect(15); //Honecker
 		if (HandManager.removeEffect(13)) builder.addField("","The Stasi have moved you off the watch-list. The Communist no longer has advance knowledge of the Democrat's plays.",false);	//Stasi
 		if (HandManager.removeEffect(50)) builder.addField("", "The Democrat loses +1 Operations bonus.", false);	//Sinatra
-		if (HandManager.removeEffect(58)) builder.addField("","The Democrat loses bonus to Operations in East Germany.",false);	//A-H Border
+		if (HandManager.removeEffect(58)) builder.addField("Hungarian Travel Banned","The Democrat loses bonus to Operations in East Germany.",false);	//A-H Border
 		if (HandManager.removeEffect(63)) builder.addField("","The Democrat will now pay normal cost to place influence in Communist East German spaces.",false);	//Genscher
 		if (HandManager.removeEffect(25)) builder.addField("","The Communist loses +1 Operations bonus.",false);;	//Perestroika
 		if (HandManager.removeEffect(74)) builder.addField("","The Democrat loses bonus to support checks in Eastern Europe.",false);	//FRG
 		if (HandManager.removeEffect(59)) builder.addField("","US rolls on support checks in East Germany are no longer penalized.",false);	//Grenz
 		if (HandManager.removeEffect(49)) builder.addField("Debt Burden Lifted","USSR support checks are no longer restricted by region.",false);	//Debt Burden
-		if (HandManager.removeEffect(77)) builder.addField("","The card set aside by the Democrat has returned to the hand.",false);	//Samizdat
+		if (HandManager.removeEffect(77)) {
+			builder.addField("","The card set aside by the Democrat has returned to the hand.",false);	//Samizdat
+			HandManager.addToHand(0, Samizdat.card);
+		}
 		if (HandManager.removeEffect(101)) builder.addField("","US rolls on support checks in Romania are no longer penalized.",false);	//Elena
 		if (HandManager.removeEffect(80)) builder.addField("","Democrat malus to Operations removed.",false);	//Prudence
 		if (HandManager.removeEffect(81)) builder.addField("","Communist malus to Operations removed.",false);

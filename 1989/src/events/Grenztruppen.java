@@ -2,21 +2,20 @@ package events;
 
 import java.awt.Color;
 
-import game.GameData;
-import map.MapManager;
+import cards.HandManager;
+import logging.Log;
+import main.Launcher;
 
-public class Normalization extends Card {
+public class Grenztruppen extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder
-			.setTitle("Czechoslovak Government Experiences Purge")
-			.setDescription("Sympathizers to the Prague Spring dismissed")
-			.setColor(Color.red);
-		builder.changeInfluence(31, 0, -MapManager.get(44).support[1]);
-		builder.changeInfluence(32, 0, -MapManager.get(44).support[1]);
-		GameData.txtchnl.sendMessage(builder.build()).complete();
+		builder.setTitle("Republikflucht rates drop") 
+		.setColor(Color.red);
+		builder.addField("Grenztruppen","The Democrat gets a -1 malus to support checks in East Germany for the rest of this turn.",false);
+		HandManager.addEffect(59);
+		Log.writeToLog("Grenztruppen active.");
 	}
 
 	@Override
@@ -26,17 +25,17 @@ public class Normalization extends Card {
 
 	@Override
 	public String getId() {
-		return "052";
+		return "059";
 	}
 
 	@Override
 	public String getName() {
-		return "Normalization";
+		return "GrenzTruppen";
 	}
 
 	@Override
 	public int getOps() {
-		return 3;
+		return 2;
 	}
 
 	@Override
@@ -61,12 +60,13 @@ public class Normalization extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Remove all Democratic support from Praha and Plzen.";
+		return "*For the rest of this turn, Democratic support checks in East Germany receive a -1 malus.*";
 	}
 
 	@Override
 	public String getArguments() {
-		return "None.";
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
