@@ -148,6 +148,7 @@ public class DecisionCommand extends Command {
 			if (!result) {
 				return;
 			}
+			HandManager.removeEffect(96);
 		}
 		
 		/*
@@ -239,6 +240,11 @@ public class DecisionCommand extends Command {
 			}
 			
 			else {
+				CardEmbedBuilder builder = new CardEmbedBuilder();
+				builder.setTitle("Dash for the West")
+				.setColor(Color.blue);
+				builder.addField("Defector", "The event " + CardList.getCard(i)+ " will now be played.", false);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
 				HandManager.Removed.add(i);
 				HandManager.Discard.remove((Integer) i);
 				Log.writeToLog(CardList.getCard(i).getName()+":");
@@ -343,6 +349,133 @@ public class DecisionCommand extends Command {
 			builder.bulkChangeInfluence(order, 1, values);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
+		if (event==83) {
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			if (args.length%2!=1) return;
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) return;
+				if (order.indexOf(c)!=-1) return; // no duplicates plox
+				order.add(c);
+				if (!MapManager.get(c).inRegion(0)) return; // must be East Germany
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					return; //this isn't an integer. xP
+				}
+			}
+			int sum = 0;
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)<=0) return; //no non-positive numbers please
+				if (values.get(i)>2) return; //at most 2 per province
+				sum += values.get(i);
+			}
+			if (sum!=4) return;
+			
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle("Modrow")
+				.setColor(Color.red);
+			builder.bulkChangeInfluence(order, 1, values);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (event==88) {
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			if (args.length%2!=1) return;
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) return;
+				if (order.indexOf(c)!=-1) return; // no duplicates plox
+				order.add(c);
+				if (!MapManager.get(c).inRegion(2)) return; // must be Czechoslovak
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					return; //this isn't an integer. xP
+				}
+			}
+			int sum = 0;
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)<=0) return; //no non-positive numbers please
+				if (values.get(i)>2) return; //values at most 2
+				sum += values.get(i);
+			}
+			if (sum!=4) return;
+			
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle("Adamec")
+				.setColor(Color.red);
+			builder.bulkChangeInfluence(order, 1, values);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (event==93) {
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			if (args.length%2!=1) return;
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) return;
+				if (order.indexOf(c)!=-1) return; // no duplicates plox
+				order.add(c);
+				if (!MapManager.get(c).inRegion(ShockTherapy.target)) return;
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					return; //this isn't an integer. xP
+				}
+			}
+			int sum = 0;
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)<=0) return; //no non-positive numbers please
+				if (values.get(i)>2) return; //values at most 2
+				sum += values.get(i);
+			}
+			if (sum!=3) return;
+			
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle("Shock Therapy")
+				.setColor(Color.blue);
+			builder.bulkChangeInfluence(order, 0, values);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (event==97) {
+			boolean flag = false;
+			for (int i=Common.bracket[4]; i<Common.bracket[5]; i++) {
+				if (MapManager.get(i).support[0]>0) continue;
+				if (MapManager.get(i).icon==8) continue; //nosystem
+				flag = true;
+				break;
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			if (!flag) {
+				builder.addField("Nowhere to run!","The Ceausescus have been captured. The trial is scheduled for tomorrow. Glory to the New Romania.",false);
+				builder.changeVP(2);
+			}
+			else {
+				HandManager.addEffect(971); //hunt for the Ceaușescus
+				int c = MapManager.find(args[1]);
+				if (c==-1) return;
+				if (!MapManager.get(c).inRegion(4)) return; //implicitly excludes systematization
+				if (MapManager.get(c).support[0]>0) return; 
+				TyrantIsGone.target = c;
+				builder.addField("Helicopter", "The Ceaușescus have fled to " + MapManager.get(c).name + ".", false);
+			}
+			HandManager.addEffect(97); //active
+			builder.setTitle("Ceaușescus Flee Bucharest")
+			.setColor(Color.blue);
+			builder.changeInfluence(51, 1, -4);
+			
+			builder.addField("The Tyrant is Gone!","The Ceausescu-associated events may no longer be played for the event.",false);
+			
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
 		if (event==201) {
 			
 			if (CardList.getCard(DeutscheMarks.card).getAssociation()==1&&CardList.getCard(DeutscheMarks.card).isPlayable(1)) {
@@ -363,6 +496,75 @@ public class DecisionCommand extends Command {
 				boolean result = GameData.ops.ops(args);
 				if (!result) return;
 			}
+		}
+		if (event==86) {
+			ArrayList<Integer>doable = new ArrayList<Integer>();
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			int maxInfRem = 0;
+			for (int i=Common.bracket[0]; i<Common.bracket[1]; i++) {
+				if (MapManager.get(i).support[1]>0) {
+					doable.add(i);
+					maxInfRem += MapManager.get(i).support[1];
+				}
+			}
+			if (maxInfRem<=2) {
+				order = doable;
+				for (int i : order) {
+					values.add(-MapManager.get(i).support[1]);
+				}
+			}
+			else {
+			if (args.length%2!=1) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}
+				if (order.indexOf(c)!=-1) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} // no duplicates plox
+				order.add(c);
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}
+			}
+			int sum = 0;
+			if (!doable.containsAll(order)) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)>=0) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} //no non-negative numbers please
+				if (MapManager.get(order.get(i)).support[1]+values.get(i)<0){
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} //don't give me negative influence values
+				sum += values.get(i);
+			}
+			if (sum!=-2) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle("Berlin Wall falls")
+				.setColor(Color.blue);
+			builder.bulkChangeInfluence(order, 1, values); //remove communist sps
+			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
 		/*
 		 * Space Ability 3.
@@ -422,7 +624,16 @@ public class DecisionCommand extends Command {
 				return;
 			}
 			for (int i=1; i<args.length; i+=2) {
-				order.add(MapManager.find(args[i]));
+				int c = MapManager.find(args[i]);
+				if (c==-1) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}
+				if (order.indexOf(c)!=-1) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} // no duplicates plox
+				order.add(c);
 				try{
 					values.add(Integer.parseInt(args[i+1]));
 				}

@@ -24,6 +24,7 @@ public class LaszloTokes extends Card {
 		Log.writeToLog("László Tőkés active.");
 		builder.addField("Prelude", CardList.getCard(107) + " may now be played for the event.", false);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
+		GameData.dec = new Decision(0, 1);
 		GameData.ops = new Operations(0, CardList.getCard(73).getOpsMod(0), true, true, false, 2, 4);
 		GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", you may now conduct your Operations in Romania.").complete();
 	}

@@ -14,7 +14,7 @@ public class Sajudis extends Card {
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Sąjūdis")
+		builder.setTitle("Sąjūdis Sweeps Lithuanian Elections")
 		.setDescription("")
 		.setColor(Color.blue);
 		builder.changeInfluence(target, 0, Math.max(0,MapManager.get(target).stab+MapManager.get(target).support[1]-MapManager.get(target).support[0]));

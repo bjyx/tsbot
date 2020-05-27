@@ -275,6 +275,10 @@ public class GameData {
 				Scoring.score(i);
 				if (PowerStruggle.retained[i]!=-1) builder.changeVP(-4);
 			}
+			if (HandManager.effectActive(971)) {
+				builder.addField("The Ceaușescus escape Romania.", "", false);
+				builder.changeVP(-2);
+			}
 			checkScore(true, false);
 			return;
 		}

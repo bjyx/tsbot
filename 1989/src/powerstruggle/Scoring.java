@@ -2,7 +2,9 @@ package powerstruggle;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import events.CardEmbedBuilder;
+import events.Decision;
 import game.GameData;
 import main.Common;
 import map.Country;
@@ -55,6 +57,10 @@ public class Scoring {
 		else if (totalCountries[1]>0) vp -= presence[region];
 		builder.changeVP(vp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
+		if (region==4&&HandManager.effectActive(970)) {
+			GameData.dec = new Decision(0, 97);
+			GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", designate the Ceaușescus' location.").complete();
+		}
 	}
 	
 	/**

@@ -3,14 +3,12 @@ package events;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import cards.CardList;
-import cards.HandManager;
 import cards.Operations;
 import game.GameData;
 import main.Common;
 import map.MapManager;
 
-public class Ceausescu extends Card {
+public class UnionOfDemocraticForces extends Card {
 
 	private static ArrayList<Integer> doable;
 	private static ArrayList<Integer> order;
@@ -20,60 +18,60 @@ public class Ceausescu extends Card {
 		boolean opponentInfluence=false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder
-			.setTitle("Ceaușescu Cracks Down on Dissent")
-			.setColor(Color.red);
+			.setTitle("Union of Democratic Forces")
+			.setColor(Color.blue);
 		if (doable.isEmpty()) {
-			builder.addField("No spaces to target!", "Why crack down on a loyal populace?", false);
+			builder.addField("No spaces to target!", "Congratulations. You've managed to dodge the Union. Was it worth giving up Bulgaria?", false);
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 			return;
 		}
-		builder.bulkChangeInfluence(order, 0, values); //remove opponent sps
+		builder.bulkChangeInfluence(order, 1, values); //remove opponent sps
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 		
-		for (int i=Common.bracket[4]; i<Common.bracket[5]; i++) {
+		for (int i=Common.bracket[5]; i<Common.bracket[6]; i++) {
 			if (MapManager.get(i).support[1]>0) {
 				opponentInfluence=true;
 				break;
 			}
 		}
 		if(opponentInfluence) {
-			GameData.ops=new Operations(sp, getOpsMod(sp), false, true, false, 1, 4); //one check in Romania
-			GameData.dec=new Decision(sp, 41); //Ceausescu is a special case because of what comes after
-			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention()+", you may now conduct your support check in Romania.").complete();
+			GameData.ops=new Operations(0, getOpsMod(0), false, true, false, 2, 5); //two checks in Bulgaria
+			GameData.dec=new Decision(0, 1);
+			Common.spChannel(0).sendMessage(Common.spRole(0).getAsMention()+", you may now conduct your support checks.").complete();
 		}
 		else {
-			Common.spChannel(sp).sendMessage("For the oddest reason, you cannot conduct a check in Romania. Mission success?").complete();
+			Common.spChannel(0).sendMessage("For the oddest reason, you cannot support check Bulgaria.").complete();
 		}
 	}
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return !HandManager.effectActive(97); //tyrant is gone
+		return true;
 	}
 
 	@Override
 	public String getId() {
-		return "041";
+		return "094";
 	}
 
 	@Override
 	public String getName() {
-		return "Ceaușescu";
+		return "Union of Democratic Forces";
 	}
 
 	@Override
 	public int getOps() {
-		return 3;
+		return 4;
 	}
 
 	@Override
 	public int getEra() {
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -87,16 +85,16 @@ public class Ceausescu extends Card {
 		order = new ArrayList<Integer>();
 		values = new ArrayList<Integer>();
 		int maxInfRem = 0;
-		for (int i=Common.bracket[4]; i<Common.bracket[5]; i++) {
-			if (MapManager.get(i).support[0]>0) {
+		for (int i=Common.bracket[5]; i<Common.bracket[6]; i++) {
+			if (MapManager.get(i).support[1]>0) {
 				doable.add(i);
-				maxInfRem += MapManager.get(i).support[0];
+				maxInfRem += MapManager.get(i).support[1];
 			}
 		}
-		if (maxInfRem<=3) {
+		if (maxInfRem<=4) {
 			order = doable;
 			for (int i : order) {
-				values.add(-MapManager.get(i).support[0]);
+				values.add(-MapManager.get(i).support[1]);
 			}
 			return true;
 		}
@@ -117,22 +115,22 @@ public class Ceausescu extends Card {
 		if (!doable.containsAll(order)) return false;
 		for (int i=0; i<order.size(); i++) {
 			if (values.get(i)>=0) return false; //no non-negative numbers please
-			if (MapManager.get(order.get(i)).support[0]+values.get(i)<0) return false; //don't give me negative influence values
+			if (MapManager.get(order.get(i)).support[1]+values.get(i)<0) return false; //don't give me negative influence values
 			sum += values.get(i);
 		}
-		if (sum!=-3) return false; // up to 3 influence may be removed...
+		if (sum!=-4) return false; // up to 4 influence may be removed...
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		if (HandManager.effectActive(97)) return "Ceaușescu has been deposed! Play for Operations only.";
-		return "Remove 3 Democratic Support from Romania. Then, the Communist makes 1 Support Check in Romania using this card's Operations. If the Democrat, at the end of the turn, has at least 1 Support in a space adjacent to Cluj-Napoca, the Communist loses 1 Support in București. *This event prevented by " + CardList.getCard(97) + ".*";
+		return "Remove 4 Communist Support from Bulgaria. The Democrat then makes two support checks on East Germany using this card's Operations.";
 	}
 
 	@Override
 	public String getArguments() {
-		return "Support.";
+		return "Event: Support.\n"
+				+ "Decision: Support Checks.";
 	}
 
 }

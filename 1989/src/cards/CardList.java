@@ -114,7 +114,7 @@ public class CardList {
 		CardList.addCard(new Nepotism());
 		
 		CardList.addCard(new TheBalticWay());		//red
-		/*//LateWar
+		//LateWar
 		CardList.addCard(new Spitzel());
 		CardList.addCard(new Modrow());
 		CardList.addCard(new BreakawayBaltics());	//red
@@ -124,7 +124,7 @@ public class CardList {
 		CardList.addCard(new Adamec());
 		CardList.addCard(new DominoTheory());
 		CardList.addCard(new CivicForum());
-		/*
+		
 		CardList.addCard(new MyFirstBanana());
 		CardList.addCard(new Betrayal());
 		CardList.addCard(new ShockTherapy());

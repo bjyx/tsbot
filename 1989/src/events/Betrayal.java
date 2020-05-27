@@ -2,38 +2,37 @@ package events;
 
 import java.awt.Color;
 
-import cards.CardList;
 import game.GameData;
+import main.Common;
 import map.MapManager;
 
-public class TheBalticWay extends Card {
+public class Betrayal extends Card {
 
 	public static int target;
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("Baltic Way")
-		.setDescription("")
-		.setColor(Color.blue);
-		builder.changeInfluence(target, 0, Math.max(0,MapManager.get(target).stab+MapManager.get(target).support[1]-MapManager.get(target).support[0]));
-		builder.changeStab();
+		builder.setTitle("Orthodox Church of " + Common.countries[MapManager.get(target).region] + " Cooperates With Government")
+		.setColor(Color.red);
+		builder.changeInfluence(target, 1, MapManager.get(target).support[0]);
+		builder.changeInfluence(target, 0, -MapManager.get(target).support[0]);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
 	@Override
 	public boolean isPlayable(int sp) {
-		return GameData.getStab()==4;
+		return true;
 	}
 
 	@Override
 	public String getId() {
-		return "081";
+		return "092";
 	}
 
 	@Override
 	public String getName() {
-		return "The Baltic Way";
+		return "Betrayal";
 	}
 
 	@Override
@@ -43,12 +42,12 @@ public class TheBalticWay extends Card {
 
 	@Override
 	public int getEra() {
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		return 0;
+		return 1;
 	}
 
 	@Override
@@ -59,18 +58,17 @@ public class TheBalticWay extends Card {
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
 		target = MapManager.find(args[1]);
-		return MapManager.get(target).icon==7; //Minority space
+		return MapManager.get(target).icon==6&&MapManager.get(target).inRegion(7); //Church in Eastern Europe but not East Germany
 	}
 
 	@Override
 	public String getDescription() {
-		if (GameData.getStab()>4) return "The USSR is too stable. Play for Operations only.";
-		return "The Democrat gains 3 VP and places sufficient support in any Minority space to gain control. *The USSR's stability decreases, allowing play of "+CardList.getCard(84)+".*";
+		return "Select any Orthodox Church. All Democratic Support in that space is replaced with Communist Support.";
 	}
 
 	@Override
 	public String getArguments() {
-		return "A valid alias for a minority space (Razgrad or Harghita-Covasna).";
+		return "The space to choose.";
 	}
 
 }

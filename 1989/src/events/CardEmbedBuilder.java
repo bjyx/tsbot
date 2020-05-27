@@ -2,6 +2,7 @@ package events;
 
 import java.util.ArrayList;
 
+import cards.HandManager;
 import commands.StartCommand;
 import game.GameData;
 import main.Launcher;
@@ -66,6 +67,11 @@ public class CardEmbedBuilder extends EmbedBuilder {
 		if (amt==0) return this;
 		if (MapManager.get(country).icon==8) return this; //failsafe for the fucking systematization
 		MapManager.get(country).changeInfluence(sp, amt);
+		if (HandManager.effectActive(971)&&MapManager.get(TyrantIsGone.target).isControlledBy()==0) {
+			this.addField("The Ceausescus have been captured!", "", false);
+			HandManager.removeEffect(971);
+			this.changeVP(2);
+		}
 		return (CardEmbedBuilder) this.addField(MapManager.get(country) + ((sp==0?StartCommand.emojiID[amt>0?3:1]:StartCommand.emojiID[amt>0?2:0]))+intToEmoji(amt),"Now at " + (MapManager.get(country).isControlledBy()==0?"**":"") + MapManager.get(country).support[0] + (MapManager.get(country).isControlledBy()==0?"**":"") + "/" + (MapManager.get(country).isControlledBy()==1?"**":"") + MapManager.get(country).support[1] + (MapManager.get(country).isControlledBy()==1?"**":""),true);
 	}
 	/**

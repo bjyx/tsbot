@@ -384,6 +384,11 @@ public class Operations {
 			builder.addField("Warsaw Pact Summit", "+2", false);
 			Log.writeToLog("Warsaw Pact Summit: +2.");
 		}
+		if (sp==1&&HandManager.effectActive(96)) {
+			roll+=3;
+			builder.addField("The Chinese Solution", "+3", false);
+			Log.writeToLog("The Chinese Solution: +3.");
+		}
 		String[] modifiers = {"",""};
 		for (int adj : MapManager.get(country).adj) {
 			if (MapManager.get(adj).isControlledBy()==sp) {
