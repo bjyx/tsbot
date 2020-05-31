@@ -49,13 +49,11 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Socialist Governments";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
@@ -67,7 +65,6 @@ public class SocialistGovernments extends Card {
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 

@@ -226,25 +226,21 @@ public class SetupCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.setup");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Allows the player to place their starting influence.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Setup influence";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.setup <country> <influence> ad infinitum. You will be prompted to use this command when needed.\n"
 				+ "- Example: TS.setup ddr 1 polska 4 bg 1");
 	}

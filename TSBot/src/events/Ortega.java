@@ -65,7 +65,6 @@ public class Ortega extends Card {
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 

@@ -91,13 +91,11 @@ public class PuppetGovernments extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "The US adds 1 Influence to three countries that do not have influence from either player.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "The three countries to target. These must be devoid of all influence.";
 	}
 

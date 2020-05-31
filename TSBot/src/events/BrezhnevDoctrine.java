@@ -41,37 +41,31 @@ public class BrezhnevDoctrine extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Brezhnev Doctrine";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

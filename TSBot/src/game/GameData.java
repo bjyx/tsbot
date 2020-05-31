@@ -304,7 +304,7 @@ public class GameData {
 		builder.setTitle("End of Turn Summary");
 		if (hasAbility(0,2,true))builder.addMilOps(0, 2);
 		if (hasAbility(1,2,true))builder.addMilOps(1, 2);
-		builder.changeVP(OpsToVP()); // stage E
+		builder.changeVP(OpsToVP(), false); // stage E
 		checkScore(false, false);
 		int scoring = HandManager.checkScoring();
 		if (scoring!=0) {
@@ -313,6 +313,7 @@ public class GameData {
 		if (HandManager.China != -1) HandManager.China %= 2; // stage G
 		if (turn==10) {
 			Log.writeToLog("-+-+-Final Scoring-+-+-");
+			HandManager.removeEffect(50); //what action round?
 			HandManager.removeEffect(73); //if still active; ShuttleDip doesn't count for final scoring
 			Log.writeToLog("Europe: ");
 			CardList.getCard(2).onEvent(-1, new String[] {}); //Europe Scoring
@@ -593,8 +594,8 @@ public class GameData {
 	 * Changes {@link #score}.
 	 * @param amt is the amount to change {@link #score} by.
 	 */
-	public static void changeScore(int amt) {
-		if (HandManager.effectActive(50)&&!GameData.isHeadlinePhase()&&GameData.phasing()==0) {
+	public static void changeScore(int amt, boolean wwby) {
+		if (HandManager.effectActive(50)&&!GameData.isHeadlinePhase()&&GameData.phasing()==0&&wwby) {
 			Log.writeToLog("We Will Bury You: ");
 			CardEmbedBuilder builder = new CardEmbedBuilder();
 			builder.setTitle("We Will Bury You...").setDescription("...and the UN sits idle.")

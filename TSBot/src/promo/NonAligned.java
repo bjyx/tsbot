@@ -96,7 +96,6 @@ public class NonAligned extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Select any of the following:\n"
 				+ "- India\n"
 				+ "- A country in Southeast Asia\n"
@@ -109,7 +108,6 @@ public class NonAligned extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "The country.";
 	}
 	

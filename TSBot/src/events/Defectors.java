@@ -44,61 +44,51 @@ public class Defectors extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return GameData.phasing()==1||GameData.isHeadlinePhase();
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "103";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Defectors";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "If played by the US in the headline phase, cancels the USSR's headline. If played by the USSR during an action round, the US gains 1 VP.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

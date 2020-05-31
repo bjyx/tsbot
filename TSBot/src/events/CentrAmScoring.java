@@ -58,61 +58,51 @@ public class CentrAmScoring extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "037";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Central America Scoring";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Scores Central America on a scale of 1/3/5. +1 for battlegrounds, +1 for each country you control that borders the other superpower (Cuba, Mexico).";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

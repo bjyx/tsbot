@@ -79,7 +79,7 @@ public class Wargames extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The player may chooose to end the game after giving their opponent 6 VPs. *Only playable at DEFCON 2.*\n";
+		return "The player may choose to end the game after giving their opponent 6 VPs. *Only playable at DEFCON 2.*\n";
 	}
 
 	@Override

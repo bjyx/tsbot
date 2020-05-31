@@ -43,31 +43,26 @@ public class Chernobyl extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Chernobyl";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -113,13 +108,11 @@ public class Chernobyl extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "*For the rest of the turn, the USSR may not use Operations to place Influence Points in a specified region.*";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "The region, designated by the following strings with any case:\n"
 				+ "- europe, eu, e, other words starting with 'e'\n"
 				+ "- asia, as, a, other words starting with 'a'\n"

@@ -33,7 +33,6 @@ public class EvilEmpire extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -79,7 +78,6 @@ public class EvilEmpire extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

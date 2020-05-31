@@ -184,13 +184,11 @@ public class Summit extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Summit";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 

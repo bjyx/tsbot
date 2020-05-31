@@ -233,25 +233,21 @@ public class StartCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.start");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Commence the Cold War.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Start (start)";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.start **[settings]** **[handicap]** - How it all begins.\n"
 				+ "Settings will be a number between 0 and 143 inclusive.\n"
 				+ "If the number in binary has a digit in the following position:\n"

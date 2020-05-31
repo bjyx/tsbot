@@ -105,7 +105,6 @@ public class TheReformer extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Influence markers. Countries must be in Europe and numbers must add up to 4 (6 if the USSR leads in VPs).";
 	}
 

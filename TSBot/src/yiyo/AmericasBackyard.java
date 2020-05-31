@@ -93,6 +93,7 @@ public class AmericasBackyard extends Card {
 		target1 = MapManager.find(args[1]);
 		target2 = MapManager.find(args[2]);
 		if (target1==-1||target2==-1) return false; //must exist xp
+		if (target1==target2) return false; //cannot be the same
 		if (MapManager.get(target1).isBattleground||MapManager.get(target2).isBattleground) return false; //non-battlegrounds only
 		if (MapManager.get(target1).region==7&&MapManager.get(target2).region==7) return true; //central america
 		return false;
@@ -100,14 +101,13 @@ public class AmericasBackyard extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Add 2 US Influence from each of two non-battlegrounds in Central America. The US may conduct two realignments in Central America. DEFCON increases by 1 for every country the USSR loses Control of during this process.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Event: the countries. They cannot be the same.\n"
+				+ "Decision: realignments.";
 	}
 
 }

@@ -14,7 +14,6 @@ public class U2Incident extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Plane Shot Down Over USSR Territory")
 		.setDescription("NASA press release states plane was a research aircraft")

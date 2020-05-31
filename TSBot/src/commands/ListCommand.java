@@ -25,19 +25,16 @@ public class ListCommand extends Command {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Lists any players in the current game. If the game has started, the side they play will also be listed.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Player List";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.list - Lists any players in the current game.");
 	}
 

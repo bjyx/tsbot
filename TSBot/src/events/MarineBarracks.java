@@ -111,13 +111,11 @@ public class MarineBarracks extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Remove all US Influence from Lebanon and two additional US influence from anywhere in the Middle East.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Influence markers. Countries must be within the Middle East (but cannot be Lebanon). Influence values must add to 2. ";
 	}
 

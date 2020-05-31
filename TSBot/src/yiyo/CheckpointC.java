@@ -106,14 +106,12 @@ public class CheckpointC extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "The US must discard a USSR event and draw a replacement. If unable, **drop DEFCON by 1.** (Note that this occurs during the US's Action Round.)\n"
 				+ "*This occurs at the beginning of every action round until either side sets their Military Operations to zero.* __To do so, write `TS.decide charlie`.__";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "The discarded card. If none are available, no argument is needed.";
 	}
 

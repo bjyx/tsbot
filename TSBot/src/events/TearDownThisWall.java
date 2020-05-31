@@ -61,19 +61,16 @@ public class TearDownThisWall extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "\"Tear Down This Wall\"";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 

@@ -1540,7 +1540,6 @@ public class DecisionCommand extends Command {
 				GameData.txtchnl.sendMessage(builder.build()).complete();
 			}
 		}
-		// TODO more events as enumerated above as they come
 		GameData.checkScore(false, false);
 		if (GameData.dec.card==event&&GameData.dec.sp==sp) GameData.dec=null; //if the decision is left as is and completes successfully, reset
 		if (GameData.dec==null) {
@@ -1577,13 +1576,11 @@ public class DecisionCommand extends Command {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Decision making";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("Usage information will be given by prompt.");
 	}
 

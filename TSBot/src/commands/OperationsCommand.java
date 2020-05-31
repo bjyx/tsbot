@@ -62,25 +62,21 @@ public class OperationsCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.ops","TS.operations","TS.o");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Play the card on exactly one of three types of operations: Place Influence, Realign, or Coup.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Operations Play (operations, ops, o)";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.operations *<operation type>* *<other arguments>*\n"
 				+ "**Operation Types**\n"
 				+ "- *influence*: arguments alternate between countries and influence values.\n"

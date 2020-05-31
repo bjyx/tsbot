@@ -169,22 +169,18 @@ public class PlayCommand extends Command {
 	}
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.play","TS.use","TS.p");
 	}
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Play a card from your hand.";
 	}
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Play a card (play, use, p)";
 	}
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.play **[ID]** **[usage method]** \n"
 				+ "- The user (who should be phasing player) plays the card with ID **ID** in one of the following manners:\n"
 				+ "- `h`eadline\n"

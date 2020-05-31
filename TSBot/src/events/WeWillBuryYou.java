@@ -35,55 +35,46 @@ public class WeWillBuryYou extends Card {
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "050";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "\"We Will Bury You!\"";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 4;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "**Degrade DEFCON by 1**. If the US does not play UN Intervention for the event on the next action round, the USSR gains 3 VP before any US VP award.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

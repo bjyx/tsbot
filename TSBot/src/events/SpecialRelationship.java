@@ -31,43 +31,36 @@ public class SpecialRelationship extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return MapManager.get(18).isControlledBy()==0;
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "105";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Special Relationship";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -92,7 +85,6 @@ public class SpecialRelationship extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "A country that satisfies the condition expressed in the description.";
 	}
 

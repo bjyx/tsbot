@@ -113,7 +113,7 @@ public class TimeCommand extends Command {
 			GameData.txtchnl.sendMessage(new CardEmbedBuilder().changeDEFCON(-1).setTitle("Tsar Bomba!").setColor(Color.red).build()).complete();
 		}
 		Operations.tsarbomba = false;
-		GameData.changeScore(0); //removes We Will Bury You if it's still active for some reason, and it's here because it does not ducking matter what the US dies by
+		if (HandManager.activecard!=50) GameData.changeScore(0, true); //removes We Will Bury You if it's still active for some reason, and it's here because it does not ducking matter what the US dies by
 		GameData.checkScore(false, false);
 		
 		if ((HandManager.effectActive(490) && !HandManager.handContains(0, 49))||(HandManager.effectActive(491) && !HandManager.handContains(1, 49))) {

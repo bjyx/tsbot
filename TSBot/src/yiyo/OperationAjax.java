@@ -67,7 +67,6 @@ public class OperationAjax extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "If DEFCON is greater than three, degrade DEFCON to three. Add 2 US Influence to Iran.";
 	}
 

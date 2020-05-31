@@ -237,25 +237,21 @@ public class ReadCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.read","TS.load");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "A replacement of the start command that loads an already existing game.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Load Game";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.read/load **string** - Load a game in progress.\n"
 				+ "The string for a game in progress can be obtained by TS.save. **The game must not have started, and there must be two players ready to play.**\n"
 				+ "After loading, make sure to use TS.+ to advance the state of the game, as all save states take you to the end of the turn in question. \n"

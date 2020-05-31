@@ -42,61 +42,51 @@ public class RedScare extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return !(GameData.ccw&&sp==1&&HandManager.China==-1);
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "031";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Red Scare/Purge";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 4;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "The opposing player deducts one Operations Point on every card played by that side for every purpose for the remainder of this turn.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

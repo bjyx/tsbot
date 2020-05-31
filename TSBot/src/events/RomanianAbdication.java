@@ -38,31 +38,26 @@ public class RomanianAbdication extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Romanian Abdication";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

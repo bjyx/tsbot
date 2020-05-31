@@ -16,7 +16,6 @@ public class SpaceCommand extends Command {
 
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		// TODO Auto-generated method stub
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");
 			return;
@@ -49,25 +48,21 @@ public class SpaceCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.space", "TS.s");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Send the card to space.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Space Race (space, s)";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.space to space a card.");
 	}
 

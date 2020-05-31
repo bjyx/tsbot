@@ -15,7 +15,6 @@ public class SEAsiaScoring extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		int[] totalCountries = {0,0};
 		int[] battlegrounds = {0,0};
 		String[] strings = {"","","",""};
@@ -49,61 +48,51 @@ public class SEAsiaScoring extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "038";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Southeast Asia Scoring";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Scores Southeast Asia for 1 VP for each country controlled, and 1 extra VP for controlling a battleground (i.e. Thailand).";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 

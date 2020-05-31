@@ -40,7 +40,6 @@ public class ResetCommand extends Command {
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.reset");
 	}
 
@@ -56,7 +55,6 @@ public class ResetCommand extends Command {
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("TS.reset - Resets all variables. Get ready to do this again.");
 	}
 

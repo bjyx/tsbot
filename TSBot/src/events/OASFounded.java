@@ -93,13 +93,11 @@ public class OASFounded extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "The US adds a total of 2 Influence to countries in Central and South America.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Country-Influence order. All influence values must sum to 2 and the countries must be in Central or South America.";
 	}
 

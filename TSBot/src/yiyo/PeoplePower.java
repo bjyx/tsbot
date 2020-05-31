@@ -69,13 +69,11 @@ public class PeoplePower extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "*One time use: after playing this card, you may discard this card to flip a die to the opposite face after it is rolled.* __You will be prompted after every die roll to decide.__";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Event: None.\n"
 				+ "Decision: `flip` or `accept`; `flip` flips the die to its opposite face in exchange for discarding this card.";
 	}

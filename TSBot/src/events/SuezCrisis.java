@@ -23,7 +23,6 @@ public class SuezCrisis extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Anglo-French Forces Withdraw From Egypt")
 		.setDescription("Eden set to resign amid diplomatic pressure in a victory for Nasser")
@@ -41,37 +40,31 @@ public class SuezCrisis extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return !HandManager.effectActive(1005);
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "028";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Suez Crisis";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
@@ -131,7 +124,6 @@ public class SuezCrisis extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Influence values ((*country* *value*)+). All entries in *country* must be either the UK, France, or Israel, and all entries in *value* must be negative integers at least -2 that do not exceed American influence in the associated country. The entries in *value* must sum to a number at least -4.\n" 
 				+ "Example: TS.event gbr 2 il 1 france 1";
 	}

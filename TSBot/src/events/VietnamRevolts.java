@@ -15,7 +15,6 @@ public class VietnamRevolts extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Dien Bien Phu falls")
 			.setDescription("Negotiations now underway in Geneva to decide fate of French Indochina")

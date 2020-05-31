@@ -49,7 +49,6 @@ public class InfoCommand extends Command {
 
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
-		// TODO Auto-generated method stub
 		if (!GameData.hasGameStarted()) {
 			sendMessage(e, ":x: What game?");
 			return;

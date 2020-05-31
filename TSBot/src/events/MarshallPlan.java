@@ -99,14 +99,12 @@ public class MarshallPlan extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Add 1 US Influence to each of seven non-USSR-controlled Western European countries.\n"
 				+ "*This event enables the play of " + CardList.getCard(21) + ".*";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "The seven Western European countries to which influence will be added. This is not necessary if, for some reason, there are at most seven countries in Western Europe not under USSR control.";
 	}
 

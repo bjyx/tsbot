@@ -43,50 +43,42 @@ public class Quagmire extends Card {
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Quagmire";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Cancels (but does not prevent) NORAD.\n"
 				+ "*The US must discard a card worth at least two OPs every action round and roll a die in lieu of performing an action. If and only if said roll is between 1 and 4, this effect is cancelled. If no cards are available to discard, the US must play a scoring card for the event instead; if the US has no scoring cards, they must skip all action rounds for the rest of the turn.*";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Event: None.\n"
 				+ "Decision: the ID of the card to be discarded/played.";
 	}

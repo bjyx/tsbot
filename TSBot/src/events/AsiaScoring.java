@@ -112,7 +112,6 @@ public class AsiaScoring extends Card {
 	}
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "None.";
 	}
 }

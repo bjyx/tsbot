@@ -18,7 +18,6 @@ public class CambridgeFive extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		regions = new boolean[10]; //9 is always false; this is a prophylactic defense against sneaky people who try to game break
 		boolean flag = false;
 		String a = "";
@@ -79,49 +78,41 @@ public class CambridgeFive extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
 		return GameData.getEra()!=2; 
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
 		return "104";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "The Cambridge Five";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -133,7 +124,6 @@ public class CambridgeFive extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Event: None. \n"
 				+ "Decision: the single country where you want to place influence. This must be within a region listed by the American scoring cards.";
 	}

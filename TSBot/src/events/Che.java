@@ -121,7 +121,6 @@ public class Che extends Card {
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Both coup targets, in order. If no targets exist, this is not required (as this will not lose the game).\nTo pass on a legal coup, leave that section blank.";
 	}
 

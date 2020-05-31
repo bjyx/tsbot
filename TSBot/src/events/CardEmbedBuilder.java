@@ -49,9 +49,19 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	 * @param amt is the amount the score changes by.
 	 * @return the builder with the new field, for chaining.
 	 */
+	public CardEmbedBuilder changeVP(int amt, boolean wwby) {
+		if (amt==0) return this;
+		GameData.changeScore(amt, wwby);
+		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:"+StartCommand.emojiID[amt>0?9:10] + intToEmoji(amt),"Now at " + GameData.getScore(),false);
+	}
+	/**
+	 * Adds a field to denote the change in score. Also changes the score.
+	 * @param amt is the amount the score changes by.
+	 * @return the builder with the new field, for chaining.
+	 */
 	public CardEmbedBuilder changeVP(int amt) {
 		if (amt==0) return this;
-		GameData.changeScore(amt);
+		GameData.changeScore(amt, true);
 		return (CardEmbedBuilder) this.addField(":regional_indicator_v::regional_indicator_p:"+StartCommand.emojiID[amt>0?9:10] + intToEmoji(amt),"Now at " + GameData.getScore(),false);
 	}
 	/**

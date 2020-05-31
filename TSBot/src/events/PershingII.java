@@ -48,19 +48,16 @@ public class PershingII extends Card {
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
 		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
 		return 1;
 	}
 
@@ -94,13 +91,11 @@ public class PershingII extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "The USSR gains 1 VP. The US loses 1 Influence point in each of three Western European countries.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Three countries, all Western European, in which the US loses influence. If (for some reason) at most three countries have US Influence in them, this is not needed.";
 	}
 
