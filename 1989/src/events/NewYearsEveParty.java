@@ -1,7 +1,8 @@
-package cards;
+package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import events.Card;
 import events.CardEmbedBuilder;
 import game.GameData;
