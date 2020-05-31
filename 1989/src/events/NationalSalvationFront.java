@@ -2,19 +2,21 @@ package events;
 
 import java.awt.Color;
 
+import cards.HandManager;
 import events.Card;
-import game.GameData;
+import logging.Log;
+import main.Launcher;
 
-public class TheThirdWay extends Card {
+public class NationalSalvationFront extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("\"The Third Way\"")
+		builder.setTitle("National Salvation Front")
 		.setColor(Color.red);
-		builder.changeVP(-2);
-		builder.changeInfluence(11, 1, 3);
-		GameData.txtchnl.sendMessage(builder.build()).complete();
+		builder.addField("","When the next Power Struggle in the Balkans happens, the Communist gains two Power Struggle cards, and the Democrat loses two.",false);
+		HandManager.addEffect(102);
+		Log.writeToLog("National Salvation Front active.");
 	}
 
 	@Override
@@ -24,22 +26,22 @@ public class TheThirdWay extends Card {
 
 	@Override
 	public String getId() {
-		return "079";
+		return "102";
 	}
 
 	@Override
 	public String getName() {
-		return "The Third Way";
+		return "National Salvation Front";
 	}
 
 	@Override
 	public int getOps() {
-		return 2;
+		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		return 1;
+		return 2;
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class TheThirdWay extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The Communist gains 2 VP. Place 3 Communist Support in the East German Writers space.";
+		return "*When the next Power Struggle in the Balkans happens, the Communist gains two Power Struggle cards, and the Democrat loses two.*";
 	}
 
 	@Override

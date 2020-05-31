@@ -1,9 +1,14 @@
 package events;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
+import cards.HandManager;
 import cards.Operations;
 import game.GameData;
+import logging.Log;
 import main.Common;
+import main.Launcher;
 import map.MapManager;
 
 public class Gorby extends Card {
@@ -14,6 +19,14 @@ public class Gorby extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
+		if (HandManager.effectActive(99)&&sp==0) {
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Gorbachev Defeats Ligachev for General Secretary")
+					.setColor(Color.blue);
+			Log.writeToLog("Ligachev Cancelled.");
+			HandManager.removeEffect(50);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
 		boolean opponentInfluence=false;
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder

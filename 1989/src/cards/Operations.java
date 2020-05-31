@@ -332,7 +332,7 @@ public class Operations {
 			txtsp.sendMessage(":x: Do we not have the resources to crush this? What do you mean, debt!?").complete();
 			return false;
 		}
-		if (MapManager.get(country).support[(sp+1)%2]==0) {
+		if (MapManager.get(country).support[(sp+1)%2]==0&&restrictions!=109) {
 			txtsp.sendMessage(":x: This country is fresh out of foreign influence, I can tell you that.").complete();
 			return false;
 		}
@@ -388,6 +388,26 @@ public class Operations {
 			roll+=3;
 			builder.addField("The Chinese Solution", "+3", false);
 			Log.writeToLog("The Chinese Solution: +3.");
+		}
+		if (HandManager.effectActive(1000+Common.opp(sp))&&MapManager.get(country).isControlledBy()==Common.opp(sp)) {
+			roll--;
+			builder.addField("Stand Fast", "-1", false);
+			Log.writeToLog("Stand Fast: -1.");
+		}
+		if (sp==0&&MapManager.get(country).inRegion(4)&&HandManager.effectActive(101)) {
+			roll--;
+			builder.addField("Elena", "-1", false);
+			Log.writeToLog("Elena: -1.");
+		}
+		if (sp==0&&HandManager.removeEffect(105)) {
+			roll+=2;
+			builder.addField("Public Against Violence", "+2", false);
+			Log.writeToLog("Public Against Violence: +2.");
+		}
+		if (sp==1&&HandManager.effectActive(107)) {
+			roll+=2;
+			builder.addField("Massacre at Timisoara", "+2", false);
+			Log.writeToLog("Massacre at Timisoara: +2.");
 		}
 		String[] modifiers = {"",""};
 		for (int adj : MapManager.get(country).adj) {

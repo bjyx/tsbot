@@ -85,13 +85,11 @@ public class Intelligentsia extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return "Place a total of 4 Democratic support in Intellectual spaces (";
+		return "Place a total of 4 Democratic support in Intellectual spaces (no more than 2 per space).";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Influence.";
 	}
 

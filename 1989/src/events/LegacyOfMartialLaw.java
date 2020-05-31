@@ -106,13 +106,11 @@ public class LegacyOfMartialLaw extends Card {
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Replace 1 Democratic SP with a Communist SP in any space in Poland. Then, make one Support Check in Poland using this card's value.";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
 		return "Event: The location of the influence to be removed. This must be in Poland.\n"
 				+ "Decision: The space to conduct the support check. This must also be in Poland.";
 		

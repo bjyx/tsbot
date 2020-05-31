@@ -40,62 +40,53 @@ public class Adamec extends Card {
 
 	@Override
 	public boolean isPlayable(int sp) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return "088";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Adamec";
 	}
 
 	@Override
 	public int getOps() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public int getEra() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 
 	@Override
 	public boolean isRemoved() {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public boolean isFormatted(int sp, String[] args) {
-		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
-		return null;
+		return "The Communist rolls a die and subtracts the number of worker spaces controlled by the Democrat in Czechoslovakia. On a roll of 3-6, add 4 Communist Support to Czechoslovakia (no more than 2 per space).";
 	}
 
 	@Override
 	public String getArguments() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Event: None.\n"
+				+ "Decision: Support, if necessary.";
 	}
 
 }

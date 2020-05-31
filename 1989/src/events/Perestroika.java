@@ -63,7 +63,7 @@ public class Perestroika extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The Communist adds 1 Operations Point to any card played for Operations this turn.";
+		return "*The Communist adds 1 Operations Point to any card played for Operations this turn.*";
 	}
 
 	@Override

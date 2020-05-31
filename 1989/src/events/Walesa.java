@@ -3,6 +3,7 @@ package events;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import cards.CardList;
 import cards.HandManager;
 import cards.Operations;
 import game.GameData;
@@ -109,7 +110,7 @@ public class Walesa extends Card {
 
 	@Override
 	public String getDescription() {
-		return "Place 4 Democratic SPs in Poland (unrestricted). The Democrat may conduct two support checks in Poland using this card.";
+		return "Place 4 Democratic SPs in Poland (unrestricted). The Democrat may conduct two support checks in Poland using this card. *May only be played after the event of "+CardList.getCard(2)+" has been activated.*";
 	}
 
 	@Override

@@ -133,6 +133,12 @@ public class PowerStruggle {
 			c-=2;
 			builder.addField("Round Table Talks", "The Democrat gets two cards from the Communist.", false);
 		}
+		if (r>=4&&HandManager.effectActive(102)) {
+			HandManager.removeEffect(102);
+			d-=2;
+			c+=2;
+			builder.addField("National Salvation Front", "The Communist gets two cards from the Democrat.", false);
+		}
 		if (HandManager.removeEffect(72)) {
 			for (int i=Common.bracket[r]; i<Common.bracket[r+1]; i++) {
 				if (MapManager.get(i).icon==1&&MapManager.get(i).isControlledBy()==0) {

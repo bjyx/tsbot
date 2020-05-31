@@ -82,7 +82,7 @@ public class DominoTheory extends Card {
 
 	@Override
 	public String getArguments() {
-		return "The card's ID. Alternatively, 0, to not do anything, in case the Communist stacked the discards against you.";
+		return "The card's ID. Alternatively, 0, to not do anything, in case the Communist stacked the discard pile against you.";
 	}
 
 }

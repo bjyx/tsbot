@@ -29,7 +29,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	
 	@Override
 	public MessageEmbed build() {
-		this.setAuthor("Turn " + GameData.getTurn() + " " + ("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR")), "");
+		this.setAuthor("Turn " + GameData.getTurn() + " " + ("Action Round " + (GameData.getAR() + 1)/2  + " " + (GameData.phasing()==0?"US":"USSR")), null);
 		return super.build();
 	}
 	
@@ -65,7 +65,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	 */
 	public CardEmbedBuilder changeInfluence(int country, int sp, int amt) {
 		if (amt==0) return this;
-		if (MapManager.get(country).icon==8) return this; //failsafe for the fucking systematization
+		if (MapManager.get(country).icon==8) return this; //failsafe for the fucking systematization... and this will work
 		MapManager.get(country).changeInfluence(sp, amt);
 		if (HandManager.effectActive(971)&&MapManager.get(TyrantIsGone.target).isControlledBy()==0) {
 			this.addField("The Ceausescus have been captured!", "", false);

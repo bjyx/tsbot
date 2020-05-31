@@ -135,7 +135,7 @@ public class CardList {
 		CardList.addCard(new PolitburoIntrigue());
 		CardList.addCard(new Ligachev());
 		CardList.addCard(new StandFast());
-		/*
+		
 		CardList.addCard(new Elena());
 		CardList.addCard(new NationalSalvationFront());
 		CardList.addCard(new GovernmentResigns());
@@ -145,7 +145,7 @@ public class CardList {
 		CardList.addCard(new Timisoara());
 		CardList.addCard(new ArmyBacksRevolution());
 		CardList.addCard(new KremlinCoup());
-		CardList.addCard(new MaltaSummit());*/
+		CardList.addCard(new MaltaSummit());
 	}
 	/**
 	 * Adds the Card to the list.

@@ -67,7 +67,7 @@ public class MondayDemonstrations extends Card {
 	@Override
 	public String getDescription() {
 		if (!HandManager.effectActive(24)) return "St. Nicholas Church has not started this week's peace prayer yet. Play for Operations only.";
-		return "Add sufficient Democratic SPs for control of the Lutheran Church and Leipzig. Then the Democrat makes **five (5)** support checks in East Germay using this card's Operations.";
+		return "Add sufficient Democratic SPs for control of the Lutheran Church and Leipzig. Then the Democrat makes **five (5)** support checks in East Germany using this card's Operations.";
 	}
 
 	@Override

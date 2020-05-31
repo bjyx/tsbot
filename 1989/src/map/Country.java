@@ -170,7 +170,7 @@ public class Country {
 	}
 	
 	public String toString() {
-		return Common.flags[this.region] + Country.emoji[this.icon] + " " + this.shorthand + (this.isBattleground?"*":" ");
+		return Common.flags[this.region] + Country.emoji[this.icon] + " " + this.shorthand + (this.isBattleground?"\\*":" ");
 	}
 	/**
 	 * Assigns a color to each region. 
@@ -196,7 +196,7 @@ public class Country {
 				.setTitle(name+" "+emoji[icon] + " (" + shorthand + ")")
 				.setDescription(stab + " stability" + (isBattleground?" battleground ":" ")+ "space in " + Common.countries[region])
 				.setColor(getColor())
-				.addField("Influence", StartCommand.emojiID[(this.isControlledBy()==0?9:6)]+CardEmbedBuilder.intToEmoji(support[0])+StartCommand.emojiID[(this.isControlledBy()==1?10:7)]+CardEmbedBuilder.intToEmoji(support[1]), false)
+				.addField("Influence", StartCommand.emojiID[(this.isControlledBy()==0?3:1)]+CardEmbedBuilder.intToEmoji(support[0])+StartCommand.emojiID[(this.isControlledBy()==1?2:0)]+CardEmbedBuilder.intToEmoji(support[1]), false)
 				.setFooter(desc, Launcher.url("emoji/InflNC.png"));
 		if (Launcher.f) builder.setImage(Launcher.url("countries/"+shorthand+".png"));
 		else builder.setThumbnail(Launcher.url("countries/"+shorthand+".png"));

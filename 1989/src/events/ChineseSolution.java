@@ -22,6 +22,7 @@ public class ChineseSolution extends Card {
 		builder.setTitle("The Chinese Solution")
 		.setColor(Color.red);
 		builder.changeVP(3); //democratic backfire
+		GameData.txtchnl.sendMessage(builder.build()).complete();
 		GameData.dec = new Decision(1, 1);
 		HandManager.addEffect(96); //how +3 is effected
 		GameData.ops = new Operations(1, CardList.getCard(96).getOpsMod(1), false, true, false, 5, target);

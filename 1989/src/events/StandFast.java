@@ -2,19 +2,21 @@ package events;
 
 import java.awt.Color;
 
-import events.Card;
-import game.GameData;
+import cards.HandManager;
+import logging.Log;
+import main.Common;
+import main.Launcher;
 
-public class TheThirdWay extends Card {
+public class StandFast extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("\"The Third Way\"")
-		.setColor(Color.red);
-		builder.changeVP(-2);
-		builder.changeInfluence(11, 1, 3);
-		GameData.txtchnl.sendMessage(builder.build()).complete();
+		builder.setTitle("Stand Fast")
+		.setColor(Common.spColor(sp));
+		builder.addField("","For the rest of the turn, the " + Common.players[Common.opp(sp)] + " gets a -1 malus to Support Check in spaces controlled by the " + Common.players[sp] + ".",false);
+		HandManager.addEffect(1000 + sp);
+		Log.writeToLog("Stand Fast active.");
 	}
 
 	@Override
@@ -24,27 +26,27 @@ public class TheThirdWay extends Card {
 
 	@Override
 	public String getId() {
-		return "079";
+		return "100";
 	}
 
 	@Override
 	public String getName() {
-		return "The Third Way";
+		return "Stand Fast";
 	}
 
 	@Override
 	public int getOps() {
-		return 2;
+		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 2;
 	}
 
 	@Override
@@ -59,7 +61,7 @@ public class TheThirdWay extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The Communist gains 2 VP. Place 3 Communist Support in the East German Writers space.";
+		return "*Your opponent gets a -1 malus to all Support Checks in spaces you control for the rest of this turn.*";
 	}
 
 	@Override

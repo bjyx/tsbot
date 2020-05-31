@@ -19,6 +19,7 @@ import main.Launcher;
 import map.MapManager;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import powerstruggle.PowerStruggle;
 /**
  * The command that handles any decisions to be made with regards to any card that cannot be handled by the event command list. The following cards have such an effect:
  * <ul>
@@ -149,6 +150,8 @@ public class DecisionCommand extends Command {
 				return;
 			}
 			HandManager.removeEffect(96);
+			HandManager.removeEffect(107);
+
 		}
 		
 		/*
@@ -474,6 +477,87 @@ public class DecisionCommand extends Command {
 			
 			builder.addField("The Tyrant is Gone!","The Ceausescu-associated events may no longer be played for the event.",false);
 			
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+		}
+		if (event==104) {
+			int target;
+			ArrayList<Character> a = new ArrayList<Character>();
+			a.addAll(Arrays.asList('e','p','c','h','r','b'));
+			if (args.length<2) return;
+			char b = args[1].charAt(0);
+			if (a.indexOf(b)==-1) return;
+			target = a.indexOf(b);
+			if (PowerStruggle.retained[target]==-1) return; //you already have that
+			GameData.ps = new PowerStruggle(target, 0);
+			return;
+		}
+		if (event==110) {
+			ArrayList<Integer>doable = new ArrayList<Integer>();
+			ArrayList<Integer>order = new ArrayList<Integer>();
+			ArrayList<Integer>values = new ArrayList<Integer>();
+			int maxInfRem = 0;
+			for (int i=Common.bracket[0]; i<Common.bracket[6]; i++) {
+				if (MapManager.get(i).support[1]>0 && MapManager.get(i).icon==2) {
+					doable.add(i);
+					maxInfRem += MapManager.get(i).support[1];
+				}
+			}
+			if (maxInfRem<=5) {
+				order = doable;
+				for (int i : order) {
+					values.add(-MapManager.get(i).support[1]);
+				}
+			}
+			else {
+			if (args.length%2!=1) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}
+				if (order.indexOf(c)!=-1) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} // no duplicates plox
+				order.add(c);
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				}
+			}
+			int sum = 0;
+			if (!doable.containsAll(order)) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)>=0) {
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} //no non-negative numbers please
+				if (MapManager.get(order.get(i)).support[1]+values.get(i)<0){
+					sendMessage(e, ":x: This is not properly formatted.");
+					return;
+				} //don't give me negative influence values
+				sum += values.get(i);
+			}
+			if (sum!=-5) {
+				sendMessage(e, ":x: This is not properly formatted.");
+				return;
+			}
+			}
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+				.setTitle("Malta Summit Aftermath")
+				.setColor(Color.blue);
+			builder.bulkChangeInfluence(order, 1, values); //remove communist sps
 			GameData.txtchnl.sendMessage(builder.build()).complete();
 		}
 		if (event==201) {
@@ -844,6 +928,52 @@ public class DecisionCommand extends Command {
 			else {
 				sendMessage(e, ":x: Give the number of the card you wish to discard.");
 				return;
+			}
+		}
+		if (event==106) {
+			ArrayList<Integer> order = new ArrayList<Integer>();
+			ArrayList<Integer> values = new ArrayList<Integer>();
+			if (args.length%2!=1) return; //each country must associate with a number
+			for (int i=1; i<args.length; i+=2) {
+				int c = MapManager.find(args[i]);
+				if (c==-1) return;
+				if (order.indexOf(c)!=-1) return; // no duplicates plox
+				if (!MapManager.get(c).inRegion(SocialDemocraticPlatform.target)) return;
+				order.add(c);
+				try{
+					values.add(Integer.parseInt(args[i+1]));
+				}
+				catch (NumberFormatException err){
+					return; //this isn't an integer. xP
+				}
+			}
+			int sum = 0;
+			for (int i=0; i<order.size(); i++) {
+				if (values.get(i)<=0) return; //no non-negative numbers please
+				sum += values.get(i);
+			}
+			if (sum!=2) return; // up to 2 influence may be added...
+			boolean opponentInfluence=false;
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder
+			.setTitle("Social Democratic Platform")
+			.setColor(Common.spColor(1));
+			builder.bulkChangeInfluence(order, 1, values); //remove opponent sps
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			
+			for (int i=Common.bracket[InflationaryCurrency.target]; i<Common.bracket[InflationaryCurrency.target+1]; i++) {
+				if (MapManager.get(i).support[Common.opp(sp)]>0) {
+					opponentInfluence=true;
+					break;
+				}
+			}
+			if(opponentInfluence) {
+				GameData.dec=new Decision(1, 1);
+				GameData.ops=new Operations(1, CardList.getCard(105).getOpsMod(1),false,true,false,1,SocialDemocraticPlatform.target);
+				GameData.txtchnl.sendMessage(builder.build()).complete();
+			}
+			else {
+				Common.spChannel(sp).sendMessage("How the f@#k do you still have this region locked down!? You lost it to the Democrat!").complete();
 			}
 		}
 		// TODO more events as enumerated above as they come

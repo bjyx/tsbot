@@ -57,9 +57,12 @@ public class Scoring {
 		else if (totalCountries[1]>0) vp -= presence[region];
 		builder.changeVP(vp);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
-		if (region==4&&HandManager.effectActive(970)) {
+		if (region==4&&HandManager.effectActive(970)&&!HandManager.effectActive(1040)) {
 			GameData.dec = new Decision(0, 97);
 			GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", designate the Ceaușescus' location.").complete();
+		}
+		if (HandManager.effectActive(1040)) {
+			GameData.checkScore(true, true); //game ends here
 		}
 	}
 	

@@ -53,7 +53,7 @@ public class JoinCommand extends Command {
 		}
 		if (PlayerList.getArray().contains(null)) {
 			PlayerList.addPlayer(e.getAuthor());
-			sendMessage(e, ":o: Done. Make sure that at least one of the players owns a copy of *Twilight Struggle* before starting, per the licensing agreement.");
+			sendMessage(e, ":o: Done. Make sure that at least one of the players owns a copy of *1989: Dawn of Freedom* before starting, per the licensing agreement.");
 			return;
 		}
 		sendMessage(e, ":x: There is only enough room for two superpowers on this world stage.");

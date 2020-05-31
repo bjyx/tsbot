@@ -2,18 +2,22 @@ package events;
 
 import java.awt.Color;
 
-import events.Card;
+import cards.CardList;
+import cards.HandManager;
 import game.GameData;
+import logging.Log;
+import main.Launcher;
 
-public class TheThirdWay extends Card {
+public class ArmyBacksRevolution extends Card {
 
 	@Override
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
-		builder.setTitle("\"The Third Way\"")
-		.setColor(Color.red);
-		builder.changeVP(-2);
-		builder.changeInfluence(11, 1, 3);
+		builder.setTitle("Army Backs Romanian Revolution")
+			.setColor(Color.blue);
+		builder.addField("",HandManager.removeEffect(70)?"The effects of " + CardList.getCard(70) + " are cancelled.":"The event for " + CardList.getCard(70) + " can no longer be played.",false);
+		Log.writeToLog("Army Backs Revolution Active.");
+		HandManager.addEffect(108);
 		GameData.txtchnl.sendMessage(builder.build()).complete();
 	}
 
@@ -24,27 +28,27 @@ public class TheThirdWay extends Card {
 
 	@Override
 	public String getId() {
-		return "079";
+		return "108";
 	}
 
 	@Override
 	public String getName() {
-		return "The Third Way";
+		return "Army Backs Revolution";
 	}
 
 	@Override
 	public int getOps() {
-		return 2;
+		return 3;
 	}
 
 	@Override
 	public int getEra() {
-		return 1;
+		return 2;
 	}
 
 	@Override
 	public int getAssociation() {
-		return 1;
+		return 0;
 	}
 
 	@Override
@@ -59,7 +63,7 @@ public class TheThirdWay extends Card {
 
 	@Override
 	public String getDescription() {
-		return "The Communist gains 2 VP. Place 3 Communist Support in the East German Writers space.";
+		return "*Cancels/Prevents the effects of " + CardList.getCard(70) + ".*";
 	}
 
 	@Override

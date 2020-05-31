@@ -82,7 +82,7 @@ public class TimeCommand extends Command {
 			return;
 		}
 		if (!extraCheck&&GameData.arsLeft()==0) { //Turn Sequence: 3
-			GameData.ops = new Operations(GameData.aheadInSpace(), 2, false, true, false, 1);
+			GameData.ops = new Operations(GameData.aheadInSpace(), CardList.getCard(1).getOpsMod(GameData.aheadInSpace()), false, true, false, 1);
 			GameData.dec = new Decision(GameData.aheadInSpace(), 1); //whoever has the ability is obligatorily ahead in space
 			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.aheadInSpace()).getAsMention() + ", you can now use your extra support check.");
 		}
@@ -104,7 +104,7 @@ public class TimeCommand extends Command {
 			}
 		}
 		
-		GameData.changeScore(0); //removes We Will Bury You if it's still active for some reason
+		if (HandManager.activecard!=99) GameData.changeScore(0); //removes Ligachev if it's still active for some reason
 		GameData.checkScore(false, false);
 		
 		if ((HandManager.effectActive(490) && !HandManager.handContains(0, 49))||(HandManager.effectActive(491) && !HandManager.handContains(1, 49))) {

@@ -267,6 +267,9 @@ public class GameData {
 		} //stage 4
 		if (HandManager.effectActive(104)) { //stage 5
 			dec = new Decision(0,104);
+			HandManager.addEffect(1040);
+			builder.addField("New Year's Eve Party!", "The Democrat may select a Communist country to hold a Power Struggle in.", false);
+			txtchnl.sendMessage(builder.build()).complete();
 			return;
 			//TODO you're gonna have to code in this later
 		}
@@ -303,8 +306,8 @@ public class GameData {
 		if (HandManager.removeEffect(101)) builder.addField("","US rolls on support checks in Romania are no longer penalized.",false);	//Elena
 		if (HandManager.removeEffect(80)) builder.addField("","Democrat malus to Operations removed.",false);	//Prudence
 		if (HandManager.removeEffect(81)) builder.addField("","Communist malus to Operations removed.",false);
-		if (HandManager.removeEffect(1000)) builder.addField("","Communist Support Checks in Democratic spaces no longer have a -1 malus.",false);	//Stand Fast
-		if (HandManager.removeEffect(1001)) builder.addField("","Democratic Support Checks in Communist spaces no longer have a -1 malus.",false);
+		if (HandManager.removeEffect(1000)) builder.addField("Crowd Mentality","Communist Support Checks in Democratic spaces no longer have a -1 malus.",false);	//Stand Fast
+		if (HandManager.removeEffect(1001)) builder.addField("Crowd Mentality","Democratic Support Checks in Communist spaces no longer have a -1 malus.",false);
 		if (turn==4) {
 			Log.writeToLog("MW Cards Added.");
 			HandManager.addToDeck(1); //Rule 4.4
@@ -432,6 +435,16 @@ public class GameData {
 	 * @param amt is the amount to change {@link #score} by.
 	 */
 	public static void changeScore(int amt) {
+		if (HandManager.effectActive(99)&&GameData.phasing()==0) {
+			Log.writeToLog("Ligachev: ");
+			CardEmbedBuilder builder = new CardEmbedBuilder();
+			builder.setTitle("Ligachev Vindicated")
+					.setColor(Color.red);
+			HandManager.removeEffect(99); //this has to come before because otherwise it's an infinite loop
+			builder.changeVP(-3);
+			GameData.txtchnl.sendMessage(builder.build()).complete();
+			GameData.checkScore(false, false);
+		}
 		score += amt;
 		Log.writeToLog("VP" + (amt>0?"+":"") + amt);
 	}

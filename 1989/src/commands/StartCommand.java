@@ -119,30 +119,26 @@ public class StartCommand extends Command {
 		HandManager.addToDeck(0);
 		HandManager.deal();
 		SetupCommand.setup = 0;
-		GameData.txtcom.sendMessage(PlayerList.getCom().getAsMention() + ", please place six influence markers in Eastern Europe. (Use TS.setup)").complete();
+		GameData.txtcom.sendMessage(PlayerList.getCom().getAsMention() + ", please place your first two Support Points. (Use TS.setup)").complete();
 	}
 
 	@Override
 	public List<String> getAliases() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("DF.start");
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "Start 1989.";
 	}
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
 		return "Start (start)";
 	}
 
 	@Override
 	public List<String> getUsageInstructions() {
-		// TODO Auto-generated method stub
 		return Arrays.asList("DF.start - How it all begins.\n");
 	}
 
