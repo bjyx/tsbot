@@ -345,7 +345,7 @@ public class HandManager {
 			if (card==116&&mode!='s') {
 				Log.writeToLog("First Lightning:");
 				CardEmbedBuilder builder = new CardEmbedBuilder();
-				builder.setTitle("American Nuclear Monopoly Broken!")
+				builder.setTitle("Soviets Test Nuclear Weapon")
 					.setDescription("")
 					.setColor(Color.red);
 				builder.changeDEFCON(-1);
@@ -416,6 +416,7 @@ public class HandManager {
 					precedence = 1;
 				}
 				TimeCommand.cardPlayed = true;
+				TimeCommand.cardPlayedSkippable = true;
 				TimeCommand.hl1 = false;
 				TimeCommand.hl2 = false;
 				GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
@@ -441,6 +442,7 @@ public class HandManager {
 			}
 			activecard = card;
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.eventRequired = true;
 		}
 		if (mode=='o') {
@@ -473,6 +475,7 @@ public class HandManager {
 			activecard = card;
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, true, false, false);
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.operationsRequired = true;
 		}
 		if (mode=='s') {
@@ -495,6 +498,7 @@ public class HandManager {
 			activecard = card;
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, false, true, false);
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.spaceRequired = true;
 		}
 		TimeCommand.prompt();

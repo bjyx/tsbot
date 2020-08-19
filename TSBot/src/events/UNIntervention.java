@@ -35,7 +35,7 @@ public class UNIntervention extends Card {
 		}
 		if (HandManager.effectActive(60)) {
 			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("U2 Incident—Khrushchev's Trap!")
+			builder.setTitle("Khrushchev Embarasses CIA")
 				.setDescription("Downed pilot revealed to be alive")
 				.setFooter("\"I must tell you a secret. When I made my first report "
 						+ "I deliberately did not say that the pilot was alive and well ... "

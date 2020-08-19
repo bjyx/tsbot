@@ -22,7 +22,7 @@ public class KremlinFlu extends Card {
 	public void onEvent(int sp, String[] args) {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("Sudden Change in Soviet Leadership")
-			.setDescription("Noted political figure not present at annual May Day parade")
+			.setDescription("Noted political figure not present at May Day parade")
 			//.setFooter("\"\"\n"
 			//		+ "- ",Launcher.url("people/cia.png"))
 			.setColor(Color.blue);
