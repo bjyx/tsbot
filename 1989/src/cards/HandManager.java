@@ -213,7 +213,7 @@ public class HandManager {
 	public static void deal() {
 		Random random = new Random();
 		while ((HandManager.effectActive(65)?7:8) > ComHand.size()||8 > DemHand.size()) {
-			if (8 > ComHand.size()&&!Deck.isEmpty()) {
+			if ((HandManager.effectActive(65)?7:8) > ComHand.size()&&!Deck.isEmpty()) {
 				ComHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
 			if(Deck.isEmpty()) { //Rule 4.3
@@ -284,6 +284,7 @@ public class HandManager {
 				}
 			}
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.eventRequired = true;
 		}
 		if (mode=='o') {
@@ -326,6 +327,7 @@ public class HandManager {
 			}
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, false, 2);
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.operationsRequired = true;
 		}
 		if (mode=='t') {
@@ -334,6 +336,7 @@ public class HandManager {
 			playmode = 't';
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), false, false, true, 0);
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.spaceRequired = true;
 		}
 		if (mode=='c') {
@@ -349,8 +352,9 @@ public class HandManager {
 			GameData.ops = new Operations(sp, CardList.getCard(card).getOpsMod(sp), true, true, false);
 			Common.spChannel(sp).sendMessage(Common.spRole(sp).getAsMention() + ", you may now perform the operations.");
 			TimeCommand.cardPlayed = true;
+			TimeCommand.cardPlayedSkippable = true;
 			TimeCommand.operationsRequired = true;
-			Log.writeToLog("UN Intervention played with card for ops.");
+			Log.writeToLog("Common Europeah Home played with card for ops.");
 		}
 		TimeCommand.prompt();
 	}

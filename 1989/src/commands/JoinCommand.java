@@ -20,19 +20,19 @@ public class JoinCommand extends Command {
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.roledem==null) {
-			if (e.getGuild().getRolesByName("TSUSA", true).isEmpty()) {
+			if (e.getGuild().getRolesByName("DFDEM", true).isEmpty()) {
 				GameData.roledem = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
-						.setName("TSUSA").setColor(Color.BLUE).setMentionable(true).complete();
+						.setName("DFDEM").setColor(Color.BLUE).setMentionable(true).complete();
 			}
 			else {
-				GameData.roledem = e.getGuild().getRolesByName("TSUSA", true).get(0);
+				GameData.roledem = e.getGuild().getRolesByName("DFDEM", true).get(0);
 			}
-			if (e.getGuild().getRolesByName("TSSSR", true).isEmpty()) {
+			if (e.getGuild().getRolesByName("DFCOM", true).isEmpty()) {
 				GameData.rolecom = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
-						.setName("TSSSR").setColor(Color.RED).setMentionable(true).complete();
+						.setName("DFCOM").setColor(Color.RED).setMentionable(true).complete();
 			}
 			else {
-				GameData.rolecom = e.getGuild().getRolesByName("TSSSR", true).get(0);
+				GameData.rolecom = e.getGuild().getRolesByName("DFCOM", true).get(0);
 			}
 			for (Member m : e.getGuild().getMembers()) {
 				if (m.getRoles().contains(GameData.roledem)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roledem).complete();

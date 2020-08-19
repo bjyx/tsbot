@@ -71,10 +71,7 @@ public class StartCommand extends Command {
 		
 		if (e.getGuild().getTextChannelsByName("df-dem", true).isEmpty()) {
 			GameData.txtdem = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"df-dem", e.getGuild(), ChannelType.TEXT)
-					.setTopic("O thus be it ever, when freemen shall stand\n" + 
-							"Between their loved homes and the war's desolation.\n" + 
-							"Blest with vict'ry and peace, may the Heav'n rescued land\n" + 
-							"Praise the Power that hath made and preserved us a nation!\n") //final stanza of *-spangled banner
+					.setTopic("Assembly")
 					.addPermissionOverride(GameData.roledem, 68672, 0)
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847)
 					.complete();
@@ -89,10 +86,7 @@ public class StartCommand extends Command {
 		}
 		if (e.getGuild().getTextChannelsByName("df-com", true).isEmpty()) {
 			GameData.txtcom = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"df-com", e.getGuild(), ChannelType.TEXT)
-					.setTopic("В победе бессмертных идей коммунизма\n" + 
-							"Мы видим грядущее нашей страны,\n" + 
-							"И Красному знамени славной Отчизны\n" + 
-							"Мы будем всегда беззаветно верны!") //final stanza of soviet anthem, pre-chorus
+					.setTopic("Politburo") //final stanza of soviet anthem, pre-chorus
 					.addPermissionOverride(GameData.rolecom, 68672, 0)
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847).complete();
 		}
