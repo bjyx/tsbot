@@ -864,7 +864,8 @@ public class MapManager {
 				new String[] {"costarica", "cri", "cr"}, 
 				new Integer[] {70, 72, 73}, //hn, ni, pa
 				"While the other countries in Latin and especially Central America swung left and right throughout the Cold War, Costa Rica managed to avoid the political turmoil of the region. "
-				+ "In fact, the most bloody section of its history was a 44-day civil war over a democratic election, with 2,000 deaths, after which the resulting junta abolished its military and itself.", 
+				+ "In fact, the most bloody section of its history was a 44-day civil war over a democratic election, with 2,000 deaths, after which the resulting junta abolished its military and itself. "
+				+ "If only politics were so simple elsewhere.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -901,7 +902,9 @@ public class MapManager {
 				false, 
 				new String[] {"elsalvador", "slv", "sv"}, 
 				new Integer[] {68, 70}, //gt, hn
-				"", 
+				"El Salvador was ruled by a succession of military dictators. In 1979, the Revolutionary Government Junta deposed President Romero, prompting Carter to support the Junta out of fear that they would turn communist. "
+				+ "The junta then plunged the country into twelve years of civil war against the leftist Farabundo Martí Nationalist Front. Notable individuals include Óscar Romero (pictured on Liberation Theology), "
+				+ "who protested US involvement in the repression occuring in El Salvador, and would later be assassinated in the second year of the war.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -912,7 +915,8 @@ public class MapManager {
 				false, 
 				new String[] {"guatemala", "gtm", "gt"}, 
 				new Integer[] {67, 70, 71}, //sv, hn, mx
-				"", 
+				"Guatemalan dictator Jorge Ubico was overthrown in 1944 in favor of a democratic government led by Juan José Arévalo and his successor, Jacobo Árbenz. Árbenz's agrarian reform bill (Decree 900), dangerous to the interests of the United Fruit Company, "
+				+ "led the CIA to overthrow Árbenz in Operation PBSUCCESS. In his place came more dictators and a thirty-year civil war against the FAR and AR-13.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -923,7 +927,8 @@ public class MapManager {
 				false, 
 				new String[] {"haiti", "hti", "ht", "ayiti", "haïti"}, 
 				new Integer[] {65, 66}, //cu, do
-				"", 
+				"Haiti's Cold War history is largely dominated by the bloody rule of the Duvalier dynasty. While the country was stable before 1956, the period after the coup that brought François \"Papa Doc\" to power was marked by the Tontons Macoutes, "
+				+ "a private militia meant to terrorize the population and prevent opposition. The US firmly supported Papa Doc for his anti-communism, but this support began to wane as Baby Doc took power, and the US forced him to leave for France in 1985.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -934,7 +939,8 @@ public class MapManager {
 				false, 
 				new String[] {"honduras", "hnd", "hn"}, 
 				new Integer[] {64, 67, 68, 72}, //cr, sv, gt, ni
-				"", 
+				"Honduras, unlike its neighbors, did not undergo the bloody ordeal of civil war during the Cold War; however, the Honduran government still had its share of leftist guerrillas to deal with, most notably the Cinchoneros. "
+				+ "The US mostly used Honduras as a staging ground to support the Contras in Nicaragua.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -945,7 +951,8 @@ public class MapManager {
 				true, 
 				new String[] {"mexico", "mex", "mx", "méxico"}, 
 				new Integer[] {68, 84}, //gt, us
-				"", 
+				"For the duration of the Cold War, Mexico was ruled by the Institutional Revolutionary Party, which worked on improving the Mexican economy, culminating in a display of Mexico's newfound economic power in the 1968 Olympics. "
+				+ "The PRI held an absolute dominance over the country until the 1980s, and would retain the presidency until 2000. Mexico's economy growth focused primarily on its budding oil industry, and would collapse with oil prices in 1982.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -956,7 +963,8 @@ public class MapManager {
 				false, 
 				new String[] {"nicaragua", "nic", "ni"}, 
 				new Integer[] {64, 65, 70}, //cr, cu, hn
-				"", 
+				"Nicaragua was ruled by the Somoza dynasty of dictators until their deposition in 1979 by the Sandinista Movement. While the US backed the Sandinistas at first, the flow of cash started to benefit the anti-Sandinista Contras when Nicaragua was found to be backing Salvadoran rebel groups. "
+				+ "Congress stopped official funding to the Contras in 1983; however, Reagan's administration continued to covertly support them using proceeds from arms sales to Iran.", 
 				new int[] {0,0}
 				));
 		map.add(new Country(
@@ -967,7 +975,9 @@ public class MapManager {
 				true, 
 				new String[] {"panama", "pan", "pa"}, 
 				new Integer[] {64, 78}, //cr, co
-				"", 
+				"Panama's political climate changed drastically in the controversial elections of 1968. The winner of said election, Arnulfo Arias Madrid, was made to resign ten days into his presidency and was replaced by Omar Torrijos. "
+				+ "Torrijos's rule saw a treaty to return the American-held Panama Canal Zone and multiple populist reforms. Torrijos died in a plane crash in 1981, and the country fell into the hands of Manuel Noriega. "
+				+ "Though an information source and ally of the United States in the War on Drugs, Noriega himself amassed a fortune through trafficking and money laundering. He was overthrown by the US in Operation Just Cause.", 
 				new int[] {1,0}
 				));
 		//South America - 74
