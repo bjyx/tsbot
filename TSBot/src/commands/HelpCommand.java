@@ -2,9 +2,9 @@ package commands;
 
 import java.util.*;
 
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.*;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command to help people with other commands.
  * @author this was not built by me; I just liked the architecture.

@@ -8,7 +8,7 @@ import cards.Operations;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 /**
  * The UN Intervention Card.
  * @author adalbert

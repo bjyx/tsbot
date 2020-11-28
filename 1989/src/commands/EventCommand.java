@@ -9,7 +9,7 @@ import cards.Operations;
 import game.GameData;
 import game.PlayerList;
 import logging.Log;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command handling cards played for the event. 
  * @author adalbert

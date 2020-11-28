@@ -6,8 +6,8 @@ import commands.InfoCommand;
 import commands.StartCommand;
 import game.GameData;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 /**
  * An extension of Discord's EmbedBuilder built for displaying changes to the game.
  * @author adalbert

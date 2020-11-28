@@ -9,7 +9,7 @@ import cards.Operations;
 import events.CardEmbedBuilder;
 import game.GameData;
 import game.PlayerList;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command allowing players to play cards.
  * @author adalbert

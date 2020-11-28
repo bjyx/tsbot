@@ -10,15 +10,10 @@ import game.GameData;
 import game.PlayerList;
 import logging.Log;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.PermissionOverride;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.requests.Route;
-import net.dv8tion.jda.core.requests.restaction.ChannelAction;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.PermissionOverride;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command that starts the game.
  * @author adalbert
@@ -70,7 +65,7 @@ public class StartCommand extends Command {
 		// create two channels, one for the US and one for the USSR, accessible only by the respective role
 		
 		if (e.getGuild().getTextChannelsByName("df-dem", true).isEmpty()) {
-			GameData.txtdem = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"df-dem", e.getGuild(), ChannelType.TEXT)
+			GameData.txtdem = e.getGuild().createTextChannel("df-dem")
 					.setTopic("Assembly")
 					.addPermissionOverride(GameData.roledem, 68672, 0)
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847)
@@ -85,7 +80,7 @@ public class StartCommand extends Command {
 			GameData.txtdem.putPermissionOverride(GameData.roledem).setPermissions(68672, 0).queue();
 		}
 		if (e.getGuild().getTextChannelsByName("df-com", true).isEmpty()) {
-			GameData.txtcom = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"df-com", e.getGuild(), ChannelType.TEXT)
+			GameData.txtcom = e.getGuild().createTextChannel("df-com")
 					.setTopic("Politburo") //final stanza of soviet anthem, pre-chorus
 					.addPermissionOverride(GameData.rolecom, 68672, 0)
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847).complete();
@@ -101,8 +96,8 @@ public class StartCommand extends Command {
 		GameData.startGame();
 		PlayerList.detSides();
 		// give the roles to the respective countries
-		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getDem()), GameData.roledem).complete();
-		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getCom()), GameData.rolecom).complete();
+		e.getGuild().addRoleToMember(e.getGuild().getMember(PlayerList.getDem()), GameData.roledem).complete();
+		e.getGuild().addRoleToMember(e.getGuild().getMember(PlayerList.getCom()), GameData.rolecom).complete();
 		Log.writeToLog("New Game: 1989");
 		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Game of 1989 Has Started.").setDescription(":hourglass: January 1989—the start of a pivotal year for Eastern Europe. Good luck.").setColor(Color.WHITE);
 		sendMessage(e, new MessageBuilder(builder.build()).build());

@@ -10,8 +10,8 @@ import game.GameData;
 import logging.Log;
 import main.Common;
 import main.Launcher;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 /**
  * These are called countries as a legacy of Twilight Struggle. 
  * @author adalbert

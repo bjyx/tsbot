@@ -6,7 +6,7 @@ import java.util.List;
 import cards.HandManager;
 import game.GameData;
 import game.PlayerList;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command handling cards played on the space race. 
  * @author adalbert

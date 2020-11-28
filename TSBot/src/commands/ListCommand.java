@@ -5,8 +5,8 @@ import java.util.List;
 
 import game.GameData;
 import game.PlayerList;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.MessageBuilder;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.MessageBuilder;
 /**
  * The command that provides a list of the people who are playing this. 
  * @author adalbert

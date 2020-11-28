@@ -11,7 +11,7 @@ import game.GameData;
 import game.PlayerList;
 import main.Common;
 import map.MapManager;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import powerstruggle.PowerStruggle;
 import powerstruggle.Scoring;
 import powerstruggle.StruggleCard;

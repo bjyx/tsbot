@@ -3,8 +3,8 @@ package main;
 import java.awt.Color;
 
 import game.GameData;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.Role;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
 
 /**
  * A class used to store things that may be used across multiple classes. 

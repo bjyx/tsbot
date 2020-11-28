@@ -6,11 +6,8 @@ import java.util.List;
 
 import game.GameData;
 import game.PlayerList;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.requests.Route;
-import net.dv8tion.jda.core.requests.restaction.RoleAction;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command allowing people to join the game.
  * @author adalbert
@@ -21,22 +18,22 @@ public class JoinCommand extends Command {
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.roledem==null) {
 			if (e.getGuild().getRolesByName("DFDEM", true).isEmpty()) {
-				GameData.roledem = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
+				GameData.roledem = e.getGuild().createRole()
 						.setName("DFDEM").setColor(Color.BLUE).setMentionable(true).complete();
 			}
 			else {
 				GameData.roledem = e.getGuild().getRolesByName("DFDEM", true).get(0);
 			}
 			if (e.getGuild().getRolesByName("DFCOM", true).isEmpty()) {
-				GameData.rolecom = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
+				GameData.rolecom = e.getGuild().createRole()
 						.setName("DFCOM").setColor(Color.RED).setMentionable(true).complete();
 			}
 			else {
 				GameData.rolecom = e.getGuild().getRolesByName("DFCOM", true).get(0);
 			}
 			for (Member m : e.getGuild().getMembers()) {
-				if (m.getRoles().contains(GameData.roledem)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roledem).complete();
-				if (m.getRoles().contains(GameData.rolecom)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolecom).complete();
+				if (m.getRoles().contains(GameData.roledem)) e.getGuild().removeRoleFromMember(m, GameData.roledem).complete();
+				if (m.getRoles().contains(GameData.rolecom)) e.getGuild().removeRoleFromMember(m, GameData.rolecom).complete();
 			}
 		}
 		if (GameData.hasGameEnded()) {

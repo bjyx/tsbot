@@ -10,7 +10,7 @@ import events.Stasi;
 import game.GameData;
 import game.PlayerList;
 import main.Common;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command allowing players to play cards.
  * @author adalbert

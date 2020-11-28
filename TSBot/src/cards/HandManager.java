@@ -15,8 +15,8 @@ import game.GameData;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import readwrite.ReadWrite;
 import turnzero.NationalistChina;
 /**

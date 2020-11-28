@@ -7,7 +7,7 @@ import cards.CardList;
 import cards.HandManager;
 import game.GameData;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 /**
  * The Our Man In Tehran Card.
  * @author adalbert

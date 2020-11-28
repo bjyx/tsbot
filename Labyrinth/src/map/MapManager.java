@@ -713,63 +713,7 @@ public class MapManager {
 			//be: soft
 			map.get(5).setPosture(-1);
 			break;
-		case 8: //assad
-			//us hard
-			map.get(0).setPosture(1);
-			//iq: poor neutral, 2M2C, 1A1R
-			map.get(18).setPosture(2);
-			map.get(18).setGovernance(3);
-			map.get(18).editUnits(-1, 2);
-			map.get(18).editUnits(1, 2);
-			map.get(18).spring = new int[] {1, 1};
-			//bh: fair ally, 2T, 1A
-			map.get(21).setPosture(1);
-			map.get(21).setGovernance(2);
-			map.get(21).editUnits(-2, 2);
-			map.get(21).spring[0] = 1;
-			//pk: poor ally, 1C, 1R
-			map.get(25).setPosture(1);
-			map.get(25).setGovernance(2);
-			map.get(25).editUnits(1, 1);
-			map.get(25).spring[1] = 1;
-			//af: poor ally, 4T2C
-			map.get(24).setGovernance(3);
-			map.get(24).setPosture(1);
-			map.get(24).editUnits(-2, 4);
-			map.get(24).editUnits(1, 2);
-			//sy: cw fair neut, 2C, 1A1R
-			map.get(14).setPosture(2);
-			map.get(14).setGovernance(2);
-			map.get(14).cw = true;
-			map.get(14).editUnits(-1, 3);
-			map.get(14).editUnits(1, 2);
-			//eg: fair ally, 1A1R
-			map.get(34).setPosture(1);
-			map.get(34).setGovernance(2);
-			map.get(34).spring = new int[] {1, 1};
-			//tr: fair ally, aid
-			map.get(13).setPosture(1);
-			map.get(13).setGovernance(2);
-			map.get(13).aid=1;
-			//ly: poor neut
-			map.get(35).setPosture(2);
-			map.get(35).setGovernance(3);
-			//ml: poor neut, 1C
-			map.get(38).setPosture(2);
-			map.get(38).setGovernance(3);
-			map.get(38).editUnits(1, 1);
-			//gb: hard
-			map.get(2).setPosture(1);
-			//fr: hard
-			map.get(4).setPosture(1);
-			//dk: soft
-			map.get(7).setPosture(-1);
-			//it: hard
-			map.get(8).setPosture(1);
-			//ru: soft
-			map.get(11).setPosture(-1);
-			break;
-		case 9: //isil
+		case 8: //isil
 			//us hard
 			map.get(0).setPosture(1);
 			//iq: poor neutral, 2M2C, 1A1R
@@ -797,7 +741,7 @@ public class MapManager {
 			map.get(14).cw = true;
 			map.get(14).editUnits(-1, 3);
 			map.get(14).editUnits(2, 4);
-			caliph = 14;
+			caliph = 14; //raqqa
 			//ng: poor neutral, 2 cells
 			map.get(39).religion = 0; //set to muslim
 			map.get(39).setPosture(2);
@@ -811,7 +755,7 @@ public class MapManager {
 			//be: hard
 			map.get(5).setPosture(1);
 			break;
-		case 10: //campaign awk
+		case 9: //campaign awk
 			//us hard
 			map.get(0).setPosture(1);
 			//ly: poor adv
@@ -841,7 +785,7 @@ public class MapManager {
 			//so: besieged
 			map.get(31).br = true;
 			break;
-		case 11: //campaign awk althist
+		case 10: //campaign awk althist
 			//us hard
 			map.get(0).setPosture(1);
 			//ly: poor adv
@@ -871,7 +815,7 @@ public class MapManager {
 			//so: besieged
 			map.get(31).br = true;
 			break;
-		case 12: //fall of isil
+		case 11: //fall of isil
 			//us hard
 			map.get(0).setPosture(1);
 			//iq: poor neutral, 2M3C; advisors
@@ -880,6 +824,7 @@ public class MapManager {
 			map.get(18).editUnits(-1, 2);
 			map.get(18).editUnits(2, 3);
 			map.get(18).cw = true;
+			map.get(18).advisors = true;
 			//bh: fair ally, 2T
 			map.get(21).setPosture(1);
 			map.get(21).setGovernance(2);
@@ -895,7 +840,7 @@ public class MapManager {
 			map.get(14).cw = true;
 			map.get(14).editUnits(-1, 2);
 			map.get(14).editUnits(2, 4);
-			caliph = 14;
+			caliph = 14; //raqqa
 			//ng: poor ally, 1 cells
 			map.get(39).religion = 0; //set to muslim
 			map.get(39).setPosture(1);
@@ -904,7 +849,7 @@ public class MapManager {
 			//be: hard
 			map.get(5).setPosture(1);
 			break;
-		case 13: //trump
+		case 12: //trump
 			//us hard
 			map.get(0).setPosture(1);
 			//iq: poor neutral, 2M3C; advisors
@@ -942,6 +887,7 @@ public class MapManager {
 			map.get(14).cw = true;
 			map.get(14).editUnits(-1, 2);
 			map.get(14).editUnits(1, 1);
+			map.get(14).advisors = true;
 			//ir: islamist, 3 cell
 			map.get(22).religion = 1; //set to muslim
 			map.get(22).setPosture(3);
@@ -956,7 +902,7 @@ public class MapManager {
 			//pk: 2M
 			map.get(25).editUnits(-1, 2);
 			break;
-		case 14: //hillary
+		case 13: //hillary
 			//us soft
 			map.get(0).setPosture(-1);
 			//iq: poor neutral, 2M3C; advisors
@@ -994,6 +940,7 @@ public class MapManager {
 			map.get(14).cw = true;
 			map.get(14).editUnits(-1, 2);
 			map.get(14).editUnits(1, 1);
+			map.get(14).advisors = true;
 			//ir: islamist, 3 cell
 			map.get(22).religion = 1; //set to muslim
 			map.get(22).setPosture(3);
@@ -1010,67 +957,37 @@ public class MapManager {
 			//ru: hard
 			map.get(11).setPosture(1);
 			break;
+		case 14:
+			//us hard
+			map.get(0).setPosture(1);
+			//ly: poor adv
+			map.get(35).setPosture(3);
+			map.get(35).setGovernance(3);
+			//sy: fair adv
+			map.get(14).setPosture(3);
+			map.get(14).setGovernance(2);
+			//iq: poor adv
+			map.get(18).setPosture(3);
+			map.get(18).setGovernance(3);
+			//sa: poor ally, 2 troops
+			map.get(19).setPosture(1);
+			map.get(19).setGovernance(3);
+			map.get(19).editUnits(-2, 2);
+			//bh: fair ally, 2 troops
+			map.get(21).setPosture(1);
+			map.get(21).setGovernance(2);
+			map.get(21).editUnits(-2, 2);
+			//pk: fair neut
+			map.get(25).setPosture(2);
+			map.get(25).setGovernance(2);
+			//af: ir, 4 sleepers
+			map.get(24).setGovernance(4);
+			map.get(24).setPosture(3);
+			map.get(24).editUnits(1, 4);
+			//so: besieged
+			map.get(31).br = true;
+			break;
 		case 15:
-			//us hard
-			map.get(0).setPosture(1);
-			//ly: poor adv
-			map.get(35).setPosture(3);
-			map.get(35).setGovernance(3);
-			//sy: fair adv
-			map.get(14).setPosture(3);
-			map.get(14).setGovernance(2);
-			//iq: poor adv
-			map.get(18).setPosture(3);
-			map.get(18).setGovernance(3);
-			//sa: poor ally, 2 troops
-			map.get(19).setPosture(1);
-			map.get(19).setGovernance(3);
-			map.get(19).editUnits(-2, 2);
-			//bh: fair ally, 2 troops
-			map.get(21).setPosture(1);
-			map.get(21).setGovernance(2);
-			map.get(21).editUnits(-2, 2);
-			//pk: fair neut
-			map.get(25).setPosture(2);
-			map.get(25).setGovernance(2);
-			//af: ir, 4 sleepers
-			map.get(24).setGovernance(4);
-			map.get(24).setPosture(3);
-			map.get(24).editUnits(1, 4);
-			//so: besieged
-			map.get(31).br = true;
-			break;
-		case 16:
-			//us hard
-			map.get(0).setPosture(1);
-			//ly: poor adv
-			map.get(35).setPosture(3);
-			map.get(35).setGovernance(3);
-			//sy: fair adv
-			map.get(14).setPosture(3);
-			map.get(14).setGovernance(2);
-			//iq: poor adv
-			map.get(18).setPosture(3);
-			map.get(18).setGovernance(3);
-			//sa: poor ally, 2 troops
-			map.get(19).setPosture(1);
-			map.get(19).setGovernance(3);
-			map.get(19).editUnits(-2, 2);
-			//bh: fair ally, 2 troops
-			map.get(21).setPosture(1);
-			map.get(21).setGovernance(2);
-			map.get(21).editUnits(-2, 2);
-			//pk: fair neut
-			map.get(25).setPosture(2);
-			map.get(25).setGovernance(2);
-			//af: ir, 4 sleepers
-			map.get(24).setGovernance(4);
-			map.get(24).setPosture(3);
-			map.get(24).editUnits(1, 4);
-			//so: besieged
-			map.get(31).br = true;
-			break;
-		case 17:
 			//us hard
 			map.get(0).setPosture(1);
 			//ly: poor adv
@@ -1123,6 +1040,15 @@ public class MapManager {
 			if (c.aliases.contains(alias)) return c.id;
 		}
 		return -1;
+	}
+	
+	/**
+	 * Searches for a country with the provided alias. 
+	 * @param alias is... well...
+	 * @return the ID of the country with the given alias. If no country has this alias, it provides -1. 
+	 */
+	public static int length() {
+		return map.size();
 	}
 	/**
 	 * Sets up the board in a custom manner, as dictated by the provided string. 

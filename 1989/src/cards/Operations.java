@@ -13,8 +13,8 @@ import game.GameData;
 import logging.Log;
 import main.Common;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.TextChannel;
 /**
  * Class for handling all related to operations.
  * @author adalbert

@@ -12,9 +12,9 @@ import logging.Log;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
 import readwrite.ReadWrite;
 /**
  * Deals with the variables in the game, including the score, the space race, and time.

@@ -7,7 +7,7 @@ import commands.StartCommand;
 import game.GameData;
 import main.Common;
 import main.Launcher;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 
 /**
@@ -32,6 +32,12 @@ public abstract class Card {
 	 * @param args includes the parameters for the event.
 	 */
 	public abstract void onEvent(int sp, String[] args);
+	
+	/**
+	 * The event associated with the card when played by a solitaire bot. 
+	 * @param sp is the player *playing* the card (to be distinguished from the phasing player, in the case of self-inflicted Grain Sales playing a neutral card, for example).
+	 */
+	//public abstract void onEventBot(int sp);
 	/**
 	 * Determines whether the card is playable at the current moment.
 	 * @param sp is the superpower playing the card (only relevant for Red Scare under CCW rules).
@@ -76,11 +82,6 @@ public abstract class Card {
 	 * @return A string.
 	 */
 	public abstract String getArguments();
-	/**
-	 * There are multiple "Jihadist Personality" cards that affect how certain cards are played.
-	 * @return a boolean value.
-	 */
-	public abstract boolean isJihadistPersonality();
 	
 	/**
 	 * Gives the ID of the card.

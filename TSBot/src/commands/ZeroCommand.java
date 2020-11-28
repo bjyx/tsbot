@@ -9,7 +9,7 @@ import game.GameData;
 import game.PlayerList;
 import logging.Log;
 import turnzero.TurnZero;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command handling Turn Zero, an optional step in the setup process. 
  * @author adalbert

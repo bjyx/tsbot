@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import commands.StartCommand;
 import game.Die;
-import game.GameData;
+//import game.GameData;
 import logging.Log;
 import main.Common;
 import main.Launcher;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 /**
  * These are called countries as a legacy of Twilight Struggle. 
  * @author adalbert
@@ -101,6 +100,10 @@ public class Country {
 	 * Besieged Regime marker.
 	 */
 	public boolean br = false;
+	/**
+	 * Advisors - +1 militia at turn start.
+	 */
+	public boolean advisors = false;
 	/**
 	 * The form used in the shorthand of the log, which is also a valid alias. Also used to pull out a flag. 
 	 */
@@ -235,6 +238,14 @@ public class Country {
 		return -1;
 	}
 	
+	public String unitString() {
+		String str = "";
+		for (int i : units) {
+			str += Common.units_e[i+3];
+		}
+		return str;
+	}
+	
 	public String toString() {
 		return ":flag_" + this.shorthand + ":";
 	}
@@ -272,10 +283,7 @@ public class Country {
 			str += MapManager.get(i);
 		}
 		builder.addField("Adjacencies", str, false);
-		for (int i : units) {
-			str += Common.units_e[i+3];
-		}
-		builder.addField("Units", str, false);
+		builder.addField("Units", unitString(), false);
 		return builder.build();
 	}
 }

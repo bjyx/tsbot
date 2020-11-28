@@ -11,7 +11,7 @@ import events.Decision;
 import game.GameData;
 import logging.Log;
 import main.Launcher;
-import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.api.EmbedBuilder;
 /**
  * The First Lightning Card from the Promo Pack.
  * @author adalbert

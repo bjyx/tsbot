@@ -11,7 +11,7 @@ import game.PlayerList;
 import logging.Log;
 import main.Launcher;
 import map.MapManager;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command handling setting up the initial board state. 
  * @author adalbert

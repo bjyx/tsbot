@@ -5,9 +5,8 @@ import java.util.List;
 
 import game.GameData;
 import game.PlayerList;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.GuildController;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command that resets the bot for a new game.
  * @author adalbert
@@ -31,8 +30,8 @@ public class ResetCommand extends Command {
 		consent[0]=false;
 		consent[1]=false;
 		for (Member m : e.getGuild().getMembers()) {
-			if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
-			if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
+			if (m.getRoles().contains(GameData.roleusa)) e.getGuild().removeRoleFromMember(m, GameData.roleusa).complete();
+			if (m.getRoles().contains(GameData.rolessr)) e.getGuild().removeRoleFromMember(m, GameData.rolessr).complete();
 		}
 		GameData.reset();
 		

@@ -11,15 +11,11 @@ import game.GameData;
 import game.PlayerList;
 import logging.Log;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.PermissionOverride;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.requests.Route;
-import net.dv8tion.jda.core.requests.restaction.ChannelAction;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.PermissionOverride;
+import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import turnzero.TurnZero;
 /**
  * The command that starts the game.
@@ -93,7 +89,7 @@ public class StartCommand extends Command {
 		// create two channels, one for the US and one for the USSR, accessible only by the respective role
 		
 		if (e.getGuild().getTextChannelsByName("ts-usa", true).isEmpty()) {
-			GameData.txtusa = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"ts-usa", e.getGuild(), ChannelType.TEXT)
+			GameData.txtusa = (TextChannel) e.getGuild().createTextChannel("ts-usa")
 					.setTopic("O thus be it ever, when freemen shall stand\n" + 
 							"Between their loved homes and the war's desolation.\n" + 
 							"Blest with vict'ry and peace, may the Heav'n rescued land\n" + 
@@ -111,7 +107,7 @@ public class StartCommand extends Command {
 			GameData.txtusa.putPermissionOverride(GameData.roleusa).setPermissions(68672, 0).queue();
 		}
 		if (e.getGuild().getTextChannelsByName("ts-ussr", true).isEmpty()) {
-			GameData.txtssr = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"ts-ussr", e.getGuild(), ChannelType.TEXT)
+			GameData.txtssr = e.getGuild().createTextChannel("ts-ussr")
 					.setTopic("В победе бессмертных идей коммунизма\n" + 
 							"Мы видим грядущее нашей страны,\n" + 
 							"И Красному знамени славной Отчизны\n" + 
@@ -130,8 +126,8 @@ public class StartCommand extends Command {
 		GameData.startGame();
 		PlayerList.detSides();
 		// give the roles to the respective countries
-		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getUSA()), GameData.roleusa).complete();
-		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getSSR()), GameData.rolessr).complete();
+		e.getGuild().addRoleToMember(e.getGuild().getMember(PlayerList.getUSA()), GameData.roleusa).complete();
+		e.getGuild().addRoleToMember(e.getGuild().getMember(PlayerList.getSSR()), GameData.rolessr).complete();
 		Log.writeToLog("New Game: "+settings+" "+SetupCommand.handicap);
 		ruleset = settings;
 		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Twilight Struggle Game Has Started.").setDescription(":hourglass: It is now seven minutes to midnight and counting. Good luck.").setColor(Color.WHITE);

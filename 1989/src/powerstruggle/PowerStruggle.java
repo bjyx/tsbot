@@ -15,8 +15,8 @@ import game.Die;
 import game.GameData;
 import main.Common;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 /**
  * A Power Struggle in 1989.

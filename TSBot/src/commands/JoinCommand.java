@@ -6,11 +6,8 @@ import java.util.List;
 
 import game.GameData;
 import game.PlayerList;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.requests.Route;
-import net.dv8tion.jda.core.requests.restaction.RoleAction;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command allowing people to join the game.
  * @author adalbert
@@ -21,14 +18,14 @@ public class JoinCommand extends Command {
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		if (GameData.roleusa==null) {
 			if (e.getGuild().getRolesByName("TSUSA", true).isEmpty()) {
-				GameData.roleusa = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
+				GameData.roleusa = e.getGuild().createRole()
 						.setName("TSUSA").setColor(Color.BLUE).setMentionable(true).complete();
 			}
 			else {
 				GameData.roleusa = e.getGuild().getRolesByName("TSUSA", true).get(0);
 			}
 			if (e.getGuild().getRolesByName("TSSSR", true).isEmpty()) {
-				GameData.rolessr = new RoleAction(Route.Roles.CREATE_ROLE.compile(e.getGuild().getId()), e.getGuild())
+				GameData.rolessr = e.getGuild().createRole()
 						.setName("TSSSR").setColor(Color.RED).setMentionable(true).complete();
 			}
 			else {
@@ -36,8 +33,8 @@ public class JoinCommand extends Command {
 			}
 		}
 		for (Member m : e.getGuild().getMembers()) {
-			if (m.getRoles().contains(GameData.roleusa)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.roleusa).complete();
-			if (m.getRoles().contains(GameData.rolessr)) new GuildController(e.getGuild()).removeRolesFromMember(m, GameData.rolessr).complete();
+			if (m.getRoles().contains(GameData.roleusa)) e.getGuild().removeRoleFromMember(m, GameData.roleusa).complete();
+			if (m.getRoles().contains(GameData.rolessr)) e.getGuild().removeRoleFromMember(m, GameData.rolessr).complete();
 		}
 		if (GameData.hasGameEnded()) {
 			sendMessage(e, ":x: Have you tried turning it off and on again?");

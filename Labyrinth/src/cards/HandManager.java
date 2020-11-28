@@ -2,25 +2,31 @@ package cards;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import cards.CardList;
-import commands.TimeCommand;
+//import commands.TimeCommand;
 import events.Card;
 import events.CardEmbedBuilder;
-import events.Decision;
+//import events.Decision;
 import game.GameData;
 import logging.Log;
 import main.Common;
 import main.Launcher;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 /**
  * Manages everything related to the cards used in the game - which cards are in the Deck, which are Discarded, which are in the players' hands, and which have ongoing effects.
  * @author adalbert
  *
  */
 public class HandManager {
+	/**
+	 * Whether the decks in the game operate on a reshuffle discard principle. 
+	 */
+	public static boolean reshuffle = true;
 	/**
 	 * The cards in the hand of the American player.
 	 */
@@ -30,7 +36,7 @@ public class HandManager {
 	 */
 	public static ArrayList<Integer> JihHand = new ArrayList<Integer>();
 	/**
-	 * The cards in the deck.
+	 * The cards in the deck currently in use.
 	 */
 	public static ArrayList<Integer> Deck = new ArrayList<Integer>();
 	/**
@@ -160,30 +166,190 @@ public class HandManager {
 	 * @param era is one of 0, 1, and 2, representing the early, mid, and late wars.
 	 */
 	public static void seedDecks(int scenario) {
-		//TODO
+		List<Integer> x, y;
+		switch (scenario) {
+		case 0:
+			for (int i=1; i<=120; i++) {
+				Deck.add(i);
+			}
+			break;
+		case 1:
+			for (int i=1; i<=120; i++) {
+				if (i!=78) Deck.add(i); //dodge Axis of Evil
+				else Removed.add(i);
+			}
+			break;
+		case 2:
+			x = Arrays.asList(43, 109);
+			for (int i=1; i<=120; i++) {
+				if (!x.contains(i)) Deck.add(i);
+				else Removed.add(i);
+			}
+			addEffect(43); //Patriot
+			addEffect(80); //FATA
+			break;
+		case 3:
+			x = Arrays.asList(43, 109, 5, 57, 116, 37);
+			for (int i=1; i<=120; i++) {
+				if (!x.contains(i)) Deck.add(i);
+				else Removed.add(i);
+			}
+			addEffect(43); //Patriot
+			addEffect(80); //FATA
+			addEffect(57); //Abu Sayyaf
+			addEffect(5); //NEST
+			addEffect(31); //Wiretap
+			addEffect(44); //Renditions
+			addEffect(34); //Enhanced
+			break;
+		case 4:
+			for (int i=121; i<=240; i++) {
+				Deck.add(i);
+			}
+			//new normal; no carryover
+			break;
+		case 5:
+			for (int i=121; i<=240; i++) {
+				Deck.add(i);
+			}
+			break;
+		case 6: //deck seeding time lol
+			Deck = new ArrayList<Integer>(Arrays.asList(124, 131, 132, 133, 134, 148, 153, 154, 164, 175, 191, 203, 206, 211, 212, 213, 220, 223, 227, 228));
+			x = Arrays.asList(123, 141, 142, 145, 151, 156, 173, 178, 180, 188, 201, 210, 215, 216, 217, 218, 221, 225, 230, 231);
+			y = Arrays.asList();
+			for (int i=121; i<=240; i++) {
+				if (!x.contains(i)&&!Deck.contains(i)) y.add(i);
+			}
+			Random random = new Random();
+			for (int i=0; i<40; i++) {
+				Deck.add(y.remove(random.nextInt(y.size()))); //40 random cards
+			}
+			reshuffle = false;
+			break;
+		case 7:
+			x = Arrays.asList(133, 185, 237);
+			for (int i=121; i<=240; i++) {
+				if (!x.contains(i)) Deck.add(i);
+				else Removed.add(i);
+			}
+			break;
+		case 8:
+			x = Arrays.asList(133, 185, 237, 151, 174, 184, 188, 194, 234);
+			for (int i=121; i<=240; i++) {
+				if (!x.contains(i)) Deck.add(i);
+				else Removed.add(i);
+			}
+			break;
+		case 9:
+			for (int i=1; i<=120; i++) {
+				Deck.add(i);
+			}
+			reshuffle = false;
+			break;
+		case 10:
+			for (int i=1; i<=240; i++) { //full deck shuffle
+				Deck.add(i);
+			}
+			break;
+		case 11:
+			for (int i=241; i<=360; i++) {
+				Deck.add(i);
+			}
+			break;
+		case 12:
+			x = Arrays.asList(303, 340, 343);
+			for (int i=241; i<=360; i++) {
+				if (!x.contains(i)) Deck.add(i);
+				else Removed.add(i);
+			}
+			addEffect(251); //Tweets on
+			break;
+		case 13:
+			x = Arrays.asList(303, 340, 343);
+			for (int i=241; i<=360; i++) {
+				if (!x.contains(i)) Deck.add(i);
+				else Removed.add(i);
+			}
+			addEffect(251); //Tweets on
+			break;
+		case 14:
+			for (int i=1; i<=120; i++) {
+				Deck.add(i);
+			}
+			reshuffle = false;
+			break;
+		case 15:
+			for (int i=1; i<=360; i++) {
+				Deck.add(i);
+			}
+			break;
+		default:
+			break;
+		}
 	}
 	/**
-	 * Deals each player a hand of eight or nine cards, depending on the era. If the deck is empty, it reshuffles the discards. (Rules 3.1, 4.1, 4.3, and 4.5B)
+	 * Deals each player a hand of cards, depending on funding or deployment. If the deck is empty, it creates a new deck based on the scenario.
 	 */
 	public static void deal() {
 		Random random = new Random();
-		while ((HandManager.effectActive(65)?7:8) > JihHand.size()||8 > USAHand.size()) {
-			if ((HandManager.effectActive(65)?7:8) > JihHand.size()&&!Deck.isEmpty()) {
+		while ((GameData.getFund()-1)/3+7 > JihHand.size()||Math.min((15-GameData.countUnits(-2)-1)/5+7, 9) > USAHand.size()) {
+			if ((GameData.getFund()-1)/3+7 > JihHand.size()&&!Deck.isEmpty()) {
 				JihHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
 			if(Deck.isEmpty()) { //Rule 4.3
-				Deck.addAll(Discard);
-				Discard.clear();
+				GameData.reshuffle--;
+				if (GameData.reshuffle==0) {
+					GameData.checkVictory(true); //game ends upon exhausting deck
+					return;
+				}
+				if (reshuffle) { //reuse the discard pile
+					Deck.addAll(Discard);
+					Discard.clear();
+				}
+				else if (GameData.scenario==6) { //second half of a seeded deck
+					for (int i=121; i<=240; i++) {
+						if (!Discard.contains(i)&&!Removed.contains(i)&&!USAHand.contains(i)&&!JihHand.contains(i)) Deck.add(i);
+					}
+				}
+				else if (GameData.scenario==14&&GameData.reshuffle==1) { //Third stage of extended campaign
+					for (int i=241; i<=360; i++) {
+						Deck.add(i);
+					}
+				}
+				else {
+					for (int i=121; i<=240; i++) { //second stage of either campaign
+						Deck.add(i);
+					}
+					GameData.awk = true;
+				}
 			}
-			if (8 > USAHand.size()&&!Deck.isEmpty()) {
+			if (Math.min((15-GameData.countUnits(-2)-1)/5+7, 9) > USAHand.size()&&!Deck.isEmpty()) {
 				USAHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
 			if(Deck.isEmpty()) { //Rule 4.3
-				Deck.addAll(Discard);
-				Discard.clear();
+				GameData.reshuffle--;
+				if (GameData.reshuffle==0) {
+					GameData.checkVictory(true);
+				}
+				if (reshuffle) { //reuse the discard pile
+					Deck.addAll(Discard);
+					Discard.clear();
+				}
+				else if (GameData.scenario==6) { //second half of a seeded deck
+					for (int i=121; i<=240; i++) {
+						if (!Discard.contains(i)&&!Removed.contains(i)&&!USAHand.contains(i)&&!JihHand.contains(i)) Deck.add(i);
+					}
+				}
+				else if (GameData.scenario==14&&GameData.reshuffle==1) { //Third stage of extended campaign
+					for (int i=241; i<=360; i++) {
+						Deck.add(i);
+					}
+				}
+				else for (int i=121; i<=240; i++) { //second stage of either campaign
+					Deck.add(i);
+				}
 			}
 		}
-		HandManager.removeEffect(65);
 	}
 	/**
 	 * Creates a MessageEmbed containing the details of the US's cards. To be sent after every turn. 
@@ -201,7 +367,7 @@ public class HandManager {
 	 * @return A MessageEmbed, containing the details of the USSR's hand.
 	 */
 	public static MessageEmbed getSUNHand() {
-		EmbedBuilder builder = new EmbedBuilder().setTitle("USSR Hand").setColor(Color.red);
+		EmbedBuilder builder = new EmbedBuilder().setTitle("Jihadist Hand").setColor(Color.green);
 		for (int c : JihHand) {
 			builder.addField(CardList.getCard(c).toString(), CardList.getCard(c).getDescription(), false);
 		}
@@ -215,8 +381,8 @@ public class HandManager {
 	 */
 	public static void play(int sp, int card, char mode, boolean a) {
 		
-		
-		//super complicated area, will nitgrit later
+		/*
+		//TODO super complicated area, will nitgrit later
 		activecard = card;
 		GameData.txtchnl.sendMessage(CardList.getCard(card).toEmbed(sp).setAuthor("Turn " + GameData.getTurn() + " " + (GameData.getAR()==0?"Headline":("AR " + ((GameData.getAR() + 1)/2) + (GameData.phasing()==0?" US":" USSR")))).build()).complete();
 		if (mode=='e') {
@@ -311,7 +477,7 @@ public class HandManager {
 			TimeCommand.operationsRequired = true;
 			Log.writeToLog("Common Europeah Home played with card for ops.");
 		}
-		TimeCommand.prompt();
+		TimeCommand.prompt();*/
 	}
 	public static boolean handContains(int sp, int card) {
 		if (sp==0) return USAHand.contains(card);

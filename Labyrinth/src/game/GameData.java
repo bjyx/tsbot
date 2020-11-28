@@ -6,17 +6,14 @@ import cards.HandManager;
 import cards.Operations;
 import events.CardEmbedBuilder;
 import events.Decision;
-import events.Samizdat;
 import logging.Log;
 import main.Common;
 import main.Launcher;
 import map.Country;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
-import powerstruggle.PowerStruggle;
-import powerstruggle.Scoring;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Role;
+import net.dv8tion.jda.api.entities.TextChannel;
 /**
  * Deals with the variables in the game, including the score, the space race, and time.
  * @author adalbert
@@ -64,9 +61,21 @@ public class GameData {
 	 */
 	private static boolean ended = false;
 	/**
+	 * Whether the rules from Awakening are in effect.
+	 */
+	public static boolean awk = false;
+	/**
+	 * Whether the rules from Forever War are in effect.
+	 */
+	public static boolean fw = false;
+	/**
 	 * Whether the first optional rule, Zakat/Strong Horse, is active.
 	 */
 	public static boolean zakat = false;
+	/**
+	 * Whether the first optional rule, Zakat/Strong Horse, is active.
+	 */
+	public static boolean stronghorse = false;
 	/**
 	 * Whether the second optional rule, Heroic Alerts, is active.
 	 */
@@ -90,7 +99,7 @@ public class GameData {
 	/**
 	 * The reshuffle count, an inbuilt timer.
 	 */
-	private static int reshuffle = 0;
+	public static int reshuffle = 1;
 	/**
 	 * The current action round (-> infinity), as a time tracker, esp. for some tracked events.
 	 */
@@ -133,7 +142,7 @@ public class GameData {
 	/**
 	 * Creates the conditions dictated by an eight-character string. AKA: no.
 	 */
-	public static boolean startCustom(int s) {
+	/*public static boolean startCustom(int s) {
 		switch (s) {
 		case 0:
 			//TODO ...
@@ -171,7 +180,7 @@ public class GameData {
 				.setColor(Common.spColor(victor))
 				.setImage(Launcher.url("victory/" + (victor==0?"us":"ji") + cause + ".png"));
 		txtchnl.sendMessage(builder.build()).complete();
-		Log.writeToLog("Game Won By " + (victor==0?"US":"SU"));
+		Log.writeToLog("Game Won By " + (victor==0?"US":"JI"));
 	}
 	
 	/**
@@ -195,17 +204,86 @@ public class GameData {
 	}
 	
 	/**
+	 * Initializes everything (i.e. prestige and funding) in {@link #GameData()} to a scenario.
+	 */
+	public static void initialize() {
+		switch (scenario) {
+		case 0:
+			prestige = 7;
+			fund = 9;
+		case 1:
+			prestige = 7;
+			fund = 9;
+		case 2:
+			prestige = 8;
+			fund = 6;
+		case 3:
+			prestige = 3;
+			fund = 5;
+		case 4:
+			prestige = 5;
+			fund = 5;
+		case 5:
+			prestige = 7;
+			fund = 6;
+		case 6:
+			prestige = 5;
+			fund = 5;
+		case 7:
+			prestige = 6;
+			fund = 6;
+		case 8:
+			prestige = 5;
+			fund = 7;
+		case 9:
+			prestige = 7;
+			fund = 9;
+		case 10:
+			prestige = 7;
+			fund = 9;
+		case 11:
+			prestige = 5;
+			fund = 6;
+		case 12:
+			prestige = 6;
+			fund = 4;
+		case 13:
+			prestige = 6;
+			fund = 4;
+		case 14:
+			prestige = 7;
+			fund = 9;
+		case 15:
+			prestige = 7;
+			fund = 9;
+		}
+	}
+	
+	/**
 	 * Resets everything in {@link #GameData()} to its initial state.
 	 */
 	public static void reset() {
 		txtchnl.sendMessage(":hourglass: Take us back.").complete();
 		started = false;
 		ended = false;
-		//TODO reset all values
+		zakat = false;
+		stronghorse = false;
+		hero = false;
+		vardiff = false;
+		scenario = 0;
+		player = 2;
+		diff = new boolean[] {false, false, false, false, false};
+		reshuffle = 1;
+		ar = 0;
+		prestige = 8;
+		fund = 9;
+		reserves = new int[] {0,0};
 		HandManager.reset();
 		txtchnl = null;
 		Country.count = 0;
 	}
+	
+	
 	
 	/**
 	 * Moves the turn forward, performing all functions necessary at the end of the turn.
@@ -213,66 +291,10 @@ public class GameData {
 	public static void advanceTurn() {
 		CardEmbedBuilder builder = new CardEmbedBuilder();
 		builder.setTitle("End of Turn Summary");
-		checkScore(false, false);
-		int scoring = HandManager.checkScoring();
-		if (scoring!=0) {
-			endGame((scoring/2+1)%2, 3); //1 -> 1, 2 -> 0, 3 -> 0
-		} //stage 4
-		if (HandManager.effectActive(104)) { //stage 5
-			dec = new Decision(0,104);
-			HandManager.addEffect(1040);
-			builder.addField("New Year's Eve Party!", "The Democrat may select a Communist country to hold a Power Struggle in.", false);
-			txtchnl.sendMessage(builder.build()).complete();
-			return;
-			//TODO you're gonna have to code in this later
-		}
-		if (turn==10) { // stage 7
-			for (int i=0; i<6; i++) {
-				Scoring.score(i);
-				if (PowerStruggle.retained[i]!=-1) builder.changeVP(-4);
-			}
-			if (HandManager.effectActive(971)) {
-				builder.addField("The Ceaușescus escape Romania.", "", false);
-				builder.changeVP(-2);
-			}
-			checkScore(true, false);
-			return;
-		}
-		turn++; // stage 6
-		ar = 1; 
-		hasT2[0] = false; 
-		hasT2[1] = false;
-		//TODO effect reminders
-		HandManager.removeEffect(15); //Honecker
-		if (HandManager.removeEffect(13)) builder.addField("","The Stasi have moved you off the watch-list. The Communist no longer has advance knowledge of the Democrat's plays.",false);	//Stasi
-		if (HandManager.removeEffect(50)) builder.addField("", "The Democrat loses +1 Operations bonus.", false);	//Sinatra
-		if (HandManager.removeEffect(58)) builder.addField("Hungarian Travel Banned","The Democrat loses bonus to Operations in East Germany.",false);	//A-H Border
-		if (HandManager.removeEffect(63)) builder.addField("","The Democrat will now pay normal cost to place influence in Communist East German spaces.",false);	//Genscher
-		if (HandManager.removeEffect(25)) builder.addField("","The Communist loses +1 Operations bonus.",false);;	//Perestroika
-		if (HandManager.removeEffect(74)) builder.addField("","The Democrat loses bonus to support checks in Eastern Europe.",false);	//FRG
-		if (HandManager.removeEffect(59)) builder.addField("","US rolls on support checks in East Germany are no longer penalized.",false);	//Grenz
-		if (HandManager.removeEffect(49)) builder.addField("Debt Burden Lifted","USSR support checks are no longer restricted by region.",false);	//Debt Burden
-		if (HandManager.removeEffect(77)) {
-			builder.addField("","The card set aside by the Democrat has returned to the hand.",false);	//Samizdat
-			HandManager.addToHand(0, Samizdat.card);
-		}
-		if (HandManager.removeEffect(101)) builder.addField("","US rolls on support checks in Romania are no longer penalized.",false);	//Elena
-		if (HandManager.removeEffect(80)) builder.addField("","Democrat malus to Operations removed.",false);	//Prudence
-		if (HandManager.removeEffect(81)) builder.addField("","Communist malus to Operations removed.",false);
-		if (HandManager.removeEffect(1000)) builder.addField("Crowd Mentality","Communist Support Checks in Democratic spaces no longer have a -1 malus.",false);	//Stand Fast
-		if (HandManager.removeEffect(1001)) builder.addField("Crowd Mentality","Democratic Support Checks in Communist spaces no longer have a -1 malus.",false);
-		if (turn==4) {
-			Log.writeToLog("MW Cards Added.");
-			HandManager.addToDeck(1); //Rule 4.4
-			builder.addField("Mid War","Mid War cards now available for use. You will now get nine cards per turn instead of eight, and there will be eight action rounds per turn.",false);
-		}
-		if (turn==8) {
-			Log.writeToLog("LW Cards Added.");
-			HandManager.addToDeck(2); //Rule 4.4
-			builder.addField("Late War","Late War cards now available for use.",false);
-		}
-		if (hasAbility(0, 7)||hasAbility(1,7)) Operations.seven %= 2;
-		if (hasAbility(0, 8)||hasAbility(1,8)) Operations.eight %= 2;
+		checkVictory(false);
+		
+		//TODO lapses
+		
 		txtchnl.sendMessage(builder.build()).complete();
 	}
 	
@@ -280,48 +302,17 @@ public class GameData {
 	 * Performs all functions necessary at the start of the turn.
 	 */
 	public static void startTurn() {
-		txtchnl.sendMessage(new CardEmbedBuilder().setTitle("Start of Turn " + getTurn()).addField("Cards have been dealt.", "", false).build()).complete();
+		txtchnl.sendMessage(new CardEmbedBuilder().setTitle("Start of Turn").addField("Cards have been dealt.", "", false).build()).complete();
 		HandManager.deal(); // stage 1; also reshuffles automatically
-		Log.writeToLog("-+-+- Turn "+getTurn()+" -+-+-");
-	}
-	
-	/**
-	 * @return {@link #turn}
-	 */
-	public static int getTurn() {
-		return turn;
-	}
-	/**
-	 * The era in which the current turn resides.
-	 * @return <ul>
-	 * <li> -1 if setting up.
-	 * <li> 0 if Early War.
-	 * <li> 1 if Mid War.
-	 * <li> 2 if Late War.
-	 * </ul>
-	 */
-	public static int getEra() {
-		if (turn==0) return -1;
-		if (turn<4) return 0;
-		if (turn>7) return 2;
-		return 1;
+		Log.writeToLog("-+-+- New Turn -+-+-");
 	}
 	/**
 	 * Advances the action round.
 	 */
 	public static void advanceTime() {
-		if (HandManager.Effects.contains(15)&&ar==14) {
-			HandManager.removeEffect(15);
-			ar = 15; 
-			return; //Honecker's effect, end of AR7
-		}
-		if (ar>=14) { //AR7 or later
-			advanceTurn();
-			return;
-		}
-		ar++; //if you don't advance the turn or have anything to do with extra action rounds
-		HandManager.activecard = 0;
-		Log.writeToLog("--- New AR ---");
+		ar++;
+		//TODO special effect at ar%4==0
+		Log.writeToLog("--- AR "+ar+" ---");
 	}
 	
 	public static int arsLeft() {
@@ -339,128 +330,132 @@ public class GameData {
 		return ar;
 	}
 	/**
-	 * Determines the superpower currently executing his actions.
-	 * @return 0 for the US, 1 for the USSR.
+	 * Determines the superpower currently executing actions.
+	 * @return 0 for the US, 1 for the Jihadist.
 	 */
 	public static int phasing() {
-		return ar%2;
+		return ((ar%4)/2+1)%2;
 	}
 	/**
 	 * Determines the superpower not currently executing his actions.
-	 * @return 0 for the US, 1 for the USSR.
+	 * @return 0 for the US, 1 for the Jihadist.
 	 */
 	public static int opponent() {
 		return (phasing()+1)%2;
 	}
 	/**
-	 * Decrement {@link #ussr}, and changes the VP accordingly. The Baltic Chain is a linear progression, so this is possible.
-	 */
-	public static void setStab() {
-		ussr--;
-		Log.writeToLog("USSR -1 Stability");
-		changeScore(ussrVP[ussr]);
-	}
-	/**
-	 * 
-	 * @return {@link #ussr}
-	 */
-	public static int getStab() {
-		return ussr;
-	}
-	/**
 	 * Adds 1 to a party's progress on the T2 Track.
 	 * @param sp is 0 if US, 1 if USSR.
 	 */
-	public static void addT2(int sp) {
-		tsquare[sp]++;
-		Log.writeToLog("T2 " + (sp==0?"D":"C") + " + 1");
+	public static void changeReserves(int sp, int amt) {
+		reserves[sp]+=amt;
+		reserves[sp] = Math.min(2, Math.max(0, reserves[sp]));
+		Log.writeToLog("R" + (sp==0?"U":"J") + (amt>0?"+":"") + amt);
 	}
 	/**
 	 * 
 	 * @param sp is 0 if US, 1 if USSR.
 	 * @return {@link #tsquare}[sp].
 	 */
-	public static int getT2(int sp) {
-		return tsquare[sp];
+	public static int getReserves(int sp) {
+		return reserves[sp];
 	}
 	/**
-	 * Changes {@link #score}.
-	 * @param amt is the amount to change {@link #score} by.
+	 * Changes {@link #prestige}.
+	 * @param amt is the amount to change {@link #prestige} by.
 	 */
-	public static void changeScore(int amt) {
-		if (HandManager.effectActive(99)&&GameData.phasing()==0) {
-			Log.writeToLog("Ligachev: ");
-			CardEmbedBuilder builder = new CardEmbedBuilder();
-			builder.setTitle("Ligachev Vindicated")
-					.setColor(Color.red);
-			HandManager.removeEffect(99); //this has to come before because otherwise it's an infinite loop
-			builder.changeVP(-3);
-			GameData.txtchnl.sendMessage(builder.build()).complete();
-			GameData.checkScore(false, false);
-		}
-		score += amt;
-		Log.writeToLog("VP" + (amt>0?"+":"") + amt);
+	public static void changePrestige(int amt) {
+		prestige += amt;
+		prestige = Math.min(12, Math.max(1, prestige));
+		Log.writeToLog("P" + (amt>0?"+":"") + amt);
 	}
 	/**
 	 * 
-	 * @return {@link #score}
+	 * @return {@link #prestige}
 	 */
-	public static int getScore() {
-		return score;
+	public static int getPrestige() {
+		return prestige;
 	}
 	/**
-	 * Checks the score for victory conditions, and ends the game accordingly.
-	 * @param f is true if triggered under final scoring or New Years' Eve.
-	 * @param w is true only if triggered under New Years' Eve.
+	 * Changes {@link #fund}.
+	 * @param amt is the amount to change {@link #fund} by.
 	 */
-	public static void checkScore(boolean f, boolean w) {
-		if (score<=-20) {
-			endGame(1, 0);
+	public static void changeFund(int amt) {
+		fund += amt;
+		fund = Math.min(9, Math.max(1, fund));
+		Log.writeToLog("$" + (amt>0?"+":"") + amt);
+	}
+	/**
+	 * 
+	 * @return {@link #fund}
+	 */
+	public static int getFund() {
+		return fund;
+	}
+	/**
+	 * Checks for victory conditions, and ends the game accordingly.
+	 * @param fin is true if triggered under final scoring.
+	 */
+	public static void checkVictory(boolean fin) {
+		if (countUnits(1)==0) {
+			endGame(0, 2);
 			return;
 		}
-		if (score>=20) {
+		int g = 0, f = 0, p = 0, r = 0, c = 0;
+		boolean i2 = false;
+		for (int i=0; i<MapManager.length(); i++) {
+			if (MapManager.get(i).religion<=1) {
+				if (MapManager.get(i).getGovernance(false)<=2) {
+					f++;
+					if (MapManager.get(i).getGovernance(false)==1) {
+						g+=MapManager.get(i).res;
+					}
+				}
+				if (MapManager.get(i).getGovernance(false)>=3) {
+					p++;
+					if (MapManager.get(i).getGovernance(false)==4) {
+						r+=MapManager.get(i).res;
+						if (!i2) {
+							for (Integer j : MapManager.get(i).adj) {
+								if (MapManager.get(j).getGovernance(false)==4) i2=true;
+							}
+						}
+					}
+				}
+				if (fin && MapManager.get(i).rc==1) c++;
+			}
+		}
+		if (g>=12) {
 			endGame(0, 0);
 			return;
 		}
-		int x = 0;
-		if (!f) return;
-		if (w) x=4;
-		if (score<0) endGame(1,x);
-		else if (score>0) endGame(0,x);
-		else endGame(-1,x);
+		if (r>=6&&i2) {
+			endGame(1, 0);
+			return;
+		}
+		if (f>=15) {
+			endGame(0, 1);
+			return;
+		}
+		if (p>=15&&prestige==1) {
+			endGame(1, 1);
+			return;
+		}
+		if (!fin) return;
+		if (g>2*(r+c)) {
+			endGame(0, 0);
+		}
+		else endGame(0, 1);
 	}
 	/**
-	 * Marks the superpower as having sent a card to China for that turn.
+	 * Counts units of the given type in each country. 
 	 * @param sp is 0 if US, 1 if USSR.
 	 */
-	public static void toT2(int sp) {
-		hasT2[sp] = true;
-	}
-	/**
-	 * Determines the superpower currently ahead on the space race.
-	 * @return -1 if tied, 0 if US, 1 if USSR.
-	 */
-	public static int aheadInSpace() {
-		if (tsquare[0]<tsquare[1]) return 1;
-		if (tsquare[1]<tsquare[0]) return 0;
-		return -1;
-	}
-	/**
-	 * Determines whether a superpower has reached its allotted amount of cards able to be sent on the space race.
-	 * @param sp is 0 if US, 1 if USSR.
-	 * @return true iff the superpower in question has used all opportunities for spacing. 
-	 */
-	public static boolean hasT2(int sp) {
-		return hasT2[sp];
-	}
-	/**
-	 * Determines whether a superpower has an ability granted to it by the space race.
-	 * @param sp is 0 if US, 1 if USSR.
-	 * @param rank is the rank in question.
-	 * @param alt asks whether the alternate space track is active.
-	 * @return true if {@link #space}[sp] >= rank and {@link #space}[(sp+1)%2] < rank.
-	 */
-	public static boolean hasAbility(int sp, int rank) {
-		return (tsquare[sp]>=rank) && (tsquare[(sp+1)%2]<rank);
+	public static int countUnits(int type) {
+		int x=0;
+		for (int i=0; i<MapManager.length(); i++) {
+			x += MapManager.get(i).countUnits(type);
+		}
+		return x;
 	}
 }

@@ -10,15 +10,10 @@ import game.GameData;
 import game.PlayerList;
 import logging.Log;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.MessageBuilder;
-import net.dv8tion.jda.core.entities.ChannelType;
-import net.dv8tion.jda.core.entities.PermissionOverride;
-import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.managers.GuildController;
-import net.dv8tion.jda.core.requests.Route;
-import net.dv8tion.jda.core.requests.restaction.ChannelAction;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.MessageBuilder;
+import net.dv8tion.jda.api.entities.PermissionOverride;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 /**
  * The command that starts the game.
  * @author adalbert
@@ -62,14 +57,14 @@ public class StartCommand extends Command {
 		//now parse a scenario
 		int scenario = 0;
 		try {
-			if (args.length>=2 && Integer.parseInt(args[1])>=0 && Integer.parseInt(args[1])<17) scenario=Integer.parseInt(args[1]);
+			if (args.length>=2 && Integer.parseInt(args[1])>=0 && Integer.parseInt(args[1])<16) scenario=Integer.parseInt(args[1]);
 			else if (args.length>=2){
-				sendMessage(e, ":x: Leave this field blank if you want to. The scenario must be written as non-negative integers less than 17.");
+				sendMessage(e, ":x: Leave this field blank if you want to. The scenario must be written as a non-negative integer less than 16.");
 				return;
 			}
 		}
 		catch (NumberFormatException err) {
-			sendMessage(e, ":x: Leave this field blank if you want to. The scenario must be written as non-negative integers less than 17.");
+			sendMessage(e, ":x: Leave this field blank if you want to. The scenario must be written as a non-negative integer less than 16.");
 			return;
 		}
 		//now determine the rules. 
@@ -101,7 +96,7 @@ public class StartCommand extends Command {
 		// create two channels, one for the US and one for the USSR, accessible only by the respective role
 		
 		if (e.getGuild().getTextChannelsByName("lb-usa", true).isEmpty()) {
-			GameData.txtusa = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"lb-usa", e.getGuild(), ChannelType.TEXT)
+			GameData.txtusa = e.getGuild().createTextChannel("lb-usa")
 					.setTopic("[REDACTED]")
 					.addPermissionOverride(GameData.roleusa, 68672, 0)
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847)
@@ -116,7 +111,7 @@ public class StartCommand extends Command {
 			GameData.txtusa.putPermissionOverride(GameData.roleusa).setPermissions(68672, 0).queue();
 		}
 		if (e.getGuild().getTextChannelsByName("lb-jih", true).isEmpty()) {
-			GameData.txtjih = (TextChannel) new ChannelAction(Route.Guilds.CREATE_CHANNEL.compile(e.getGuild().getId()),"lb-jih", e.getGuild(), ChannelType.TEXT)
+			GameData.txtjih = e.getGuild().createTextChannel("lb-jih")
 					.setTopic("[REDACTED]")
 					.addPermissionOverride(GameData.rolejih, 68672, 0)
 					.addPermissionOverride(e.getGuild().getPublicRole(), 0, 2146958847).complete();
@@ -132,8 +127,8 @@ public class StartCommand extends Command {
 		GameData.startGame();
 		PlayerList.detSides();
 		// give the roles to the respective countries
-		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getUSA()), GameData.roleusa).complete();
-		new GuildController(e.getGuild()).addRolesToMember(e.getGuild().getMember(PlayerList.getJih()), GameData.rolejih).complete();
+		e.getGuild().addRoleToMember(e.getGuild().getMember(PlayerList.getUSA()), GameData.roleusa).complete();
+		e.getGuild().addRoleToMember(e.getGuild().getMember(PlayerList.getJih()), GameData.rolejih).complete();
 		Log.writeToLog("New Game: Labyrinth");
 		EmbedBuilder builder = new EmbedBuilder().setTitle("A New Game of Labyrinth Has Started.").setDescription(":hourglass:" + getDescription(GameData.scenario) + " Good luck.").setColor(Color.WHITE);
 		sendMessage(e, new MessageBuilder(builder.build()).build());
@@ -145,10 +140,12 @@ public class StartCommand extends Command {
 		if (rules>=4) {
 			rules-=4;
 			GameData.zakat = true;
+			GameData.stronghorse = true;
 			builder.addField("Zakat/Strong Horse", "Gives each player a second wind.", false);
 		}
 		else {
 			GameData.zakat = false;
+			GameData.stronghorse = false;
 		}
 		if (rules>=2) {
 			rules-=2;
@@ -185,15 +182,24 @@ public class StartCommand extends Command {
 				}
 			}
 		}
+		if (scenario>3 && scenario !=9 && scenario != 14) GameData.awk = true;
+		if (scenario>10) GameData.fw = true; //amends awakening rules for campaign scenario, but doesn't add any rules by themselves
 		
 		//and now for the board state
-		MapManager.initialize(scenario);
+		GameData.initialize(); //game variables
+		MapManager.initialize(scenario); //map
 		
 		Log.writeToLog("-+-+- Setup -+-+-");
 		CardList.initialize();
-		HandManager.seedDecks(scenario);
+		HandManager.seedDecks(scenario); //decks
 		HandManager.deal();
-		//GameData.txtcom.sendMessage(PlayerList.getCom().getAsMention() + ", please place your first two Support Points. (Use TS.setup)").complete();
+		if (scenario==2) {
+			GameData.txtjih.sendMessage(PlayerList.getJih().getAsMention() + ", please place one cell in each of three non-US countries. (Use LB.setup)").complete();
+		}
+		else {
+			TimeCommand.cardPlayed = false;
+			TimeCommand.prompt();
+		}
 	}
 
 	@Override
@@ -219,19 +225,20 @@ public class StartCommand extends Command {
 				+ "1 - You Can Call Me Al (Base)\n"
 				+ "2 - Anaconda (Base)\n"
 				+ "3 - Mission Accomplished? (Base)\n"
+				
 				+ "4 - Awakening (AWK)\n"
 				+ "5 - Mitt's Turn (AWK)\n"
 				+ "6 - Arab Spring (AWK)\n"
 				+ "7 - Status of Forces (AWK)\n"
-				+ "8 - Assad Alone (AWK) \n" //up to debate
-				+ "9 - ISIL (AWK)\n"
-				+ "10 - Campaign (AWK)\n"
-				+ "11 - Campaign (AWK, shuffled)\n"
-				+ "12 - Fall of ISIL (FW)\n"
-				+ "13 - Trump Takes Command (FW)\n"
-				+ "14 - Hillary Takes Command (FW)\n"
-				+ "15 - Extended Campaign (FW)\n"
-				+ "16 - Extended Campaign (FW, althist)\n"
+				+ "8 - ISIL (AWK)\n"
+				+ "9 - Campaign (AWK)\n"
+				+ "10 - Campaign (AWK, shuffled)\n"
+				
+				+ "11 - Fall of ISIL (FW)\n"
+				+ "12 - Trump Takes Command (FW)\n"
+				+ "13 - Hillary Takes Command (FW)\n"
+				+ "14 - Extended Campaign (FW)\n"
+				+ "15 - Extended Campaign (FW, shuffled)\n"
 				+ "If no number is given, it will be by default 0 (Let's Roll!).\n\n"
 				+ "The second integer indicates the side to play for a solitaire game (0 US 1 Jihad), or 2-player mode. Note that 1 is not available in the base game.\n"
 				+ "If no number is given, it will be by default 2 (two-player).\n\n"
@@ -242,7 +249,9 @@ public class StartCommand extends Command {
 				+ "`001` Variable Bot Difficulty\n"
 				+ "If no number is given, it will be by default 0 (no additional rules).\n\n"
 				+ "Provided that a solitaire game is being started and Variable Bot Difficulty is not on, the fourth integer describes the difficulty, from 0-5.\n"
-				+ "If no number is given, it will be by default 0 (Muddled/Off Guard).");
+				+ "If no number is given, it will be by default 0 (Muddled/Off Guard)."
+				+ "The last integer indicates the number of reshuffles to play, to a maximum of three. This option may not be available for some scenarios.\n"
+				+ "If no number is given, it will be set to a default for each scenario—often, this is 1.\n\n");
 	}
 
 	private String getDescription(int scenario) {
@@ -264,22 +273,20 @@ public class StartCommand extends Command {
 		case 7: 
 			return "It is 2011, and the US has just pulled out of Iraq.";
 		case 8: 
-			return "It is 2012, a fight over the fate of Syria.";
-		case 9: 
 			return "It is 2014, and ISIL has just proclaimed its caliphate.";
-		case 10: 
+		case 9: 
 			return "It is September 12, and the towers have fallen. This game will continue into 2015.";
-		case 11: 
+		case 10: 
 			return "[Note: Alternative History.] It is September 12, and the towers have fallen. This game will continue into 2015.";
-		case 12: 
+		case 11: 
 			return "It is 2016. ISIL's mark on the Middle East is starting to fade.";
-		case 13: 
+		case 12: 
 			return "It is 2017, and Donald Trump has just taken power.";
-		case 14: 
+		case 13: 
 			return "[Note: Alternative History.] It is 2017, and Hillary Clinton has just taken power.";
-		case 15: 
+		case 14: 
 			return "It is September 12, and the towers have fallen. This game will continue into 2020.";
-		case 16: 
+		case 15: 
 			return "[Note: Alternative History.] It is September 12, and the towers have fallen. This game will continue into 2020.";
 		
 		default:

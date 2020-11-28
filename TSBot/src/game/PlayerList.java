@@ -7,9 +7,9 @@ import java.util.Random;
 
 import cards.HandManager;
 import map.MapManager;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.MessageEmbed;
-import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.entities.User;
 /**
  * Handles a list of players who are playing this game. No AI yet. 
  * @author adalbert

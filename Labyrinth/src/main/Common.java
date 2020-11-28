@@ -2,8 +2,9 @@ package main;
 
 import java.awt.Color;
 
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.Role;
+import game.GameData;
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.Role;
 
 /**
  * A class used to store things that may be used across multiple classes. 
@@ -14,7 +15,7 @@ public class Common {
 	/**
 	 * Strings representing numbers between 0 and 6. 
 	 */
-	public static final String[] numbers = {"zero","one","two","three","four","five","six"};
+	public static final String[] numbers = {"zero","one","two","three","four","five","six","seven","eight","nine"};
 	/**
 	 * Strings for the players. Flavor only.
 	 */
