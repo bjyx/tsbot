@@ -465,6 +465,7 @@ public class MapManager {
 		case 2: //anaconda
 			//us hard
 			map.get(0).setPosture(1);
+			map.get(0).adj = new ArrayList<Integer>(Arrays.asList(1)); //patriot
 			//ly: poor adv
 			map.get(35).setPosture(3);
 			map.get(35).setGovernance(3);
@@ -502,6 +503,7 @@ public class MapManager {
 		case 3: //mission accomplished?
 			//us hard
 			map.get(0).setPosture(1);
+			map.get(0).adj = new ArrayList<Integer>(Arrays.asList(1)); //patriot
 			//ly: poor adv
 			map.get(35).setPosture(3);
 			map.get(35).setGovernance(3);
@@ -561,7 +563,7 @@ public class MapManager {
 			//auto-rerolls one hard schengen country in optimal order
 			if (GameData.player==2) {
 				for (int i=3; i<=9; i++) {
-					if (map.get(i).getPosture(false)==1) {
+					if (map.get(i).getPosture()==1) {
 						map.get(i).rollCountry();
 						break;
 					}
@@ -824,7 +826,7 @@ public class MapManager {
 			map.get(18).editUnits(-1, 2);
 			map.get(18).editUnits(2, 3);
 			map.get(18).cw = true;
-			map.get(18).advisors = true;
+			map.get(18).advisors = 1;
 			//bh: fair ally, 2T
 			map.get(21).setPosture(1);
 			map.get(21).setGovernance(2);
@@ -887,7 +889,7 @@ public class MapManager {
 			map.get(14).cw = true;
 			map.get(14).editUnits(-1, 2);
 			map.get(14).editUnits(1, 1);
-			map.get(14).advisors = true;
+			map.get(14).advisors = 1;
 			//ir: islamist, 3 cell
 			map.get(22).religion = 1; //set to muslim
 			map.get(22).setPosture(3);
@@ -940,7 +942,7 @@ public class MapManager {
 			map.get(14).cw = true;
 			map.get(14).editUnits(-1, 2);
 			map.get(14).editUnits(1, 1);
-			map.get(14).advisors = true;
+			map.get(14).advisors = 1;
 			//ir: islamist, 3 cell
 			map.get(22).religion = 1; //set to muslim
 			map.get(22).setPosture(3);
@@ -1065,13 +1067,24 @@ public class MapManager {
 		return true;
 	}*/
 	/**
+	 * 
+	 * @return The sum of the postures of the rest of the world multiplied by the US's posture. 
+	 */
+	public static int GWOT() {
+		int x = 0; 
+		for (int i=1; i<length(); i++) { //aka not america
+			if (get(i).religion==2) x += get(i).getPosture();
+		}
+		return x*get(0).getPosture();
+	}
+	/**
 	 * Calculates the extent of the caliphate.
 	 */
 	public static ArrayList<Integer> caliphate() {
 		ArrayList<Integer> c = new ArrayList<Integer>(Arrays.asList(caliph));
 		for (Integer i : c) {
 			for (Integer j : map.get(i).adj) {
-				if (!c.contains(j) && map.get(j).religion<=1 && (map.get(j).cw||map.get(j).rc!=0||map.get(j).getGovernance(false)==4)) {
+				if (!c.contains(j) && map.get(j).religion<=1 && (map.get(j).cw||map.get(j).rc!=0||map.get(j).getGovernance()==4)) {
 					c.add(j);
 				}
 			}

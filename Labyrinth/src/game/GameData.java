@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import cards.HandManager;
 import cards.Operations;
+import commands.TimeCommand;
 import events.CardEmbedBuilder;
 import events.Decision;
 import logging.Log;
@@ -293,25 +294,44 @@ public class GameData {
 		builder.setTitle("End of Turn Summary");
 		checkVictory(false);
 		
+		builder.changeFund(-1); //funding-- 
+		boolean flag = false;
+		if (MapManager.GWOT()>=3) builder.changePrestige(1); //prestige++ if gwot marker is 3 in favor
+		for (int i=0; i<MapManager.length(); i++) {
+			if (MapManager.get(i).rc==1) MapManager.get(i).rc=2; //green -> tan
+			if (MapManager.get(i).getGovernance()==4) {
+				flag = true;
+			}
+		}
+		if (flag) builder.changePrestige(-1); //islamist rule
 		//TODO lapses
 		
-		txtchnl.sendMessage(builder.build()).complete();
-	}
-	
-	/**
-	 * Performs all functions necessary at the start of the turn.
-	 */
-	public static void startTurn() {
-		txtchnl.sendMessage(new CardEmbedBuilder().setTitle("Start of Turn").addField("Cards have been dealt.", "", false).build()).complete();
+		
+		builder.changeReserves(0, -2).changeReserves(1, -2); //clear reserves
 		HandManager.deal(); // stage 1; also reshuffles automatically
 		Log.writeToLog("-+-+- New Turn -+-+-");
+		builder.addField("Cards have been dealt.", "", false);
+		txtchnl.sendMessage(builder.build()).complete();
 	}
 	/**
 	 * Advances the action round.
 	 */
 	public static void advanceTime() {
 		ar++;
-		//TODO special effect at ar%4==0
+		if (HandManager.JihHand.isEmpty() && (HandManager.USAHand.isEmpty()||TimeCommand.usHolds)) ar = (ar/4+1)*4; //advance to next mult of 4
+		if (ar%4==0) { //after US action rounds/at end of turn, resolve plots
+			for (int i=0; i<MapManager.length(); i++) {
+				for (Integer p : MapManager.get(i).plots) {
+					Operations.resolvePlot(i, p);
+				}
+				MapManager.get(i).plots.clear();
+			}
+		}
+		/*advance turn when:
+		 * - both sides are out
+		 * - the jihadist is out and the US holds/discards
+		 */
+		if (HandManager.JihHand.isEmpty() && (HandManager.USAHand.isEmpty()||TimeCommand.usHolds)) advanceTurn();
 		Log.writeToLog("--- AR "+ar+" ---");
 	}
 	
@@ -397,7 +417,7 @@ public class GameData {
 	 * @param fin is true if triggered under final scoring.
 	 */
 	public static void checkVictory(boolean fin) {
-		if (countUnits(1)==0) {
+		if (trackCells()==cellMax()) {
 			endGame(0, 2);
 			return;
 		}
@@ -405,19 +425,19 @@ public class GameData {
 		boolean i2 = false;
 		for (int i=0; i<MapManager.length(); i++) {
 			if (MapManager.get(i).religion<=1) {
-				if (MapManager.get(i).getGovernance(false)<=2) {
+				if (MapManager.get(i).getGovernance()<=2) {
 					f++;
-					if (MapManager.get(i).getGovernance(false)==1) {
+					if (MapManager.get(i).getGovernance()==1) {
 						g+=MapManager.get(i).res;
 					}
 				}
-				if (MapManager.get(i).getGovernance(false)>=3) {
+				if (MapManager.get(i).getGovernance()>=3) {
 					p++;
-					if (MapManager.get(i).getGovernance(false)==4) {
+					if (MapManager.get(i).getGovernance()==4) {
 						r+=MapManager.get(i).res;
 						if (!i2) {
 							for (Integer j : MapManager.get(i).adj) {
-								if (MapManager.get(j).getGovernance(false)==4) i2=true;
+								if (MapManager.get(j).getGovernance()==4) i2=true;
 							}
 						}
 					}
@@ -448,14 +468,33 @@ public class GameData {
 		else endGame(0, 1);
 	}
 	/**
-	 * Counts units of the given type in each country. 
-	 * @param sp is 0 if US, 1 if USSR.
+	 * Counts the troops on the track.
+	 * @param sp is 0 if US, 1 if Jihadist.
 	 */
-	public static int countUnits(int type) {
+	public static int trackTroops() {
 		int x=0;
 		for (int i=0; i<MapManager.length(); i++) {
-			x += MapManager.get(i).countUnits(type);
+			x += MapManager.get(i).countUnits(-2) - MapManager.get(i).countUnits(-3); // do not count NATO or other troops
 		}
-		return x;
+		return 15-x;
+	}
+	
+	/**
+	 * Counts the available cells on the track.
+	 * @param sp is 0 if US, 1 if Jihadist.
+	 */
+	public static int trackCells() {
+		int x=0;
+		for (int i=0; i<MapManager.length(); i++) {
+			x += MapManager.get(i).countUnits(1) - MapManager.get(i).countUnits(3); // do not count Sadr
+		}
+		return Math.max(cellMax()-x, 0);
+	}
+	
+	/**
+	 * Calculates the maximum number of cells that can be used. A contingency for Awakening introducing Training Camps.
+	 */
+	public static int cellMax() {
+		return ((fund-1)/3+1)*5;
 	}
 }

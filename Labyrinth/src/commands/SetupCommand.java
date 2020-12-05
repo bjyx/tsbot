@@ -18,6 +18,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  */
 public class SetupCommand extends Command {
 
+	public static boolean setup = true;
 	
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
@@ -33,7 +34,7 @@ public class SetupCommand extends Command {
 			sendMessage(e, ":x: Don't. You're compromising your play.");
 			return;
 		}
-		if (!e.getAuthor().equals(PlayerList.getJih())&&GameData.scenario!=2) { //restrict setup to the cells placed by the Jihadist
+		if (!e.getAuthor().equals(PlayerList.getJih())&&GameData.scenario!=2||setup) { //restrict setup to the cells placed by the Jihadist
 			sendMessage(e, ":x: Now's not the time to use this.");
 			return;
 		}
@@ -41,7 +42,6 @@ public class SetupCommand extends Command {
 			sendMessage(e, ":x: Three cells in three different countries.");
 			return;
 		}
-		int sp = 1;
 		int[] countries = new int[(args.length-1)];
 		for (int i=1; i<args.length; i++) {
 			countries[i-1] = MapManager.find(args[i]);
@@ -65,6 +65,7 @@ public class SetupCommand extends Command {
 			MapManager.get(countries[i]).testCountry();
 			builder.editUnits(countries[i], 1, 1);
 		}
+		setup = true;
 		TimeCommand.cardPlayed = false;
 		TimeCommand.prompt();
 		GameData.txtchnl.sendMessage(builder.build()).complete();

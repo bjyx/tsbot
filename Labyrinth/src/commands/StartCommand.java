@@ -194,6 +194,7 @@ public class StartCommand extends Command {
 		HandManager.seedDecks(scenario); //decks
 		HandManager.deal();
 		if (scenario==2) {
+			SetupCommand.setup = false;
 			GameData.txtjih.sendMessage(PlayerList.getJih().getAsMention() + ", please place one cell in each of three non-US countries. (Use LB.setup)").complete();
 		}
 		else {

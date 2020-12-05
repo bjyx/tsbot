@@ -2,12 +2,12 @@ package cards;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import commands.TimeCommand;
 import events.CardEmbedBuilder;
 import events.Decision;
-import events.ForeignCurrencyDebtBurden;
 import game.Die;
 import game.GameData;
 import logging.Log;
@@ -46,6 +46,10 @@ public class Operations {
 	 */
 	public int opnumber = -1;
 	/**
+	 * The plots currently available to the jihadist. 
+	 */
+	public ArrayList<Integer> plots = new ArrayList<Integer>(Arrays.asList(1, 1, 1, 2, 2, 3));
+	/**
 	 * Whether the Jihadist has already used the first plot (which disables the corresponding event).
 	 */
 	public static boolean firstplot = false;
@@ -83,73 +87,111 @@ public class Operations {
 	 */
 	public boolean ops(String[] args) {
 		String usage = args[1];
-		if (usage.equals("influence")||usage.equals("i")) {
-			if (args.length<3) {
-				txtsp.sendMessage(":x: Usage: [origin][destination][amount].").complete();
-				return false;
-			}
-			if (args.length%2!=0) {
-				txtsp.sendMessage(":x: An influence value must be associated with every listed country.").complete();
-				return false;
-			}
-			int[] countries = new int[(args.length-2)/2];
-			int[] amt = new int[(args.length-2)/2];
-			for (int i=2; i<args.length; i+=2) {
-				countries[(i-2)/2] = MapManager.find(args[i]);
-				if (countries[(i-2)/2]==-1) {
-					txtsp.sendMessage(":x: "+args[i]+" isn't a country or alias of one.").complete();
+		if (sp==0) {
+			if (usage.equalsIgnoreCase("m")||usage.equalsIgnoreCase("movement")||usage.equalsIgnoreCase("deploy")) {
+				//Deploy takes one origin and one destination, along with the number of troops.
+				//checks length
+				if (args.length<5) {
+					txtsp.sendMessage(":x: From where, to where, and how much?").complete();
 					return false;
 				}
+				//pulls arguments
+				int from = MapManager.find(args[2]);
+				if (from==-1) {
+					txtsp.sendMessage(":x: "+args[2]+" isn't a country or alias of one.").complete();
+					return false;
+				}
+				int to = MapManager.find(args[3]);
+				if (to==-1) {
+					txtsp.sendMessage(":x: "+args[3]+" isn't a country or alias of one.").complete();
+					return false;
+				}
+				int amt;
 				try {
-					amt[(i-2)/2] = Integer.parseInt(args[i+1]);
+					amt = Integer.parseInt(args[4]);
 				}
-				catch (NumberFormatException err) {
-					txtsp.sendMessage(":x: NaN").complete();
+				catch (Exception e) {
+					txtsp.sendMessage(":x: I'd rather not have to deal with fractional troops.").complete();
 					return false;
 				}
-				if (amt[(i-2)/2]<=0) {
-					txtsp.sendMessage(":x: Positive integers only, please - this is not De-Stalinization.").complete();
+				//checks legality:
+				//from must have the specified no. of troops
+				int total = (from==0?GameData.trackTroops():MapManager.get(from).countUnits(-2)); //incs NATO and others
+				if (total<amt) {
+					txtsp.sendMessage(":x: You can't draw troops out of thin air.").complete();
 					return false;
 				}
-			}
-			return this.influence(countries, amt);
-		}
-		if (usage.equals("check")||usage.equals("c")) {
-			if (args.length<3) {
-				txtsp.sendMessage(":x: Where?").complete();
-				return false;
-			}
-			int country = MapManager.find(args[2]);
-			if (country==-1) {
-				txtsp.sendMessage(":x: "+args[2]+" isn't a country or alias of one.").complete();
-				return false;
-			}
-			if (HandManager.effectActive(58)&&!ahbr) {
-				ahbr=true;
-				if (args.length>3) { 
-					if (MapManager.get(country).inRegion(0)&&args[3].equalsIgnoreCase("habsburg")) {
-						opnumber++;
-						restrictions = 0;
+				//from cannot disable a WoI in an RC country
+				if (MapManager.get(from).rc!=0&&MapManager.get(from).countUnits(-2)-amt<MapManager.get(from).countUnits(1)+5) {
+					txtsp.sendMessage(":x: We still have a war to pursue in " + MapManager.get(from).name + ".").complete();
+					return false;
+				}
+				//to must be Muslim (or "the US")
+				if (to!=0) {
+					if (MapManager.get(to).religion==2) {
+						txtsp.sendMessage(":x: " + MapManager.get(to).name + " isn't so much an ally as a diplomatic partner.").complete();
+						return false;
+					}
+					if (MapManager.get(to).religion==3) {
+						txtsp.sendMessage(":x: You're going to get a very chilly reception to that.").complete();
+						return false;
+					}
+				//to must be allied or RCable
+					if (MapManager.get(to).getPosture()!=1 //not allied
+						&&!((MapManager.get(to).getGovernance()==4 //not islamist rule...
+						||(to==18&&HandManager.effectActive(37)) //nor iraqi wmd...
+						||(to==35&&HandManager.effectActive(39)))&&amt>=6) //nor libyan wmd, and 6 troops or more for a rc
+						) { //make casus belli compatible
+						txtsp.sendMessage(":x: " + MapManager.get(to).name + " is not going to humor your request to station troops in their land.").complete();
+						return false;
 					}
 				}
+				//sufficient ops required
+				if (MapManager.get(to).getGovernance()>this.opnumber) {
+					if (MapManager.get(to).getGovernance()<=this.opnumber+GameData.getReserves(0)) GameData.changeReserves(0, -2);
+					else {
+						txtsp.sendMessage(":x: Needs more investment.").complete();
+						return false;
+					}
+				}
+				return this.deploy(from, to, amt);
 			}
-			
-			return this.realignment(country);
-		}
-		//legacy
-		if (usage.equals("t")||usage.equals("tsquare")||usage.equalsIgnoreCase("t2")) {
-			if (GameData.getT2(sp)==8) {
-				txtsp.sendMessage(":x: This is as far as you go on the square. How did you get here, anyways?").complete();
-				return false;
+			if (usage.equalsIgnoreCase("g")||usage.equalsIgnoreCase("governance")||usage.equalsIgnoreCase("woi")) {
+				
 			}
-			return this.space();
+			if (usage.equalsIgnoreCase("t")||usage.equalsIgnoreCase("terror")||usage.equalsIgnoreCase("alert")) {
+				
+			}
+			if (usage.equalsIgnoreCase("c")||usage.equalsIgnoreCase("cells")||usage.equalsIgnoreCase("disrupt")) {
+				
+			}
+			if (usage.equalsIgnoreCase("r")||usage.equalsIgnoreCase("reserves")) {
+				
+			}
 		}
-		txtsp.sendMessage(":x: You clearly aren't spacing the card. Why not use it for operations?").complete();
+		else { // sp == 1
+			if (usage.equalsIgnoreCase("m")||usage.equalsIgnoreCase("movement")||usage.equalsIgnoreCase("travel")) {
+				
+			}
+			if (usage.equalsIgnoreCase("g")||usage.equalsIgnoreCase("governance")||usage.equalsIgnoreCase("jihad")) {
+				
+			}
+			if (usage.equalsIgnoreCase("t")||usage.equalsIgnoreCase("terror")||usage.equalsIgnoreCase("plot")) {
+				
+			}
+			if (usage.equalsIgnoreCase("c")||usage.equalsIgnoreCase("cells")||usage.equalsIgnoreCase("recruit")) {
+				
+			}
+			if (usage.equalsIgnoreCase("r")||usage.equalsIgnoreCase("reserves")) {
+				
+			}
+		}
+		txtsp.sendMessage(":x: That's not an action you can take. M, G, T, C, R. Four genres, four operations per side.").complete();
 		return false;
 	}
 	//TODO operations
 	/**
-	 * Conducts a deploy operation. 
+	 * Conducts a single deploy operation. 
 	 * @param from is the origin.
 	 * @param to is the destination.
 	 * @param num is the number of troops.
@@ -167,28 +209,86 @@ public class Operations {
 	public boolean travel(int from, int to) {
 		return false;
 	}
-	
+	/**
+	 * Conducts a whole travel operation.
+	 * @param from is the entire set of origin countries.
+	 * @param to is the entire set of destination countries.
+	 * @return the success of the operation.
+	 */
+	public boolean bulkTravel(int[] from, int[] to) {
+		return false;
+	}
+	/**
+	 * Conducts a single War of Ideas.
+	 * @param target is the target of the WoI.
+	 * @return the success of the operation.
+	 */
 	public boolean woi(int target) {
 		return false;
 	}
-	
-	public boolean jihad(int target) {
+	/**
+	 * Conducts a jihad operation. 
+	 * @param target is the set of countries targeted.
+	 * @param amts is the number of dice used on each given country in order. 
+	 * @param major is the determinant of whether each country is being targeted by Major Jihad and is thus eligible for Islamism. 
+	 * @return the success of the operation.
+	 */
+	public boolean jihad(int[] target, int[] amts, boolean[] major) {
 		return false;
 	}
-	
+	/**
+	 * Conducts a single alert.
+	 * @param target
+	 * @return
+	 */
 	public boolean alert(int target) {
 		return false;
 	}
-	
+	/**
+	 * Conducts a single plot. Since juking is possible, placement of plots is in a separate command. 
+	 * @param target is the target country.
+	 * @return
+	 */
 	public boolean plot(int target) {
 		return false;
 	}
 	
+	/**
+	 * Places one successful plot. 
+	 * @param target is the target country.
+	 * @return
+	 */
+	public boolean placePlot(int target, int level) {
+		return false;
+	}
+	/**
+	 * Resolves one unblocked plot.
+	 */
+	public static boolean resolvePlot(int target, int level) {
+		return false;
+	}
+	/**
+	 * Conducts one disrupt operation. Preferentially targets active cells for optimality.
+	 * @param target is the target country.
+	 * @return
+	 */
 	public boolean disrupt(int target) {
 		return false;
 	}
-	
+	/**
+	 * Conducts one recruit operation. Serial.
+	 * @param target
+	 * @return
+	 */
 	public boolean recruit(int target) {
+		return false;
+	}
+	/**
+	 * Conducts a whole recruit operation. Serial.
+	 * @param target
+	 * @return
+	 */
+	public boolean bulkRecruit(int[] target, int[] amts) {
 		return false;
 	}
 }

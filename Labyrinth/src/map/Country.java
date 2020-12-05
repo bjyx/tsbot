@@ -33,6 +33,10 @@ public class Country {
 	 */
 	public ArrayList<Integer> units;
 	/**
+	 * The plots occupying this country, by number. 
+	 */
+	public ArrayList<Integer> plots = new ArrayList<Integer>();
+	/**
 	 * The space's ID, used in the find() function. Likely redundant.
 	 */
 	public int id;
@@ -103,7 +107,7 @@ public class Country {
 	/**
 	 * Advisors - +1 militia at turn start.
 	 */
-	public boolean advisors = false;
+	public int advisors = 0;
 	/**
 	 * The form used in the shorthand of the log, which is also a valid alias. Also used to pull out a flag. 
 	 */
@@ -169,11 +173,9 @@ public class Country {
 	}
 	/**
 	 * ...
-	 * @param test dictates the necessity of a test for this situation. For example, if you're simply checking for the existence of a Fair Muslim country, you need to skip over an untested country. If you're checking this specific country you'll need to test it.
 	 * @return the governance of the country.
 	 */
-	public int getGovernance(boolean test) {
-		if (gov==0&&test) testCountry();
+	public int getGovernance() {
 		return gov;
 	}
 	
@@ -185,11 +187,9 @@ public class Country {
 	}
 	/**
 	 * ...
-	 * @param test dictates the necessity of a test for this situation. For example, if you're simply checking for the existence of a Fair Muslim country, you need to skip over an untested country. If you're checking this specific country you'll need to test it.
 	 * @return the posture of the country.
 	 */
-	public int getPosture(boolean test) {
-		if (post==0&&test) testCountry();
+	public int getPosture() {
 		return post;
 	}
 	
@@ -219,7 +219,7 @@ public class Country {
 	public int countUnits(int cond) {
 		int x = 0;
 		for (Integer i : units) {
-			if (cond > 0) {
+			if (cond >= 0) { //cadres count as islamic units
 				if (i >= cond) x++;
 			}
 			else {

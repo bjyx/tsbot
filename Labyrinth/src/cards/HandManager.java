@@ -292,7 +292,7 @@ public class HandManager {
 	 */
 	public static void deal() {
 		Random random = new Random();
-		while ((GameData.getFund()-1)/3+7 > JihHand.size()||Math.min((15-GameData.countUnits(-2)-1)/5+7, 9) > USAHand.size()) {
+		while ((GameData.getFund()-1)/3+7 > JihHand.size()||Math.min(GameData.trackTroops()/5+7, 9) > USAHand.size()) {
 			if ((GameData.getFund()-1)/3+7 > JihHand.size()&&!Deck.isEmpty()) {
 				JihHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
@@ -323,7 +323,7 @@ public class HandManager {
 					GameData.awk = true;
 				}
 			}
-			if (Math.min((15-GameData.countUnits(-2)-1)/5+7, 9) > USAHand.size()&&!Deck.isEmpty()) {
+			if (Math.min(GameData.trackTroops()/5+7, 9) > USAHand.size()&&!Deck.isEmpty()) {
 				USAHand.add(Deck.remove(random.nextInt(Deck.size())));
 			}
 			if(Deck.isEmpty()) { //Rule 4.3
@@ -379,7 +379,7 @@ public class HandManager {
 	 * @param card is the card in question.
 	 * @param mode is the mode of playing, as described under playmode.
 	 */
-	public static void play(int sp, int card, char mode, boolean a) {
+	public static void play(int sp, int card, char mode) {
 		
 		/*
 		//TODO super complicated area, will nitgrit later

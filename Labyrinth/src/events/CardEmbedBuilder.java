@@ -73,7 +73,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	}
 	
 	public CardEmbedBuilder setGovernance(int country, int lvl) {
-		if (MapManager.get(country).getGovernance(false)==lvl) return this;
+		if (MapManager.get(country).getGovernance()==lvl) return this;
 		if (MapManager.get(country).religion>1) return this; //non-mutable governances exist
 		if (lvl>4) return this;
 		if (lvl<0) return this; //TODO can you set something back to untested? 
@@ -84,14 +84,14 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder shiftGovernance(int country, int dir) {
 		if (dir==0) return this;
 		if (MapManager.get(country).religion>1) return this; //non-mutable governances exist
-		if (MapManager.get(country).getGovernance(false)==1&&dir==-1) return this;
-		if (MapManager.get(country).getGovernance(false)==3&&dir==1) return this; //Poor to Islamist rule isn't happening by event. Use setGovernance for this.
-		MapManager.get(country).setGovernance(MapManager.get(country).getGovernance(false)+dir);
-		return (CardEmbedBuilder) this.addField(MapManager.get(country) + Common.gov_e[MapManager.get(country).getGovernance(false)], "", false);
+		if (MapManager.get(country).getGovernance()==1&&dir==-1) return this;
+		if (MapManager.get(country).getGovernance()==3&&dir==1) return this; //Poor to Islamist rule isn't happening by event. Use setGovernance for this.
+		MapManager.get(country).setGovernance(MapManager.get(country).getGovernance()+dir);
+		return (CardEmbedBuilder) this.addField(MapManager.get(country) + Common.gov_e[MapManager.get(country).getGovernance()], "", false);
 	}
 	
 	public CardEmbedBuilder setAlignment(int country, int lvl) {
-		if (MapManager.get(country).getPosture(false)==lvl) return this;
+		if (MapManager.get(country).getPosture()==lvl) return this;
 		if (MapManager.get(country).religion>1) return this; //no alignment
 		if (lvl>3) return this;
 		if (lvl<0) return this;
@@ -100,7 +100,7 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	}
 	
 	public CardEmbedBuilder setPosture(int country, int lvl) {
-		if (MapManager.get(country).getPosture(false)==lvl) return this;
+		if (MapManager.get(country).getPosture()==lvl) return this;
 		if (MapManager.get(country).religion!=2) return this; //no posture
 		if (lvl>1) return this;
 		if (lvl<-1) return this;
@@ -111,9 +111,15 @@ public class CardEmbedBuilder extends EmbedBuilder {
 	public CardEmbedBuilder shiftAlignment(int country, int dir) {
 		if (dir==0) return this;
 		if (MapManager.get(country).religion>1) return this; //non-mutable governances exist
-		if (MapManager.get(country).getPosture(false)==1&&dir==-1) return this;
-		if (MapManager.get(country).getPosture(false)==3&&dir==1) return this;
-		MapManager.get(country).setGovernance(MapManager.get(country).getGovernance(false)+dir);
-		return (CardEmbedBuilder) this.addField(MapManager.get(country) + Common.gov_e[MapManager.get(country).getGovernance(false)], "", false);
+		if (MapManager.get(country).getPosture()==1&&dir<0) return this;
+		if (MapManager.get(country).getPosture()==3&&dir>0) return this;
+		MapManager.get(country).setGovernance(MapManager.get(country).getGovernance()+dir);
+		return (CardEmbedBuilder) this.addField(MapManager.get(country) + Common.gov_e[MapManager.get(country).getGovernance()], "", false);
+	}
+	
+	public CardEmbedBuilder changeReserves(int sp, int amt) {
+		if (amt==0) return this;
+		GameData.changeReserves(sp, amt);
+		return (CardEmbedBuilder) this.addField(Common.players_e[sp] +":military_helmet:"+ intToEmoji(amt), "", false);
 	}
 }

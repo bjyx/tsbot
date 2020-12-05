@@ -23,10 +23,10 @@ public class CardList {
 	 */
 	public static void initialize() {
 		cardList = new ArrayList<Card>();
-		CardList.addCard(new Placeholder()); //just to occupy the 0 slot so I don't get peeved enough to use a map
+		/*CardList.addCard(new Placeholder()); //just to occupy the 0 slot so I don't get peeved enough to use a map
 //US cards start here
 		CardList.addCard(new Backlash());
-		CardList.addCard(new Biometrics()); //red
+		CardList.addCard(new Biometrics());
 		CardList.addCard(new CTR());
 		CardList.addCard(new MoroTalks());
 		CardList.addCard(new NEST());
@@ -105,7 +105,7 @@ public class CardList {
 		
 		CardList.addCard(new LooseNuke());
 		CardList.addCard(new Opium());
-		CardList.addCard(new Pirates());		//red
+		CardList.addCard(new Pirates());
 		CardList.addCard(new SchengenVisas());
 		CardList.addCard(new SchroederChirac());
 		CardList.addCard(new AbuGhurayb());
@@ -114,11 +114,11 @@ public class CardList {
 		CardList.addCard(new CleanOperatives());
 		CardList.addCard(new FATA());
 		
-		CardList.addCard(new ForeignFighters());		//red
+		CardList.addCard(new ForeignFighters());
 		CardList.addCard(new JihadistVideos());
 		CardList.addCard(new Kashmir());
-		CardList.addCard(new Leak());	//red
-		CardList.addCard(new Leak()); ///s
+		CardList.addCard(new Leak());
+		CardList.addCard(new Leak());
 		CardList.addCard(new LebanonWar());
 		CardList.addCard(new MartyrdomOperation());
 		CardList.addCard(new MartyrdomOperation());
@@ -132,7 +132,7 @@ public class CardList {
 		CardList.addCard(new Wahhabism());
 		//Neutrals start here
 		CardList.addCard(new DanishCartoons());
-		CardList.addCard(new Fatwa()); //see 7.6
+		CardList.addCard(new Fatwa());
 		CardList.addCard(new GazaWithdrawal());
 		CardList.addCard(new Hamas());
 		CardList.addCard(new HizbUtTahrir());
@@ -157,12 +157,12 @@ public class CardList {
 		CardList.addCard(new OilPriceSpike());
 		CardList.addCard(new OilPriceSpike());
 		CardList.addCard(new Saleh());
-		CardList.addCard(new USElection());
+		CardList.addCard(new USElection());/*
 		
 		//Awakening cards
 		
 		CardList.addCard(new Advisors());
-		CardList.addCard(new Backlash()); //red
+		CardList.addCard(new Backlash());
 		CardList.addCard(new HumanitarianAid());
 		CardList.addCard(new PearlRoundabout());
 		CardList.addCard(new Peshmerga());
@@ -220,7 +220,7 @@ public class CardList {
 		CardList.addCard(new AbuGhraibJailBreak());
 		CardList.addCard(new AlShabaab());
 		CardList.addCard(new ArabWinter());
-		CardList.addCard(new BostonMarathon()); //Sadr
+		CardList.addCard(new BostonMarathon());
 		CardList.addCard(new Censorship());
 		CardList.addCard(new ChangeOfState());
 		CardList.addCard(new GazaRockets());
@@ -251,11 +251,11 @@ public class CardList {
 		//Neutral
 		CardList.addCard(new CriticalMiddle());
 		
-		CardList.addCard(new CrossBorderSupport());		//red
+		CardList.addCard(new CrossBorderSupport());
 		CardList.addCard(new CyberWarfare());
 		CardList.addCard(new DayOfRage());
-		CardList.addCard(new EbolaScare());	//red
-		CardList.addCard(new ErdoganEffect()); ///s
+		CardList.addCard(new EbolaScare());
+		CardList.addCard(new ErdoganEffect());
 		CardList.addCard(new FridayOfAnger());
 		CardList.addCard(new JVCopycat());
 		CardList.addCard(new KinderGentler());
@@ -268,7 +268,7 @@ public class CardList {
 		CardList.addCard(new ThreeCups());
 		CardList.addCard(new AbuBakrAlBaghdadi());
 		CardList.addCard(new AbuSayyafISIL()); //repeat?
-		CardList.addCard(new Agitators()); //see 7.6
+		CardList.addCard(new Agitators());
 		CardList.addCard(new AlNusra());
 		CardList.addCard(new AymanAlZawahiri()); //repeat from Zawahiri?
 		CardList.addCard(new Daraa());
@@ -355,7 +355,7 @@ public class CardList {
 		CardList.addCard(new VehicleRammingAttacks());
 		CardList.addCard(new AmaqNewsAgency());
 		CardList.addCard(new AttemptedCoup());
-		CardList.addCard(new BarcelonaBombs()); //Sadr
+		CardList.addCard(new BarcelonaBombs());
 		CardList.addCard(new BlackGold());
 		CardList.addCard(new BotchedYemeniRaid());
 		CardList.addCard(new EarlyExit());
@@ -389,8 +389,8 @@ public class CardList {
 		//Neutrals
 		CardList.addCard(new AmnestyInternational());
 		CardList.addCard(new Blasphemy());
-		CardList.addCard(new Brexit());	//red
-		CardList.addCard(new DissentChannel()); ///s
+		CardList.addCard(new Brexit());
+		CardList.addCard(new DissentChannel());
 		CardList.addCard(new FilibusterNuclear());
 		CardList.addCard(new GazaAid());
 		CardList.addCard(new HafizSaeedKhan());
@@ -402,10 +402,10 @@ public class CardList {
 		CardList.addCard(new MbS());
 		CardList.addCard(new Novichok());
 		CardList.addCard(new RohingyaGenocide());
-		CardList.addCard(new USNKSummit()); //repeat?
-		CardList.addCard(new USBorderCrisis()); //see 7.6
+		CardList.addCard(new USNKSummit());
+		CardList.addCard(new USBorderCrisis());
 		CardList.addCard(new AbuMuhammadAlShimali());
-		CardList.addCard(new ErdoganDance()); //repeat from Zawahiri?
+		CardList.addCard(new ErdoganDance());
 		CardList.addCard(new EUBolstersIranDeal());
 		
 		CardList.addCard(new GulenMovement());
@@ -428,7 +428,7 @@ public class CardList {
 		CardList.addCard(new PeaceDividend());
 		CardList.addCard(new PoliticalIslamism());
 		CardList.addCard(new QuickWinBadIntel());
-		CardList.addCard(new USChinaTradeWar());
+		CardList.addCard(new USChinaTradeWar());*/
 	}
 	/**
 	 * Adds the Card to the list.
