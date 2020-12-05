@@ -84,7 +84,9 @@ public class TimeCommand extends Command {
 		if (!extraCheck&&GameData.arsLeft()==0) { //Turn Sequence: 3
 			GameData.ops = new Operations(GameData.aheadInSpace(), CardList.getCard(1).getOpsMod(GameData.aheadInSpace()), false, true, false, 1);
 			GameData.dec = new Decision(GameData.aheadInSpace(), 1); //whoever has the ability is obligatorily ahead in space
-			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.aheadInSpace()).getAsMention() + ", you can now use your extra support check.");
+			//extraCheck = true; //can be passed up on?
+			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.aheadInSpace()).getAsMention() + ", you can now use your extra support check."); //and they should take it.
+			return;
 		}
 		if (GameData.phasing()==0&&HandManager.effectActive(13)&&GameData.getAR()!=14) {
 			if (args.length<2) {
@@ -107,10 +109,6 @@ public class TimeCommand extends Command {
 		if (HandManager.activecard!=99) GameData.changeScore(0); //removes Ligachev if it's still active for some reason
 		GameData.checkScore(false, false);
 		
-		if ((HandManager.effectActive(490) && !HandManager.handContains(0, 49))||(HandManager.effectActive(491) && !HandManager.handContains(1, 49))) {
-			HandManager.removeEffect(490);
-			HandManager.removeEffect(491);
-		}
 		GameData.advanceTime(); //everything else in the turn sequence
 		HandManager.activecard = 0;
 		if (HandManager.effectActive(13)&&GameData.getAR()!=14) {
@@ -187,39 +185,32 @@ public class TimeCommand extends Command {
 
 	public static void prompt() {
 		if (!cardPlayed) {
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please play a card. (TS.play [card] [use])").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please play a card. (TS.play [card] [use])").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", please play a card. (DF.play [card] [use])").complete();
 		}
 		else if (!cardPlayedSkippable) {
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please play a card. Set card to 0 to skip turn. (TS.play [card] [use])").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please play a card. Set card to 0 to skip turn. (TS.play [card] [use])").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", please play a card. Set card to 0 to skip turn. (DF.play [card] [use])").complete();
 		}
 		else if (eventRequired&&!eventDone) {
-			if (CardList.getCard(HandManager.activecard).getAssociation()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please play your event. (TS.event [args])").complete();
-			else if (CardList.getCard(HandManager.activecard).getAssociation()==1) GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please play your event. (TS.event [args])").complete();
-			else if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please play your event. (TS.event [args])").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please play your event. (TS.event [args])").complete();
+			if (CardList.getCard(HandManager.activecard).getAssociation()==2) Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", please play your event. (DF.event [args])").complete();
+			else Common.spChannel(CardList.getCard(HandManager.activecard).getAssociation()).sendMessage(Common.spRole(CardList.getCard(HandManager.activecard).getAssociation()).getAsMention() + ", please play your event. (DF.event [args])").complete();
 		}
 		else if (operationsRequired&&!operationsDone) {
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please play your operations. (TS.ops [args])").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please play your operations. (TS.ops [args])").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", please play your operations. (DF.ops [args])").complete();
 		}
 		else if (spaceRequired&&!spaceDone) {
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", confirm that you are sending this card to space. (TS.space [args])").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", confirm that you are sending this card to space. (DF.space [args])").complete();
 		}
 		else if (!trapDone) {
-			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you must discard a card to attempt to break up this General Strike. Alternatively, you may play a scoring card for the event, but this will allow the strike to continue. (TS.decide [card])").complete();
+			GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", you must discard a card to attempt to break up this General Strike. Alternatively, you may play a scoring card for the event, but this will allow the strike to continue. (DF.decide [card])").complete();
 		}
 		else if (!isCardDiscarded) {
-			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", you may discard a card. Set card to 0 to not do so. (TS.decide [card])").complete();
+			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", you may discard a card. Set card to 0 to not do so. (DF.decide [card])").complete();
 		}
 		else if (!extraCheck) {
-			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", ").complete();
+			Common.spChannel(GameData.aheadInSpace()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", you may now use your extra support check.").complete();
 		}
 		else if (canAdvance()) {
-			if (GameData.phasing()==0) GameData.txtdem.sendMessage(GameData.roledem.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();
-			else GameData.txtcom.sendMessage(GameData.rolecom.getAsMention() + ", please advance the time. (TS.time/TS.+)").complete();
+			Common.spChannel(GameData.phasing()).sendMessage(Common.spRole(GameData.phasing()).getAsMention() + ", please advance the time. (DF.time/TS.+)").complete();
 		}
 	}
 	public static void reset() {

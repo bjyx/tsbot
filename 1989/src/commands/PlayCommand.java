@@ -17,7 +17,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
  *
  */
 public class PlayCommand extends Command {
-	private static final List<Character> modes = Arrays.asList('h','e','o','s');
+	private static final List<Character> modes = Arrays.asList('e','o','t','c');
 	@Override
 	public void onCommand(MessageReceivedEvent e, String[] args) {
 		
